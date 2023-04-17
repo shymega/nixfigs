@@ -94,7 +94,7 @@
     stow
     gammastep
     corefonts
-    atuin
+    inputs.nixpkgs-unstable.legacyPackages.${system}.atuin
     exa
     bat
     genact
