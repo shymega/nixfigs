@@ -6,6 +6,7 @@
   environment.etc."crypttab".text = ''
     homecrypt /dev/disk/by-label/HOMECRYPT /persist/etc/.homecrypt.bin
   '';
+  networking.hostName = "NEO-LINUX";
 
   boot = {
     cleanTmpDir = true;
