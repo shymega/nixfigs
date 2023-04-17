@@ -16,7 +16,25 @@ in {
       {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.extraSpecialArgs = { inherit inputs doom-emacs; };
+        home-manager.extraSpecialArgs = { inherit inputs; };
+        home-manager.users.dzrodriguez = { imports = [ ../users/home.nix ]; };
+      }
+    ];
+  };
+
+  nixos-dev-vm-cloud = lib.nixosSystem {
+    specialArgs = { inherit inputs; };
+    system = "x86_64-linux";
+    modules = [
+      ./nixos-dev-vm-cloud
+      ./configuration.nix
+      ../common
+
+      home-manager.nixosModules.home-manager
+      {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.extraSpecialArgs = { inherit inputs; };
         home-manager.users.dzrodriguez = { imports = [ ../users/home.nix ]; };
       }
     ];
