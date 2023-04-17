@@ -1,0 +1,65 @@
+{ config, lib, pkgs, inputs, ... }:
+
+{
+  users.users.dzrodriguez = {
+    isNormalUser = true;
+    shell = pkgs.zsh;
+    description = "RODRIGUEZ, Dom";
+    password = "password";
+    subUidRanges = [{
+      startUid = 100000;
+      count = 65536;
+    }];
+    subGidRanges = [{
+      startGid = 100000;
+      count = 65536;
+    }];
+    extraGroups = [
+      "wheel"
+      "dialout"
+      "adbusers"
+      "uucp"
+      "kvm"
+      "docker"
+      "libvirt"
+      "lp"
+      "lpadmin"
+      "plugdev"
+      "input"
+      "disk"
+      "networkmanager"
+      "video"
+      "qemu-libvirtd"
+      "libvirtd"
+      "systemd-journal"
+    ];
+  };
+
+  security = {
+    rtkit.enable = true;
+    polkit.enable = true;
+    sudo.wheelNeedsPassword = false; # Very dodgy!
+  };
+
+  services = {
+    avahi = { enable = false; };
+    flatpak.enable = true;
+    thermald.enable = true;
+    dbus.enable = true;
+    openssh = {
+      enable = true;
+      startWhenNeeded = true;
+    };
+    udisks2.enable = true;
+    printing = {
+      enable = true;
+      drivers = [ pkgs.hplipWithPlugin ];
+    };
+    blueman.enable = true;
+    zerotierone.enable = true;
+    power-profiles-daemon.enable = false;
+    geoclue2.enable = true;
+  };
+
+  nixpkgs.config.allowUnfree = true;
+}

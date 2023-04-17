@@ -1,0 +1,1 @@
+{ lib, inputs, ... }: { imports = [ ./global ]; }
