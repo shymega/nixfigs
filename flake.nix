@@ -53,28 +53,22 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, nixos-hardware
-    , impermanence, nix-colors, nix-on-droid, nixos-wsl, sops-nix, nix-alien
-    , nix-darwin, emacs-overlay, doom-emacs, home-manager, ... }:
+  outputs = inputs@{ self, nixpkgs, ... }:
     let user = "dzrodriguez";
     in {
-      nixosConfigurations = (import ./nixos-hosts {
-        inherit (nixpkgs) lib;
-        inherit inputs nixpkgs nixpkgs-unstable nixos-hardware impermanence nix-colors nix-on-droid nixos-wsl sops-nix nix-alien emacs-overlay doom-emacs home-manager;
-      });
+      nixosConfigurations = (import ./nixos-hosts (inputs // {
+         inherit (nixpkgs) lib;
+         inherit inputs;
+      }));
 
-      darwinConfigurations = (import ./darwin-hosts {
+      darwinConfigurations = (import ./darwin-hosts (inputs // {
         inherit (nixpkgs) lib;
-        inherit inputs nix-darwin nixpkgs nixpkgs-unstable nixos-hardware
-          impermanence nix-colors nix-on-droid nixos-wsl sops-nix nix-alien
-          emacs-overlay doom-emacs home-manager;
-      });
+        inherit inputs;
+      }));
 
-      homeConfigurations = (import ./users {
+      homeConfigurations = (import ./users (inputs // {
         inherit (nixpkgs) lib;
-        inherit inputs nix-darwin nixpkgs nixpkgs-unstable nixos-hardware
-          impermanence nix-colors nix-on-droid nixos-wsl sops-nix nix-alien
-          emacs-overlay doom-emacs home-manager;
-      });
+        inherit inputs;
+      }));
     };
 }
