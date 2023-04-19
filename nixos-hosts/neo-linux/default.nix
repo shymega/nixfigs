@@ -7,6 +7,7 @@
     homecrypt /dev/disk/by-label/HOMECRYPT /persist/etc/.homecrypt.bin
   '';
   networking.hostName = "NEO-LINUX";
+  time.timeZone = "Europe/London";
 
   boot = {
     cleanTmpDir = true;
