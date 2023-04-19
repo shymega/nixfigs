@@ -95,6 +95,7 @@
     gammastep
     corefonts
     inputs.nixpkgs-unstable.legacyPackages.${system}.atuin
+    inputs.nixpkgs-unstable.legacyPackages.${system}.texlive.combined.scheme-full
     exa
     bat
     genact
