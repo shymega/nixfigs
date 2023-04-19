@@ -98,6 +98,9 @@
     just
     starship
     zoxide
+    ripgrep
+    ack
+    silver-searcher
   ];
 
   news.display = "silent";
