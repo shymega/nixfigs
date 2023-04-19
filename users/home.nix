@@ -49,7 +49,6 @@
 
   home.packages = with pkgs; [
     pavucontrol
-    xclip
     fzf
     jq
     wget
@@ -65,11 +64,7 @@
     brightnessctl
     ncmpcpp
     bitwarden
-    polkit_gnome
     networkmanagerapplet
-    mpd-mpris
-    playerctl
-    mpdris2
     gpicview
     expect
     pass
@@ -86,14 +81,15 @@
     podman-compose
     gitkraken
     itd
-    azure-cli
-    awscli2
-    google-cloud-sdk
     p7zip
-    nodejs
     stow
-    gammastep
-    corefonts
+    q
+    step-cli
+    mkcert
+    minishift
+    minikube
+    postgrest
+    rclone
     inputs.nixpkgs-unstable.legacyPackages.${system}.atuin
     inputs.nixpkgs-unstable.legacyPackages.${system}.texlive.combined.scheme-full
     exa
@@ -102,7 +98,6 @@
     just
     starship
     zoxide
-    pavucontrol
   ];
 
   news.display = "silent";
