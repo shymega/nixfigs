@@ -88,7 +88,6 @@
     mkcert
     minishift
     minikube
-    postgrest
     rclone
     inputs.nixpkgs-unstable.legacyPackages.${system}.atuin
     inputs.nixpkgs-unstable.legacyPackages.${system}.texlive.combined.scheme-full
