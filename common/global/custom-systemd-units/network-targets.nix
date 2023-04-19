@@ -18,13 +18,6 @@
     };
   };
 
-  systemd.targets.network-online = {
-    unitConfig = {
-      Requires = [ "network-online.service" ];
-      Description = "Connected to a network";
-    };
-  };
-
   systemd.services.network-mifi = {
     unitConfig = {
       refuseManualStart = "true";
