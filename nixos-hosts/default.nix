@@ -17,7 +17,9 @@ in {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = { inherit inputs; };
-        home-manager.users.dzrodriguez = { imports = [ ../users/home.nix ]; };
+        home-manager.users.dzrodriguez = {
+          imports = [ ../home-manager/home.nix ];
+        };
       }
     ];
   };
@@ -35,7 +37,9 @@ in {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = { inherit inputs; };
-        home-manager.users.dzrodriguez = { imports = [ ../users/home.nix ]; };
+        home-manager.users.dzrodriguez = {
+          imports = [ ../home-manager/home.nix ];
+        };
       }
     ];
   };
