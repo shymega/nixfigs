@@ -57,8 +57,8 @@
     let user = "dzrodriguez";
     in {
       nixosConfigurations = (import ./nixos-hosts (inputs // {
-         inherit (inputs.nixpkgs) lib;
-         inherit inputs;
+        inherit (inputs.nixpkgs) lib;
+        inherit inputs;
       }));
 
       darwinConfigurations = (import ./darwin-hosts (inputs // {
