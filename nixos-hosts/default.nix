@@ -26,6 +26,26 @@ in {
     ];
   };
 
+  trinity-linux = lib.nixosSystem {
+    specialArgs = { inherit inputs; };
+    system = "x86_64-linux";
+    modules = [
+      ./trinity-linux
+      ./configuration.nix
+      ../common
+
+      home-manager.nixosModules.home-manager
+      {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.extraSpecialArgs = { inherit inputs; };
+        home-manager.users.dzrodriguez = {
+          imports = [ ../home-manager/home.nix ];
+        };
+      }
+    ];
+  };
+
   nixos-dev-vm-cloud = lib.nixosSystem {
     specialArgs = { inherit inputs; };
     system = "x86_64-linux";
