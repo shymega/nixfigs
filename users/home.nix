@@ -1,6 +1,8 @@
-{ inputs, config, lib, pkgs, ... }:
+{ inputs, config, lib, ... }:
 
-{
+let
+  pkgs = import inputs.nixpkgs-unstable { config = { allowUnfree = true; }; };
+in {
   imports = [ ./network-targets.nix ./programs/rofi.nix ];
 
   home.username = "dzrodriguez";
@@ -89,9 +91,10 @@
     minishift
     minikube
     rclone
-    inputs.nixpkgs-unstable.legacyPackages.${system}.atuin
-    inputs.nixpkgs-unstable.legacyPackages.${system}.texlive.combined.scheme-full
+    atuin
+    texlive.combined.scheme-full
     exa
+    httpie
     bat
     genact
     just
