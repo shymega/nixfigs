@@ -1,4 +1,8 @@
-{ config, lib, pkgs, ... }: {
+{ inputs, config, lib, pkgs, ... }:
+let
+  nixpkgs-unstable =
+    import inputs.nixpkgs-unstable { config = { allowUnfree = true; }; };
+in {
   environment = {
     variables = {
       TERMINAL = "alacritty";
@@ -14,9 +18,7 @@
       pciutils
       usbutils
       wget
-      gnupg
-      pinentry-curses
-      pinentry-rofi
+      nixpkgs-unstable.gnupg
       htop
       xorg.xinit
       bc
