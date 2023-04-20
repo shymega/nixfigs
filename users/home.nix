@@ -6,13 +6,14 @@ in {
   imports = [ ./network-targets.nix ./programs/rofi.nix ];
 
   home.username = "dzrodriguez";
-
   home.stateVersion = "22.11";
 
   services = {
     keybase.enable = true;
-    gpg-agent.enable = true;
-
+    gpg-agent = {
+      enable = true;
+      pinentryFlavor = "gnome3";
+    };
     gnome-keyring = {
       enable = true;
       components = [ "secrets" ];
