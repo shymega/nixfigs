@@ -3,6 +3,8 @@ let
   nixpkgs-unstable =
     import inputs.nixpkgs-unstable { config = { allowUnfree = true; }; };
 in {
+  programs.nix-ld.enable = true;
+
   environment = {
     variables = {
       TERMINAL = "alacritty";
@@ -24,6 +26,8 @@ in {
       bc
       acpi
       tmux
+      nix-alien
+      nix-index-update
       nix-index
     ];
   };
