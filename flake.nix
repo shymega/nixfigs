@@ -53,21 +53,21 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, ... }:
+  outputs = inputs@{ ... }:
     let user = "dzrodriguez";
     in {
       nixosConfigurations = (import ./nixos-hosts (inputs // {
-         inherit (nixpkgs) lib;
+         inherit (inputs.nixpkgs) lib;
          inherit inputs;
       }));
 
       darwinConfigurations = (import ./darwin-hosts (inputs // {
-        inherit (nixpkgs) lib;
+        inherit (inputs.nixpkgs) lib;
         inherit inputs;
       }));
 
       homeConfigurations = (import ./users (inputs // {
-        inherit (nixpkgs) lib;
+        inherit (inputs.nixpkgs) lib;
         inherit inputs;
       }));
     };
