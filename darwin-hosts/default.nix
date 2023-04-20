@@ -11,7 +11,7 @@
       {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.users.dzrodriguez = import ../users/home.nix;
+        home-manager.users.dzrodriguez = import ../home-manager/home.nix;
       }
     ];
   };

@@ -1,7 +1,6 @@
 { inputs, config, lib, ... }:
 
-let
-  pkgs = import inputs.nixpkgs-unstable { config = { allowUnfree = true; }; };
+let pkgs = import inputs.nixpkgs-unstable { config = { allowUnfree = true; }; };
 in {
   imports = [ ./network-targets.nix ./programs/rofi.nix ];
 

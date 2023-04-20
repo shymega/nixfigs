@@ -66,7 +66,7 @@
         inherit inputs;
       }));
 
-      homeConfigurations = (import ./users (inputs // {
+      homeConfigurations = (import ./home-manager (inputs // {
         inherit (inputs.nixpkgs) lib;
         inherit inputs;
       }));
