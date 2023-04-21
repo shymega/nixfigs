@@ -26,8 +26,7 @@ in {
       bc
       acpi
       tmux
-      nix-alien
-      nix-index-update
+      inputs.nix-alien.packages.${builtins.currentSystem}.nix-alien
       nix-index
     ];
   };
