@@ -78,7 +78,7 @@
   fileSystems."/data" = {
     device = "/dev/disk/by-label/WINLINSHARE";
     fsType = "ntfs3";
-    options = [ "defaults" "rw" "uid=1000" "nofail" ];
+    options = [ "rw" "uid=1000" "gid=100" "user" "exec" "umask=000" "nofail" ];
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
