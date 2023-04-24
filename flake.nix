@@ -60,15 +60,5 @@
         inherit (inputs.nixpkgs) lib;
         inherit inputs;
       }));
-
-      darwinConfigurations = (import ./darwin-hosts (inputs // {
-        inherit (inputs.nixpkgs) lib;
-        inherit inputs;
-      }));
-
-      homeConfigurations = (import ./home-manager (inputs // {
-        inherit (inputs.nixpkgs) lib;
-        inherit inputs;
-      }));
     };
 }
