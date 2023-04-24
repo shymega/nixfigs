@@ -3,8 +3,6 @@ let
   nixpkgs-unstable =
     import inputs.nixpkgs-unstable { config = { allowUnfree = true; }; };
 in {
-  programs.nix-ld.enable = true;
-
   environment = {
     variables = {
       TERMINAL = "alacritty";
@@ -20,7 +18,7 @@ in {
       pciutils
       usbutils
       wget
-      nixpkgs-unstable.gnupg
+      gnupg
       htop
       xorg.xinit
       bc
