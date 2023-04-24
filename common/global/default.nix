@@ -11,7 +11,7 @@
     ./hw.nix
     ./networking.nix
     ./nix.nix
-    # ./openssh.nix
+    ./openssh.nix
     # ./sops.nix
     ./podman.nix
     ./sound.nix
