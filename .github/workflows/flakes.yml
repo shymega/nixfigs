@@ -33,14 +33,15 @@ jobs:
   test-flakes:
     needs:
       - update-flakes
+    runs-on: ubuntu-18.04
     steps:
-    - name: Checkout nixfigs.
-      uses: actions/checkout@v3
-    - name: Install Nix.
-      uses: cachix/install-nix-action@v19
-      with:
-        github_access_token: ${{ secrets.GITHUB_TOKEN }}
-    - name: "Build Flake.
-      run: nix build
-    - name: "Check flake.
-      run: nix flake check
+      - name: Checkout nixfigs.
+        uses: actions/checkout@v3
+      - name: Install Nix.
+        uses: cachix/install-nix-action@v19
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: "Build Flake."
+        run: nix build
+      - name: "Check flake."
+        run: nix flake check
