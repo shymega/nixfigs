@@ -6,7 +6,7 @@ on:
     - cron: '0 0 * * 1'
 
 jobs:
-  update-flakes
+  update-flakes:
     permissions:
       pull_requests: write
       contents: write
@@ -30,7 +30,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           pull-request-number: ${{ steps.flake-update.outputs.pull-request-number }}
 
-  test-flakes:  
+  test-flakes:
     needs:
       - update-flakes
     steps:
