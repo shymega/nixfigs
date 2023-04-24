@@ -8,7 +8,6 @@ on:
 jobs:
   update-flakes:
     permissions:
-      pull-requests: write
       contents: write
     runs-on: ubuntu-latest
     steps:
@@ -17,18 +16,11 @@ jobs:
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Update flake.lock
-        id: flake-update
-        uses: DeterminateSystems/update-flake-lock@v19
+        run: nix flake update
+      - name: Commit changes to Lockfile.
+        uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          pr-title: "[Auto]: Update flake.lock"
-          pr-labels: |
-            dependencies
-            automated
-      - name: Automatically merge PR.
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          pull-request-number: ${{ steps.flake-update.outputs.pull-request-number }}
+            commit_message: "[Auto]: Update flake.lock"
 
   test-flakes:
     needs:
