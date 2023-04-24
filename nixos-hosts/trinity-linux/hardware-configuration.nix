@@ -18,8 +18,9 @@
 
   # Filesystems (root on tmpfs)
   fileSystems."/" = {
-    device = "none";
-    fsType = "tmpfs";
+    device = "/dev/disk/by-label/NIXOS_BTRFS_ROOT";
+    fsType = "btrfs";
+    options = [ "subvol=root" "compress=zstd" "noatime" ];
     neededForBoot = true; # required
   };
 
@@ -42,7 +43,6 @@
       "subvol=nixos-config"
     ];
     neededForBoot = true; # required
-
   };
 
   fileSystems."/var/log" = {
@@ -50,7 +50,6 @@
     fsType = "btrfs";
     options = [ "defaults" "compress-force=zstd" "noatime" "ssd" "subvol=log" ];
     neededForBoot = true; # required
-
   };
 
   fileSystems."/persist" = {
@@ -77,8 +76,8 @@
 
   fileSystems."/data" = {
     device = "/dev/disk/by-label/WINLINSHARE";
-    fsType = "btrfs";
-    options = [ "defaults" "noatime" "ssd" "nofail" ];
+    fsType = "ntfs3";
+    options = [ "rw" "uid=1000" "gid=100" "user" "exec" "umask=000" "nofail" ];
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
