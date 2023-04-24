@@ -6,7 +6,7 @@ let
 
   lib = nixpkgs.lib;
 in {
-  neo-linux = lib.nixosSystem {
+  NEO-LINUX = lib.nixosSystem {
     specialArgs = { inherit inputs; };
     system = "x86_64-linux";
     modules = [
@@ -26,7 +26,7 @@ in {
     ];
   };
 
-  trinity-linux = lib.nixosSystem {
+  TRINITY-LINUX = lib.nixosSystem {
     specialArgs = { inherit inputs; };
     system = "x86_64-linux";
     modules = [
@@ -46,7 +46,7 @@ in {
     ];
   };
 
-  nixos-dev-vm-cloud = lib.nixosSystem {
+  DOM-DEV-VM-CLOUD = lib.nixosSystem {
     specialArgs = { inherit inputs; };
     system = "x86_64-linux";
     modules = [
