@@ -1,1 +1,4 @@
-{ lib, inputs, ... }: { imports = [ ./global ]; }
+{ lib, inputs, ... }: {
+  imports = [ ./global ];
+  system.stateVersion = "22.11";
+}
