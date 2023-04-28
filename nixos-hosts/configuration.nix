@@ -56,7 +56,7 @@
       drivers = [ pkgs.hplipWithPlugin ];
     };
     blueman.enable = true;
-    zerotierone.enable = true;
+    zerotierone.enable = false;
     power-profiles-daemon.enable = false;
     geoclue2.enable = true;
   };
