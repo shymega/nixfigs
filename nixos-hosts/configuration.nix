@@ -63,6 +63,8 @@
 
   nixpkgs.config.allowUnfree = true;
   programs.zsh.enable = true;
+  programs.fish.enable = true;
+  programs.bash.enable = true;
 
   virtualisation.libvirtd = {
     enable = true;
@@ -76,5 +78,5 @@
   virtualisation.docker.enable = true;
   virtualisation.waydroid.enable = true;
   virtualisation.lxd.enable = true;
-  environment.shells = with pkgs; [ zsh ];
+  environment.shells = with pkgs; [ zsh bash fish ];
 }

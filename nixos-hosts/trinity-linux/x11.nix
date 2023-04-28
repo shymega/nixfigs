@@ -7,7 +7,8 @@ let
       -t warning \
       -m 'What do you want to do?' \
       -b 'Poweroff' 'systemctl poweroff' \
-      -b 'Reboot' 'systemctl reboot'
+      -b 'Reboot' 'systemctl reboot' \
+      -b 'Suspend' 'systemctl suspend'
   '';
 in {
   services.greetd = {
@@ -21,8 +22,13 @@ in {
   };
 
   environment.etc."greetd/environments".text = ''
-    ${pkgs.sway}/bin/sway
-    /usr/bin/bash
+    sway
+    startplasma-x11
+    startplasma-wayland
+    cinnamon-session
+    bash
+    fish
+    zsh
   '';
 
   services = {
