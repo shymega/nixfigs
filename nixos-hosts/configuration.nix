@@ -42,7 +42,7 @@
   };
 
   services = {
-    avahi = { enable = false; };
+    avahi = { enable = true; };
     flatpak.enable = true;
     thermald.enable = true;
     dbus.enable = true;
