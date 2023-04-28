@@ -64,7 +64,6 @@
   nixpkgs.config.allowUnfree = true;
   programs.zsh.enable = true;
   programs.fish.enable = true;
-  programs.bash.enable = true;
 
   virtualisation.libvirtd = {
     enable = true;
