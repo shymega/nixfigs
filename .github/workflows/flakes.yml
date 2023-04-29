@@ -25,7 +25,7 @@ jobs:
   test-flakes:
     needs:
       - update-flakes
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout nixfigs.
         uses: actions/checkout@v3
