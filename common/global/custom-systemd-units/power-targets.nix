@@ -4,7 +4,7 @@
     description = "On AC power";
     unitConfig = {
       RefuseManualStart = "true";
-      defaultDependencies = "false";
+      DefaultDependencies = "false";
     };
   };
 
@@ -13,7 +13,7 @@
     description = "On battery power";
     unitConfig = {
       RefuseManualStart = "true";
-      defaultDependencies = "false";
+      DefaultDependencies = "false";
     };
   };
 }
