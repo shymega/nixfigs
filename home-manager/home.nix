@@ -106,6 +106,11 @@ in {
     ripgrep
     ack
     silver-searcher
+    aws-sam-cli
+    awscli2
+    azure-cli
+    nixfmt
+    google-cloud-sdk
   ];
 
   news.display = "silent";
