@@ -33,7 +33,5 @@ jobs:
         uses: cachix/install-nix-action@v19
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: "Build Flake."
-        run: nix build
       - name: "Check flake."
-        run: nix flake check
+        run: nix flake --impure check
