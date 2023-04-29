@@ -7,12 +7,12 @@ let
   lib = nixpkgs.lib;
 in {
   NEO-LINUX = lib.nixosSystem {
-    specialArgs = { inherit inputs; };
     system = "x86_64-linux";
+    specialArgs = { inherit inputs; };
     modules = [
-      ./neo-linux
-      ./configuration.nix
-      ../common
+      (import ./neo-linux)
+      (import ./configuration.nix)
+      (import ../common)
 
       home-manager.nixosModules.home-manager
       {
@@ -27,12 +27,12 @@ in {
   };
 
   TRINITY-LINUX = lib.nixosSystem {
-    specialArgs = { inherit inputs; };
     system = "x86_64-linux";
+    specialArgs = { inherit inputs; };
     modules = [
-      ./trinity-linux
-      ./configuration.nix
-      ../common
+      (import ./trinity-linux)
+      (import ./configuration.nix)
+      (import ../common)
 
       home-manager.nixosModules.home-manager
       {
