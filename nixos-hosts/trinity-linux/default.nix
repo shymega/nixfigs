@@ -83,8 +83,8 @@
   };
 
   services.udev.extraRules = ''
-   SUBSYSTEM=="power_supply", KERNEL=="ADP1", ATTR{online}=="0", RUN+="/usr/bin/systemctl --no-block start battery.target"
-   SUBSYSTEM=="power_supply", KERNEL=="ADP1", ATTR{online}=="1", RUN+="/usr/bin/systemctl --no-block start ac.target"
+   SUBSYSTEM=="power_supply", KERNEL=="ADP1", ATTR{online}=="0", RUN+="${pkgs.systemd}/bin/systemctl --no-block start battery.target"
+   SUBSYSTEM=="power_supply", KERNEL=="ADP1", ATTR{online}=="1", RUN+="${pkgs.systemd}/bin/systemctl --no-block start ac.target"
 
    # blacklist for usb autosuspend
    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="8087", ATTR{idProduct}=="0032", GOTO="power_usb_rules_end"
