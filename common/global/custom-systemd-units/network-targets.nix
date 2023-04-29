@@ -4,128 +4,128 @@
   systemd.services.network-online = {
     enable = false;
     unitConfig = {
-      after = [ "network.target" ];
-      partOf = [ "network-online.target" ];
-      wantedBy = [ "network-online.target" ];
-      description = "Network is Online";
-      refuseManualStart = "true";
+      After = [ "network.target" ];
+      PartOf = [ "network-online.target" ];
+      WantedBy = [ "network-online.target" ];
+      Description = "Network is Online";
+      RefuseManualStart = "true";
     };
     serviceConfig = {
-      type = "oneshot";
-      remainAfterExit = "true";
-      execStart = "-${pkgs.coreutils}/bin/touch /tmp/network-online.flag";
-      execStop = "-${pkgs.coreutils}/bin/rm /tmp/network-online.flag";
+      Type = "oneshot";
+      RemainAfterExit = "true";
+      ExecStart = "-${pkgs.coreutils}/bin/touch /tmp/network-online.flag";
+      ExecStop = "-${pkgs.coreutils}/bin/rm /tmp/network-online.flag";
     };
   };
 
   systemd.services.network-mifi = {
     unitConfig = {
-      refuseManualStart = "true";
-      description = "Network condition helper for MiFi connections";
-      partOf = [ "network-mifi.target" ];
-      wantedBy = [ "network-mifi.target" ];
+      RefuseManualStart = "true";
+      Description = "Network condition helper for MiFi connections";
+      PartOf = [ "network-mifi.target" ];
+      WantedBy = [ "network-mifi.target" ];
     };
     serviceConfig = {
-      type = "oneshot";
-      remainAfterExit = "true";
-      execStart = "-${pkgs.coreutils}/bin/touch /tmp/network-mifi.flag";
-      execStop = "-${pkgs.coreutils}/bin/rm /tmp/network-mifi.flag";
+      Type = "oneshot";
+      RemainAfterExit = "true";
+      ExecStart = "-${pkgs.coreutils}/bin/touch /tmp/network-mifi.flag";
+      ExecStop = "-${pkgs.coreutils}/bin/rm /tmp/network-mifi.flag";
     };
   };
 
   systemd.targets.network-mifi = {
     unitConfig = {
-      description = "Connected to MiFi";
-      requires = [ "network-mifi.service" ];
+      Description = "Connected to MiFi";
+      Requires = [ "network-mifi.service" ];
     };
   };
 
   systemd.targets.network-portal = {
     unitConfig = {
-      description = "Connected to captive portal";
-      requires = [ "network-portal.service" ];
+      Description = "Connected to captive portal";
+      Requires = [ "network-portal.service" ];
     };
   };
 
   systemd.services.network-portal = {
     unitConfig = {
-      refuseManualStart = "true";
-      description = "Network condition helper for captive portals";
-      partOf = [ "network-portal.target" ];
-      wantedBy = [ "network-portal.target" ];
+      RefuseManualStart = "true";
+      Description = "Network condition helper for captive portals";
+      PartOf = [ "network-portal.target" ];
+      WantedBy = [ "network-portal.target" ];
     };
     serviceConfig = {
-      type = "oneshot";
-      remainAfterExit = "true";
-      execStart = "-${pkgs.coreutils}/bin/touch /tmp/network-portal.flag";
-      execStop = "-${pkgs.coreutils}/bin/rm /tmp/network-portal.flag";
+      Type = "oneshot";
+      RemainAfterExit = "true";
+      ExecStart = "-${pkgs.coreutils}/bin/touch /tmp/network-portal.flag";
+      ExecStop = "-${pkgs.coreutils}/bin/rm /tmp/network-portal.flag";
     };
   };
 
   systemd.targets.network-rnet = {
     unitConfig = {
-      description = "Connected to family network";
-      requires = [ "network-rnet.service" ];
+      Description = "Connected to family network";
+      Requires = [ "network-rnet.service" ];
     };
   };
   systemd.services.network-rnet = {
     unitConfig = {
-      refuseManualStart = "true";
-      description = "Network condition helper for family network";
-      partOf = [ "network-rnet.target" ];
-      wantedBy = [ "network-rnet.target" ];
+      RefuseManualStart = "true";
+      Description = "Network condition helper for family network";
+      PartOf = [ "network-rnet.target" ];
+      WantedBy = [ "network-rnet.target" ];
     };
     serviceConfig = {
-      type = "oneshot";
-      remainAfterExit = "true";
-      execStart = "-${pkgs.coreutils}/bin/touch /tmp/network-rnet.flag";
-      execStop = "-${pkgs.coreutils}/bin/rm /tmp/network-rnet.flag";
+      Type = "oneshot";
+      RemainAfterExit = "true";
+      ExecStart = "-${pkgs.coreutils}/bin/touch /tmp/network-rnet.flag";
+      ExecStop = "-${pkgs.coreutils}/bin/rm /tmp/network-rnet.flag";
     };
   };
 
   systemd.targets.network-vpn = {
     unitConfig = {
-      description = "Connected to a VPN";
-      requires = [ "network-vpn.service" ];
+      Description = "Connected to a VPN";
+      Requires = [ "network-vpn.service" ];
     };
   };
 
   systemd.services.network-vpn = {
     unitConfig = {
-      refuseManualStart = "true";
-      description = "Network condition helper for VPN connections";
-      partOf = [ "network-vpn.target" ];
-      wantedBy = [ "network-vpn.target" ];
+      RefuseManualStart = "true";
+      Description = "Network condition helper for VPN connections";
+      PartOf = [ "network-vpn.target" ];
+      WantedBy = [ "network-vpn.target" ];
 
     };
     serviceConfig = {
-      type = "oneshot";
-      remainAfterExit = "true";
-      execStart = "-${pkgs.coreutils}/bin/touch /tmp/network-vpn.flag";
-      execStop = "-${pkgs.coreutils}/bin/rm /tmp/network-vpn.flag";
+      Type = "oneshot";
+      RemainAfterExit = "true";
+      ExecStart = "-${pkgs.coreutils}/bin/touch /tmp/network-vpn.flag";
+      ExecStop = "-${pkgs.coreutils}/bin/rm /tmp/network-vpn.flag";
     };
   };
 
   systemd.targets.network-wwan = {
     unitConfig = {
-      description = "Connected to WWAN";
-      requires = [ "network-wwan.service" ];
+      Description = "Connected to WWAN";
+      Requires = [ "network-wwan.service" ];
     };
   };
 
   systemd.services.network-wwan = {
     unitConfig = {
-      refuseManualStart = "true";
-      description = "Network condition helper for WWAN connections";
-      partOf = [ "network-wwan.target" ];
-      wantedBy = [ "network-wwan.target" ];
+      RefuseManualStart = "true";
+      Description = "Network condition helper for WWAN connections";
+      PartOf = [ "network-wwan.target" ];
+      WantedBy = [ "network-wwan.target" ];
 
     };
     serviceConfig = {
-      type = "oneshot";
-      remainAfterExit = "true";
-      execStart = "-${pkgs.coreutils}/bin/touch /tmp/network-wwan.flag";
-      execStop = "-${pkgs.coreutils}/bin/rm /tmp/network-wwan.flag";
+      Type = "oneshot";
+      RemainAfterExit = "true";
+      ExecStart = "-${pkgs.coreutils}/bin/touch /tmp/network-wwan.flag";
+      ExecStop = "-${pkgs.coreutils}/bin/rm /tmp/network-wwan.flag";
     };
   };
 }

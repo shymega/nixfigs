@@ -4,7 +4,7 @@
   systemd.services.power-maximum-tdp = {
     description = "Change TDP to maximum TDP when on AC power";
     wantedBy = [ "ac.target" ];
-    unitConfig = { RefuseManualStart = "true"; };
+    unitConfig = { RefuseManualStart = true; };
     serviceConfig = {
       Type = "oneshot";
       ExecStart =
@@ -15,7 +15,7 @@
   systemd.services.power-saving-tdp = {
     description = "Change TDP to power saving TDP when on battery power";
     wantedBy = [ "battery.target" ];
-    unitConfig = { RefuseManualStart = "true"; };
+    unitConfig = { RefuseManualStart = true; };
     serviceConfig = {
       Type = "oneshot";
       ExecStart =
@@ -25,8 +25,7 @@
 
   systemd.services.powertop = {
     description = "Auto-tune Power Management with powertop";
-    wantedBy = [ "battery.target" ];
-    unitConfig = { RefuseManualStart = "true"; };
+    unitConfig = { RefuseManualStart = true; };
     serviceConfig = {
       Type = "oneshot";
       ExecStart = "${pkgs.powertop}/bin/powertop --auto-tune";
