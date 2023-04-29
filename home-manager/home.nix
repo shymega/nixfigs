@@ -113,6 +113,9 @@ in {
     azure-cli
     nixfmt
     google-cloud-sdk
+    coreutils
+    file
+    nodejs
   ];
 
   news.display = "silent";
