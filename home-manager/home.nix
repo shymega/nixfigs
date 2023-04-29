@@ -12,6 +12,9 @@ in {
     gpg-agent = {
       enable = true;
       pinentryFlavor = "gnome3";
+      enableExtraSocket = true;
+      defaultCacheTtl = 34560000;
+      maxCacheTtl = 34560000;
     };
     gnome-keyring = {
       enable = true;
