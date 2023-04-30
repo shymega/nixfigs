@@ -117,6 +117,10 @@ in {
     nodejs
     dogdns
     android-tools
+    pre-commit
+    modem-manager-gui
+    hadolint
+    pass
   ];
 
   news.display = "silent";
