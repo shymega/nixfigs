@@ -3,7 +3,6 @@
     conflicts = [ "battery.target" ];
     description = "On AC power";
     unitConfig = {
-      RefuseManualStart = "true";
       DefaultDependencies = "false";
     };
   };
@@ -12,7 +11,6 @@
     conflicts = [ "ac.target" ];
     description = "On battery power";
     unitConfig = {
-      RefuseManualStart = "true";
       DefaultDependencies = "false";
     };
   };
