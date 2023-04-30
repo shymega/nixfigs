@@ -116,6 +116,8 @@ in {
     coreutils
     file
     nodejs
+    dogdns
+    android-tools
   ];
 
   news.display = "silent";
