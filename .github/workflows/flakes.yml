@@ -17,7 +17,7 @@ jobs:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Update flake.lock
         run: nix flake update --impure
-      - name: Commit changes to Lockfile.
+      - name: Commit changes to lockfile
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
             commit_message: "[Auto]: Update flake.lock"
@@ -27,11 +27,10 @@ jobs:
       - update-flakes
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout nixfigs.
-        uses: actions/checkout@v3
-      - name: Install Nix.
+      - uses: actions/checkout@v3
+      - name: Install Nix
         uses: cachix/install-nix-action@v19
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: "Check flake."
+      - name: Check flake
         run: nix flake check --impure
