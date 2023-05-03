@@ -79,4 +79,14 @@
   virtualisation.waydroid.enable = true;
   virtualisation.lxd.enable = true;
   environment.shells = with pkgs; [ zsh fish ];
+
+  system.autoUpgrade.enable = true;
+
+  nix.settings.auto-optimise-store = true;
+
+  nix.gc = {
+    automatic = true;
+    dates = "daily";
+    options = "--delete-older-than 2d";
+  };
 }
