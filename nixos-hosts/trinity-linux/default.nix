@@ -93,4 +93,28 @@
    ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"
    LABEL="power_usb_rules_end"
   '';
+
+  powerManagement = {
+    enable = true;
+    cpuFreqGovernor = "ondemand";
+    powertop.enable = true;
+  };
+
+  services.tlp = {
+    enable = true;
+    settings = {
+      CPU_BOOST_ON_BAT = 0;
+      CPU_SCALING_GOVERNOR_ON_BATTERY = "powersave";
+      START_CHARGE_THRESH_BAT0 = 90;
+      STOP_CHARGE_THRESH_BAT0 = 97;
+      RUNTIME_PM_ON_BAT = "auto";
+    };
+  };
+
+  services.logind = {
+    extraConfig = ''
+      HandleLidSwitchExternalPower=ignore
+      LidSwitchIgnoredInhibited=no
+    '';
+  };
 }
