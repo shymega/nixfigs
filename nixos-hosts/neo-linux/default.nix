@@ -84,4 +84,9 @@
       umount /mnt
     '';
   };
+
+  powerManagement = {
+    enable = true;
+    cpuFreqGovernor = "performance";
+  };
 }
