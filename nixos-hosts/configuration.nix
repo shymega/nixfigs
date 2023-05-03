@@ -79,5 +79,4 @@
   virtualisation.waydroid.enable = true;
   virtualisation.lxd.enable = true;
   environment.shells = with pkgs; [ zsh fish ];
-  boot.binfmt.emulatedSystems= ["i386-linux" "x86_64-linux" ];
 }
