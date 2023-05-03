@@ -97,7 +97,6 @@
   powerManagement = {
     enable = true;
     cpuFreqGovernor = "ondemand";
-    powertop.enable = true;
   };
 
   services.tlp = {
