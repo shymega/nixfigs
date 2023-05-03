@@ -24,6 +24,7 @@ in {
       bc
       acpi
       tmux
+      powertop
     ];
   };
 }
