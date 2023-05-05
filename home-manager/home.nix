@@ -121,6 +121,9 @@ in {
     modem-manager-gui
     hadolint
     pass
+    asciinema
+    hercules
+    yt-dlp
   ];
 
   news.display = "silent";
