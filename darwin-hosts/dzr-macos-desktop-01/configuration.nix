@@ -3,8 +3,8 @@
     + "/darwin-hosts/mac-vm/configuration.nix";
 
   networking = {
-    computerName = "MAC-VM"; # Host name
-    hostName = "MAC-VM";
+    computerName = "DZR-MACOS-DESKTOP-01"; # Host name
+    hostName = "DZR-MACOS-DESKTOP-01";
   };
 
   fonts = { # Fonts
@@ -26,6 +26,7 @@
       git
       ranger
       atuin
+      neovim
     ];
   };
 
