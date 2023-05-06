@@ -17,7 +17,7 @@
       options hid_apple fnmode=0
     '';
 
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
     kernelParams = [ "quiet" ];
 
