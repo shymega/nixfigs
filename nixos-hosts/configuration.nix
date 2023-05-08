@@ -64,13 +64,11 @@
       enable = true;
       dnssec = "true";
       dns = [
-        "1.1.1.1#one.one.one.one"
-        "1.0.0.1#one.one.one.one"
-        "9.9.9.9#dns.quad9.net"
       ];
       fallbackDns = [ "1.1.1.1" "1.0.0.1" "8.8.8.8" "8.8.4.4" ];
       extraConfig = ''
         DNSOverTLS=yes
+        DNS=1.1.1.1#one.one.one.one 1.0.0.1#one.one.one.one 9.9.9.9#dns.quad9.net
       '';
     };
   };
