@@ -11,20 +11,20 @@ in {
       GIT_EDITOR = "$EDITOR";
       SUDO_EDITOR = "$EDITOR";
     };
-    systemPackages = with pkgs; [
+    systemPackages = with nixpkgs-unstable; [
+      acpi
+      bc
       git
+      gnupg
+      htop
       killall
       nano
       pciutils
+      powertop
+      tmux
       usbutils
       wget
-      gnupg
-      htop
       xorg.xinit
-      bc
-      acpi
-      tmux
-      powertop
     ];
   };
 }
