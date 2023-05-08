@@ -21,12 +21,21 @@ in {
       components = [ "secrets" ];
     };
     network-manager-applet.enable = true;
-    #mako.enable = true;
     dunst.enable = true;
-    #    mpd-discord-rpc.enable = true;
-    #    mpris-proxy.enable = true;
-    #    mpdris2.enable = true;
-    #    kanshi.enable = true;
+    mpd-discord-rpc.enable = true;
+    mpris-proxy.enable = true;
+    mpdris2.enable = true;
+    mpd = {
+        enable = true;
+        musicDirectory = "/home/dzrodriguez/Multimedia/Music/";
+        extraConfig = ''
+            audio_output {
+                type "pipewire"
+                name "My PipeWire Output"
+            }
+        '';
+    };
+    # kanshi.enable = true;
     emacs.enable = true;
     gammastep = {
       enable = true;
