@@ -25,7 +25,7 @@ in {
       usbutils
       wget
       xorg.xinit
-      protonvpn-cli_2
+      protonvpn-cli
     ];
   };
 }
