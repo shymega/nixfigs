@@ -16,7 +16,7 @@
 
     kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
-    kernelParams = [ "quiet" ];
+    kernelParams = [ "quiet" "usbcore.autosuspend=-1" ];
 
     initrd.luks.devices = {
       nixos = {
