@@ -74,11 +74,18 @@
     fsType = "xfs";
   };
 
-  fileSystems."/data" = {
-    device = "/dev/disk/by-label/WINLINSHARE";
-    fsType = "ntfs3";
-    options = [ "rw" "uid=1000" "gid=100" "user" "exec" "umask=000" "nofail" ];
+  fileSystems."/data/SHARED0" = {
+    device = "/dev/disk/by-label/SHARED0";
+    fsType = "btrfs";
+    options = [ "defaults" "noatime" "ssd" ];
   };
+
+  fileSystems."/data/SHARED1" = {
+    device = "/dev/disk/by-label/SHARED1";
+    fsType = "btrfs";
+    options = [ "defaults" "noatime" ];
+  };
+
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode =
