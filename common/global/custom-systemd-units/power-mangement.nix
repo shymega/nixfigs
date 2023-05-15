@@ -25,7 +25,6 @@
 
   systemd.services.powertop = {
     description = "Auto-tune Power Management with powertop";
-    wantedBy = [ "battery.target" "ac.target" ];
     unitConfig = { RefuseManualStart = true; };
     serviceConfig = {
       Type = "oneshot";
