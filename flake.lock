@@ -633,11 +633,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1684515116,
-        "narHash": "sha256-8W9io4X4YytQ0+IM0GYceE2MpQ/C1tYfnEHLCvt+LAQ=",
+        "lastModified": 1684520017,
+        "narHash": "sha256-Q3CroXT/tz/n1kC32ZqkFHWdEGfJCvU5hjl5VoFkW/k=",
         "owner": "shymega",
         "repo": "nixpkgs",
-        "rev": "edaf6d04135616543dc86cc949d1158c34801f06",
+        "rev": "7a7b0862dbe772582eb3e41c85430faf206fb606",
         "type": "github"
       },
       "original": {
