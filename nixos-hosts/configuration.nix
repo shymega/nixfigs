@@ -105,5 +105,9 @@
     polkitPolicyOwners = [ "dzrodriguez" ];
   };
 
-  networking.firewall.checkReversePath = false; 
+  networking.firewall.checkReversePath = false;
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "nodejs-16.20.0"
+  ];
 }
