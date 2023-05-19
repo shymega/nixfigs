@@ -16,10 +16,10 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  # Filesystems (root on tmpfs)
   fileSystems."/" = {
-    device = "none";
-    fsType = "tmpfs";
+    device = "/dev/disk/by-label/NIXOS_BTRFS_ROOT";
+    fsType = "btrfs";
+    options = [ "subvol=root" "compress=zstd" "noatime" ];
     neededForBoot = true; # required
   };
 
@@ -42,7 +42,6 @@
       "subvol=nixos-config"
     ];
     neededForBoot = true; # required
-
   };
 
   fileSystems."/var/log" = {
@@ -50,7 +49,6 @@
     fsType = "btrfs";
     options = [ "defaults" "compress-force=zstd" "noatime" "ssd" "subvol=log" ];
     neededForBoot = true; # required
-
   };
 
   fileSystems."/persist" = {
@@ -58,12 +56,13 @@
     fsType = "btrfs";
     options =
       [ "defaults" "compress-force=zstd" "noatime" "ssd" "subvol=persist" ];
-    neededForBoot = true;
+    neededForBoot = true; # required
   };
 
   fileSystems."/boot" = {
     device = "/dev/disk/by-label/ESP";
     fsType = "vfat";
+    neededForBoot = true; # required
   };
 
   swapDevices = [{ device = "/dev/disk/by-label/SWAP"; }];
