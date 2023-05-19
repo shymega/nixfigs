@@ -61,8 +61,8 @@
     geoclue2.enable = true;
 
     resolved = {
-      enable = true;
-      dnssec = "true";
+      enable = false;
+      dnssec = "false";
       fallbackDns = [ "1.1.1.1" "1.0.0.1" "8.8.8.8" "8.8.4.4" ];
       extraConfig = ''
         DNSOverTLS=yes
@@ -71,7 +71,7 @@
     };
   };
 
-  networking.networkmanager.dns = "systemd-resolved";
+  networking.networkmanager.dns = "none";
 
   nixpkgs.config.allowUnfree = true;
   programs.zsh.enable = true;
