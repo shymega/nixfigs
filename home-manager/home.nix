@@ -107,7 +107,6 @@ in {
     ncmpcpp
     networkmanagerapplet
     nixfmt
-    nodejs
     p7zip
     pass
     pulseaudio
