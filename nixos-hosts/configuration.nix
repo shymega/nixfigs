@@ -104,4 +104,6 @@
     enable = true;
     polkitPolicyOwners = [ "dzrodriguez" ];
   };
+
+  networking.firewall.checkReversePath = false; 
 }
