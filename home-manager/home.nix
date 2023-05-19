@@ -110,6 +110,7 @@ in {
     nodejs
     p7zip
     pass
+    pulseaudio
     pavucontrol
     podman-compose
     pre-commit
