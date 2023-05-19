@@ -63,6 +63,7 @@
   fileSystems."/boot" = {
     device = "/dev/disk/by-label/ESP";
     fsType = "vfat";
+    neededForBoot = true; # required
   };
 
   swapDevices = [{ device = "/dev/disk/by-label/SWAP"; }];
@@ -85,7 +86,6 @@
     fsType = "btrfs";
     options = [ "defaults" "noatime" ];
   };
-
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode =
