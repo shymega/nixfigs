@@ -2,7 +2,10 @@
 , nix-colors, nix-on-droid, nixos-wsl, sops-nix, nix-alien, emacs-overlay
 , doom-emacs, home-manager, ... }:
 let
-  pkgs = import nixpkgs { config.allowUnfree = true; };
+  pkgs = import nixpkgs {
+    config.allowUnfree = true;
+    system = "x86_64-linux";
+  };
 
   lib = nixpkgs.lib;
 in {
