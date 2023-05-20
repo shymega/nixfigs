@@ -46,11 +46,11 @@ in {
     ];
   };
 
-  DOM-DEV-VM-CLOUD = lib.nixosSystem {
-    specialArgs = { inherit inputs; };
+  LINK-LINUX = lib.nixosSystem {
     system = "x86_64-linux";
+    specialArgs = { inherit inputs; };
     modules = [
-      ./nixos-dev-vm-cloud
+      ./link-linux
       ./configuration.nix
       ../common
 
@@ -65,4 +65,5 @@ in {
       }
     ];
   };
+
 }
