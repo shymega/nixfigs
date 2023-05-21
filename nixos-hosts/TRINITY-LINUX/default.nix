@@ -105,7 +105,6 @@
 
   services.thermald.enable = true;
   services.auto-cpufreq.enable = true;
-  services.power-profiles-daemon.enable = true;
 
   services.logind = {
     extraConfig = ''
