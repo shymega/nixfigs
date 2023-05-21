@@ -13,7 +13,7 @@ in {
     system = "x86_64-linux";
     specialArgs = { inherit inputs; };
     modules = [
-      (import ./neo-linux)
+      (import ./NEO-LINUX)
       (import ./configuration.nix)
       (import ../common)
 
@@ -33,7 +33,7 @@ in {
     system = "x86_64-linux";
     specialArgs = { inherit inputs; };
     modules = [
-      (import ./trinity-linux)
+      (import ./TRINITY-LINUX)
       (import ./configuration.nix)
       (import ../common)
 
@@ -53,7 +53,7 @@ in {
     system = "x86_64-linux";
     specialArgs = { inherit inputs; };
     modules = [
-      (import ./link-linux)
+      (import ./LINK-LINUX)
       (import ./configuration.nix)
       (import ../common)
 
