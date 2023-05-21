@@ -53,9 +53,9 @@ in {
     system = "x86_64-linux";
     specialArgs = { inherit inputs; };
     modules = [
-      ./link-linux
-      ./configuration.nix
-      ../common
+      (import ./link-linux)
+      (import ./configuration.nix)
+      (import ../common)
 
       home-manager.nixosModules.home-manager
       {
