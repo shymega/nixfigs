@@ -2,7 +2,7 @@
 let
   nixpkgs-unstable = import inputs.nixpkgs-unstable {
     config = { allowUnfree = true; };
-    system = "x86_64-linux";
+    system = pkgs.system;
   };
 in {
   environment = {
