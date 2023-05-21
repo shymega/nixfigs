@@ -4,7 +4,7 @@
 let
   pkgs = import nixpkgs {
     config.allowUnfree = true;
-    system = "x86_64-linux";
+    system = nixpkgs.system;
   };
 
   lib = nixpkgs.lib;

@@ -1,9 +1,9 @@
-{ inputs, config, lib, ... }:
+{ inputs, config, lib, pkgs, ... }:
 
 let
-  pkgs = import inputs.nixpkgs-unstable {
+  nixpkgs-unstable = import inputs.nixpkgs-unstable {
     config = { allowUnfree = true; };
-    system = "x86_64-linux";
+    system = pkgs.system;
   };
 in {
   imports = [ ./network-targets.nix ./programs/rofi.nix ];
@@ -59,14 +59,14 @@ in {
     };
     vscode = {
       enable = true;
-      package = pkgs.vscode.fhs;
+      package = nixpkgs-unstable.vscode.fhs;
     };
     direnv.enable = true;
     home-manager.enable = true;
     fish.enable = true;
   };
 
-  home.packages = with pkgs; [
+  home.packages = with nixpkgs-unstable; [
     ack
     android-tools
     asciinema
