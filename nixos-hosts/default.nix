@@ -1,14 +1,7 @@
 { lib, inputs, nixpkgs, nixpkgs-unstable, nixos-hardware, impermanence
 , nix-colors, nix-on-droid, nixos-wsl, sops-nix, nix-alien, emacs-overlay
 , doom-emacs, home-manager, ... }:
-let
-  pkgs = import nixpkgs {
-    config.allowUnfree = true;
-    system = nixpkgs.system;
-  };
-
-  lib = nixpkgs.lib;
-in {
+{
   NEO-LINUX = lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = { inherit inputs; };
