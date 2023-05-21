@@ -16,7 +16,8 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  boot.zramSwap.enable = true;
+  zramSwap.enable = true;
+  zramSwap.algorithm = "zstd";
 
   # Filesystems (root on tmpfs)
   fileSystems."/" = {
