@@ -2,10 +2,8 @@
 
 let
   pkgs = import inputs.nixpkgs-unstable {
-    config = {
-      allowUnfree = true;
-      system = "x86_64-linux";
-    };
+    config = { allowUnfree = true; };
+    system = "x86_64-linux";
   };
 in {
   imports = [ ./network-targets.nix ./programs/rofi.nix ];
