@@ -46,9 +46,7 @@
     flatpak.enable = true;
     thermald.enable = true;
     dbus.enable = true;
-    openssh = {
-      enable = true;
-    };
+    openssh = { enable = true; };
     udisks2.enable = true;
     printing = {
       enable = true;
