@@ -69,7 +69,7 @@
     };
   };
 
-  networking.networkmanager.dns = "none";
+  networking.networkmanager.dns = "default";
 
   nixpkgs.config.allowUnfree = true;
   programs.zsh.enable = true;
