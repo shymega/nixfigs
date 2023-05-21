@@ -11,12 +11,20 @@
 
     supportedFilesystems = [ "ntfs" ];
     extraModprobeConfig = ''
+      options snd-intel-dspcfg dsp_driver=1
       options hid_apple fnmode=0
     '';
 
     kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
-    kernelParams = [ "quiet" "mem_sleep_default=deep" "loglevel=3" "splash" ];
+    kernelParams = [
+      "quiet"
+      "mem_sleep_default=deep"
+      "loglevel=3"
+      "splash"
+      "fbcon=rotate:1"
+      "video=DSI-1:panel_orientation=right_side_up"
+    ];
 
     initrd.luks.devices = {
       nixos = {
@@ -95,6 +103,8 @@
   services.thermald.enable = true;
   services.auto-cpufreq.enable = true;
 
+  hardware.sensor.iio.enable = true;
+
   services.logind = {
     extraConfig = ''
       HandleLidSwitchExternalPower=ignore
@@ -111,6 +121,23 @@
     driSupport = true;
     driSupport32Bit = true;
   };
+
+  fonts.fontconfig = {
+    subpixel.rgba = "vbgr"; # Pixel order for rotated screen
+
+    # The OLED display has √(1920² + 1200²) px / 8in ≃ 283 dpi
+    # Per the documentation, antialiasing, hinting, etc. have no visible effect at such high pixel densities anyhow.
+    # Set manually, as the hiDPI module had incorrect settings prior to NixOS 22.11; see nixpkgs#194594.
+    hinting.enable = lib.mkDefault false;
+    antialias =
+      lib.mkIf (lib.versionOlder (lib.versions.majorMinor lib.version) "22.11")
+      false;
+  };
+
+  # More HiDPI settings
+  services.xserver.dpi = 280;
+
+  services.xserver.videoDrivers = [ "intel" ];
 
   services.udev = {
     packages = with pkgs; [ gnome.gnome-settings-daemon ];
