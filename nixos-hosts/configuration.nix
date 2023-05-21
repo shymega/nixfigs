@@ -48,7 +48,6 @@
     dbus.enable = true;
     openssh = {
       enable = true;
-      startWhenNeeded = true;
     };
     udisks2.enable = true;
     printing = {
@@ -57,7 +56,6 @@
     };
     blueman.enable = true;
     zerotierone.enable = true;
-    power-profiles-daemon.enable = false;
     geoclue2.enable = true;
 
     resolved = {
