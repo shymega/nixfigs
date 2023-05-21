@@ -4,17 +4,19 @@
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot.initrd.availableKernelModules = [
-    "nvme"
     "xhci_pci"
     "thunderbolt"
+    "nvme"
     "usbhid"
     "usb_storage"
     "sd_mod"
     "hid_apple"
   ];
-  boot.initrd.kernelModules = [ "dm-snapshot" ];
-  boot.kernelModules = [ "kvm-amd" ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
+
+  boot.zramSwap.enable = true;
 
   # Filesystems (root on tmpfs)
   fileSystems."/" = {
@@ -75,19 +77,7 @@
     fsType = "xfs";
   };
 
-  fileSystems."/data/SHARED0" = {
-    device = "/dev/disk/by-label/SHARED0";
-    fsType = "btrfs";
-    options = [ "defaults" "noatime" "ssd" ];
-  };
-
-  fileSystems."/data/SHARED1" = {
-    device = "/dev/disk/by-label/SHARED1";
-    fsType = "btrfs";
-    options = [ "defaults" "noatime" ];
-  };
-
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode =
+  hardware.cpu.intel.updateMicrocode =
     lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
