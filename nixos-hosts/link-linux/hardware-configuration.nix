@@ -67,18 +67,6 @@
     fsType = "xfs";
   };
 
-  fileSystems."/data/SHARED0" = {
-    device = "/dev/disk/by-label/SHARED0";
-    fsType = "btrfs";
-    options = [ "defaults" "noatime" "ssd" ];
-  };
-
-  fileSystems."/data/SHARED1" = {
-    device = "/dev/disk/by-label/SHARED1";
-    fsType = "btrfs";
-    options = [ "defaults" "noatime" ];
-  };
-
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode =
     lib.mkDefault config.hardware.enableRedistributableFirmware;
