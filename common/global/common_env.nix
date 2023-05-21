@@ -1,10 +1,8 @@
 { inputs, config, lib, pkgs, ... }:
 let
   nixpkgs-unstable = import inputs.nixpkgs-unstable {
-    config = {
-      allowUnfree = true;
-      system = "x86_64-linux";
-    };
+    config = { allowUnfree = true; };
+    system = "x86_64-linux";
   };
 in {
   environment = {
