@@ -5,7 +5,7 @@
   inputs = {
     nixpkgs = { url = "github:nixos/nixpkgs/nixos-22.11"; };
 
-    nixpkgs-unstable = { url = "github:shymega/nixpkgs"; };
+    nixpkgs-unstable = { url = "github:nixos/nixpkgs/nixpkgs-unstable"; };
 
     nixos-hardware = { url = "github:nixos/nixos-hardware"; };
     impermanence = { url = "github:nix-community/impermanence"; };
