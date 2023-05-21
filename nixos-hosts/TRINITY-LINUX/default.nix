@@ -124,8 +124,6 @@
     driSupport32Bit = true;
   };
 
-  hardware.sensor.ilo.enable = true;
-
   services.udev = {
     packages = with pkgs; [ gnome.gnome-settings-daemon ];
     extraHwdb = ''
