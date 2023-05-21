@@ -16,7 +16,7 @@
 
     kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
-    kernelParams = [ "quiet" ];
+    kernelParams = [ "quiet" "mem_sleep_default=deep" "loglevel=3" "splash" ];
 
     initrd.luks.devices = {
       nixos = {
@@ -85,27 +85,27 @@
   services.udev.extraRules = ''
     SUBSYSTEM=="power_supply", KERNEL=="ADP1", ATTR{online}=="0", RUN+="${pkgs.systemd}/bin/systemctl --no-block start battery.target"
     SUBSYSTEM=="power_supply", KERNEL=="ADP1", ATTR{online}=="1", RUN+="${pkgs.systemd}/bin/systemctl --no-block start ac.target"
-
-    # blacklist for usb autosuspend
-    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="8087", ATTR{idProduct}=="0032", TEST=="power/control", ATTR{power/autosuspend}:="-1"
-    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="2c7c", ATTR{idProduct}=="0125", TEST=="power/control", ATTR{power/autosuspend}:="-1"
   '';
 
   powerManagement = {
     enable = true;
-    cpuFreqGovernor = "ondemand";
+    cpuFreqGovernor = "powersave";
   };
 
   services.tlp = {
-    enable = false;
+    enable = true;
     settings = {
       CPU_BOOST_ON_BAT = 0;
       CPU_SCALING_GOVERNOR_ON_BATTERY = "powersave";
-      START_CHARGE_THRESH_BAT0 = 90;
-      STOP_CHARGE_THRESH_BAT0 = 97;
+      START_CHARGE_THRESH_BAT0 = 85;
+      STOP_CHARGE_THRESH_BAT0 = 95;
       RUNTIME_PM_ON_BAT = "auto";
     };
   };
+
+  services.thermald.enable = true;
+  services.auto-cpufreq.enable = true;
+  services.power-profiles-daemon.enable = true;
 
   services.logind = {
     extraConfig = ''
@@ -113,4 +113,25 @@
       LidSwitchIgnoredInhibited=no
     '';
   };
+  hardware.opengl = {
+    extraPackages = with pkgs; [
+      intel-media-driver
+      vaapiIntel
+      vaapiVdpau
+      libvdpau-va-gl
+    ];
+    driSupport = true;
+    driSupport32Bit = true;
+  };
+
+  hardware.sensor.ilo.enable = true;
+
+  services.udev = {
+    packages = with pkgs; [ gnome.gnome-settings-daemon ];
+    extraHwdb = ''
+      sensor:modalias:*
+       ACCEL_MOUNT_MATRIX=-0, -1, 0; -1, 0, 0; 0, 0, 1
+    '';
+  };
+
 }
