@@ -16,7 +16,7 @@
 
     kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
-    kernelParams = [ "quiet" ];
+    kernelParams = [ "quiet" "loglevel=3" "splash" ];
 
     initrd.luks.devices = {
       nixos = {
