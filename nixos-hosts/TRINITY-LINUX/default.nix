@@ -25,7 +25,7 @@ in {
       "quiet"
       "loglevel=3"
       "splash"
-#      "mem_sleep_default=deep"
+      #      "mem_sleep_default=deep"
       "fbcon=rotate:1"
       "video=DSI-1:panel_orientation=right_side_up"
     ];
