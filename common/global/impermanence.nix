@@ -2,7 +2,7 @@
   imports = [ inputs.impermanence.nixosModules.impermanence ];
 
   environment.persistence."/persist" = {
-    directories = [ "/etc/NetworkManager" "/var" "/root" ];
+    directories = [ "/etc/NetworkManager" "/var" "/root" "/usr/local" ];
     files = [
       "/etc/machine-id"
       "/etc/ssh/ssh_host_ed25519_key.pub"

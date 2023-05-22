@@ -89,4 +89,6 @@
     enable = true;
     cpuFreqGovernor = "performance";
   };
+
+  systemd.targets.ac.enable = true;
 }

@@ -19,12 +19,10 @@
   zramSwap.enable = true;
   zramSwap.algorithm = "zstd";
 
-  # Filesystems (root on tmpfs)
   fileSystems."/" = {
-    device = "/dev/disk/by-label/NIXOS_BTRFS_ROOT";
-    fsType = "btrfs";
-    options = [ "subvol=root" "compress=zstd" "noatime" ];
-    neededForBoot = true; # required
+    device = "none";
+    fsType = "tmpfs";
+    options = [ "defaults" "size=4G" "mode=755" ];
   };
 
   fileSystems."/nix" = {
