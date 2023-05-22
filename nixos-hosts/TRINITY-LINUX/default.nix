@@ -1,6 +1,10 @@
 { pkgs, lib, user, ... }:
-
-{
+let
+  unstable = import inputs.nixpkgs-unstable {
+    config = { allowUnfree = true; };
+    system = pkgs.system;
+  };
+in {
   imports = [ ./hardware-configuration.nix ./wayland.nix ./x11.nix ];
 
   networking.hostName = "TRINITY-LINUX";
@@ -15,13 +19,13 @@
       options hid_apple fnmode=0
     '';
 
-    kernelPackages = pkgs.linuxPackages_xanmod_latest;
+    kernelPackages = unstable.linuxPackages_xanmod_latest;
 
     kernelParams = [
       "quiet"
-      "mem_sleep_default=deep"
       "loglevel=3"
       "splash"
+#      "mem_sleep_default=deep"
       "fbcon=rotate:1"
       "video=DSI-1:panel_orientation=right_side_up"
     ];
