@@ -86,7 +86,7 @@
   virtualisation.docker.enable = true;
   virtualisation.waydroid.enable = true;
   virtualisation.lxd.enable = true;
-  environment.shells = with pkgs; [ zsh fish ];
+  environment.shells = with pkgs; [ zsh fish bash ];
 
   system.autoUpgrade.enable = true;
 
