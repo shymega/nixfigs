@@ -1,7 +1,7 @@
-{ pkgs, ... }:
+{ config, pkgs, lib, ...}:
 
 {
-  systemd.services.power-maximum-tdp = {
+  systemd.services.power-maximum-tdp = lib.mkIf (config.networking.hostName == "NEO-LINUX") {
     description = "Change TDP to maximum TDP when on AC power";
     wantedBy = [ "ac.target" ];
     unitConfig = { RefuseManualStart = true; };
@@ -12,7 +12,7 @@
     };
   };
 
-  systemd.services.power-saving-tdp = {
+  systemd.services.power-saving-tdp = lib.mkIf (config.networking.hostName == "NEO-LINUX") {
     description = "Change TDP to power saving TDP when on battery power";
     wantedBy = [ "battery.target" ];
     unitConfig = { RefuseManualStart = true; };
@@ -26,6 +26,7 @@
   systemd.services.powertop = {
     description = "Auto-tune Power Management with powertop";
     unitConfig = { RefuseManualStart = true; };
+    wantedBy = [ "battery.target" "ac.target" ];
     serviceConfig = {
       Type = "oneshot";
       ExecStart = "${pkgs.powertop}/bin/powertop --auto-tune";
