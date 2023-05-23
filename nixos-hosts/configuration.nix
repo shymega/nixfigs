@@ -119,4 +119,6 @@
       };
     };
   };
+
+  programs.mosh.enable = true;
 }
