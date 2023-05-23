@@ -104,7 +104,6 @@ in {
     minikube
     minishift
     mkcert
-    modem-manager-gui
     mpc-cli
     mpv
     mupdf
