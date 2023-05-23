@@ -51,7 +51,11 @@ in {
     };
 
     loader = {
-      systemd-boot = { enable = true; };
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 4;
+        consoleMode = "2";
+      };
       efi = {
         canTouchEfiVariables = true;
         efiSysMountPoint = "/boot";
