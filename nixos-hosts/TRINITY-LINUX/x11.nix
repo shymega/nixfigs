@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 let
   swayConfig = pkgs.writeText "greetd-sway-config" ''
-    output DSI-1 transform 90
+    output DSI-1 scale 1.30 transform 90
     exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
     exec "${pkgs.greetd.gtkgreet}/bin/gtkgreet -l -c sway; swaymsg exit"
     bindsym Mod4+shift+e exec swaynag \
