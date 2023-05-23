@@ -23,7 +23,7 @@ in {
 
     kernelParams = [
       "quiet"
-      "loglevel=3"
+      "loglevel=0"
       "splash"
       #      "mem_sleep_default=deep"
       "fbcon=rotate:1"
