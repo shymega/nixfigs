@@ -137,9 +137,6 @@ in {
       false;
   };
 
-  # More HiDPI settings
-  services.xserver.dpi = 280;
-
   services.xserver.videoDrivers = [ "intel" ];
 
   services.udev = {
