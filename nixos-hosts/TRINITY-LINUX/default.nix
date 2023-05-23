@@ -20,10 +20,17 @@ in {
     '';
 
     kernelPackages = unstable.linuxPackages_xanmod_latest;
+    kernel.sysctl = {
+	"kernel.printk" = "3 3 3 3";
+	"dev.i915.perf_stream_paranoid" = "0";
+	"fs.inotify.max_user_watches" = "204800";
+    };
 
     kernelParams = [
       "quiet"
-      "loglevel=0"
+      "loglevel=3"
+      "systemd.show_status=auto"
+      "rd.udev.log_level=3"
       "splash"
       "fbcon=rotate:1"
       "video=DSI-1:panel_orientation=right_side_up"
