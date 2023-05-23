@@ -21,9 +21,9 @@ in {
 
     kernelPackages = unstable.linuxPackages_xanmod_latest;
     kernel.sysctl = {
-	"kernel.printk" = "3 3 3 3";
-	"dev.i915.perf_stream_paranoid" = "0";
-	"fs.inotify.max_user_watches" = "204800";
+      "kernel.printk" = "3 3 3 3";
+      "dev.i915.perf_stream_paranoid" = "0";
+      "fs.inotify.max_user_watches" = "204800";
     };
 
     kernelParams = [
