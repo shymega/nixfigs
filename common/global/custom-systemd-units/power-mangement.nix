@@ -23,7 +23,7 @@
     };
   };
 
-  systemd.services.powertop = {
+  systemd.services.powertop = lib.mkIf (config.networking.hostName == "LUKS-LINUX") {
     description = "Auto-tune Power Management with powertop";
     unitConfig = { RefuseManualStart = true; };
     wantedBy = [ "battery.target" "ac.target" ];
