@@ -1,4 +1,4 @@
-{ pkgs, lib, user, ... }:
+{ pkgs, lib, user, inputs, ... }:
 let
   unstable = import inputs.nixpkgs-unstable {
     config = { allowUnfree = true; };
