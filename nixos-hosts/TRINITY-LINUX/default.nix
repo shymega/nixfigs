@@ -13,7 +13,7 @@ in {
   boot = {
     cleanTmpDir = true;
 
-    supportedFilesystems = [ "ntfs" ];
+    supportedFilesystems = [ "ntfs" "btrfs" ];
     extraModprobeConfig = ''
       options snd-intel-dspcfg dsp_driver=1
       options hid_apple fnmode=0
