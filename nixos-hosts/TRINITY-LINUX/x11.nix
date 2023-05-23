@@ -27,9 +27,7 @@ in {
     startplasma-x11
     startplasma-wayland
     cinnamon-session
-    bash
-    fish
-    zsh
+    awesome
   '';
 
   services = {
