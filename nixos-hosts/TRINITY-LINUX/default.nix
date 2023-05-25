@@ -4,7 +4,8 @@ let
     config = { allowUnfree = true; };
     system = pkgs.system;
   };
-in {
+in
+{
   imports = [ ./hardware-configuration.nix ./wayland.nix ./x11.nix ];
 
   networking.hostName = "TRINITY-LINUX";
@@ -54,7 +55,7 @@ in {
       systemd-boot = {
         enable = true;
         configurationLimit = 4;
-        consoleMode = "2";
+        consoleMode = "auto";
       };
       efi = {
         canTouchEfiVariables = true;
@@ -145,7 +146,7 @@ in {
     hinting.enable = lib.mkDefault false;
     antialias =
       lib.mkIf (lib.versionOlder (lib.versions.majorMinor lib.version) "22.11")
-      false;
+        false;
   };
 
   services.xserver.videoDrivers = [ "intel" ];

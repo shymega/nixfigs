@@ -1,6 +1,19 @@
-{ lib, inputs, nixpkgs, nixpkgs-unstable, nixos-hardware, impermanence
-, nix-colors, nix-on-droid, nixos-wsl, sops-nix, nix-alien, emacs-overlay
-, doom-emacs, home-manager, ... }: {
+{ lib
+, inputs
+, nixpkgs
+, nixpkgs-unstable
+, nixos-hardware
+, impermanence
+, nix-colors
+, nix-on-droid
+, nixos-wsl
+, sops-nix
+, nix-alien
+, emacs-overlay
+, doom-emacs
+, home-manager
+, ...
+}: {
   mac-vm = darwin.lib.darwinSystem {
     system = "x86_64-darwin";
     specialArgs = { inherit inputs; };
