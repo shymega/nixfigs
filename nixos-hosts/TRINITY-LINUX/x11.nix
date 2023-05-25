@@ -11,10 +11,11 @@ let
       -b 'Reboot' 'systemctl reboot' \
       -b 'Suspend' 'systemctl suspend'
   '';
-in {
+in
+{
   services.greetd = {
-    enable = true;
-    restart = true;
+    enable = false;
+    restart = false;
     settings = {
       default_session = {
         command = "${pkgs.sway}/bin/sway --config ${swayConfig}";
@@ -34,6 +35,10 @@ in {
     xserver = {
       enable = true;
       displayManager.startx.enable = true;
+      displayManager = {
+        sddm.enable = true;
+        defaultSession = "sway";
+      };
       libinput.enable = true;
       desktopManager = {
         cinnamon.enable = true;

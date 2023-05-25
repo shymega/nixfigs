@@ -7,7 +7,8 @@
     hostName = "DZR-MACOS-DESKTOP-01";
   };
 
-  fonts = { # Fonts
+  fonts = {
+    # Fonts
     fontDir.enable = true;
     fonts = with pkgs; [
       source-code-pro
@@ -18,11 +19,13 @@
 
   environment = {
     shells = with pkgs; [ zsh ]; # Default shell
-    variables = { # System variables
+    variables = {
+      # System variables
       EDITOR = "nvim";
       VISUAL = "nvim";
     };
-    systemPackages = with pkgs; [ # Installed Nix packages
+    systemPackages = with pkgs; [
+      # Installed Nix packages
       git
       ranger
       atuin
@@ -30,7 +33,8 @@
     ];
   };
 
-  programs = { # Shell needs to be enabled
+  programs = {
+    # Shell needs to be enabled
     zsh.enable = true;
   };
 
@@ -38,7 +42,8 @@
     nix-daemon.enable = true; # Auto upgrade daemon
   };
 
-  homebrew = { # Declare Homebrew using Nix-Darwin
+  homebrew = {
+    # Declare Homebrew using Nix-Darwin
     enable = true;
     onActivation = {
       autoUpdate = false; # Auto update packages
@@ -51,7 +56,8 @@
 
   nix = {
     package = pkgs.nix;
-    gc = { # Garbage collection
+    gc = {
+      # Garbage collection
       automatic = true;
       options = "--delete-older-than 14d";
     };
@@ -66,22 +72,26 @@
 
   system = {
     defaults = {
-      NSGlobalDomain = { # Global macOS system settings
+      NSGlobalDomain = {
+        # Global macOS system settings
         KeyRepeat = 1;
         NSAutomaticCapitalizationEnabled = false;
         NSAutomaticSpellingCorrectionEnabled = false;
       };
-      dock = { # Dock settings
+      dock = {
+        # Dock settings
         autohide = true;
         orientation = "bottom";
         showhidden = true;
         tilesize = 40;
       };
-      finder = { # Finder settings
+      finder = {
+        # Finder settings
         QuitMenuItem =
           false; # I believe this probably will need to be true if using spacebar
       };
-      trackpad = { # Trackpad settings
+      trackpad = {
+        # Trackpad settings
         Clicking = true;
         TrackpadRightClick = true;
       };

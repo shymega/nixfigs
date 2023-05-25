@@ -4,7 +4,8 @@ let
     config = { allowUnfree = true; };
     system = pkgs.system;
   };
-in {
+in
+{
   environment = {
     variables = {
       TERMINAL = "alacritty";
