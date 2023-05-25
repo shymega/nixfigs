@@ -3,7 +3,8 @@
 let
   inherit (pkgs.stdenv.hostPlatform) isDarwin isLinux;
   originalConfig = config;
-in (lib.mkIf isLinux {
+in
+(lib.mkIf isLinux {
 
   programs.rofi = {
     enable = true;

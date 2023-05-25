@@ -5,7 +5,8 @@ let
     config = { allowUnfree = true; };
     system = pkgs.system;
   };
-in {
+in
+{
   imports = [ ./network-targets.nix ./programs/rofi.nix ];
 
   home.username = "dzrodriguez";

@@ -10,7 +10,8 @@ let
       -b 'Reboot' 'systemctl reboot' \
       -b 'Suspend' 'systemctl suspend'
   '';
-in {
+in
+{
   services.greetd = {
     enable = true;
     restart = true;
