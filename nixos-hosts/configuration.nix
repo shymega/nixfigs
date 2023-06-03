@@ -4,7 +4,7 @@
   users.users.dzrodriguez = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    description = "RODRIGUEZ, Dom";
+    description = "RODRIGUEZ Dom";
     password = "password";
     subUidRanges = [{
       startUid = 100000;
