@@ -36,7 +36,7 @@ in
       enable = true;
       displayManager.startx.enable = true;
       displayManager = {
-        sddm.enable = true;
+        gdm.enable = true;
         defaultSession = "sway";
       };
       libinput.enable = true;
