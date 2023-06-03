@@ -26,14 +26,14 @@
     };
 
   systemd.services.powertop = {
-      description = "Auto-tune Power Management with powertop";
-      unitConfig = { RefuseManualStart = true; };
-      wantedBy = [ "battery.target" "ac.target" ];
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart = "${pkgs.powertop}/bin/powertop --auto-tune";
-      };
+    description = "Auto-tune Power Management with powertop";
+    unitConfig = { RefuseManualStart = true; };
+    wantedBy = [ "battery.target" "ac.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.powertop}/bin/powertop --auto-tune";
     };
+  };
 
   systemd.services."inhibit-suspension@" = {
     description = "Inhibit suspension for one hour";
