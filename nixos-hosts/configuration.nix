@@ -57,17 +57,17 @@
     geoclue2.enable = true;
 
     resolved = {
-      enable = false;
-      dnssec = "false";
-      fallbackDns = [ "1.1.1.1" "1.0.0.1" "8.8.8.8" "8.8.4.4" ];
+      enable = true;
+      dnssec = "allow-downgrade";
+      fallbackDns = [ "1.1.1.1" "1.0.0.1" ];
       extraConfig = ''
-        DNSOverTLS=yes
-        DNS=1.1.1.1#one.one.one.one 1.0.0.1#one.one.one.one 9.9.9.9#dns.quad9.net
+        DNSOverTLS=opportunistic
+        DNS=1.1.1.1#1dot1dot1dot1.cloudflare-dns.com 1.0.0.1#1dot1dot1dot1.cloudflare-dns.com 2606:4700:4700::1111#1dot1dot1dot1.cloudflare-dns.com 2606:4700:4700::1001#1dot1dot1dot1.cloudflare-dns.com
       '';
     };
   };
 
-  networking.networkmanager.dns = "default";
+  networking.networkmanager.dns = "systemd-resolved";
 
   nixpkgs.config.allowUnfree = true;
   programs.zsh.enable = true;
