@@ -36,11 +36,18 @@
     };
 
     loader = {
-      systemd-boot = { enable = true; };
       efi = {
         canTouchEfiVariables = true;
         efiSysMountPoint = "/boot";
       };
+      grub = {
+        device = "nodev";
+        efiSupport = true;
+        enable = true;
+        useOSProber = true;
+        version = 2;
+      };
+
       timeout = 3;
     };
 
