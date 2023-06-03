@@ -10,7 +10,7 @@ in
   imports = [ ./network-targets.nix ./programs/rofi.nix ];
 
   home.username = "dzrodriguez";
-  home.stateVersion = "22.11";
+  home.stateVersion = "23.05";
 
   services = {
     keybase.enable = true;
@@ -130,7 +130,7 @@ in
     steam-run
     step-cli
     stow
-    texlive.combined.scheme-full
+    #    texlive.combined.scheme-full
     tmuxp
     unzip
     virt-manager
