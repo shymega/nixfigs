@@ -129,6 +129,7 @@ in
       LidSwitchIgnoredInhibited=no
     '';
   };
+
   hardware.opengl = {
     extraPackages = with pkgs; [
       intel-media-driver
@@ -161,5 +162,4 @@ in
        ACCEL_MOUNT_MATRIX=-0, -1, 0; -1, 0, 0; 0, 0, 1
     '';
   };
-
 }
