@@ -12,7 +12,7 @@ in
   time.timeZone = "Europe/London";
 
   boot = {
-    cleanTmpDir = true;
+    tmp.cleanOnBoot = true;
 
     supportedFilesystems = [ "ntfs" "btrfs" ];
     extraModprobeConfig = ''
