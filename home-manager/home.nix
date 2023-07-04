@@ -132,7 +132,7 @@ in
     steam-run
     step-cli
     stow
-    #    texlive.combined.scheme-full
+    texlive.combined.scheme-full
     tmuxp
     unzip
     virt-manager
