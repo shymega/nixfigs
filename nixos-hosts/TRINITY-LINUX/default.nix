@@ -61,7 +61,6 @@ in
         efiSupport = true;
         enable = true;
         useOSProber = true;
-        version = 2;
       };
 
       timeout = 3;
