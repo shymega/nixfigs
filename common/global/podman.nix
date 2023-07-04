@@ -1,5 +1,5 @@
 { lib, ... }: {
-  virtualisation.podman = { enable = true; };
+  virtualisation.podman = { enable = false; };
 
   environment.persistence = {
     "/persist".directories = [ "/var/lib/containers" ];
