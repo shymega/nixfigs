@@ -82,7 +82,6 @@
     onShutdown = "shutdown";
   };
 
-  virtualisation.podman.enable = true;
   virtualisation.docker.enable = true;
   virtualisation.waydroid.enable = true;
   virtualisation.lxd.enable = true;
