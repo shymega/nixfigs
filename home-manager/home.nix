@@ -102,6 +102,8 @@ in
     itd
     jq
     just
+    jdk17
+    maven
     minikube
     minishift
     mkcert
