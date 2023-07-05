@@ -69,6 +69,7 @@ in
 
   home.packages = with nixpkgs-unstable; [
     ack
+    distrobox
     android-tools
     asciinema
     atuin
