@@ -3,8 +3,6 @@
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot = {
-    kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
-
     initrd.availableKernelModules = lib.mkForce [
       "usbhid"
       "usb_storage"
@@ -24,10 +22,12 @@
     loader = {
       grub.enable = false;
       generic-extlinux-compatible.enable = lib.mkForce false;
-      efi.canTouchEfiVariables = false;
+      efi.canTouchEfiVariables = true;
+      efi.efiSysMountPoint = "/boot/efi";
       systemd-boot.enable = true;
     };
   };
+
   fileSystems = {
     "/" = {
       device = "/dev/disk/by-label/NIXOS_SD";
