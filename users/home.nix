@@ -1,6 +1,8 @@
 { inputs, pkgs, config, ... }: {
   imports = [ ./network-targets.nix ./programs/rofi.nix ];
 
+  nixpkgs.config.allowUnfreePredicate = _: true;
+
   home = {
     username = "dzrodriguez";
     homeDirectory = "/home/${config.home.username}";
