@@ -78,6 +78,7 @@
     fish.enable = true;
     adb.enable = true;
     mosh.enable = true;
+    dconf.enable = true;
     _1password.enable = true;
     _1password-gui = {
       enable = true;
