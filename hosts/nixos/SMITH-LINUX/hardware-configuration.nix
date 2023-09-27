@@ -10,6 +10,7 @@
       "pcie_brcmstb" # required for the pcie bus to work
       "reset-raspberrypi" # required for vl805 firmware to load
     ];
+    supportedFilesystems = [ "zfs" ];
 
     kernelParams = lib.mkAfter [
       "8250.nr_uarts=1"
@@ -26,23 +27,70 @@
       efi.efiSysMountPoint = "/boot/efi";
       systemd-boot.enable = true;
     };
+
+    initrd.systemd.services.rollback = {
+      description = "Rollback ZFS datasets to a pristine state";
+      wantedBy = [
+        "initrd.target"
+      ];
+      after = [
+        "zfs-import-tank.service"
+      ];
+      before = [
+        "sysroot.mount"
+      ];
+      path = with pkgs; [
+        zfs
+      ];
+      unitConfig.DefaultDependencies = "no";
+      serviceConfig.Type = "oneshot";
+      script = ''
+        zfs rollback -r tank/local/root@blank && echo "rollback complete"
+      '';
+    };
   };
 
   fileSystems = {
-    "/" = {
-      device = "/dev/disk/by-label/NIXOS_SD";
-      fsType = "ext4";
-      options = [ "noatime" ];
-    };
-    "/boot" = {
-      device = "/dev/disk/by-label/ESP";
-      fsType = "vfat";
-      neededForBoot = true;
-    };
-    "/firmware" = {
-      device = "/dev/disk/by-label/FIRMWARE";
-      fsType = "vfat";
-      options = [ "ro" ];
-    };
+    "/" =
+      {
+        device = "tank/local/root";
+        fsType = "zfs";
+      };
+
+    "/boot" =
+      {
+        device = "/dev/disk/by-label/EFI";
+        fsType = "vfat";
+        neededForBoot = true;
+      };
+
+    "/firmware" =
+      {
+        device = "/dev/disk/by-label/FIRMWARE";
+        fsType = "vfat";
+        options = [ "ro" "nofail" ];
+        neededForBoot = true;
+      };
+
+    "/nix" =
+      {
+        device = "tank/local/nix";
+        fsType = "zfs";
+        neededForBoot = true;
+      };
+
+    "/etc/nixos" =
+      {
+        device = "tank/safe/nixos-config";
+        fsType = "zfs";
+        neededForBoot = true;
+      };
+
+    "/persist" =
+      {
+        device = "tank/safe/persist";
+        fsType = "zfs";
+        neededForBoot = true;
+      };
   };
 }
