@@ -16,9 +16,9 @@
   time.timeZone = "Europe/London";
 
   boot = {
-    supportedFilesystems = [ "zfs" "ntfs" ];
+    supportedFilesystems = [ "ntfs" "zfs" ];
 
-    kernelPackages = pkgs.linuxPackages_xanmod_latest;
+    kernelPackages = pkgs.linuxPackages_xanmod_stable;
     extraModulePackages = with config.boot.kernelPackages; [ zfs ];
 
     extraModprobeConfig = ''
