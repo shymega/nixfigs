@@ -93,11 +93,11 @@
   "ws-butler": "ws-butler"
   },
   "locked": {
-  "lastModified": 1695346081,
-  "narHash": "sha256-ELuMibAhsgOEIzoPb9ZodYLcde0qSEP6ZuVIvFDIb6A=",
+  "lastModified": 1695950746,
+  "narHash": "sha256-ZDXcQ49q9mglhw6nETJxXxBdA68P/WkshMAGGbXKRoE=",
   "owner": "nix-community",
   "repo": "nix-doom-emacs",
-  "rev": "5bbefaee92c4277ff1961b333f9937f5180d15f3",
+  "rev": "9b1c3371dd4b4f42f54701d42f31d3f805bfae8d",
   "type": "github"
   },
   "original": {
@@ -686,11 +686,11 @@
   },
   "nixpkgs-master": {
   "locked": {
-  "lastModified": 1695944849,
-  "narHash": "sha256-YI7vLH6JcAF7u33fxBASBrsgmjOe0c6gL+W/n58pYxY=",
+  "lastModified": 1696015448,
+  "narHash": "sha256-mJIaYwNk5qZH0hPMO5wK1HxUZmhudpdo1+mmTV/7FZk=",
   "owner": "nixos",
   "repo": "nixpkgs",
-  "rev": "664313df028dac65963a3271c1655f6f5023f31b",
+  "rev": "ffb0f6b9778f111d2af62db25a48cb7f6f7a1859",
   "type": "github"
   },
   "original": {
@@ -782,11 +782,11 @@
   },
   "nur": {
   "locked": {
-  "lastModified": 1695940762,
-  "narHash": "sha256-wSKokm+NvBwmpffSM+WH0xld18sH5YSBzr5wxDmcl0I=",
+  "lastModified": 1696013191,
+  "narHash": "sha256-apZaVgALAKLiQHczYbMMcXqJ5id2WzltFyzx0op7vrU=",
   "owner": "nix-community",
   "repo": "NUR",
-  "rev": "50363ec39651feb3cb64821107ea9d8e8e186bc6",
+  "rev": "1a1c4d396060605ffedb0a9061aa1b6502c7818a",
   "type": "github"
   },
   "original": {
@@ -814,11 +814,11 @@
   "org": {
   "flake": false,
   "locked": {
-  "lastModified": 1695208951,
-  "narHash": "sha256-GdkBhWg/bIwnQk4/a/Ief+cFtDcUJEMNqiFYO3A5sus=",
+  "lastModified": 1695726851,
+  "narHash": "sha256-qgbjspklSoI8M3cbCJOcUdjuijRgsL/+PSyEOW9VX4I=",
   "owner": "emacs-straight",
   "repo": "org-mode",
-  "rev": "266aac1186256aaf3fb1bb1181ee83d548092d12",
+  "rev": "aa9177e1a8b039c357d369c1c9aaab710bb247a9",
   "type": "github"
   },
   "original": {
@@ -902,11 +902,11 @@
   "revealjs": {
   "flake": false,
   "locked": {
-  "lastModified": 1695108593,
-  "narHash": "sha256-1Rb3w4Mpzv81pw7FaZHdQULK6+9oZIzeQ6uCD4PvjJM=",
+  "lastModified": 1695738029,
+  "narHash": "sha256-Z9c9Q41jMkj/DyXOiZYyIa7Gmn8VB8yauTyWrSsT+ps=",
   "owner": "hakimel",
   "repo": "reveal.js",
-  "rev": "db2523db277bea632c218a7d836f27079a1be7f9",
+  "rev": "88fbfc5751ad01e3f6adee5819eabeb9e73c3757",
   "type": "github"
   },
   "original": {
