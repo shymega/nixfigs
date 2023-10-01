@@ -18,7 +18,7 @@
   boot = {
     supportedFilesystems = [ "ntfs" "zfs" ];
 
-#    kernelPackages = pkgs.linuxPackages_xanmod_latest;
+    #    kernelPackages = pkgs.linuxPackages_xanmod_latest;
     kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
     extraModulePackages = with config.boot.kernelPackages; [ zfs ];
 
