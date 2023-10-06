@@ -122,10 +122,9 @@
       jetbrains.idea-ultimate
       jetbrains.pycharm-professional
       jetbrains.rider
+      jetbrains.rust-rover
       jetbrains.webstorm
       steam-run
-    ])) ++ (lib.optionals pkgs.stdenv.isx86_64 (with pkgs.master; [
-      jetbrains.rust-rover
     ]));
   };
 
