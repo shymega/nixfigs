@@ -35,6 +35,7 @@
       docker-compose
       dogdns
       encfs
+      exercism
       expect
       eza
       file
@@ -73,6 +74,7 @@
       nixpkgs-fmt
       nodejs
       notmuch
+      opentofu
       p7zip
       pass
       pavucontrol
