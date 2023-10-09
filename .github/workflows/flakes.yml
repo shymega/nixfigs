@@ -24,7 +24,7 @@ jobs:
       - name: Update Flake lockfile
         run: nix flake update
       - name: Commit changes to lockfile
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore(lockfile): Update Flake lockfile"
 
@@ -46,7 +46,7 @@ jobs:
       - name: Format Nix files
         run: nixpkgs-fmt ./*
       - name: Commit changes to codebase
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore(lint): Format Nix files"
 
