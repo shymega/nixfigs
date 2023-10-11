@@ -69,8 +69,6 @@
   networking = {
     timeServers = lib.mkForce [ "uk.pool.ntp.org" ];
     firewall.checkReversePath = false;
-
-    networkmanager.dns = "systemd-resolved";
   };
 
   programs = {
