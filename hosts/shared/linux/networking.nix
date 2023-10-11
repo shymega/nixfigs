@@ -1,6 +1,6 @@
 { config, ... }:
 {
-  networkmanager = {
+  networking.networkmanager = {
     extraConfig = ''
       [connectivity]
       uri=http://www.archlinux.org/check_network_status.txt
