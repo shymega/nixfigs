@@ -168,6 +168,8 @@
         modules = [
           nixPkgsOverlays
           inputs.agenix.darwinModules.default
+          inputs.nix-ld.nixosModules.nix-ld
+          inputs.nix-index-database.nixosModules.nix-index
           ./secrets
           { environment.systemPackages = [ inputs.agenix.defaultPackage.${system} ]; }
         ] ++ extraModules;
