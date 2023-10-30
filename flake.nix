@@ -56,6 +56,11 @@
       url = "github:cachix/pre-commit-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    atuin = {
+      url = "github:atuinsh/atuin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ self, nixpkgs, ... }:
@@ -132,6 +137,7 @@
           overlays-nixpkgs-master
           inputs.nur.overlay
           inputs.nix-alien.overlays.default
+          inputs.atuin.overlays.default
         ];
       };
       mkNixos = system: extraModules: inputs.nixpkgs.lib.nixosSystem {
