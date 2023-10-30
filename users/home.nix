@@ -117,6 +117,8 @@
     ] ++ (lib.optionals pkgs.stdenv.isx86_64 (with pkgs; [
       bitwarden
       gitkraken
+      steam-run
+    ])) ++ (lib.optionals pkgs.stdenv.isx86_64 (with pkgs.unstable; [
       jetbrains.clion
       jetbrains.datagrip
       jetbrains.gateway
@@ -124,10 +126,8 @@
       jetbrains.idea-ultimate
       jetbrains.pycharm-professional
       jetbrains.rider
-      jetbrains.webstorm
-      steam-run
-    ])) ++ (lib.optionals pkgs.stdenv.isx86_64 (with pkgs.unstable; [
       jetbrains.rust-rover
+      jetbrains.webstorm
     ]));
 
   };
