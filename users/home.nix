@@ -66,7 +66,7 @@
       minishift
       mkcert
       mpc-cli
-      mpv-unwrapped
+      mpv
       mupdf
       ncmpcpp
       neomutt
