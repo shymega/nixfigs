@@ -139,8 +139,8 @@
       enable = true;
       pinentryFlavor = "gnome3";
       enableExtraSocket = true;
-      defaultCacheTtl = 34560000;
-      maxCacheTtl = 34560000;
+      defaultCacheTtl = 7200;
+      maxCacheTtl = 7200;
     };
     gnome-keyring = {
       enable = true;
