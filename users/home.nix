@@ -59,6 +59,7 @@
       jq
       just
       kodi-wayland
+      lapce
       lazygit
       m4
       maven
