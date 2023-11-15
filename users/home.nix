@@ -54,7 +54,6 @@
       httpie
       hub
       inetutils
-      isync
       itd
       jdk17
       jq
@@ -130,7 +129,9 @@
       jetbrains.rider
       jetbrains.rust-rover
       jetbrains.webstorm
-    ]));
+    ])) ++ (with pkgs; [
+      isync-xoauth2
+    ]);
 
   };
 
