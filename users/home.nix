@@ -54,6 +54,7 @@
       httpie
       hub
       inetutils
+      isync-xoauth2
       itd
       jdk17
       jq
@@ -106,7 +107,6 @@
       unrar
       unzip
       vagrant
-      virt-manager
       w3m
       weechatWithMyPlugins
       wget
@@ -115,11 +115,9 @@
       zathura
       zip
       zoxide
-    ] ++ (lib.optionals pkgs.stdenv.isx86_64 (with pkgs; [
+    ] ++ (lib.optionals pkgs.stdenv.isx86_64 (with pkgs.unstable; [
       bitwarden
       gitkraken
-      steam-run
-    ])) ++ (lib.optionals pkgs.stdenv.isx86_64 (with pkgs.unstable; [
       jetbrains.clion
       jetbrains.datagrip
       jetbrains.gateway
@@ -129,10 +127,10 @@
       jetbrains.rider
       jetbrains.rust-rover
       jetbrains.webstorm
-    ])) ++ (with pkgs; [
-      isync-xoauth2
+      steam-run
+    ])) ++ (with pkgs.master; [
+      virt-manager
     ]);
-
   };
 
   services = {
