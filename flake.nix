@@ -95,6 +95,21 @@
                 };
               }
             )
+            (
+              final: prev: {
+                isync-xoauth2 = prev.symlinkJoin {
+                  name = "isync";
+                  paths = [
+                    (prev.writeShellScriptBin "mbsync" ''
+                      export SASL_PATH=${prev.cyrus_sasl.out}/lib/sasl2:${prev.cyrus-sasl-xoauth2}/lib/sasl2
+                      exec ${prev.isync}/bin/mbsync "$@"
+                    '')
+                    prev.isync
+                  ];
+                };
+              }
+            )
+
           ];
         };
       };
@@ -132,18 +147,6 @@
           inputs.nur.overlay
           inputs.nix-alien.overlays.default
           inputs.atuin.overlays.default
-          (final: prev: {
-            isync-xoauth2 = prev.symlinkJoin {
-              name = "isync";
-              paths = [
-                (prev.writeShellScriptBin "mbsync" ''
-                export SASL_PATH=${prev.cyrus_sasl.out}/lib/sasl2:${pkgs.cyrus-sasl-xoauth2}/lib/sasl2
-                exec ${prev.isync}/bin/mbsync "$@"
-              '')
-              prev.isync
-            ];
-          };
-          })
         ];
       };
       mkNixos = system: extraModules: inputs.nixpkgs.lib.nixosSystem {
