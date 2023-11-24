@@ -128,10 +128,10 @@
       jetbrains.webstorm
       steam-run
     ])) ++ (with pkgs; [
-     aws-sam-cli
-     awscli2
-     azure-cli
-     google-cloud-sdk
+      aws-sam-cli
+      awscli2
+      azure-cli
+      google-cloud-sdk
     ]);
   };
 
