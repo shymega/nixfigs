@@ -137,4 +137,5 @@
     sensor.iio.enable = true;
   };
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  programs.steam.enable = true;
 }
