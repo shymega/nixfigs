@@ -2,17 +2,17 @@
   description = "shymega's Nix config";
 
   inputs = {
-    nixpkgs = { url = "github:nixos/nixpkgs/nixos-23.05"; };
-    nixpkgs-unstable = { url = "github:nixos/nixpkgs/nixpkgs-unstable"; };
-    nixpkgs-master = { url = "github:nixos/nixpkgs/master"; };
-    nixpkgs-shymega = { url = "github:shymega/nixpkgs/master"; };
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs-master.url = "github:nixos/nixpkgs/master";
+    nixpkgs-shymega.url = "github:shymega/nixpkgs/master";
 
-    nur = { url = "github:nix-community/NUR"; };
-    flake-utils = { url = "github:numtide/flake-utils"; };
+    nur.url = "github:nix-community/NUR";
+    flake-utils.url = "github:numtide/flake-utils";
 
-    hardware = { url = "github:nixos/nixos-hardware"; };
-    impermanence = { url = "github:nix-community/impermanence"; };
-    nix-colors = { url = "github:misterio77/nix-colors"; };
+    hardware.url = "github:nixos/nixos-hardware";
+    impermanence.url = "github:nix-community/impermanence";
+    nix-colors.url = "github:misterio77/nix-colors";
 
     nixos-wsl = {
       url = "github:nix-community/nixos-wsl";
@@ -25,7 +25,7 @@
       inputs.home-manager.follows = "home-manager";
     };
 
-    nix-ld = { url = "github:Mic92/nix-ld"; };
+    nix-ld.url = "github:Mic92/nix-ld";
 
     nix-alien = {
       url = "github:thiagokokada/nix-alien";
@@ -54,11 +54,6 @@
 
     pre-commit-hooks = {
       url = "github:cachix/pre-commit-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    atuin = {
-      url = "github:atuinsh/atuin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -113,7 +108,6 @@
           ];
         };
       };
-
       overlays-shymega = final: prev: {
         shymega = import inputs.nixpkgs-shymega {
           inherit (prev) system;
@@ -146,22 +140,25 @@
           overlays-nixpkgs-master
           inputs.nur.overlay
           inputs.nix-alien.overlays.default
-          inputs.atuin.overlays.default
         ];
       };
-      mkNixos = system: extraModules: inputs.nixpkgs.lib.nixosSystem {
+      mkNixosConfig = system: extraModules: inputs.nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
           nixPkgsOverlays
           inputs.agenix.nixosModules.default
           inputs.nix-ld.nixosModules.nix-ld
           inputs.nix-index-database.nixosModules.nix-index
-          { environment.systemPackages = [ inputs.agenix.packages.${system}.default ]; }
+          {
+            environment.systemPackages = [
+              inputs.agenix.packages.${system}.default
+            ];
+          }
           ./secrets
         ] ++ extraModules;
         specialArgs = { inherit inputs; };
       };
-      mkHome = system: extraModules: inputs.home-manager.lib.homeManagerConfiguration {
+      mkHomeConfig = system: extraModules: inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = inputs.nixpkgs.legacyPackages.${system};
 
         modules = [
@@ -172,7 +169,7 @@
         ] ++ extraModules;
         extraSpecialArgs = { inherit inputs; };
       };
-      mkDarwin = system: extraModules: inputs.nix-darwin.lib.darwinSystem {
+      mkDarwinConfig = system: extraModules: inputs.nix-darwin.lib.darwinSystem {
         inherit system;
         modules = [
           nixPkgsOverlays
@@ -198,7 +195,7 @@
 
         ## Desktop (Beelink SER6 Pro) ##
 
-        NEO-LINUX = mkNixos "x86_64-linux" [
+        NEO-LINUX = mkNixosConfig "x86_64-linux" [
           ./hosts/nixos/configuration.nix
           ./hosts/shared/linux
           ./hosts/nixos/NEO-LINUX
@@ -207,7 +204,7 @@
         ## End Desktop (Beelink SER6 Pro) ##
 
         ## Raspberry Pi - desk ##
-        SMITH-LINUX = mkNixos "aarch64-linux" [
+        SMITH-LINUX = mkNixosConfig "aarch64-linux" [
           ./hosts/nixos/configuration.nix
           ./hosts/shared/linux
           ./hosts/nixos/SMITH-LINUX
@@ -220,7 +217,7 @@
 
         ## UMPC (GPD Pocket 3 (i7)) ##
 
-        TRINITY-LINUX = mkNixos "x86_64-linux" [
+        TRINITY-LINUX = mkNixosConfig "x86_64-linux" [
           ./hosts/nixos/configuration.nix
           ./hosts/shared/linux
           ./hosts/nixos/TRINITY-LINUX
@@ -230,7 +227,7 @@
 
         # Laptop (ThinkPad X270) ##
 
-        TWINS-LINUX = mkNixos "x86_64-linux" [
+        TWINS-LINUX = mkNixosConfig "x86_64-linux" [
           ./hosts/nixos/configuration.nix
           ./hosts/shared/linux
           ./hosts/nixos/TWINS-LINUX
@@ -286,7 +283,7 @@
 
         ## Home Automation Nodes ##
 
-        GRDN-BED-UNIT = mkNixos "aarch64-linux" [
+        GRDN-BED-UNIT = mkNixosConfig "aarch64-linux" [
           ./hosts/nixos/configuration.nix
           ./hosts/shared/linux
           ./hosts/nixos/GRDN-BED-UNIT
@@ -301,11 +298,11 @@
         ### End Work Machines ###
       };
       homeConfigurations = {
-        "dzrodriguez@NEO-LINUX" = mkHome "x86_64-linux" [ ./users/home.nix ];
-        "dzrodriguez@TRINITY-LINUX" = mkHome "x86_64-linux" [ ./users/home.nix ];
-        "dzrodriguez@TWINS-LINUX" = mkHome "x86_64-linux" [ ./users/home.nix ];
-        "dzrodriguez@SMITH-LINUX" = mkHome "aarch64-linux" [ ./users/home.nix ];
-        "dzrodriguez@GRDN-BED-UNIT" = mkHome "aarch64-linux" [ ./users/home.nix ];
+        "dzrodriguez@NEO-LINUX" = mkHomeConfig "x86_64-linux" [ ./users/home.nix ];
+        "dzrodriguez@TRINITY-LINUX" = mkHomeConfig "x86_64-linux" [ ./users/home.nix ];
+        "dzrodriguez@TWINS-LINUX" = mkHomeConfig "x86_64-linux" [ ./users/home.nix ];
+        "dzrodriguez@SMITH-LINUX" = mkHomeConfig "aarch64-linux" [ ./users/home.nix ];
+        "dzrodriguez@GRDN-BED-UNIT" = mkHomeConfig "aarch64-linux" [ ./users/home.nix ];
       };
       darwinConfigurations = {
         ### macOS (including Cloud/Local) machines ###
