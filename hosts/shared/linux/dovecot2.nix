@@ -38,8 +38,8 @@
                 }
 
                 prefix =
-                separator = .
-              }
+                separator = /
+            }
 
               passdb {
                   driver = static
