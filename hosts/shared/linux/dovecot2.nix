@@ -41,10 +41,10 @@
                 separator = /
             }
 
-              passdb {
-                  driver = static
-      	    args = nopassword
-              }
+            passdb {
+                driver = static
+                args = nopassword
+            }
     '';
   };
 }
