@@ -23,16 +23,16 @@
                   auto = subscribe
                 }
 
-                mailbox Spam {
+                mailbox "Junk Email" {
                   special_use = \Junk
                 }
 
-                mailbox Sent {
+                mailbox "Sent Items" {
                   special_use = \Sent
                   auto = subscribe
                 }
 
-                mailbox Trash {
+                mailbox "Deleted Items" {
                   special_use = \Trash
                   auto = subscribe
                 }
