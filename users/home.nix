@@ -132,6 +132,7 @@
       jetbrains.webstorm
       steam-run
     ])) ++ (with pkgs; [
+      nodePackages.aws-cdk
       aws-sam-cli
       awscli2
       azure-cli
