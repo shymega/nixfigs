@@ -10,41 +10,41 @@
     enableImap = true;
     enablePop3 = false;
     extraConfig = ''
-            listen = 127.0.0.1, ::1
-            mail_uid = 1000
-            mail_gid = 100
+      listen = 127.0.0.1, ::1
+      mail_uid = 1000
+      mail_gid = 100
 
-            namespace inbox {
-                inbox = yes
-                location =
+      namespace inbox {
+          inbox = yes
+          location =
 
-                mailbox Drafts {
-                  special_use = \Drafts
-                  auto = subscribe
-                }
+          mailbox Drafts {
+            special_use = \Drafts
+            auto = subscribe
+          }
 
-                mailbox "Junk Email" {
-                  special_use = \Junk
-                }
+          mailbox "Junk Email" {
+            special_use = \Junk
+          }
 
-                mailbox "Sent Items" {
-                  special_use = \Sent
-                  auto = subscribe
-                }
+          mailbox "Sent Items" {
+            special_use = \Sent
+            auto = subscribe
+          }
 
-                mailbox "Deleted Items" {
-                  special_use = \Trash
-                  auto = subscribe
-                }
+          mailbox "Deleted Items" {
+            special_use = \Trash
+            auto = subscribe
+          }
 
-                prefix =
-                separator = /
-            }
+          prefix =
+          separator = /
+      }
 
-            passdb {
-                driver = static
-                args = nopassword
-            }
+      passdb {
+          driver = static
+          args = nopassword
+      }
     '';
   };
 }
