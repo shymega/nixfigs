@@ -37,7 +37,6 @@
       dex
       diesel-cli
       distrobox
-      docker-compose
       dogdns
       encfs
       exercism
@@ -50,7 +49,6 @@
       gnumake
       google-chrome
       gpicview
-      hercules
       httpie
       hub
       inetutils
@@ -72,7 +70,6 @@
       mupdf
       ncmpcpp
       neomutt
-      nixfmt
       nixpkgs-fmt
       nodejs
       notmuch
@@ -84,8 +81,6 @@
       podman-compose
       poppler_utils
       pre-commit
-      protontricks
-      protonup-ng
       python3Full
       python3Packages.bugwarrior
       python3Packages.pip
