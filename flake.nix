@@ -79,7 +79,6 @@
                     scripts = with prev.pkgs.weechatScripts; [
                       buffer_autoset
                       colorize_nicks
-                      highmon
                       url_hint
                       weechat-autosort
                       weechat-go
