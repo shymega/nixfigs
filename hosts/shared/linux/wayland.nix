@@ -19,6 +19,7 @@
       wf-recorder
       wl-clipboard
       wofi
+      waybar
     ];
     extraSessionCommands = ''
       export SDL_VIDEODRIVER=wayland
@@ -28,6 +29,4 @@
       export MOZ_ENABLE_WAYLAND=1
     '';
   };
-
-  programs.waybar.enable = true;
 }
