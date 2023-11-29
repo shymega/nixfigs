@@ -84,6 +84,7 @@
       python3Full
       python3Packages.bugwarrior
       python3Packages.pip
+      python3Packages.pipx
       python3Packages.virtualenv
       q
       ranger
