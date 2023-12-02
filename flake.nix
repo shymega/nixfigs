@@ -247,13 +247,13 @@
 
         ### Handhelds ###
 
-        ## Gaming Handheld (GPD Win Mini) ##
+        ## Gaming Handheld (GPD Win Max 2 (2023)) ##
         ## TO BE ADDED. ##
-        ## End Gaming Handheld (GPD Win Mini) ##
+        ## End Gaming Handheld (GPD Win Max 2 (2023) ##
 
-        ## Gaming Handheld (Steam Deck) ##
+        ## Gaming Handheld (Steam Deck (OLED/1TB)) ##
         ## TO BE ADDED. ##
-        ## End Gaming Handheld (Steam Deck) ##
+        ## End Gaming Handheld (Steam Deck (OLED/1TB)) ##
 
         ### End Handhelds ###
 
