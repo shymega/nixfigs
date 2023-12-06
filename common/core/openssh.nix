@@ -5,9 +5,9 @@
     startWhenNeeded = true;
     allowSFTP = true;
     settings = {
-      PasswordAuthentication = true;
+      PasswordAuthentication = false;
       PermitRootLogin = "no";
-      KbdInteractiveAuthentication = true;
+      KbdInteractiveAuthentication = false;
     };
   };
 
