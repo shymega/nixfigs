@@ -1,8 +1,6 @@
-{ self, inputs, pkgs, config, ... }:
+{ pkgs, config, ... }:
 let
-  isDarwin = pkgs.stdenvNoCC.isDarwin;
-  isNixOS = builtins.pathExists "/etc/nixos" && builtins.pathExists "/nix" && pkgs.stdenvNoCC.isLinux;
-  isForeignNix = !isNixOS && pkgs.stdenvNoCC.isLinux && builtins.pathExists "/nix";
+  inherit (pkgs.stdenvNoCC) isDarwin;
   homePrefix =
     if isDarwin then
       "/Users"
