@@ -1,6 +1,6 @@
 # SPDX-FileCopyrightText: 2023 2023 Dom Rodriguez <shymega@shymega.org.uk>
 #
-# SPDX-License-Identifier: GPL-3.0
+# SPDX-License-Identifier: GPL-3.0-only
 
 # Shell for bootstrapping flake-enabled nix and other tooling
 { pkgs ? # If pkgs is not defined, instanciate nixpkgs from locked commit
