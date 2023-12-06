@@ -1,10 +1,6 @@
 { inputs, outputs, config, pkgs, lib, ... }:
 {
   imports = [
-    inputs.hardware.nixosModules.common-cpu-amd
-    inputs.hardware.nixosModules.common-gpu-amd
-    inputs.hardware.nixosModules.common-pc-ssd
-    inputs.hardware.nixosModules.common-pc
     ./hardware-configuration.nix
   ];
 
@@ -18,7 +14,7 @@
   boot = {
     supportedFilesystems = [ "ntfs" "zfs" ];
 
-    kernelPackages = pkgs.unstable.linuxPackages_xanmod_latest;
+    kernelPackages = pkgs.linuxPackages_xanmod_latest;
     extraModulePackages = with config.boot.kernelPackages; [ zfs ];
 
     extraModprobeConfig = ''
@@ -27,15 +23,6 @@
     '';
 
     zfs.devNodes = "/dev/NEO-LINUX/ROOT";
-
-    kernelParams = lib.mkForce [
-      "loglevel=3"
-      "quiet"
-      "rd.udev.log_level=3"
-      "splash"
-      "systemd.show_status=auto"
-      "systemd.unified_cgroup_hierarchy=1"
-    ];
 
     kernel.sysctl = {
       "fs.inotify.max_user_watches" = "819200";
