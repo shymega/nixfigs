@@ -30,7 +30,7 @@ in
   astro-slide = mkNixOnDroidConfig {
     hostname = "DZR-ASTRO-SLIDE";
     homeModules = [
-      inputs.home-manager
+      inputs.home-manager.nixosModules.home-manager
       {
         backupFileExtension = "hm-bak";
         useGlobalPkgs = true;
