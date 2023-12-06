@@ -22,7 +22,16 @@ let
         };
       };
       home-manager-path = inputs.home-manager.outPath;
-      modules = [ ../secrets (../hosts/android/nix-on-droid + "/${hostname}") ] ++ baseModules ++ homeModules ++ extraModules;
+      modules = [ 
+        inputs.agenix.nixosModules.default
+        inputs.nix-ld.nixosModules.nix-ld
+        inputs.nix-index-database.nixosModules.nix-index
+        {
+          environment.systemPackages = [
+            inputs.agenix.packages.${system}.default
+          ];
+        }
+../secrets (../hosts/android/nix-on-droid + "/${hostname}") ] ++ baseModules ++ homeModules ++ extraModules;
       extraSpecialArgs = { inherit self inputs nixpkgs; };
     };
 in
@@ -32,15 +41,15 @@ in
     homeModules = [
       inputs.home-manager.nixosModules.home-manager
       {
-        backupFileExtension = "hm-bak";
-        useGlobalPkgs = true;
-
-        config =
-          { config, lib, pkgs, ... }:
-          {
-            # Read the changelog before changing this value
-            home.stateVersion = "23.11";
-          };
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          sharedModules = [
+            inputs.nix-index-database.hmModules.nix-index
+            inputs.agenix.homeManagerModules.default
+          ];
+          extraSpecialArgs = { inherit self inputs; };
+        };
       }
     ];
   };
