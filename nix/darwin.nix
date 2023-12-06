@@ -13,7 +13,7 @@ let
         ../common/core
       ]
     , hardwareModules ? [ ]
-    , homeModules ? [ ]
+    , homeModules ? [ mkHomeManagerConfig {} ]
     , extraModules ? [ ]
     }: inputs.nix-darwin.lib.darwinSystem {
       inherit system;
@@ -37,6 +37,24 @@ let
       ] ++ baseModules ++ extraModules;
       specialArgs = { inherit self inputs nixpkgs; };
     };
+
+  mkHomeManagerConfig =
+    { usePkgs ? true
+    , extraModules ? [
+      ]
+    , specialArgs ? [ ({ inherit self inputs; }) ]
+    }:
+    inputs.home-manager.nixosModules.home-manager {
+      home-manager = {
+        useGlobalPkgs = usePkgs;
+        useUserPackages = usePkgs;
+        sharedModules = [
+          inputs.agenix.homeManagerModules.default
+        ] ++ extraModules;
+        extraSpecialArgs = specialArgs;
+      };
+    };
+
 in
 {
   ### macOS (including Cloud/Local) machines ###
