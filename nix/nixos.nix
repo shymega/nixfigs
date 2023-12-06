@@ -58,14 +58,16 @@ in
     homeModules = [
       inputs.home-manager.nixosModules.home-manager
       {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-        home-manager.users.dzrodriguez = import ../users/home.nix;
-        home-manager.sharedModules = [
-          inputs.nix-index-database.hmModules.nix-index
-          inputs.agenix.homeManagerModules.default
-        ];
-        home-manager.extraSpecialArgs = { inherit self inputs; };
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          users.dzrodriguez = import ../users/home.nix;
+          sharedModules = [
+            inputs.nix-index-database.hmModules.nix-index
+            inputs.agenix.homeManagerModules.default
+          ];
+          extraSpecialArgs = { inherit self inputs; };
+        };
       }
     ];
     extraModules = [
@@ -96,14 +98,17 @@ in
     homeModules = [
       inputs.home-manager.nixosModules.home-manager
       {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-        home-manager.users.dzrodriguez = import ../users/home.nix;
-        home-manager.sharedModules = [
-          inputs.nix-index-database.hmModules.nix-index
-          inputs.agenix.homeManagerModules.default
-        ];
-        home-manager.extraSpecialArgs = { inherit self inputs; };
+        home-manager = {
+
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          users.dzrodriguez = import ../users/home.nix;
+          sharedModules = [
+            inputs.nix-index-database.hmModules.nix-index
+            inputs.agenix.homeManagerModules.default
+          ];
+          extraSpecialArgs = { inherit self inputs; };
+        };
       }
     ];
     extraModules = [
@@ -128,14 +133,16 @@ in
     homeModules = [
       inputs.home-manager.nixosModules.home-manager
       {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-        home-manager.users.dzrodriguez = import ../users/home.nix;
-        home-manager.sharedModules = [
-          inputs.nix-index-database.hmModules.nix-index
-          inputs.agenix.homeManagerModules.default
-        ];
-        home-manager.extraSpecialArgs = { inherit self inputs; };
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          users.dzrodriguez = import ../users/home.nix;
+          sharedModules = [
+            inputs.nix-index-database.hmModules.nix-index
+            inputs.agenix.homeManagerModules.default
+          ];
+          extraSpecialArgs = { inherit self inputs; };
+        };
       }
     ];
     extraModules = [
