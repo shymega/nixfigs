@@ -11,7 +11,10 @@ let
     , baseModules ? [
         ../common/android/nix-on-droid
       ]
-    , homeModules ? [ ]
+    , homeModules ? [
+        mkHomeManagerConfig
+        { }
+      ]
     , extraModules ? [ ]
     }: inputs.nix-on-droid.lib.nixOnDroidConfiguration {
       pkgs = import nixpkgs {
@@ -32,22 +35,26 @@ let
       ] ++ baseModules ++ homeModules ++ extraModules;
       extraSpecialArgs = { inherit self inputs nixpkgs; };
     };
+
+  mkHomeManagerConfig =
+    { usePkgs ? true
+    , extraModules ? [
+      ]
+    , specialArgs ? [ ({ inherit self inputs; }) ]
+    }:
+    inputs.home-manager.nixosModules.home-manager {
+      home-manager = {
+        useGlobalPkgs = usePkgs;
+        useUserPackages = usePkgs;
+        sharedModules = [
+          inputs.agenix.homeManagerModules.default
+        ] ++ extraModules;
+        extraSpecialArgs = specialArgs;
+      };
+    };
 in
 {
   astro-slide = mkNixOnDroidConfig {
     hostname = "DZR-ASTRO-SLIDE";
-    homeModules = [
-      inputs.home-manager.nixosModules.home-manager
-      {
-        home-manager = {
-          useGlobalPkgs = true;
-          useUserPackages = true;
-          sharedModules = [
-            inputs.agenix.homeManagerModules.default
-          ];
-          extraSpecialArgs = { inherit self inputs; };
-        };
-      }
-    ];
   };
 }
