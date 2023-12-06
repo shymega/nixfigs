@@ -1,7 +1,8 @@
 { inputs, lib, pkgs, ... }:
 let
-  isDarwin = pkgs.stdenvNoCC.isDarwin;
-  isNixOS = builtins.pathExists "/etc/nixos" && builtins.pathExists "/nix" && pkgs.stdenvNoCC.isLinux;
+  inherit (pkgs.stdenvNoCC) isDarwin;
+  inherit (pkgs.stdenvNoCC) isLinux;
+  isNixOS = builtins.pathExists "/etc/nixos" && builtins.pathExists "/nix" && isLinux;
 in
 {
   nix = {
