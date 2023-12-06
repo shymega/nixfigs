@@ -5,7 +5,7 @@ let
     , hostname ? "UNDEFINED-HOSTNAME"
     , nixpkgs ? inputs.nixpkgs
     , baseModules ? [
-        ../common/android
+        ../common/android/nix-on-droid
         ../common/core
       ]
     , homeModules ? [ ]
@@ -22,7 +22,7 @@ let
         };
       };
       home-manager-path = inputs.home-manager.outPath;
-      modules = [ ../secrets (../hosts/android + "/${hostname}") ] ++ baseModules ++ homeModules ++ extraModules;
+      modules = [ ../secrets (../hosts/android/nix-on-droid + "/${hostname}") ] ++ baseModules ++ homeModules ++ extraModules;
       extraSpecialArgs = { inherit self inputs nixpkgs; };
     };
 in
@@ -39,9 +39,7 @@ in
           { config, lib, pkgs, ... }:
           {
             # Read the changelog before changing this value
-            home.stateVersion = "23.05";
-
-            # insert home-manager config
+            home.stateVersion = "23.11";
           };
       }
     ];
