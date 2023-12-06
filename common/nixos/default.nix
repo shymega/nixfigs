@@ -1,7 +1,5 @@
-{ inputs, pkgs, ... }:
-{
+{ ... }: {
   imports = [
-    ../global
     ./bluetooth.nix
     ./custom-systemd-units
     ./dovecot2.nix
@@ -9,6 +7,7 @@
     ./firmware.nix
     ./impermanence.nix
     ./inst_packages.nix
+    ./kernel_params.nix
     ./keychron.nix
     ./networking.nix
     ./postfix.nix
