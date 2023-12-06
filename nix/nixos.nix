@@ -95,6 +95,7 @@ in
       inputs.hardware.nixosModules.gpd-pocket-3
       inputs.hardware.nixosModules.common-pc-ssd
       inputs.hardware.nixosModules.common-pc
+      ../hosts/nixos/TRINITY-LINUX/hardware-configuration.nix
     ];
     homeModules = [
       inputs.home-manager.nixosModules.home-manager
@@ -130,6 +131,7 @@ in
       inputs.hardware.nixosModules.common-gpu-intel
       inputs.hardware.nixosModules.common-pc-ssd
       inputs.hardware.nixosModules.common-pc
+      ../hosts/nixos/TWINS-LINUX/hardware-configuration.nix
     ];
     homeModules = [
       inputs.home-manager.nixosModules.home-manager
