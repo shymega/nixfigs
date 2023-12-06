@@ -1,5 +1,5 @@
 { config, lib, inputs, outputs, pkgs, ... }: {
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     open-dyslexic
     fira
     fira-code
