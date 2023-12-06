@@ -1,23 +1,5 @@
-{ self, inputs, pkgs, config, ... }: {
-  environment.packages = with pkgs; [
-    vim
-    neovim
-    nano
+# SPDX-FileCopyrightText: 2023 2023 Dom Rodriguez <shymega@shymega.org.uk>
+#
+# SPDX-License-Identifier: GPL-3.0
 
-    diffutils
-    findutils
-    utillinux
-    tzdata
-    hostname
-    man
-    gnugrep
-    gnupg
-    gnused
-    gnutar
-    bzip2
-    gzip
-    xz
-    zip
-    unzip
-  ];
-}
+{ self, inputs, pkgs, config, ... }: { }
