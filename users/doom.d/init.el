@@ -1,3 +1,7 @@
+; SPDX-FileCopyrightText: 2023 2023 Dom Rodriguez <shymega@shymega.org.uk>
+;
+; SPDX-License-Identifier: GPL-3.0-only
+
 ;;; init.el -*- lexical-binding: t; -*-
 
 ;; This file controls what Doom modules are enabled and what order they load
