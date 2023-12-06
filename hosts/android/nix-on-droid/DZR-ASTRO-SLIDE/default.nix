@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ self, inputs, pkgs, config, ... }: {
   environment.packages = with pkgs; [
     vim
     neovim
