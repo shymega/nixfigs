@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2023 2023 Dom Rodriguez <shymega@shymega.org.uk>
+#
+# SPDX-License-Identifier: GPL-3.0
+
 { config, lib, inputs, outputs, ... }: {
   i18n = {
     defaultLocale = "en_GB.UTF-8";
