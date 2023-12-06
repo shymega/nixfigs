@@ -38,9 +38,11 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak/main";
     nixos-wsl = {
       url = "github:nix-community/nixos-wsl";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-compat.follows = "flake-compat";
-      inputs.flake-utils.follows = "flake-utils";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-compat.follows = "flake-compat";
+        flake-utils.follows = "flake-utils";
+      };
     };
     agenix = {
       url = "github:ryantm/agenix";
@@ -124,9 +126,10 @@
     let
       inherit (inputs.nixpkgs) lib;
 
-      isDarwin = inputs.nixpkgs.stdenvNoCC.isDarwin;
-      isNixOS = builtins.pathExists "/etc/nixos" && builtins.pathExists "/nix" && inputs.nixpkgs.stdenvNoCC.isLinux;
-      isForeignNix = !isNixOS && inputs.nixpkgs.stdenvNoCC.isLinux && builtins.pathExists "/nix";
+      inherit (inputs.nixpkgs.stdenvNoCC) isDarwin;
+      inherit (inputs.nixpkgs.stdenvNoCC) isLinux;
+      isNixOS = builtins.pathExists "/etc/nixos" && builtins.pathExists "/nix" && isLinux;
+      isForeignNix = !isNixOS && isLinux && builtins.pathExists "/nix";
       homePrefix =
         if isDarwin then
           "/Users"
@@ -167,10 +170,10 @@
             };
           };
         in
-        (import ./nix/devshell.nix { inherit inputs pkgs self system; }));
+        import ./nix/devshell.nix { inherit inputs pkgs self system; });
 
       nixosConfigurations = (import ./nix/nixos.nix { inherit self inputs pkgs; }) // (import ./nix/wsl.nix { inherit self inputs pkgs; });
-      homeConfigurations = (import ./nix/home-manager.nix { inherit self inputs pkgs; });
+      homeConfigurations = import ./nix/home-manager.nix { inherit self inputs pkgs; };
       nixOnDroidConfigurations = import ./nix/android.nix { inherit self inputs pkgs; };
       darwinConfigurations = import ./nix/darwin.nix { inherit self inputs pkgs; };
     };
