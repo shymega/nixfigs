@@ -24,15 +24,6 @@
       options kvm ignore_msrs=1 report_ignored_msrs=0
     '';
 
-    kernelParams = lib.mkAfter [
-      "loglevel=3"
-      "quiet"
-      "rd.udev.log_level=3"
-      "splash"
-      "systemd.show_status=auto"
-      "systemd.unified_cgroup_hierarchy=1"
-    ];
-
     kernel.sysctl = {
       "dev.i915.perf_stream_paranoid" = "0";
       "fs.inotify.max_user_watches" = "819200";
@@ -113,4 +104,20 @@
     cpuFreqGovernor = "powersave";
   };
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
+  hardware = {
+    opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
+      extraPackages32 = (lib.optionals pkgs.stdenv.isi686 (with pkgs.pkgsi686Linux; [ vaapiIntel ]));
+      extraPackages = with pkgs; [
+        vaapiIntel
+        vaapiVdpau
+        libvdpau-va-gl
+        intel-media-driver
+        intel-compute-runtime
+      ];
+    };
+  };
 }

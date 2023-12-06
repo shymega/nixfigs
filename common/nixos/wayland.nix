@@ -5,16 +5,16 @@
     package = pkgs.sway;
     wrapperFeatures.gtk = true;
     extraPackages = with pkgs; [
-      unstable.alacritty
+      alacritty
       clipman
       grim
-      unstable.kanshi
+      kanshi
       mako
       slurp
       sway-contrib.grimshot
       swayidle
       swaylock
-      unstable.waybar
+      waybar
       wdisplays
       wf-recorder
       wl-clipboard
