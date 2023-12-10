@@ -124,7 +124,7 @@ in
     ] ++ (with pkgs; [
       isync-xoauth2
       weechatWithMyPlugins
-    ]) ++ (lib.optionals pkgs.stdenv.isx86_64 (with pkgs; [
+    ]) ++ (lib.optionals pkgs.stdenv.isx86_64 (with pkgs.unstable; [
       bitwarden
       gitkraken
       jetbrains.clion
