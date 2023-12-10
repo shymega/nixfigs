@@ -138,7 +138,7 @@ in
       jetbrains.webstorm
       steam-run
     ])) ++ (with pkgs; [
-      #      aws-sam-cli
+      aws-sam-cli
       awscli2
       azure-cli
       google-cloud-sdk
