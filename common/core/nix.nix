@@ -7,6 +7,7 @@ let
   inherit (pkgs.stdenvNoCC) isDarwin;
   inherit (pkgs.stdenvNoCC) isLinux;
   isNixOS = builtins.pathExists "/etc/nixos" && builtins.pathExists "/nix" && isLinux;
+  isForeignNix = !isNixOS && isLinux && builtins.pathExists "/nix";
 in
 {
   nix = {
@@ -16,7 +17,7 @@ in
       build-users-group = "nixbld";
       builders-use-substitutes = true;
       trusted-users = [ "root" "@wheel" ];
-      sandbox = isNixOS;
+      sandbox = isForeignNix || isNixOS;
       substituters = [
         "https://cache.dataaturservice.se/spectrum"
         "https://cache.nixos.org/"
@@ -52,24 +53,21 @@ in
     registry.nixpkgs.flake = inputs.nixpkgs;
     optimise = {
       automatic = true;
-      dates = [ "00:00" ];
+      dates = [ "06:00" ];
     };
-  } // lib.optionalAttrs isNixOS {
-    nixPath = [ "nixpkgs=/run/current-system/nixpkgs" ];
-    daemonCPUSchedPolicy = "batch";
-    daemonIOSchedPriority = 5;
     gc = {
       automatic = true;
-      dates = "00:00";
       options = "--delete-older-than 14d";
     };
-  } // lib.optionalAttrs isDarwin {
+  } // lib.optionalAttrs (isForeignNix || isNixOS)
+    {
+      nixPath = [ "nixpkgs=/run/current-system/nixpkgs" ];
+      daemonCPUSchedPolicy = "batch";
+      daemonIOSchedPriority = 5;
+      gc.dates = "06:00";
+    } // lib.optionalAttrs isDarwin {
     nixPath = [ "nixpkgs=/run/current-system/sw/nixpkgs" ];
     daemonIOLowPriority = true;
-    gc = {
-      automatic = true;
-      interval = { Weekday = 0; Hour = 0; Minute = 0; };
-      options = "--delete-older-than 14d";
-    };
+    gc.interval = { Hour = 6; Minute = 0; };
   };
 }
