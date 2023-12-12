@@ -57,7 +57,16 @@
     udisks2.enable = true;
     printing = {
       enable = true;
-      drivers = [ pkgs.hplipWithPlugin ];
+      drivers = with pkgs; [
+        hplipWithPlugin
+        gutenprint
+        gutenprintBin
+        hplip
+        brlaser
+        samsung-unified-linux-driver
+        splix
+        postscript-lexmark
+      ];
     };
     saned.enable = true;
     blueman.enable = true;
