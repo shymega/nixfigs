@@ -31,7 +31,7 @@
       filter = lib.mkForce "bcm2711-rpi-4*.dtb";
     };
   };
-  system.stateVersion = "23.05";
+  system.stateVersion = "23.11";
 
   networking.hostId = "3b66435d";
   services.zfs.autoScrub.enable = true;
