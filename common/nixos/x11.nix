@@ -17,8 +17,6 @@
         plasma5.enable = true;
       };
       windowManager = {
-        awesome.enable = true;
-        stumpwm.enable = true;
         i3.enable = true;
       };
       layout = "us";
