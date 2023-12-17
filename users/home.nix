@@ -37,6 +37,7 @@ in
       bat
       bc
       brightnessctl
+      cachix
       cocogitto
       comma
       coreutils-full
@@ -122,6 +123,10 @@ in
       zip
       zoxide
     ] ++ (with pkgs; [
+      aws-sam-cli
+      awscli2
+      azure-cli
+      google-cloud-sdk
       isync-xoauth2
       weechatWithMyPlugins
     ]) ++ (lib.optionals pkgs.stdenv.isx86_64 (with pkgs.unstable; [
@@ -137,12 +142,7 @@ in
       jetbrains.rust-rover
       jetbrains.webstorm
       steam-run
-    ])) ++ (with pkgs; [
-      aws-sam-cli
-      awscli2
-      azure-cli
-      google-cloud-sdk
-    ]);
+    ]));
   };
 
   services = {
