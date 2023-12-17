@@ -174,7 +174,10 @@ in
         }
       '';
     };
-    emacs.enable = true;
+    emacs = {
+      enable = true;
+      package = pkgs.emacs28NativeComp;
+    };
     gammastep = {
       enable = true;
       provider = "geoclue2";
