@@ -14,6 +14,7 @@
     ./kernel_params.nix
     ./keychron.nix
     ./networking.nix
+    ./pam.nix
     ./postfix.nix
     ./sound.nix
     ./steam-hardware.nix
