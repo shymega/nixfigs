@@ -35,7 +35,7 @@ in
         "spectrum-os.org-1:rnnSumz3+Dbs5uewPlwZSTP0k3g/5SRG4hD7Wbr9YuQ="
       ];
       experimental-features = [ "nix-command" "flakes" "repl-flake" ];
-      connect-timeout = 90;
+      connect-timeout = lib.mkForce 90;
       http-connections = 0;
       warn-dirty = false;
       cores = 0;
