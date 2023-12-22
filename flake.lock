@@ -1046,10 +1046,10 @@
         "srvos": "srvos"
       },
       "locked": {
-        "lastModified": 1703284389,
-        "narHash": "sha256-5Rwo3wYcmdDvi70sznCLZxEmz4cKEO8YfoS3DHMVRUg=",
+        "lastModified": 1703284646,
+        "narHash": "sha256-mH7/fvraZeFGriqfcc0FlWr9YKj0nVeFNo/taSZtN7w=",
         "ref": "refs/heads/main",
-        "rev": "42a5a7323fff2a77c1d11f33551a44c9853e65c6",
+        "rev": "76cbdc817a41f288fa76674d9ba7ebd1a8340986",
         "revCount": 1,
         "type": "git",
         "url": "ssh://git@github.com/shymega/nixfigs-priv.git"
