@@ -39,8 +39,6 @@
     };
     hardware.url = "github:nixos/nixos-hardware";
     impermanence.url = "github:nix-community/impermanence";
-    nix-colors.url = "github:misterio77/nix-colors";
-    nix-flatpak.url = "github:gmodena/nix-flatpak/main";
     nixos-wsl = {
       url = "github:nix-community/nixos-wsl";
       inputs = {
@@ -90,7 +88,6 @@
       url = "github:edolstra/flake-compat";
       flake = false;
     };
-    flake-parts.url = "github:hercules-ci/flake-parts";
     flake-utils.url = "github:numtide/flake-utils";
     home-manager = {
       url = "github:nix-community/home-manager/release-23.11";
@@ -105,16 +102,8 @@
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-compat.follows = "flake-compat";
-        flake-parts.follows = "flake-parts";
         flake-utils.follows = "flake-utils";
         pre-commit-hooks-nix.follows = "pre-commit-hooks";
-      };
-    };
-    nix-fast-build = {
-      url = "github:Mic92/nix-fast-build";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-parts.follows = "flake-parts";
       };
     };
     pre-commit-hooks = {
@@ -175,7 +164,6 @@
             allowUnsupportedSystem = false;
           };
         });
-    nixpkgs = pkgs;
     in
     {
       overlays = import ./nix/overlay.nix { inherit self inputs lib; };
@@ -199,8 +187,7 @@
       nixOnDroidConfigurations = import ./nix/nix-on-droid.nix { inherit self inputs pkgs; };
       darwinConfigurations = import ./nix/darwin.nix { inherit self inputs pkgs; };
       secrets = import ./secrets;
-      common-core = import ./common/core { inherit self inputs nixpkgs; };
-      common-nixos = import ./common/nixos { inherit self inputs nixpkgs; };
-
+      common-core = import ./common/core { inherit self inputs pkgs; };
+      common-nixos = import ./common/nixos { inherit self inputs pkgs; };
     };
 }
