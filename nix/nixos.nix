@@ -90,7 +90,7 @@ in
     hostname = "SMITH-LINUX";
     system = "aarch64-linux";
     hardwareModules = [
-      inputs.hardware.nixosModules.rasperry-pi-4
+      inputs.hardware.nixosModules.raspberry-pi-4
     ];
   };
 
