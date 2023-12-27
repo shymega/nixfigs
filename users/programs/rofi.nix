@@ -2,13 +2,8 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ config, lib, pkgs, ... }:
-
-let
-  inherit (pkgs.stdenv.hostPlatform) isDarwin isLinux;
-  originalConfig = config;
-in
-lib.mkIf isLinux {
+{ self, config, lib, pkgs, ... }:
+lib.mkIf self.isNixOS || self.isForeignNix {
 
   programs.rofi = {
     enable = true;

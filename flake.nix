@@ -136,24 +136,14 @@
     let
       inherit (inputs.nixpkgs) lib;
 
-      inherit (inputs.nixpkgs.stdenvNoCC) isDarwin;
-      inherit (inputs.nixpkgs.stdenvNoCC) isLinux;
-      isNixOS = builtins.pathExists "/etc/nixos" && builtins.pathExists "/nix" && isLinux;
-      isForeignNix = !isNixOS && isLinux && builtins.pathExists "/nix";
-      homePrefix =
-        if isDarwin then
-          "/Users"
-        else
-          "/home";
-
       # TODO: Add RISC-V - specific Cache, and Nixpkgs. For Pine64/other RISC-V SoCs.
-      forAllUpstreamSystems = inputs.nixpkgs.lib.genAttrs [
+      forAllSystems = inputs.nixpkgs.lib.genAttrs [
         "aarch64-darwin"
         "aarch64-linux"
         "x86_64-darwin"
         "x86_64-linux"
       ];
-      pkgs = forAllUpstreamSystems (system:
+      pkgsForSystem = (system:
         import inputs.nixpkgs {
           inherit system;
           overlays = builtins.attrValues self.overlays;
@@ -164,23 +154,17 @@
             allowUnsupportedSystem = false;
           };
         });
+      pkgs = forAllSystems (system:
+        pkgsForSystem system);
     in
     {
       overlays = import ./nix/overlay.nix { inherit self inputs lib; };
-      devShells = forAllUpstreamSystems (system:
+      devShells = forAllSystems (system:
         let
-          pkgs = import inputs.nixpkgs {
-            inherit system;
-            overlays = builtins.attrValues self.overlays;
-            config = {
-              allowUnfree = true;
-              allowBroken = false;
-              allowInsecure = false;
-              allowUnsupportedSystem = false;
-            };
-          };
+          pkgs = pkgsForSystem system;
         in
-        import ./nix/devshell.nix { inherit inputs pkgs self system; });
+        import ./nix/devshell.nix { inherit pkgs inputs self system; }
+      );
 
       nixosConfigurations = (import ./nix/nixos.nix { inherit self inputs pkgs; }) // (import ./nix/wsl.nix { inherit self inputs pkgs; }) // (import ./nix/mobile-nixos.nix { inherit self inputs pkgs; }) // inputs.nixfigs-priv.outputs.nixosConfigurations;
       homeConfigurations = import ./nix/home-manager.nix { inherit self inputs pkgs; };
@@ -189,5 +173,18 @@
       secrets = import ./secrets;
       common-core = import ./common/core { inherit self inputs pkgs; };
       common-nixos = import ./common/nixos { inherit self inputs pkgs; };
+
+      extraOutputs = {
+        utils = {
+          inherit (pkgs.stdenvNoCC) isLinux isDarwin;
+          isNixOS = builtins.pathExists "/etc/nixos" && builtins.pathExists "/nix" && self.extraOutputs.utils.isLinux;
+          isForeignNix = self.extraOutputs.utils.isLinux && !self.extraOutputs.utils.isNixOS && builtins.pathExists "/nix";
+          homePrefix =
+            if self.extraOutputs.utils.isDarwin then
+              "/Users"
+            else
+              "/home";
+        };
+      };
     };
 }

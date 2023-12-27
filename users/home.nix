@@ -2,15 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ pkgs, config, ... }:
-let
-  inherit (pkgs.stdenvNoCC) isDarwin;
-  homePrefix =
-    if isDarwin then
-      "/Users"
-    else
-      "/home";
-in
+{ self, pkgs, config, ... }:
 {
   imports = [ ./network-targets.nix ./programs/rofi.nix ];
 
@@ -24,7 +16,7 @@ in
 
   home = {
     username = "dzrodriguez";
-    homeDirectory = homePrefix + "/${config.home.username}";
+    homeDirectory = self.extraOutputs.utils.homePrefix + "/${config.home.username}";
     enableNixpkgsReleaseCheck = true;
     stateVersion = "23.11";
     packages = with pkgs.unstable; [
