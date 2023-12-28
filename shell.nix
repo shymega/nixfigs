@@ -23,7 +23,6 @@ pkgs.mkShell {
     home-manager
     git
 
-    sops
     gnupg
     age
   ];
