@@ -41,7 +41,7 @@ let
         (../hosts/nixos + "/${hostname}")
         (../hosts/nixos + "/${hostname}" + "/hardware-configuration.nix")
       ] ++ baseModules ++ hardwareModules ++ homeModules ++ extraModules;
-      specialArgs = { inherit self inputs nixpkgs; };
+      specialArgs = { inherit self inputs nixpkgs hostname system; };
     };
 
   mkHomeManagerConfig =
