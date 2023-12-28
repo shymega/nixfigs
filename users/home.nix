@@ -135,9 +135,9 @@ in
     gpg-agent = {
       enable = true;
       pinentryFlavor = "gtk2";
-      enableScDaemon = false;
+      enableScDaemon = true;
       enableSshSupport = false;
-      enableExtraSocket = false;
+      enableExtraSocket = true;
       defaultCacheTtl = 43200;
       maxCacheTtl = 43200;
     };
