@@ -115,7 +115,11 @@
         swtpm.enable = true;
         ovmf = {
           enable = true;
-          packages = [ pkgs.OVMFFull.fd pkgs.pkgsCross.aarch64-multiplatform.OVMF.fd ];
+          packages = with pkgs; [
+            OVMFFull.fd
+          ] ++ (lib.optionals pkgs.stdenv.isx86_64 (with pkgs; [
+            pkgsCross.aarch64-multiplatform.OVMF.fd
+          ]));
         };
       };
       onBoot = "ignore";
