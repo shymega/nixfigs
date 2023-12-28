@@ -30,9 +30,6 @@ in
     packages = with pkgs.unstable; [
       android-tools
       asciinema
-      aspell
-      aspellDicts.en
-      aspellDicts.en-computers
       atuin
       bat
       bc
@@ -40,16 +37,13 @@ in
       cachix
       cocogitto
       comma
-      coreutils-full
       curl
       darkman
       dateutils
       dex
       diesel-cli
-      distrobox
       dogdns
       encfs
-      exercism
       expect
       eza
       firefox
@@ -66,9 +60,6 @@ in
       jdk17
       jq
       just
-      kodi-wayland
-      lapce
-      lazygit
       m4
       maven
       minikube
@@ -82,11 +73,9 @@ in
       nixpkgs-fmt
       nodejs
       notmuch
-      opentofu
       p7zip
       pass
       pavucontrol
-      podman-compose
       poppler_utils
       pre-commit
       python3Full
@@ -100,7 +89,6 @@ in
       reuse
       ripgrep
       rustup
-      sbcl
       scrcpy
       speedtest-go
       starship
@@ -108,7 +96,6 @@ in
       step-cli
       stow
       texlive.combined.scheme-full
-      thunderbird
       timewarrior
       tmuxp
       unrar
@@ -126,22 +113,22 @@ in
       aws-sam-cli
       awscli2
       azure-cli
+      gitkraken
       google-cloud-sdk
       isync-patched
       weechatWithMyPlugins
-    ]) ++ (lib.optionals pkgs.stdenv.isx86_64 (with pkgs.unstable; [
-      bitwarden
-      gitkraken
-      jetbrains.clion
-      jetbrains.datagrip
-      jetbrains.gateway
-      jetbrains.goland
-      jetbrains.idea-ultimate
-      jetbrains.pycharm-professional
-      jetbrains.rider
-      jetbrains.rust-rover
-      jetbrains.webstorm
-      steam-run
+    ]) ++ (lib.optionals pkgs.stdenv.isx86_64 (with pkgs.unstable.jetbrains; [
+      clion
+      datagrip
+      gateway
+      goland
+      idea-ultimate
+      phpstorm
+      pycharm-professional
+      rider
+      ruby-mine
+      rust-rover
+      webstorm
     ]));
   };
 
