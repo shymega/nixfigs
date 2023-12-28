@@ -54,7 +54,6 @@
     flatpak.enable = true;
     dbus.enable = true;
     openssh.enable = true;
-    udisks2.enable = true;
     printing = {
       enable = true;
       browsing = true;
@@ -71,7 +70,6 @@
       ];
     };
     saned.enable = true;
-    blueman.enable = true;
     zerotierone.enable = true;
     geoclue2.enable = true;
     resolved = {
@@ -106,8 +104,6 @@
   virtualisation = {
     spiceUSBRedirection.enable = true;
 
-    waydroid.enable = true;
-    lxd.enable = true;
     docker.enable = true;
     podman.enable = true;
 
