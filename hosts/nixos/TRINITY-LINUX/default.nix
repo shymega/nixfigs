@@ -98,7 +98,7 @@
   services = {
     thermald.enable = true;
     power-profiles-daemon.enable = true;
-    fstrim.enable = true;
+    fstrim.enable = false;
     auto-cpufreq.enable = true;
     logind = {
       extraConfig = ''
@@ -136,4 +136,7 @@
     sensor.iio.enable = true;
   };
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
+  services.zfs.trim.enable = lib.mkDefault false;
+  services.zfs.autoScrub.enable = lib.mkDefault false;
 }
