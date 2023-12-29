@@ -17,16 +17,15 @@ let
       )
       (builtins.readDir ./overlays/stable);
 in
-{
+stableOverlays // {
   default = lib.composeManyExtensions ([
     inputs.agenix.overlays.default
     inputs.deploy-rs.overlay
     inputs.nur.overlay
     inputs.nix-alien.overlays.default
-  ] ++ (lib.attrValues stableOverlays)
-  ++ [
+  ] ++ ([
     (import ./overlays/master.nix { inherit inputs lib; })
     (import ./overlays/shymega.nix { inherit inputs lib; })
     (import ./overlays/unstable.nix { inherit inputs lib; })
-  ]);
+  ]) ++ (lib.attrValues stableOverlays));
 }
