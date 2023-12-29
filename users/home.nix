@@ -94,7 +94,7 @@ in
       statix
       step-cli
       stow
-      texlive.combined.scheme-small
+      texlive.combined.scheme-full
       timewarrior
       tmuxp
       unrar
