@@ -98,7 +98,16 @@
   services = {
     thermald.enable = true;
     power-profiles-daemon.enable = true;
-    fstrim.enable = false;
+    zfs = {
+      trim = {
+        enable = true;
+        interval = "Sat *-*-* 04:00:00";
+      };
+      autoScrub = {
+        enable = true;
+        interval = "Sat *-*-* 05:00:00";
+      };
+    };
     auto-cpufreq.enable = true;
     logind = {
       extraConfig = ''
@@ -136,9 +145,4 @@
     sensor.iio.enable = true;
   };
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-
-  services.zfs.trim.enable = true;
-  services.zfs.trim.interval = "Sat *-*-* 04:00:00";
-  services.zfs.autoScrub.enable = true;
-  services.zfs.autoScrub.interval = "Sat *-*-* 05:00:00";
 }
