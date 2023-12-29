@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ pkgs, config, ... }:
+{ inputs, pkgs, config, ... }:
 let
   inherit (pkgs.stdenvNoCC) isDarwin;
   homePrefix =
@@ -107,6 +107,8 @@ in
       zathura
       zip
       zoxide
+    ] ++ [
+      inputs.devenv.packages."${pkgs.system}".devenv
     ] ++ (with pkgs; [
       aws-sam-cli
       awscli2
@@ -190,7 +192,10 @@ in
       enable = true;
       package = pkgs.vscode.fhs;
     };
-    direnv.enable = true;
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
     home-manager.enable = true;
     fish.enable = true;
     taskwarrior = {
