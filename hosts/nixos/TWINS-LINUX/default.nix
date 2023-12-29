@@ -121,6 +121,6 @@
     };
   };
 
-  services.zfs.trim.enable = lib.mkDefault false;
-  services.zfs.autoScrub.enable = lib.mkDefault false;
+  services.zfs.trim.enable = true;
+  services.zfs.autoScrub.enable = true;
 }
