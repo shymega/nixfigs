@@ -96,6 +96,16 @@
         LidSwitchIgnoredInhibited=no
       '';
     };
+    zfs = {
+      trim = {
+        enable = true;
+        interval = "Sat *-*-* 04:00:00";
+      };
+      autoScrub = {
+        enable = true;
+        interval = "Sat *-*-* 05:00:00";
+      };
+    };
   };
 
   powerManagement = {
@@ -120,9 +130,4 @@
       ];
     };
   };
-
-  services.zfs.trim.enable = true;
-  services.zfs.trim.interval = "Sat *-*-* 04:00:00";
-  services.zfs.autoScrub.enable = true;
-  services.zfs.autoScrub.interval = "Sat *-*-* 05:00:00";
 }
