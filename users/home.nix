@@ -186,6 +186,7 @@ in
 
   programs = {
     rbw.enable = true;
+    git.lfs.enable = true;
     neovim = {
       enable = true;
       viAlias = true;
