@@ -21,9 +21,6 @@
     resumeDevice = "/dev/disk/by-label/SWAP";
   };
 
-  zramSwap.enable = true;
-  zramSwap.algorithm = "zstd";
-
   fileSystems = {
     "/" =
       {
@@ -33,7 +30,7 @@
 
     "/nix" =
       {
-        device = "tank/local/nix";
+        device = "tank/safe/nix-store";
         neededForBoot = true; # required
         fsType = "zfs";
       };
@@ -65,10 +62,8 @@
       neededForBoot = true; # required
     };
 
-
-
     "/data" = {
-      device = "/dev/disk/by-label/SHARED0";
+      device = "/dev/disk/by-label/SHARED";
       fsType = "btrfs";
     };
 
