@@ -14,7 +14,7 @@ let
 
   personal = [ NEO-LINUX TRINITY-LINUX TWINS-LINUX ];
   work = [ ];
-  
+
   rnet-servers = [ DELTA-ZERO DIAL-IN ];
   servers = rnet-servers;
 
