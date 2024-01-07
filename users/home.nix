@@ -102,6 +102,7 @@ in
       wget
       xsv
       yt-dlp
+      yubikey-manager-qt
       yubioath-flutter
       zathura
       zellij
