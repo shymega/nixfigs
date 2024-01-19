@@ -93,7 +93,6 @@ in
       stow
       texlive.combined.scheme-full
       timewarrior
-      tmuxp
       unrar
       unzip
       vagrant
@@ -102,8 +101,6 @@ in
       wget
       xsv
       yt-dlp
-      yubikey-manager-qt
-      yubioath-flutter
       zathura
       zellij
       zip
@@ -123,6 +120,8 @@ in
       google-cloud-sdk
       isync-patched
       weechatWithMyPlugins
+      yubikey-manager-qt
+      yubioath-flutter
     ]) ++ (lib.optionals pkgs.stdenv.isx86_64 (with pkgs.jetbrains; [
       clion
       datagrip
