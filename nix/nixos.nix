@@ -31,7 +31,6 @@ let
       modules = [
         inputs.agenix.nixosModules.default
         inputs.nix-ld.nixosModules.nix-ld
-        inputs.nix-index-database.nixosModules.nix-index
         {
           environment.systemPackages = [
             inputs.agenix.packages.${system}.default
@@ -89,6 +88,7 @@ in
   SMITH-LINUX = mkNixosConfig {
     hostname = "SMITH-LINUX";
     system = "aarch64-linux";
+    baseModules = [ ];
     hardwareModules = [
       inputs.hardware.nixosModules.raspberry-pi-4
     ];
