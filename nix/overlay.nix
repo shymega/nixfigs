@@ -23,9 +23,9 @@ stableOverlays // {
     inputs.deploy-rs.overlay
     inputs.nur.overlay
     inputs.nix-alien.overlays.default
-  ] ++ ([
+  ] ++ [
     (import ./overlays/master.nix { inherit inputs lib; })
     (import ./overlays/shymega.nix { inherit inputs lib; })
     (import ./overlays/unstable.nix { inherit inputs lib; })
-  ]) ++ (lib.attrValues stableOverlays));
+  ] ++ (lib.attrValues stableOverlays));
 }
