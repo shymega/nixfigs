@@ -130,6 +130,9 @@
       url = "github:nix-community/srvos";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    cosmo-codios-codid = {
+      url = "github:Cosmo-CoDiOS/codid";
+    };
   };
 
   outputs = { self, ... } @ inputs:
