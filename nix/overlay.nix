@@ -3,30 +3,38 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 { lib, inputs, ... }:
+
 let
   importStableOverlay = overlay:
     lib.composeExtensions
       (_: _: { __inputs = inputs; })
       (import (./overlays/stable + "/${overlay}"));
 
-  stableOverlays =
-    lib.mapAttrs'
-      (overlay: _: lib.nameValuePair
-        (lib.removeSuffix ".nix" overlay)
-        (importStableOverlay overlay)
-      )
-      (builtins.readDir ./overlays/stable);
-in
-stableOverlays // {
-  default = lib.composeManyExtensions ([
+  stableOverlays = builtins.readDir ./overlays/stable;
+
+  stableOverlaysWithImports = lib.mapAttrs'
+    (overlay: _: lib.nameValuePair
+      (lib.removeSuffix ".nix" overlay)
+      (importStableOverlay overlay)
+    )
+    stableOverlays;
+
+  defaultOverlays = [
     inputs.agenix.overlays.default
+    inputs.atuin.overlays.default
+    inputs.cosmo-codios-codid.overlays.default
     inputs.deploy-rs.overlay
-    inputs.nur.overlay
     inputs.nix-alien.overlays.default
-    inputs.cosmo-codios-codid.default
-  ] ++ [
+    inputs.nur.overlay
+  ];
+
+  customOverlays = [
     (import ./overlays/master.nix { inherit inputs lib; })
     (import ./overlays/shymega.nix { inherit inputs lib; })
     (import ./overlays/unstable.nix { inherit inputs lib; })
-  ] ++ (lib.attrValues stableOverlays));
+  ];
+
+in
+stableOverlaysWithImports // {
+  default = lib.composeManyExtensions (defaultOverlays ++ customOverlays ++ (lib.attrValues stableOverlaysWithImports));
 }
