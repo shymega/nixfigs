@@ -3,7 +3,21 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 { inputs, lib, ... }:
-final: prev: {
+final: prev:
+let
+  importMasterOverlay = overlay:
+    lib.composeExtensions
+      (_: _: { __inputs = inputs; })
+      (import (./master + "/${overlay}"));
+
+  masterOverlays =
+    lib.mapAttrs'
+      (overlay: _: lib.nameValuePair
+        (lib.removeSuffix ".nix" overlay)
+        (importMasterOverlay overlay))
+      (builtins.readDir ./master);
+in
+{
   master = import inputs.nixpkgs-master {
     inherit (prev) system;
     config = {
@@ -12,20 +26,6 @@ final: prev: {
       allowInsecure = false;
       allowUnsupportedSystem = false;
     };
-    overlays =
-      let
-        importMasterOverlay = overlay:
-          lib.composeExtensions
-            (_: _: { __inputs = inputs; })
-            (import (./master + "/${overlay}"));
-
-        masterOverlays =
-          lib.mapAttrs'
-            (overlay: _: lib.nameValuePair
-              (lib.removeSuffix ".nix" overlay)
-              (importMasterOverlay overlay))
-            (builtins.readDir ./master);
-      in
-      lib.attrValues masterOverlays;
+    overlays = lib.attrValues masterOverlays;
   };
 }
