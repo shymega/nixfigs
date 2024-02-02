@@ -3,7 +3,21 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 { inputs, lib, ... }:
-final: prev: {
+final: prev:
+let
+  importUnstableOverlay = overlay:
+    lib.composeExtensions
+      (_: _: { __inputs = inputs; })
+      (import (./unstable + "/${overlay}"));
+
+  unstableOverlays =
+    lib.mapAttrs'
+      (overlay: _: lib.nameValuePair
+        (lib.removeSuffix ".nix" overlay)
+        (importUnstableOverlay overlay))
+      (builtins.readDir ./unstable);
+in
+{
   unstable = import inputs.nixpkgs-unstable {
     inherit (prev) system;
     config = {
@@ -12,20 +26,6 @@ final: prev: {
       allowInsecure = false;
       allowUnsupportedSystem = false;
     };
-    overlays =
-      let
-        importUnstableOverlay = overlay:
-          lib.composeExtensions
-            (_: _: { __inputs = inputs; })
-            (import (./unstable + "/${overlay}"));
-
-        unstableOverlays =
-          lib.mapAttrs'
-            (overlay: _: lib.nameValuePair
-              (lib.removeSuffix ".nix" overlay)
-              (importUnstableOverlay overlay))
-            (builtins.readDir ./unstable);
-      in
-      lib.attrValues unstableOverlays;
+    overlays = lib.attrValues unstableOverlays;
   };
 }
