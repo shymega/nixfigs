@@ -106,7 +106,7 @@ in
       zoxide
     ] ++ [
       inputs.devenv.packages."${pkgs.system}".devenv
-    ] ++ (with pkgs; [
+    ] ++ (with pkgs.unstable; [
       (vivaldi.override {
         proprietaryCodecs = true;
         enableWidevine = true;
