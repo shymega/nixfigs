@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ inputs, outputs, config, ... }:
+{ ... }:
 {
   virtualisation.docker.enable = true;
   virtualisation.podman.enable = true;
