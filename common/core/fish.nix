@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ inputs, outputs, pkgs, ... }:
+{ ... }:
 {
   programs.fish = {
     enable = true;
