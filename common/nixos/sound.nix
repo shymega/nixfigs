@@ -17,8 +17,9 @@
         enable = true;
         support32Bit = true;
       };
+      audio.enable = true;
       pulse.enable = true;
-      wireplumber.enable = true;
+      wireplumber.enable = lib.mkForce true;
       jack.enable = false;
     };
   };
