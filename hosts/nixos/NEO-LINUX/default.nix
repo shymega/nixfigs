@@ -115,4 +115,6 @@
       videoDrivers = [ "amdgpu" ];
     };
   };
+
+  programs.steam.enable = true;
 }
