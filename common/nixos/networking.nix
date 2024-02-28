@@ -14,16 +14,16 @@
     wifi.macAddress = "stable";
     wifi.powersave = false;
     enable = true;
-    dispatcherScripts = [
-      {
-        source = "/persist/etc/NetworkManager/dispatcher.d/05-wifi-toggle";
-        type = "basic";
-      }
-      {
-        source = "/persist/etc/NetworkManager/dispatcher.d/10-net-targets";
-        type = "basic";
-      }
-    ];
+    #    dispatcherScripts = [
+    #      {
+    #        source = "/persist/etc/NetworkManager/dispatcher.d/05-wifi-toggle";
+    #        type = "basic";
+    #      }
+    #      {
+    #        source = "/persist/etc/NetworkManager/dispatcher.d/10-net-targets";
+    #        type = "basic";
+    #      }
+    #    ];
   };
 
   programs.nm-applet = {
