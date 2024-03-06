@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 {
   boot = {
