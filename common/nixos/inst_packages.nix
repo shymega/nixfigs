@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ config, pkgs, ... }: {
+{ pkgs }: {
   environment.systemPackages = with pkgs; [
     acpi
     curl
