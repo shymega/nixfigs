@@ -2,11 +2,10 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ config, lib, pkgs, ... }:
+{ lib, pkgs, ... }:
 
 let
-  inherit (pkgs.stdenv.hostPlatform) isDarwin isLinux;
-  originalConfig = config;
+  inherit (pkgs.stdenv.hostPlatform) isLinux;
 in
 lib.mkIf isLinux {
 
