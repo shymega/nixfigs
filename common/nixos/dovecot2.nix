@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ config, ... }:{
+{ config, ... }: {
   services.dovecot2 = {
     enable = true;
     user = "dzrodriguez";
