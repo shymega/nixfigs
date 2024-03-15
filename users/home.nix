@@ -210,14 +210,10 @@ in
     taskwarrior = {
       enable = true;
       config = {
-        confirmation = false;
         report = {
           minimal.filter = "status:pending";
           active.columns = [ "id" "start" "entry.age" "priority" "project" "due" "description" ];
           active.labels = [ "ID" "Started" "Age" "Priority" "Project" "Due" "Description" ];
-        };
-        taskd = {
-          server = "inthe.am:53589";
         };
       };
     };
