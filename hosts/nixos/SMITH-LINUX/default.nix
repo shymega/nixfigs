@@ -4,10 +4,6 @@
 
 { pkgs, lib, ... }:
 {
-  imports = [
-    ./hardware-configuration.nix
-  ];
-
   time.timeZone = "Europe/London";
 
   networking = {
