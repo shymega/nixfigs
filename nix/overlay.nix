@@ -22,7 +22,6 @@ let
   defaultOverlays = [
     inputs.agenix.overlays.default
     inputs.android-nixpkgs.overlays.default
-    inputs.atuin.overlays.default
     inputs.cosmo-codios-codid.overlays.default
     inputs.deploy-rs.overlay
     inputs.nix-alien.overlays.default
