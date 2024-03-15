@@ -8,6 +8,7 @@ let
   mkHomeConfig =
     { username ? "dzrodriguez"
     , system ? "x86_64-linux"
+    , hostname ? "UNDEFINED-HOST"
     , nixpkgs ? inputs.nixpkgs
     , baseModules ? [
         ../common/home-manager
@@ -28,13 +29,14 @@ let
       modules = [
         inputs.agenix.homeManagerModules.default
       ] ++ baseModules ++ extraHomeModules;
-      extraSpecialArgs = { inherit self inputs nixpkgs username system; };
+      extraSpecialArgs = { inherit self inputs nixpkgs username system hostname; };
     };
 in
 {
   "dzrodriguez@NEO-LINUX" = mkHomeConfig {
     username = "dzrodriguez";
     system = "x86_64-linux";
+    hostname = "NEO-LINUX";
     extraHomeModules = [
       ../users
     ];
@@ -42,6 +44,7 @@ in
   "dzrodriguez@TRINITY-LINUX" = mkHomeConfig {
     username = "dzrodriguez";
     system = "x86_64-linux";
+    hostname = "TRINITY-LINUX";
     extraHomeModules = [
       ../users
     ];
@@ -49,6 +52,7 @@ in
   "dzrodriguez@TWINS-LINUX" = mkHomeConfig {
     username = "dzrodriguez";
     system = "x86_64-linux";
+    hostname = "TWINS-LINUX";
     extraHomeModules = [
       ../users
     ];
