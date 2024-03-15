@@ -106,8 +106,8 @@ in
       zoxide
     ] ++ [
       inputs.devenv.packages.${pkgs.system}.devenv
-    ] ++ (lib.optionals (hostname == "NEO-LINUX") 
-    pkgs.asfp.android-studio-for-platform)
+    ] ++ (lib.optionals (hostname == "NEO-LINUX")
+      pkgs.asfp.android-studio-for-platform)
     ++ (with pkgs.unstable; [
       (vivaldi.override {
         proprietaryCodecs = true;
