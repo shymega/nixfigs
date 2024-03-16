@@ -4,7 +4,7 @@
 
 { self, inputs, pkgs }:
 let
-mkMobileNixosConfig =
+  mkMobileNixosConfig =
     { system ? "aarch64-linux"
     , hostname ? "UNDEFINED-HOSTNAME"
     , nixpkgs ? inputs.nixpkgs
@@ -53,6 +53,4 @@ mkMobileNixosConfig =
       };
     };
 in
-{
-
-}
+{ }
