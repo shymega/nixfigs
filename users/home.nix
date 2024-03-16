@@ -109,12 +109,7 @@ in
     ] ++ [
       inputs.devenv.packages.${pkgs.system}.devenv
     ] ++ (lib.optional (hostname == "NEO-LINUX") pkgs.asfp.android-studio-for-platform)
-    ++ (with pkgs.unstable; [
-      (vivaldi.override {
-        proprietaryCodecs = true;
-        enableWidevine = true;
-      })
-    ]) ++ (with pkgs; [
+    ++ (with pkgs; [
       aws-sam-cli
       awscli2
       azure-cli
