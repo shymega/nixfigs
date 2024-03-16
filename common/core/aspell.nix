@@ -13,7 +13,7 @@ in
   ];
 
   # Configure aspell system wide
-  lib.mkIf = (isLinux == true) {
+  lib.mkIf = isLinux {
     environment.etc."aspell.conf".text = ''
       master en_US
       add-extra-dicts en-computers.rws
