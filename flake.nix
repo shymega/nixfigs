@@ -33,18 +33,12 @@
     nixfigs-priv.url = "github:shymega/nixfigs-priv/main";
     nur.url = "github:nix-community/NUR";
     devenv.url = "github:cachix/devenv/latest";
-    base16-schemes = {
-      url = "github:tinted-theming/base16-schemes";
-      flake = false;
-    };
     hardware.url = "github:nixos/nixos-hardware";
     impermanence.url = "github:nix-community/impermanence";
     nixos-wsl = {
       url = "github:nix-community/nixos-wsl";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        flake-compat.follows = "flake-compat";
-        flake-utils.follows = "flake-utils";
       };
     };
     agenix = {
@@ -63,9 +57,7 @@
       url = "github:thiagokokada/nix-alien";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
         nix-index-database.follows = "nix-index-database";
-        flake-compat.follows = "flake-compat";
       };
     };
     nix-index-database = {
@@ -80,8 +72,6 @@
       url = "github:serokell/deploy-rs";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        flake-compat.follows = "flake-compat";
-        utils.follows = "flake-utils";
       };
     };
     flake-compat = {
