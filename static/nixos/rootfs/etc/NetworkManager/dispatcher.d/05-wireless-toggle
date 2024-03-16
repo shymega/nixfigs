@@ -1,2 +1,33 @@
 #!/usr/bin/env nix-shell
-#! nix-shell -i bash -p bash systemd
+#! nix-shell -p bash -p bash -p networkmanager
+
+IDENTIFIER="nm-05-wifi-toggle"
+
+INTERFACE="${1}"
+ACTION="${2}"
+
+case "${INTERFACE}" in
+    en* | bnep* | wwan0)
+	case "${ACTION}" in
+	    up)
+		systemd-log "${IDENTIFIER}" "Turning OFF WiFi.." notice
+		nmcli radio wifi off
+		;;
+
+	    down)
+		systemd-log "${IDENTIFIER}" "Turning ON WiFi.." notice
+		nmcli radio wifi on
+		;;
+	    *)
+		systemd-log "${IDENTIFIER}" "Unknown action." warning
+		;;
+
+	esac
+	;;
+    *)
+	systemd-log "${IDENTIFIER}" "Unknown interface." warning
+	exit 0
+	;;
+esac
+
+exit
