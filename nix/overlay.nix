@@ -26,6 +26,8 @@ let
     inputs.deploy-rs.overlay
     inputs.nix-alien.overlays.default
     inputs.nur.overlay
+    inputs.shycode.overlays.default
+    inputs.shymacs.overlays.default
   ];
 
   customOverlays = [
