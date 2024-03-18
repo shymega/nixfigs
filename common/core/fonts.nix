@@ -39,7 +39,7 @@ with lib;
         terminus_font
         vistafonts
       ];
-      })
+    })
     (mkIf (config.nixfigs.fonts.xdg.enable && isLinux) {
       fonts.fontDir.enable = true;
     })
