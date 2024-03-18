@@ -167,7 +167,6 @@ in
     };
     emacs = {
       enable = true;
-      install = true;
       package = pkgs.emacsNativeComp;
     };
     gammastep = {
@@ -226,6 +225,10 @@ in
     };
     home-manager.enable = true;
     fish.enable = true;
+    emacs = {
+      enable = true;
+      package = pkgs.emacsNativeComp;
+    };
     taskwarrior = {
       enable = true;
       config = {
