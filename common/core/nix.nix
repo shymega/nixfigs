@@ -7,6 +7,13 @@ let
   inherit (self.libx) isForeignNix isNixOS isDarwin;
 in
 {
+  environment.etc."nix/overlays-compat/overlays.nix".text = ''
+    final: prev:
+    with prev.lib;
+    let overlays = (builtins.getFlake "path:/etc/nixos").nixosConfigurations.${config.networking.hostName}.config.nixpkgs.overlays; in
+      foldl' (flip extends) (_: prev) overlays final
+  '';
+
   nix = {
     settings = {
       accept-flake-config = true;
@@ -57,6 +64,9 @@ in
       automatic = true;
       dates = [ "06:00" ];
     };
+    nixPath =
+      config.nix.nixPath.default ++
+        [ "nixpkgs-overlays=/etc/nix/overlays-compat/" ];
     gc = {
       automatic = true;
       options = "--delete-older-than 14d";
