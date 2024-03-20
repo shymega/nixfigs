@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ inputs, lib, pkgs, ... }:
+{ inputs, lib, pkgs, options, config, ... }:
 let
   inherit (pkgs.stdenvNoCC) isDarwin;
   inherit (pkgs.stdenvNoCC) isLinux;
@@ -10,6 +10,13 @@ let
   isForeignNix = !isNixOS && isLinux && builtins.pathExists "/nix";
 in
 {
+  environment.etc."nix/overlays-compat/overlays.nix".text = ''
+    final: prev:
+    with prev.lib;
+    let overlays = (builtins.getFlake "path:/etc/nixos").nixosConfigurations.${config.networking.hostName}.config.nixpkgs.overlays; in
+      foldl' (flip extends) (_: prev) overlays final
+  '';
+
   nix = {
     settings = {
       accept-flake-config = true;
@@ -55,6 +62,9 @@ in
       automatic = true;
       dates = [ "06:00" ];
     };
+    nixPath =
+      options.nix.nixPath.default ++
+        [ "nixpkgs-overlays=/etc/nix/overlays-compat/" ];
     gc = {
       automatic = true;
       options = "--delete-older-than 14d";
