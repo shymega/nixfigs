@@ -32,6 +32,7 @@
     nixpkgs-shymega.url = "github:shymega/nixpkgs/master";
     shymacs.url = "github:shymega/shymacs";
     shycode.url = "github:shymega/shycode";
+    emacsconf2nix.url = "github:shymega/emacsconf2nix";
     nixfigs-priv.url = "github:shymega/nixfigs-priv/main";
     nur.url = "github:nix-community/NUR";
     devenv.url = "github:cachix/devenv/latest";
