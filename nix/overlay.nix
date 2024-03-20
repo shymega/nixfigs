@@ -28,6 +28,7 @@ let
     inputs.nur.overlay
     inputs.shycode.overlays.default
     inputs.shymacs.overlays.default
+    inputs.emacsconf2nix.overlays.default
   ];
 
   customOverlays = [
