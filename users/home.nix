@@ -108,8 +108,10 @@ in
       zoxide
     ] ++ [
       inputs.devenv.packages.${pkgs.system}.devenv
-    ] ++ (lib.optional (hostname == "NEO-LINUX") pkgs.asfp.android-studio-for-platform)
-    ++ (with pkgs; [
+    ] ++ (lib.optionals (hostname == "NEO-LINUX") [
+      pkgs.asfp.android-studio-for-platform
+      pkgs.android-studio
+    ]) ++ (with pkgs; [
       aws-sam-cli
       awscli2
       azure-cli
