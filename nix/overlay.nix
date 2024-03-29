@@ -23,9 +23,9 @@ let
     inputs.agenix.overlays.default
     inputs.android-nixpkgs.overlays.default
     inputs.cosmo-codios-codid.overlays.default
-    inputs.deploy-rs.overlay
+    inputs.deploy-rs.overlays.default
     inputs.nix-alien.overlays.default
-    inputs.nur.overlay
+    inputs.nur.overlays.default
     inputs.shycode.overlays.default
     inputs.shymacs.overlays.default
     inputs.emacsconf2nix.overlays.default
