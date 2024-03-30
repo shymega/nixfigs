@@ -28,6 +28,7 @@ let
       };
       modules = [
         inputs.agenix.homeManagerModules.default
+        inputs.nix-index-database.hmModules.nix-index
       ] ++ baseModules ++ extraHomeModules;
       extraSpecialArgs = { inherit self inputs nixpkgs username system hostname; };
     };
