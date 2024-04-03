@@ -1,6 +1,10 @@
 #!/usr/bin/env nix-shell
 #! nix-shell -p bash -p bash -p networkmanager
 
+# SPDX-FileCopyrightText: 2024 Dom Rodriguez
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
 IDENTIFIER="nm-05-wifi-toggle"
 
 INTERFACE="${1}"
