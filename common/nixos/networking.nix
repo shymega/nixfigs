@@ -4,9 +4,8 @@
 
 { self, config, pkgs, ... }:
 let
-  inherit (pkgs.stdenvNoCC) isLinux;
-  inherit (pkgs) lib;
-  isNixOS = builtins.pathExists /etc/nixos && builtins.pathExists /nix && isLinux;
+  inherit (self.libx) isNixOS;
+  inherit (pkgs.lib) optionals hasSuffix;
 in
 {
   networking.networkmanager = {

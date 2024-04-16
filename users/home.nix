@@ -2,15 +2,9 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ inputs, pkgs, config, hostname, username, ... }:
+{ self, inputs, pkgs, config, hostname, username, ... }:
 let
-  inherit (pkgs.stdenvNoCC) isDarwin;
-  homePrefix =
-    if isDarwin then
-      "/Users"
-    else
-      "/home";
-  homeDirectory = homePrefix + "/${config.home.username}";
+  inherit (self.libx) homePrefix;
 in
 {
   imports = [
