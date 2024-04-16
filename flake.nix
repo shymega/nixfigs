@@ -155,8 +155,14 @@
           };
         });
     in
+<<<<<<< HEAD
     rec {
       overlays = import ./modules/overlays.nix { inherit self inputs lib; };
+=======
+    {
+      overlays = import ./nix/overlay.nix { inherit self inputs lib; };
+      libx = import ./nix/utils.nix { inherit pkgs; };
+>>>>>>> 62438d84 (feat: Experimental use of `library` moduleSigned-off-by: Dom Rodriguez <shymega@shymega.org.uk>)
       devShells = forAllUpstreamSystems (system:
         let
           pkgs = import inputs.nixpkgs {

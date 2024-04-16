@@ -2,10 +2,10 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ config, pkgs, lib, ... }:
+{ self, config, pkgs, lib, ... }:
 let
   cfg = config.nixfigs.fonts;
-  inherit (pkgs.stdenvNoCC) isLinux;
+  inherit (self.libx) isLinux;
 in
 with lib;
 {

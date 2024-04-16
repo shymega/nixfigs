@@ -2,11 +2,9 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ pkgs, lib, ... }:
+{ self, lib, ... }:
 let
-  inherit (pkgs.stdenvNoCC) isDarwin;
-  isNixOS = builtins.pathExists "/etc/nixos" && builtins.pathExists "/nix" && pkgs.stdenvNoCC.isLinux;
-  inherit (pkgs.stdenvNoCC) isLinux;
+  inherit (self.libx) isDarwin isNixOS isLinux;
 in
 {
   programs.tmux = {

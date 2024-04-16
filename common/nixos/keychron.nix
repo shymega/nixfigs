@@ -2,11 +2,10 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ config, lib, pkgs, ... }:
+{ self, config, lib, pkgs, ... }:
 let
   cfg = config.nixfigs.input.keyboard;
-  inherit (pkgs.stdenvNoCC) isLinux;
-  isNixOS = builtins.pathExists "/etc/nixos" && builtins.pathExists "/nix" && isLinux;
+  inherit (self.libx) isNixOS;
 in
 with lib;
 {
