@@ -120,7 +120,7 @@ in
       weechatWithMyPlugins
       yubikey-manager-qt
       yubioath-flutter
-    ]) ++ (lib.optionals pkgs.stdenv.isx86_64 (with pkgs.unstable.jetbrains; [
+    ]) ++ (lib.optionals pkgs.stdenv.isx86_64 (with pkgs.jetbrains; [
       clion
       datagrip
       gateway
