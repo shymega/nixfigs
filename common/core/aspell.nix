@@ -2,10 +2,9 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ pkgs, lib, ... }:
+{ self, pkgs, lib, ... }:
 let
-  inherit (pkgs.stdenvNoCC) isLinux;
-  isNixOS = builtins.pathExists "/etc/nixos" && builtins.pathExists "/nix" && isLinux;
+  inherit (self.libx) isNixOS;
 in
 with lib;
 {

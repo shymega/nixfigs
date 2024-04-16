@@ -2,14 +2,9 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ inputs, pkgs, config, hostname, ... }:
+{ self, pkgs, config, hostname, ... }:
 let
-  inherit (pkgs.stdenvNoCC) isDarwin;
-  homePrefix =
-    if isDarwin then
-      "/Users"
-    else
-      "/home";
+  inherit (self.libx) homePrefix;
 in
 {
   imports = [ ./network-targets.nix ./programs/rofi.nix ];

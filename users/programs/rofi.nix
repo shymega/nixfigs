@@ -2,10 +2,9 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ lib, pkgs, ... }:
-
+{ self, lib, pkgs, ... }:
 let
-  inherit (pkgs.stdenv.hostPlatform) isLinux;
+  inherit (self.libx) isLinux;
 in
 lib.mkIf isLinux {
 

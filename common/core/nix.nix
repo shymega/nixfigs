@@ -2,12 +2,9 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ inputs, lib, pkgs, ... }:
+{ self, inputs, lib, pkgs, ... }:
 let
-  inherit (pkgs.stdenvNoCC) isDarwin;
-  inherit (pkgs.stdenvNoCC) isLinux;
-  isNixOS = builtins.pathExists "/etc/nixos" && builtins.pathExists "/nix" && isLinux;
-  isForeignNix = !isNixOS && isLinux && builtins.pathExists "/nix";
+  inherit (self.libx) isForeignNix isNixOS isDarwin;
 in
 {
   nix = {

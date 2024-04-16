@@ -150,6 +150,7 @@
     in
     {
       overlays = import ./nix/overlay.nix { inherit self inputs lib; };
+      libx = import ./nix/utils.nix { inherit pkgs; };
       devShells = forAllUpstreamSystems (system:
         let
           pkgs = import inputs.nixpkgs {
