@@ -78,10 +78,9 @@
       dnssec = "allow-downgrade";
       fallbackDns = [ "1.1.1.1" "1.0.0.1" ];
       extraConfig = ''
-        	DNS=8.8.8.8 8.8.4.4
+          DNS=1.1.1.1#1dot1dot1dot1.cloudflare-dns.com 1.0.0.1#1dot1dot1dot1.cloudflare-dns.com 2606:4700:4700::1111#1dot1dot1dot1.cloudflare-dns.com 2606:4700:4700::1001#1dot1dot1dot1.cloudflare-dns.com
           DNSOverTLS=opportunistic
       '';
-      #        DNS=1.1.1.1#1dot1dot1dot1.cloudflare-dns.com 1.0.0.1#1dot1dot1dot1.cloudflare-dns.com 2606:4700:4700::1111#1dot1dot1dot1.cloudflare-dns.com 2606:4700:4700::1001#1dot1dot1dot1.cloudflare-dns.com
     };
   };
 
