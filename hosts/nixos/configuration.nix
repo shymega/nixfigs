@@ -75,11 +75,11 @@
     geoclue2.enable = true;
     resolved = {
       enable = true;
-      dnssec = "allow-downgrade";
+      dnssec = "false";
+      dnsovertls = "opportunistic";
       fallbackDns = [ "1.1.1.1" "1.0.0.1" ];
       extraConfig = ''
-          DNS=1.1.1.1#1dot1dot1dot1.cloudflare-dns.com 1.0.0.1#1dot1dot1dot1.cloudflare-dns.com 2606:4700:4700::1111#1dot1dot1dot1.cloudflare-dns.com 2606:4700:4700::1001#1dot1dot1dot1.cloudflare-dns.com
-          DNSOverTLS=opportunistic
+        DNS=1.1.1.1#1dot1dot1dot1.cloudflare-dns.com 1.0.0.1#1dot1dot1dot1.cloudflare-dns.com 2606:4700:4700::1111#1dot1dot1dot1.cloudflare-dns.com 2606:4700:4700::1001#1dot1dot1dot1.cloudflare-dns.com
       '';
     };
   };
