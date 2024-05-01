@@ -111,8 +111,6 @@ in
     system = "x86_64-linux";
     hardwareModules = [
       inputs.hardware.nixosModules.lenovo-thinkpad-x270
-      inputs.hardware.nixosModules.common-cpu-intel
-      inputs.hardware.nixosModules.common-gpu-intel
       inputs.hardware.nixosModules.common-pc-ssd
       inputs.hardware.nixosModules.common-pc
     ];
