@@ -22,13 +22,12 @@ let
   defaultOverlays = [
     inputs.agenix.overlays.default
     inputs.android-nixpkgs.overlays.default
-    inputs.cosmo-codios-codid.overlays.default
     inputs.deploy-rs.overlays.default
+    inputs.emacsconf2nix.overlays.default
     inputs.nix-alien.overlays.default
     inputs.nur.overlay
     inputs.shycode.overlays.default
     inputs.shymacs.overlays.default
-    inputs.emacsconf2nix.overlays.default
   ];
 
   customOverlays = [
