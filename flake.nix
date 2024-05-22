@@ -28,6 +28,12 @@
     ];
   };
 
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+    systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];
+
+    imports = [ ./modules/parts ./overlays ./secrets ];
+  };
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -129,57 +135,4 @@
     bestool.url = "github:shymega/bestool/shymega-all-fixes";
     nix-gaming.url = "github:fufexan/nix-gaming";
   };
-
-  outputs = { self, ... } @ inputs:
-    let
-      inherit (inputs.nixpkgs) lib;
-
-      # TODO: Add RISC-V - specific Cache, and Nixpkgs. For Pine64/other RISC-V SoCs.
-      forAllUpstreamSystems = inputs.nixpkgs.lib.genAttrs [
-        "aarch64-darwin"
-        "aarch64-linux"
-        "x86_64-darwin"
-        "x86_64-linux"
-      ];
-      pkgs = forAllUpstreamSystems (system:
-        import inputs.nixpkgs {
-          inherit system;
-          overlays = builtins.attrValues self.overlays ++ [
-            (import ./pkgs/dwl/dwl.nix)
-          ];
-          config = {
-            allowUnfree = true;
-            allowBroken = false;
-            allowInsecure = false;
-            allowUnsupportedSystem = false;
-          };
-        });
-    in
-    rec {
-      overlays = import ./modules/overlays.nix { inherit self inputs lib; };
-      devShells = forAllUpstreamSystems (system:
-        let
-          pkgs = import inputs.nixpkgs {
-            inherit system;
-            overlays = builtins.attrValues self.overlays;
-            config = {
-              allowUnfree = true;
-              allowBroken = false;
-              allowInsecure = false;
-              allowUnsupportedSystem = false;
-            };
-          };
-        in
-        import ./modules/devshell.nix { inherit inputs pkgs self system; });
-
-      nixosConfigurations = (import ./modules/nixos.nix { inherit self inputs pkgs; }) // (import ./modules/wsl.nix { inherit self inputs pkgs; }) // (import ./modules/mobile-nixos.nix { inherit self inputs pkgs; }) // inputs.nixfigs-priv.outputs.nixosConfigurations;
-      homeConfigurations = import ./modules/home-manager.nix { inherit self inputs pkgs; };
-      nixOnDroidConfigurations = import ./modules/nix-on-droid.nix { inherit self inputs pkgs; };
-      darwinConfigurations = import ./modules/darwin.nix { inherit self inputs pkgs; };
-      secrets-system = import ./secrets/system;
-      secrets = secrets-system;
-      secrets-user = import ./secrets/user;
-      common-core = import ./common/core { inherit self inputs pkgs; };
-      common-nixos = import ./common/nixos { inherit self inputs pkgs; };
-    };
 }
