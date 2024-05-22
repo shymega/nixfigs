@@ -8,9 +8,9 @@ let
   importStableOverlay = overlay:
     lib.composeExtensions
       (_: _: { __inputs = inputs; })
-      (import (./overlays/stable + "/${overlay}"));
+      (import (./stable + "/${overlay}"));
 
-  stableOverlays = builtins.readDir ./overlays/stable;
+  stableOverlays = builtins.readDir ./stable;
 
   stableOverlaysWithImports = lib.mapAttrs'
     (overlay: _: lib.nameValuePair
@@ -31,10 +31,10 @@ let
   ];
 
   customOverlays = [
-    (import ./overlays/master.nix { inherit inputs lib; })
-    (import ./overlays/shymega.nix { inherit inputs lib; })
-    (import ./overlays/unstable.nix { inherit inputs lib; })
-    (import ./overlays/asfp.nix { inherit inputs; })
+    (import ./master.nix { inherit inputs lib; })
+    (import ./shymega.nix { inherit inputs lib; })
+    (import ./unstable.nix { inherit inputs lib; })
+    (import ./asfp.nix { inherit inputs; })
   ];
 
 in

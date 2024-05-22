@@ -24,6 +24,12 @@
     ];
   };
 
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+    systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];
+
+    imports = [ ./modules/parts ./overlays ./secrets ];
+  };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
@@ -37,140 +43,20 @@
     devenv.url = "github:cachix/devenv/latest";
     hardware.url = "github:nixos/nixos-hardware";
     impermanence.url = "github:nix-community/impermanence";
-    nixos-wsl = {
-      url = "github:nix-community/nixos-wsl";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
-    agenix = {
-      url = "github:ryantm/agenix";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        home-manager.follows = "home-manager";
-        darwin.follows = "nix-darwin";
-      };
-    };
-    nix-ld = {
-      url = "github:Mic92/nix-ld";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nix-alien = {
-      url = "github:thiagokokada/nix-alien";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        nix-index-database.follows = "nix-index-database";
-      };
-    };
-    nix-index-database = {
-      url = "github:Mic92/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nix-darwin = {
-      url = "github:LnL7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    deploy-rs = {
-      url = "github:serokell/deploy-rs";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
-      flake = false;
-    };
-    flake-utils.url = "github:numtide/flake-utils";
-    home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nix-on-droid = {
-      url = "github:nix-community/nix-on-droid/release-23.11";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    lanzaboote = {
-      url = "github:nix-community/lanzaboote";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-compat.follows = "flake-compat";
-        flake-utils.follows = "flake-utils";
-        pre-commit-hooks-nix.follows = "pre-commit-hooks";
-      };
-    };
-    pre-commit-hooks = {
-      url = "github:cachix/pre-commit-hooks.nix";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
-        flake-compat.follows = "flake-compat";
-      };
-    };
-    stylix = {
-      url = "github:danth/stylix";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        home-manager.follows = "home-manager";
-        flake-compat.follows = "flake-compat";
-      };
-    };
-    srvos = {
-      url = "github:nix-community/srvos";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    android-nixpkgs = {
-      url = "github:tadfisher/android-nixpkgs/stable";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixos-wsl.url = "github:nix-community/nixos-wsl";
+    agenix.url = "github:ryantm/agenix";
+    nix-ld.url = "github:Mic92/nix-ld";
+    nix-alien.url = "github:thiagokokada/nix-alien";
+    nix-index-database.url = "github:Mic92/nix-index-database";
+    nix-darwin.url = "github:LnL7/nix-darwin";
+    deploy-rs.url = "github:serokell/deploy-rs";
+    flake-compat.url = "github:edolstra/flake-compat";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    home-manager.url = "github:nix-community/home-manager/release-23.11";
+    nix-on-droid.url = "github:nix-community/nix-on-droid/release-23.11";
+    stylix.url = "github:danth/stylix";
+    srvos.url = "github:nix-community/srvos";
+    android-nixpkgs.url = "github:tadfisher/android-nixpkgs/stable";
     asfp.url = "github:robbins/nixpkgs/android-studio-for-platform";
   };
-
-  outputs = { self, ... } @ inputs:
-    let
-      inherit (inputs.nixpkgs) lib;
-
-      # TODO: Add RISC-V - specific Cache, and Nixpkgs. For Pine64/other RISC-V SoCs.
-      forAllUpstreamSystems = inputs.nixpkgs.lib.genAttrs [
-        "aarch64-darwin"
-        "aarch64-linux"
-        "x86_64-darwin"
-        "x86_64-linux"
-      ];
-      pkgs = forAllUpstreamSystems (system:
-        import inputs.nixpkgs {
-          inherit system;
-          overlays = builtins.attrValues self.overlays;
-          config = {
-            allowUnfree = true;
-            allowBroken = false;
-            allowInsecure = false;
-            allowUnsupportedSystem = false;
-          };
-        });
-    in
-    {
-      overlays = import ./nix/overlay.nix { inherit self inputs lib; };
-      devShells = forAllUpstreamSystems (system:
-        let
-          pkgs = import inputs.nixpkgs {
-            inherit system;
-            overlays = builtins.attrValues self.overlays;
-            config = {
-              allowUnfree = true;
-              allowBroken = false;
-              allowInsecure = false;
-              allowUnsupportedSystem = false;
-            };
-          };
-        in
-        import ./nix/devshell.nix { inherit inputs pkgs self system; });
-
-      nixosConfigurations = (import ./nix/nixos.nix { inherit self inputs pkgs; }) // (import ./nix/wsl.nix { inherit self inputs pkgs; }) // (import ./nix/mobile-nixos.nix { inherit self inputs pkgs; }) // inputs.nixfigs-priv.outputs.nixosConfigurations;
-      homeConfigurations = import ./nix/home-manager.nix { inherit self inputs pkgs; };
-      nixOnDroidConfigurations = import ./nix/nix-on-droid.nix { inherit self inputs pkgs; };
-      darwinConfigurations = import ./nix/darwin.nix { inherit self inputs pkgs; };
-      secrets = import ./secrets;
-      common-core = import ./common/core { inherit self inputs pkgs; };
-      common-nixos = import ./common/nixos { inherit self inputs pkgs; };
-    };
 }
