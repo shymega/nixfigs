@@ -29,9 +29,6 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
     nixpkgs-shymega.url = "github:shymega/nixpkgs/master";
-    shymacs.url = "github:shymega/shymacs";
-    shycode.url = "github:shymega/shycode";
-    emacsconf2nix.url = "github:shymega/emacsconf2nix";
     nixfigs-priv.url = "github:shymega/nixfigs-priv/main";
     nur.url = "github:nix-community/NUR";
     devenv.url = "github:cachix/devenv/latest";
@@ -95,7 +92,6 @@
         nixpkgs.follows = "nixpkgs";
         flake-compat.follows = "flake-compat";
         flake-utils.follows = "flake-utils";
-        pre-commit-hooks-nix.follows = "pre-commit-hooks";
       };
     };
     pre-commit-hooks = {
