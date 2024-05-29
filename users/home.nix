@@ -154,7 +154,13 @@ in
     mpd-discord-rpc.enable = true;
     mpris-proxy.enable = true;
     mpdris2.enable = true;
-    emacs.enable = true;
+    emacs = {
+      enable = true;
+      client.enable = true;
+      startWithUserSession = true;
+      socketActivation.enable = true;
+      package = pkgs.emacs29-pgtk;
+    };
     mpd = {
       enable = true;
       musicDirectory = "${config.home.homeDirectory}/Multimedia/Music/";
@@ -225,12 +231,7 @@ in
     fish.enable = true;
     emacs = {
       enable = true;
-      package = pkgs.emacsNativeComp;
-    };
-    doom-emacs = {
-      enable = true;
-      doomDir = "${homeDirectory}/.cpnfig/emacs.d/.doom.d";
-      emacs = pkgs.emacs29-pgtk;
+      package = pkgs.emacs29-pgtk;
     };
     taskwarrior = {
       enable = true;
