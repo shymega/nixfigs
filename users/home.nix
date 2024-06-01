@@ -25,7 +25,7 @@ in
 
   home = {
     username = "dzrodriguez";
-    homeDirectory = homeDirectory;
+    inherit homeDirectory;
     enableNixpkgsReleaseCheck = true;
     stateVersion = "23.11";
     packages = with pkgs.unstable; [
