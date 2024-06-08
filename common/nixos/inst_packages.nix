@@ -27,7 +27,4 @@
     usbutils
     wget
   ];
-  programs = {
-    nix-ld.enable = true;
-  };
 }
