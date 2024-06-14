@@ -252,5 +252,40 @@ in
     };
   };
   news.display = "silent";
-  systemd.user.tmpfiles.rules = [ "L %t/discord-ipc-0 - - - - app/com.discordapp.Discord/discord-ipc-0" ];
+
+  systemd.user =
+    let
+      atuinDataDir = "${homeDirectory}/.local/share/atuin";
+      atuinSocket = "${atuinDataDir}/atuin.sock";
+      atuinDaemonConfig = {
+        Description = "Atuin - Magical Shell History Daemon";
+        ConditionPathIsDirectory = atuinDataDir;
+        ConditionPathExists = "${homeDirectory}/.config/atuin/config.toml";
+      };
+      atuinSyncTimerConfig = {
+        Description = "Atuin - Magical Shell History Syncer";
+        ConditionPathIsDirectory = atuinDataDir;
+        ConditionPathExists = "${homeDirectory}/.config/atuin/config.toml";
+      };
+    in
+    {
+      tmpfiles.rules = [ "L %t/discord-ipc-0 - - - - app/com.discordapp.Discord/discord-ipc-0" ];
+      sockets.atuin-daemon = {
+        Unit = atuinDaemonConfig;
+        Install.WantedBy = [ "default.target" ];
+        Socket = {
+          ListenStream = atuinSocket;
+          Accept = false;
+          RemoveOnStop = true;
+          SocketMode = [ "0600" ];
+        };
+      };
+      services.atuin-daemon = {
+        Unit = atuinDaemonConfig // { Requires = [ "atuin-daemon.socket" ]; };
+        Service = {
+          ExecStart = "${pkgs.unstable.atuin}/bin/atuin daemon";
+          Environment = [ "ATUIN_LOG=info" ];
+        };
+      };
+    };
 }
