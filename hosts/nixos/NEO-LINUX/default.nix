@@ -93,7 +93,6 @@
     opengl = {
       enable = true;
       driSupport = false;
-      driSupport32Bit = false;
       extraPackages = pkgs.lib.mkForce (with pkgs; [
         amdvlk
       ]);
