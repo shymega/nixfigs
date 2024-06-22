@@ -26,7 +26,7 @@
       filter = lib.mkForce "bcm2711-rpi-4*.dtb";
     };
   };
-  system.stateVersion = "23.11";
+  system.stateVersion = "24.05";
 
   services = {
     zfs = {
