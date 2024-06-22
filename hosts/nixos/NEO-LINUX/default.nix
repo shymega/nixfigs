@@ -3,6 +3,9 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 { config, pkgs, ... }:
+let
+  enableXanmod = false;
+in
 {
   environment.etc."crypttab".text = ''
     homecrypt /dev/disk/by-label/HOMECRYPT /persist/etc/.homecrypt.bin
@@ -14,8 +17,11 @@
   boot = {
     supportedFilesystems = [ "ntfs" "zfs" ];
 
-    kernelPackages = pkgs.linuxPackages_xanmod_latest;
-    # kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+    kernelPackages = if enableXanmod then
+      pkgs.linuxPackages_xanmod_latest
+    else
+      config.boot.zfs.package.latestCompatibleLinuxPackages;
+    
     extraModulePackages = with config.boot.kernelPackages; [ zfs ];
 
     extraModprobeConfig = ''
