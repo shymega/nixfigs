@@ -3,6 +3,9 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 { config, pkgs, lib, ... }:
+let
+  enableXanmod = false;
+in
 {
   networking.hostName = "TRINITY-LINUX";
   networking.hostId = "65ad6c0b";
@@ -11,8 +14,10 @@
   boot = {
     supportedFilesystems = [ "zfs" "ntfs" ];
 
-    kernelPackages = pkgs.linuxPackages_xanmod_latest;
-    # kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+    kernelPackages = if enableXanmod then
+      pkgs.linuxPackages_xanmod_latest
+    else
+      config.boot.zfs.package.latestCompatibleLinuxPackages;
     extraModulePackages = with config.boot.kernelPackages; [ zfs ];
 
     extraModprobeConfig = ''
