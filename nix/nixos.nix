@@ -124,8 +124,9 @@ in
   GRDN-BED-UNIT = mkNixosConfig {
     hostname = "GRDN-BED-UNIT";
     system = "aarch64-linux";
-    extraModules = [
-      ../hosts/nixos/configuration.nix
+    baseModules = [ ];
+    hardwareModules = [
+      inputs.hardware.nixosModules.raspberry-pi-4
     ];
   };
 
