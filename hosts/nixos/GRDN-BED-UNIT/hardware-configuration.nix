@@ -14,7 +14,6 @@
       "pcie_brcmstb" # required for the pcie bus to work
       "reset-raspberrypi" # required for vl805 firmware to load
     ];
-    supportedFilesystems = [ "zfs" ];
 
     kernelParams = lib.mkAfter [
       "8250.nr_uarts=1"
@@ -26,14 +25,17 @@
 
     loader = {
       grub.enable = false;
-      systemd-boot.enable = false;
+      generic-extlinux-compatible.enable = lib.mkForce false;
+      efi.canTouchEfiVariables = true;
+      efi.efiSysMountPoint = "/boot/efi";
+      systemd-boot.enable = true;
     };
 
     fileSystems = {
       "/" =
         {
           device = "/dev/disk/by-label/NIXOS_SD";
-          fsType = "ext4";
+          fsType = "xfs";
           options = [ "noatime" ];
         };
 
@@ -44,6 +46,14 @@
           options = [ "ro" "nofail" ];
           neededForBoot = true;
         };
+
+      "/boot" =
+        {
+          device = "/dev/disk/by-label/ESP";
+          fsType = "vfat";
+          neededForBoot = true;
+        };
+
     };
   };
 }
