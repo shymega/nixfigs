@@ -58,11 +58,6 @@
       enable = true;
       browsing = true;
       drivers = with pkgs; [
-        epson-escpr
-        brlaser
-        gutenprint
-        gutenprintBin
-        hplip
         hplipWithPlugin
       ];
     };
@@ -146,11 +141,6 @@
   hardware.sane = {
     enable = true;
     extraBackends = with pkgs; [
-      brlaser
-      epson-escpr
-      gutenprint
-      gutenprintBin
-      hplip
       hplipWithPlugin
     ];
   };
