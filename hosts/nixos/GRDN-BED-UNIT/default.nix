@@ -4,11 +4,6 @@
 
 { inputs, pkgs, lib, ... }:
 {
-  imports = [
-    inputs.hardware.nixosModules.raspberry-pi-4
-    ./hardware-configuration.nix
-  ];
-
   time.timeZone = "Europe/London";
 
   networking = {
