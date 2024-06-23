@@ -30,30 +30,29 @@
       efi.efiSysMountPoint = "/boot/efi";
       systemd-boot.enable = true;
     };
+  };
 
-    fileSystems = {
-      "/" =
-        {
-          device = "/dev/disk/by-label/NIXOS_SD";
-          fsType = "xfs";
-          options = [ "noatime" ];
-        };
+  fileSystems = {
+    "/" =
+      {
+        device = "/dev/disk/by-label/NIXOS_SD";
+        fsType = "xfs";
+        options = [ "noatime" ];
+      };
 
-      "/firmware" =
-        {
-          device = "/dev/disk/by-label/FIRMWARE";
-          fsType = "vfat";
-          options = [ "ro" "nofail" ];
-          neededForBoot = true;
-        };
+    "/firmware" =
+      {
+        device = "/dev/disk/by-label/FIRMWARE";
+        fsType = "vfat";
+        options = [ "ro" "nofail" ];
+        neededForBoot = true;
+      };
 
-      "/boot" =
-        {
-          device = "/dev/disk/by-label/ESP";
-          fsType = "vfat";
-          neededForBoot = true;
-        };
-
-    };
+    "/boot" =
+      {
+        device = "/dev/disk/by-label/ESP";
+        fsType = "vfat";
+        neededForBoot = true;
+      };
   };
 }
