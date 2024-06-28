@@ -69,6 +69,7 @@ in
       leafnode
       maven
       mkcert
+      moneydance
       mpc-cli
       mpv
       mupdf
