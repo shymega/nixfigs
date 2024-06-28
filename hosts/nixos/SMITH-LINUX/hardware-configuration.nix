@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ lib, modulesPath, ... }:
+{ lib, ... }:
 {
   boot = {
     initrd.availableKernelModules = lib.mkForce [
