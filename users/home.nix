@@ -118,7 +118,7 @@ in
       zip
       zoxide
     ] ++ (pkgs.lib.optionals (hostname == "NEO-LINUX") [
-      pkgs.android-studio-for-platform
+      pkgs.unstable.android-studio-for-platform
       pkgs.android-studio
     ]) ++ (with pkgs; [
       aws-sam-cli
