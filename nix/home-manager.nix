@@ -42,6 +42,14 @@ in
       ../users
     ];
   };
+  "dzrodriguez@MORPHEUS-LINUX" = mkHomeConfig {
+    username = "dzrodriguez";
+    system = "x86_64-linux";
+    hostname = "MORPHEUS-LINUX";
+    extraHomeModules = [
+      ../users
+    ];
+  };
   "dzrodriguez@TRINITY-LINUX" = mkHomeConfig {
     username = "dzrodriguez";
     system = "x86_64-linux";
