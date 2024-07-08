@@ -98,9 +98,23 @@ in
 
   ## End UMPC (GPD P3) ##
 
-  ## Gaming Handheld (GPD Win Max 2 (2023)) ##
-  ## TO BE ADDED. ##
-  ## End Gaming Handheld (GPD Win Max 2 (2023) ##
+  ## Gaming Handheld (GPD Win Max 2 (2024)) ##
+
+  MORPHEUS-LINUX = mkNixosConfig {
+    hostname = "MORPHEUS-LINUX";
+    system = "x86_64-linux";
+    hardwareModules = [
+      inputs.hardware.nixosModules.common-cpu-amd
+      inputs.hardware.nixosModules.common-gpu-amd
+      inputs.hardware.nixosModules.common-pc-ssd
+      inputs.hardware.nixosModules.common-pc
+    ];
+    extraModules = [
+      ../hosts/nixos/configuration.nix
+    ];
+  };
+
+  ## End Gaming Handheld (GPD Win Max 2 (2024) ##
 
   ### End UMPC devices ###
 
@@ -132,21 +146,13 @@ in
 
   ### Handhelds ###
 
-  ## Gaming Handheld (Steam Deck (OLED/1TB)) ##
+  ## Gaming Handheld (Steam Deck (OLED/2TB)) ##
   ## TO BE ADDED. ##
-  ## End Gaming Handheld (Steam Deck (OLED/1TB)) ##
+  ## End Gaming Handheld (Steam Deck (OLED/2TB)) ##
 
   ### End Handhelds ###
 
   ### Experimental Device Ports ###
-
-  ## RISC-V Experimental Tablet (Pine64 PineTab2-V) ##
-  ## TO BE ADDED. ##
-  ## End RISC-v Experimental Tablet (Pine64 PineTab2-V) ##
-
-  ## ARM64 Experimental Tablet (Pine64 PineTab2 ARM64) ##
-  ## TO BE ADDED. ##
-  ## End ARM64 Experimental Tablet (Pine64 PineTab2 ARM) ##
 
   ## ClockworkPi uConsole (CM4) ##
   # Received, Debian installed. Work ongoing to upstream DTB and driver patches. #
