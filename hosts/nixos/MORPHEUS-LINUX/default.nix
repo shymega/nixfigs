@@ -137,7 +137,19 @@ in
 
   programs.steam = {
     enable = true;
+    gamescopeSession.enable = true;
+    extest.enable = true;
+    package = pkgs.steam.override {
+      extraPkgs = pkgs:
+        with pkgs; [
+          python3Full
+          python3Packages.pip
+          python3Packages.tkinter
+          python3Packages.virtualenv
+        ];
+    };
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = false;
+    localNetworkGameTransfers.openFirewall = true;
   };
 }
