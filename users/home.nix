@@ -127,7 +127,12 @@ in
       gitkraken
       google-cloud-sdk
       isync-patched
+      lutris
+      protontricks
+      protonup-qt
       weechatWithMyPlugins
+      wineWowPackages.stable
+      winetricks
       yubikey-manager-qt
       yubioath-flutter
     ]) ++ (with pkgs; lib.optionals stdenv.isx86_64 (with pkgs.unstable.jetbrains; [
