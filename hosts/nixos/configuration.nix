@@ -145,8 +145,11 @@
 
   system.stateVersion = "24.05";
 
-  nixfigs.fonts = {
-    enable = true;
-    xdg.enable = true;
+  nixfigs = {
+    fonts = {
+      enable = true;
+      xdg.enable = true;
+    };
+    shells.fish.enable = true;
   };
 }
