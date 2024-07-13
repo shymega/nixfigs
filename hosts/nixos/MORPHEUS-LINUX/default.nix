@@ -151,6 +151,7 @@ in
           steamtinkerlaunch
           wineWowPackages.stable
           winetricks
+          wemod-launcher
         ];
     };
     remotePlay.openFirewall = false;
