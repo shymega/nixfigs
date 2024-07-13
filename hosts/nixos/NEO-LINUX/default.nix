@@ -152,7 +152,7 @@ in
           wemod-launcher
           wineWowPackages.stable
           winetricks
-      ];
+        ];
     };
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
