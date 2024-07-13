@@ -8,6 +8,5 @@
     config.common.default = "gtk";
     wlr.enable = true;
     xdgOpenUsePortal = true;
-    extraPortals = with pkgs; [ xdg-desktop-portal-kde xdg-desktop-portal-gnome xdg-desktop-portal-gtk ];
   };
 }
