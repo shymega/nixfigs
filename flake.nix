@@ -114,8 +114,8 @@
       url = "github:tadfisher/android-nixpkgs/stable";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    asfp.url = "github:robbins/nixpkgs/android-studio-for-platform";
     nix-doom-emacs-unstraightened.url = "github:marienz/nix-doom-emacs-unstraightened";
+    wemod-launcher.url = "github:shymega/wemod-launcher/refactor-shymega";
   };
 
   outputs = { self, ... } @ inputs:
