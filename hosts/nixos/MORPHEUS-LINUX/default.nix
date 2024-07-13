@@ -145,7 +145,6 @@ in
           protonup-qt
           python3Full
           python3Packages.pip
-          python3Packages.tkinter
           python3Packages.virtualenv
           steamcmd
           steamtinkerlaunch
