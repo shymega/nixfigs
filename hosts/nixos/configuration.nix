@@ -50,7 +50,11 @@
   };
 
   services = {
-    avahi.enable = true;
+    avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
+    };
     flatpak.enable = true;
     dbus.enable = true;
     openssh.enable = true;
@@ -59,6 +63,10 @@
       browsing = true;
       drivers = with pkgs; [
         hplipWithPlugin
+        gutenprint
+        gutenprintBin
+        samsung-unified-linux-driver
+        brlaser
       ];
     };
     saned.enable = true;
@@ -140,6 +148,7 @@
     enable = true;
     extraBackends = with pkgs; [
       hplipWithPlugin
+      epkowa
     ];
   };
 
