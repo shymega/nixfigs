@@ -82,7 +82,7 @@ in
       unitConfig.DefaultDependencies = "no";
       serviceConfig.Type = "oneshot";
       script = ''
-        zfs rollback -r tank/local/root@blank && echo "rollback complete"
+        zfs rollback -r tank/local/root@blank
       '';
     };
   };
