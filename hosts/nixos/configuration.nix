@@ -77,6 +77,7 @@
     zerotierone.joinNetworks = [ "159924d6300f2e03" "a09acf023309eb36" "9bee8941b58d20f4" "3efa5cb78ad4744a" ];
     geoclue2 = {
       enable = true;
+      enableDemoAgent = lib.mkDefault true;
       appConfig = {
         redshift = {
           isAllowed = true;
