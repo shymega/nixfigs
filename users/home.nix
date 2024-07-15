@@ -205,7 +205,7 @@ in
 
   age = {
     secrets = {
-      atuin_key.file = "../secrets/atuin_key.age";
+      atuin_key.file = ../secrets/atuin_key.age;
     };
     identityPaths = [
       "/persist/etc/ssh/ssh_host_ed25519_key"
