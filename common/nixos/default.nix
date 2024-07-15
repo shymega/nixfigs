@@ -21,5 +21,6 @@
     ./wayland.nix
     ./x11.nix
     ./xdg.nix
+    ./utils
   ];
 }
