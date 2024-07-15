@@ -12,6 +12,7 @@
       postfix_sasl_passwd.file = ./postfix_sasl_passwd.age;
       postfix_sender_relay.file = ./postfix_sender_relay.age;
       user_dzrodriguez.file = ./user_dzrodriguez.age;
+      atuin_key.file = ./atuin_key.age;
     };
   };
 }
