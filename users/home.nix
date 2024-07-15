@@ -127,10 +127,11 @@ in
       google-cloud-sdk
       isync-patched
       lutris
+      offlineimap
       protontricks
       protonup-qt
       steamcmd
-      steamtinkerlaunch
+      totp-cli
       weechatWithMyPlugins
       wineWowPackages.stable
       winetricks
