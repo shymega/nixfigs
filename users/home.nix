@@ -31,7 +31,6 @@ in
     packages = with pkgs.unstable; [
       android-tools
       ansible
-      atuin
       b4
       bat
       bc
@@ -199,6 +198,9 @@ in
   };
 
   age = {
+    secrets = {
+      atuin_key.file = "../secrets/atuin_key.age";
+    };
     identityPaths = [
       "/persist/etc/ssh/ssh_host_ed25519_key"
       "/etc/ssh/ssh_host_ed25519_key"
@@ -206,6 +208,25 @@ in
   };
 
   programs = {
+    atuin = {
+      enable = true;
+      settings = {
+        key_path = config.age.secrets.atuin_key.path;
+        sync_address = "https://shynet-atuin-server.fly.dev";
+        auto_sync = false;
+        dialect = "uk";
+        secrets_filter = true;
+        enter_accept = false;
+        workspaces = true;
+        sync = {
+          records = true;
+        };
+        daemon = {
+          enabled = true;
+          systemd_socket = true;
+        };
+      };
+    };
     nix-index-database.comma.enable = true;
     nix-index.enable = true;
     rbw.enable = true;
@@ -293,8 +314,20 @@ in
       services.atuin-daemon = {
         Unit = atuinDaemonConfig // { Requires = [ "atuin-daemon.socket" ]; };
         Service = {
-          ExecStart = "${pkgs.unstable.atuin}/bin/atuin daemon";
-          Environment = [ "ATUIN_LOG=info" ];
+          ExecStart = "${pkgs.atuin}/bin/atuin daemon";
+        };
+      };
+      services.atuin-sync = {
+        Unit = atuinSyncTimerConfig;
+        Service = {
+          ExecStart = "${pkgs.atuin}/bin/atuin daemon";
+        };
+      };
+      timers.atuin-sync = {
+        Unit = atuinSyncTimerConfig;
+        Timer = {
+          OnBootSec = "1min";
+          OnCalendar = "OnCalendar=*:0/15";
         };
       };
     };
