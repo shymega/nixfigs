@@ -5,6 +5,7 @@
 final: prev: {
   offlineimap = prev.offlineimap.overrideAttrs {
     version = "git";
+    dontPatch = true;
     src = builtins.fetchGit {
       url = "https://github.com/shymega/OfflineIMAP3";
       ref = "shymega-fixes";
