@@ -1,4 +1,5 @@
 { system, ... }:
-{ imports = [./network-utils.nix ./sync.nix];
+{
+  imports = [ ./network-utils.nix ./sync.nix ];
 }
 
