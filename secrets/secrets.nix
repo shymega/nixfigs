@@ -31,9 +31,8 @@ let
   allKeys = all-machines ++ all-users;
 in
 {
-  "postfix_sasl_passwd.age".publicKeys = personal;
-  "postfix_sender_relay.age".publicKeys = personal;
-  "user_dzrodriguez.age".publicKeys = personal ++ rnet;
-  "atuin_key.age".publicKeys = allKeys;
-  "geoclue_url.age".publicKeys = personal-machines;
+  "./system/postfix_sasl_passwd.age".publicKeys = personal;
+  "./system/postfix_sender_relay.age".publicKeys = personal;
+  "./system/user_dzrodriguez.age".publicKeys = personal ++ rnet;
+  "./system/geoclue_url.age".publicKeys = personal-machines;
 }
