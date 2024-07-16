@@ -2,13 +2,17 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ config, ... }: {
+{ config, ... }:
+let
+  userHome = if config.networking.hostName == "MORPHEUS-LINUX" then config.users.users."dominic.rodriguez".home else config.users.users.dzrodriguez.home;
+in
+{
   services.dovecot2 = {
     enable = true;
     user = "dzrodriguez";
     group = "users";
     mailLocation =
-      "maildir:${config.users.users.dzrodriguez.home}/.mail/%d/%u/:LAYOUT=fs:INBOX=${config.users.users.dzrodriguez.home}/.mail/%d/%u/INBOX";
+      "maildir:${config.users.users.dzrodriguez.home}/.mail/%d/%u/:LAYOUT=fs:INBOX=${userHome}/.mail/%d/%u/INBOX";
     enablePAM = false;
     enableImap = true;
     enablePop3 = false;
