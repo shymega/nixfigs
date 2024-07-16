@@ -13,7 +13,7 @@ in
       isNormalUser = true;
       shell = pkgs.zsh;
       description = "Dom RODRIGUEZ";
-      hashedPasswordFile = config.age.secrets.user_dominic.rodriguez.path;
+      hashedPasswordFile = config.age.secrets."user_dominic.rodriguez".path;
       subUidRanges = [{
         startUid = 100000;
         count = 65536;
