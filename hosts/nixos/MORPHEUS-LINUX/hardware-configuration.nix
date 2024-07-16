@@ -5,20 +5,10 @@
 { config, lib, ... }:
 {
   imports = [ ./disks.nix ];
-  boot = {
-    initrd.availableKernelModules = [
-      "nvme"
-      "xhci_pci"
-      "thunderbolt"
-      "usbhid"
-      "usb_storage"
-      "sd_mod"
-      "hid_apple"
-    ];
-    initrd.kernelModules = [ "dm-snapshot" "amdgpu" ];
-    kernelModules = [ "kvm-amd" ];
-    extraModulePackages = [ ];
-  };
+  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usbhid" "sdhci_pci" "hid_apple" ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-amd" ];
+  boot.extraModulePackages = [ ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode =
