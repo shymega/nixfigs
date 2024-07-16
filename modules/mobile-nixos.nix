@@ -30,7 +30,7 @@ let
       home-manager-path = inputs.home-manager.outPath;
       modules = [
         inputs.agenix.nixosModules.default
-        ../secrets
+        ../secrets/system
         (../hosts/android/nix-on-droid + "/${hostname}")
       ] ++ baseModules ++ homeModules ++ extraModules;
       extraSpecialArgs = { inherit self inputs nixpkgs; };
