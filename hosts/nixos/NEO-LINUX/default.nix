@@ -12,7 +12,6 @@ in
   '';
   networking.hostName = "NEO-LINUX";
   networking.hostId = "7f9080b5";
-  time.timeZone = "Europe/London";
 
   boot = {
     supportedFilesystems = [ "ntfs" "zfs" ];
