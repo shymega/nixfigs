@@ -9,7 +9,6 @@ in
 {
   networking.hostName = "TRINITY-LINUX";
   networking.hostId = "65ad6c0b";
-  time.timeZone = "Europe/London";
 
   boot = {
     supportedFilesystems = [ "zfs" "ntfs" ];
