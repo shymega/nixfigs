@@ -4,8 +4,6 @@
 
 { inputs, pkgs, lib, ... }:
 {
-  time.timeZone = "Europe/London";
-
   networking = {
     hostName = "GRDN-BED-UNIT";
   };
