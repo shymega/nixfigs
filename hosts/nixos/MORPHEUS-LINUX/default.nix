@@ -7,11 +7,8 @@ let
   enableXanmod = false;
 in
 {
-  environment.etc."crypttab".text = ''
-    homecrypt /dev/disk/by-label/HOMECRYPT /persist/etc/.homecrypt.bin
-  '';
   networking.hostName = "MORPHEUS-LINUX";
-  networking.hostId = "9f3120c5";
+  networking.hostId = "e8a03c89";
 
   boot = {
     supportedFilesystems = [ "ntfs" "zfs" ];
@@ -29,19 +26,9 @@ in
       options kvm ignore_msrs=1 report_ignored_msrs=0
     '';
 
-    zfs.devNodes = "/dev/MORPHEUS-LINUX/ROOT";
-
     kernel.sysctl = {
       "fs.inotify.max_user_watches" = "819200";
       "kernel.printk" = "3 3 3 3";
-    };
-
-    initrd.luks.devices = {
-      nixos = {
-        device = "/dev/disk/by-label/NIXOS_PART";
-        preLVM = true;
-        allowDiscards = true;
-      };
     };
 
     plymouth = {
