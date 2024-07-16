@@ -165,32 +165,32 @@ in
 
   ## ClockworkPi uConsole (CM4) ##
   # Received, Debian installed. Work ongoing to upstream DTB and driver patches. #
-#  CLOCKWORK-UC-CM4 = mkNixosConfig {
-#    hostname = "CLOCKWORK-UC-CM4";
-#    system = "aarch64-linux";
-#    baseModules = [ ];
-#    hardwareModules = [
-#      inputs.hardware.nixosModules.raspberry-pi-4
-#    ];
-#    extraModules = [
-#      "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-#    ];
-#  };
+  #  CLOCKWORK-UC-CM4 = mkNixosConfig {
+  #    hostname = "CLOCKWORK-UC-CM4";
+  #    system = "aarch64-linux";
+  #    baseModules = [ ];
+  #    hardwareModules = [
+  #      inputs.hardware.nixosModules.raspberry-pi-4
+  #    ];
+  #    extraModules = [
+  #      "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+  #    ];
+  #  };
 
   ## End ClockworkPi uConsole (CM4) ##
 
   ## ClockworkPi DevTerm (CM4) ##
-#  CLOCKWORK-DT-CM4 = mkNixosConfig {
-#    hostname = "CLOCKWORK-DT-CM4";
-#    system = "aarch64-linux";
-#    baseModules = [ ];
-#    hardwareModules = [
-#      inputs.hardware.nixosModules.raspberry-pi-4
-#    ];
-#    extraModules = [
-#      "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-#    ];
-#  };
+  #  CLOCKWORK-DT-CM4 = mkNixosConfig {
+  #    hostname = "CLOCKWORK-DT-CM4";
+  #    system = "aarch64-linux";
+  #    baseModules = [ ];
+  #    hardwareModules = [
+  #      inputs.hardware.nixosModules.raspberry-pi-4
+  #    ];
+  #    extraModules = [
+  #      "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+  #    ];
+  #  };
   ## End ClockworkPi DevTerm (CM4) ##
 
   ### End Experimental Device Ports ###
