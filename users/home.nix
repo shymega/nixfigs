@@ -328,7 +328,7 @@ in
         atuin-sync = {
           Unit = atuinSyncTimerConfig;
           Service = {
-            ExecStart = "${pkgs.unstable.atuin}/bin/atuin daemon";
+            ExecStart = "${pkgs.unstable.atuin}/bin/atuin sync";
           };
         };
       };
