@@ -42,8 +42,8 @@ in
       ../users
     ];
   };
-  "dzrodriguez@MORPHEUS-LINUX" = mkHomeConfig {
-    username = "dzrodriguez";
+  "dominic.rodriguez@MORPHEUS-LINUX" = mkHomeConfig {
+    username = "dominic.rodriguez";
     system = "x86_64-linux";
     hostname = "MORPHEUS-LINUX";
     extraHomeModules = [
