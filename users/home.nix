@@ -142,7 +142,7 @@ in
       protontricks
       protonup-qt
       steamcmd
-      totp-cli
+      totp
       weechatWithMyPlugins
       wineWowPackages.stable
       winetricks
