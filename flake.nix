@@ -142,7 +142,7 @@
           };
         });
     in
-    {
+    rec {
       overlays = import ./modules/overlays.nix { inherit self inputs lib; };
       devShells = forAllUpstreamSystems (system:
         let
@@ -163,7 +163,9 @@
       homeConfigurations = import ./modules/home-manager.nix { inherit self inputs pkgs; };
       nixOnDroidConfigurations = import ./modules/nix-on-droid.nix { inherit self inputs pkgs; };
       darwinConfigurations = import ./modules/darwin.nix { inherit self inputs pkgs; };
-      secrets = import ./secrets;
+      secrets-system = import ./secrets/system;
+      secrets = secrets-system
+      secrets-user = import ./secrets/user;
       common-core = import ./common/core { inherit self inputs pkgs; };
       common-nixos = import ./common/nixos { inherit self inputs pkgs; };
     };
