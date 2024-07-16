@@ -113,7 +113,7 @@ in
       inputs.hardware.nixosModules.common-gpu-amd
       inputs.hardware.nixosModules.common-pc-ssd
       inputs.hardware.nixosModules.common-pc
-      inputs.hardware.nixosModules.common-gpd-win-max-2-2023
+      inputs.hardware.nixosModules.gpd-win-max-2-2023
     ];
     extraModules = [
       ../hosts/nixos/configuration.nix
