@@ -15,7 +15,7 @@ let
 
   personal-machines = [ NEO-LINUX TRINITY-LINUX TWINS-LINUX ];
   personal = personal-users ++ personal-machines;
-  
+
   work-machines = [ ];
   work-users = [ ];
 
