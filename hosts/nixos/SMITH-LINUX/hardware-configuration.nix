@@ -20,15 +20,6 @@
       "cma=128M"
       "kunit.enable=0"
     ];
-
-    loader = {
-      grub.enable = false;
-      generic-extlinux-compatible.enable = lib.mkForce false;
-      efi.canTouchEfiVariables = true;
-      efi.efiSysMountPoint = "/boot/efi";
-      systemd-boot.enable = true;
-    };
-
   };
 
   fileSystems = {
@@ -38,19 +29,6 @@
         fsType = "ext4";
         options = [ "noatime" ];
         neededForBoot = true;
-      };
-    "/boot" =
-      {
-        device = "/dev/disk/by-label/ESP";
-        fsType = "vfat";
-        neededForBoot = true;
-      };
-    "/firmware" =
-      {
-        device = "/dev/disk/by-label/FIRMWARE";
-        fsType = "vfat";
-        options = [ "ro" "nofail" ];
-        neededForBoot = false;
       };
   };
 }
