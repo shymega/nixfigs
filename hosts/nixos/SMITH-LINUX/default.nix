@@ -4,7 +4,6 @@
 
 { pkgs, lib, ... }:
 {
-  time.timeZone = "Europe/London";
 
   networking = {
     hostName = "SMITH-LINUX";
