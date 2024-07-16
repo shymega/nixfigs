@@ -38,7 +38,7 @@ let
             inputs.deckcheatz.packages.${system}.default
           ];
         }
-        ../secrets
+        ../secrets/system
         (../hosts/nixos + "/${hostname}")
         (../hosts/nixos + "/${hostname}" + "/hardware-configuration.nix")
       ] ++ baseModules ++ hardwareModules ++ homeModules ++ extraModules;
