@@ -134,6 +134,7 @@ in
       aws-sam-cli
       awscli2
       azure-cli
+      dwl
       gitkraken
       google-cloud-sdk
       isync-patched
