@@ -140,6 +140,15 @@
           inherit system;
           overlays = builtins.attrValues self.overlays ++ [
             (final: prev: {
+              offlineimap-shymega = prev.offlineimap.overrideAttrs (finalAttrs: prevAttrs: {
+                version = "git";
+                src = builtins.fetchGit {
+                  url = "https://github.com/shymega/OfflineIMAP3";
+                  ref = "shymega-fixes";
+                };
+              });
+            })
+            (final: prev: {
               dwl = pkgs.dwl.overrideAttrs
                 (finalAttrs: {
                   src = inputs.dwl-source;
