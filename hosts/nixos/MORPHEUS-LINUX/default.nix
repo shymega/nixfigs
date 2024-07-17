@@ -137,6 +137,7 @@ in
         enable = true;
         interval = "Sat *-*-* 05:00:00";
       };
+      autoSnapshot.enable = true;
     };
     xserver = {
       enable = true;
