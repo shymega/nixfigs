@@ -79,7 +79,7 @@ in
     };
     saned.enable = true;
     zerotierone.enable = true;
-    zerotierone.joinNetworks = [ "159924d6300f2e03" "a09acf023309eb36" "9bee8941b58d20f4" "3efa5cb78ad4744a" ];
+    zerotierone.joinNetworks = builtins.split "\n" config.age.secrets.zerotier_networks.path;
     geoclue2 = {
       enable = true;
       enableDemoAgent = lib.mkForce true;
