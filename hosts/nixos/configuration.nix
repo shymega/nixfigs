@@ -118,6 +118,8 @@ in
     adb.enable = true;
     mosh.enable = true;
     dconf.enable = true;
+    xwayland.enable = true;
+
     _1password = {
       enable = true;
       package = pkgs.unstable._1password;
