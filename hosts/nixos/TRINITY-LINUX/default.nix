@@ -101,7 +101,7 @@ in
   };
   services = {
     thermald.enable = true;
-    power-profiles-daemon.enable = true;
+    power-profiles-daemon.enable = pkgs.lib.mkForce false;
     zfs = {
       trim = {
         enable = true;
