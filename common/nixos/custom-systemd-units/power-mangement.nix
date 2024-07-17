@@ -35,17 +35,19 @@ in
         '';
       };
 
-      powertop = lib.mkIf (hostName == "TRINITY-LINUX" || hostName == "TWINS-LINUX") {
-        description = "Auto-tune Power Management with powertop";
-        unitConfig = { RefuseManualStart = true; };
-        path = with pkgs; [
-          powertop
-        ];
-        serviceConfig.Type = "oneshot";
-        script = ''
-          powertop --auto-tune
-        '';
-      };
+      powertop = lib.mkIf
+        (hostName == "TRINITY-LINUX" || hostName == "TWINS-LINUX")
+        {
+          description = "Auto-tune Power Management with powertop";
+          unitConfig = { RefuseManualStart = true; };
+          path = with pkgs; [
+            powertop
+          ];
+          serviceConfig.Type = "oneshot";
+          script = ''
+            powertop --auto-tune
+          '';
+        };
 
       gpd-p3-reset-keyboard = lib.mkIf (hostName == "TRINITY-LINUX") {
         description = "Reset keyboard on the GPD Pocket 3 after Powertop runs";
@@ -61,6 +63,34 @@ in
         serviceConfig.Type = "oneshot";
         script = ''
           echo 'on' > /sys/bus/usb/devices/3-3/power/control
+        '';
+      };
+
+      gpd-wm2-2024-fixes = lib.mkIf (hostName == "MORHPEUS-LINUX") {
+        description = "Fix hw on GPD WM2 2024";
+        wantedBy = [
+          "ac.target"
+          "multi-user.target"
+          "battery.target"
+        ];
+        path = with pkgs; [
+          coreutils
+          awk
+          bash
+        ];
+        serviceConfig.Type = "oneshot";
+        script = ''
+          	  echo 0 > /sys/bus/usb/devices/usb1/1-4/authorized
+          	  echo disabled > /sys/bus/i2c/devices/i2c-GXTP7385:00/power/wakeup
+          	  echo disabled > /sys/bus/i2c/devices/i2c-PNP0C50:00/power/wakeup
+          	  for i in $(cat /proc/acpi/wakeup|grep enabled|awk '{print $1}'|xargs); do 
+          	  	case $i in
+          		 SLPB|XHCI)
+          		   ;;
+          		 *) 
+          		   echo $i | tee /proc/acpi/wakeup;
+          		 esac; 
+          	  done
         '';
       };
 
