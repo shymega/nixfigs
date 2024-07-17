@@ -12,6 +12,7 @@
       postfix_sender_relay.file = ./postfix_sender_relay.age;
       "user_dominic.rodriguez".file = ./user_dominic.rodriguez.age;
       geoclue_url.file = ./geoclue_url.age;
+      zerotier_networks.file = ./zerotier_networks.age;
     };
   };
 }
