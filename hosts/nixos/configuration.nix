@@ -23,6 +23,7 @@ in
         count = 65536;
       }];
       extraGroups = [
+        "i2c"
         "adbusers"
         "dialout"
         "disk"
