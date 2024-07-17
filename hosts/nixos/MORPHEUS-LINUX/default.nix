@@ -101,13 +101,13 @@ in
   hardware = {
     opengl = {
       enable = true;
-      driSupport = false;
-      extraPackages = pkgs.lib.mkForce (with pkgs; [
-        amdvlk
-      ]);
-      extraPackages32 = with pkgs; [
-        driversi686Linux.amdvlk
+      extraPackages = with pkgs; [
+        rocm-opencl-icd
+        vaapiVdpau
+        rocm-opencl-runtime
+        libvdpau-va-gl
       ];
+      extraPackages32 = [ pkgs.driversi686Linux.amdvlk ];
     };
   };
 
