@@ -3,13 +3,12 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 final: prev: {
-  offlineimap = prev.offlineimap.overrideAttrs {
+  offlineimap-shymega = prev.offlineimap.overrideAttrs {
     version = "git";
-    dontPatch = true;
     src = builtins.fetchGit {
       url = "https://github.com/shymega/OfflineIMAP3";
       ref = "shymega-fixes";
-      rev = "9e5cdba6e75f6c69c41b8d9880bd7defc74708a4";
+      rev = "a7c311c0ec44bd64cf666d9ef187fec87b72b5b7";
     };
   };
 }
