@@ -11,17 +11,18 @@
     fuse
     git
     gnupg
-    offlineimap
     htop
     iw
     lm_sensors
     nano
     nvme-cli
+    offlineimap
     pciutils
     powertop
     smartmontools
     solo2-cli
     tmux
+    unstable.syncthing
     usbutils
     wget
   ];
