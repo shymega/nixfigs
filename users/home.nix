@@ -386,7 +386,7 @@ in
         Unit = atuinSyncTimerConfig;
         Timer = {
           OnBootSec = "1min";
-          OnCalendar = "OnCalendar=*:0/15";
+          OnCalendar = "*:0/15";
         };
       };
     };
