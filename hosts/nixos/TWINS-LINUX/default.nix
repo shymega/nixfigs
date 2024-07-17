@@ -91,7 +91,7 @@ in
       SUBSYSTEM=="power_supply", KERNEL=="AC", ATTR{online}=="0", RUN+="${pkgs.systemd}/bin/systemctl --no-block start battery.target"
       SUBSYSTEM=="power_supply", KERNEL=="AC", ATTR{online}=="1", RUN+="${pkgs.systemd}/bin/systemctl --no-block start ac.target"
     '';
-    auto-cpufreq.enable = true;
+    auto-cpufreq.enable = false;
     thermald.enable = true;
     logind = {
       extraConfig = ''
