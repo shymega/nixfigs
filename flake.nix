@@ -27,10 +27,9 @@
   };
 
   inputs = {
-    #    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nixpkgs-master.url = "github:nixos/nixpkgs/master";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixpkgs-shymega.url = "github:shymega/nixpkgs/master";
     nixfigs-priv.url = "github:shymega/nixfigs-priv/main";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
@@ -38,7 +37,7 @@
     dwl-source.flake = false;
     nur.url = "github:nix-community/NUR";
     devenv.url = "github:cachix/devenv/latest";
-    hardware.url = "github:nixos/nixos-hardware";
+    hardware.url = "github:shymega/nixos-hardware/24.05-compat-add-1";
     impermanence.url = "github:nix-community/impermanence";
     nixos-wsl = {
       url = "github:nix-community/nixos-wsl";
