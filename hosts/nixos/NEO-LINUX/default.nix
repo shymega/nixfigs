@@ -15,6 +15,7 @@ in
 
   boot = {
     supportedFilesystems = [ "ntfs" "zfs" ];
+    initrd.supportedFilesystems = [ "ntfs" "zfs" ];
 
     kernelPackages =
       if enableXanmod then
@@ -88,20 +89,16 @@ in
     };
   };
 
-  powerManagement = {
-    enable = true;
-    cpuFreqGovernor = "performance";
-  };
-
   hardware = {
     opengl = {
       enable = true;
-      extraPackages = pkgs.lib.mkForce (with pkgs; [
-        amdvlk
-      ]);
-      extraPackages32 = with pkgs; [
-        driversi686Linux.amdvlk
+      extraPackages = with pkgs; [
+        rocm-opencl-icd
+        vaapiVdpau
+        rocm-opencl-runtime
+        libvdpau-va-gl
       ];
+      extraPackages32 = [ pkgs.driversi686Linux.amdvlk ];
     };
   };
 
@@ -128,11 +125,15 @@ in
         enable = true;
         interval = "Sat *-*-* 05:00:00";
       };
+      autoSnapshot.enable = true;
     };
     xserver = {
       enable = true;
       videoDrivers = [ "amdgpu" ];
     };
+    auto-cpufreq.enable = false;
+    power-profiles-daemon.enable = pkgs.lib.mkForce false;
+    thermald.enable = true;
   };
 
   programs.steam = {
@@ -157,5 +158,12 @@ in
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
     localNetworkGameTransfers.openFirewall = true;
+  };
+
+  security = {
+    pam.loginLimits = [
+      { domain = "*"; item = "nofile"; type = "-"; value = "524288"; }
+      { domain = "*"; item = "memlock"; type = "-"; value = "524288"; }
+    ];
   };
 }
