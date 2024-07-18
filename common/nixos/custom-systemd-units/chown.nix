@@ -9,7 +9,7 @@ in
 {
   systemd = {
     services = {
-      chown-data = lib.mkIf (hostName == "NEO-LINUX" || hostName == "TRINITY-LINUX") {
+      chown-data = lib.mkIf (hostName == "NEO-LINUX") {
         description = "Change permissions on /data";
         wantedBy = [ "multi-user.target" ];
         unitConfig = { RefuseManualStart = true; };
