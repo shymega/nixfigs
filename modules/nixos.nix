@@ -28,6 +28,7 @@ let
           allowUnsupportedSystem = false;
         };
       };
+
       modules = [
         inputs.agenix.nixosModules.default
         inputs.chaotic.nixosModules.default
