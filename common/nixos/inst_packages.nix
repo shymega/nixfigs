@@ -16,7 +16,6 @@
     lm_sensors
     nano
     nvme-cli
-    offlineimap
     pciutils
     powertop
     smartmontools
