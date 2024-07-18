@@ -87,23 +87,6 @@ in
 
   ## End Raspberry Pi - desk ##
 
-  ### UMPC devices ###
-
-  ## UMPC (GPD Pocket 3 (i7)) ##
-
-  TRINITY-LINUX = mkNixosConfig {
-    hostname = "TRINITY-LINUX";
-    system = "x86_64-linux";
-    hardwareModules = [
-      inputs.hardware.nixosModules.gpd-pocket-3
-    ];
-    extraModules = [
-      ../hosts/nixos/configuration.nix
-    ];
-  };
-
-  ## End UMPC (GPD P3) ##
-
   ## Gaming Handheld (GPD Win Max 2 (2024)) ##
 
   MORPHEUS-LINUX = mkNixosConfig {
