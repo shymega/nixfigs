@@ -136,6 +136,11 @@ in
     thermald.enable = true;
   };
 
+  powerManagement = {
+    enable = true;
+    cpuFreqGovernor = "performance";
+  };
+
   programs.steam = {
     enable = true;
     gamescopeSession.enable = true;
