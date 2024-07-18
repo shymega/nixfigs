@@ -50,14 +50,6 @@ in
       ../users
     ];
   };
-  "dzrodriguez@TRINITY-LINUX" = mkHomeConfig {
-    username = "dzrodriguez";
-    system = "x86_64-linux";
-    hostname = "TRINITY-LINUX";
-    extraHomeModules = [
-      ../users
-    ];
-  };
   "dzrodriguez@TWINS-LINUX" = mkHomeConfig {
     username = "dzrodriguez";
     system = "x86_64-linux";
