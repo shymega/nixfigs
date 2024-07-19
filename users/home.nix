@@ -258,14 +258,14 @@ in
         secrets_filter = true;
         enter_accept = false;
         workspaces = true;
-        sync_frequency = 0;
+        sync_frequency = 300;
         sync = {
           records = true;
         };
         daemon = {
           enabled = true;
           systemd_socket = true;
-          sync_frequency = 0;
+          sync_frequency = 300;
         };
       };
     };
@@ -339,11 +339,6 @@ in
         ConditionPathIsDirectory = atuinDataDir;
         ConditionPathExists = "${homeDirectory}/.config/atuin/config.toml";
       };
-      atuinSyncTimerConfig = {
-        Description = "Atuin - Magical Shell History Syncer";
-        ConditionPathIsDirectory = atuinDataDir;
-        ConditionPathExists = "${homeDirectory}/.config/atuin/config.toml";
-      };
     in
     {
       sessionVariables = {
@@ -384,19 +379,6 @@ in
           Service = {
             ExecStart = "${pkgs.unstable.atuin}/bin/atuin daemon";
           };
-        };
-        atuin-sync = {
-          Unit = atuinSyncTimerConfig;
-          Service = {
-            ExecStart = "${pkgs.unstable.atuin}/bin/atuin sync";
-          };
-        };
-      };
-      timers.atuin-sync = {
-        Unit = atuinSyncTimerConfig;
-        Timer = {
-          OnBootSec = "1min";
-          OnCalendar = "*:0/15";
         };
       };
     };
