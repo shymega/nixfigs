@@ -200,10 +200,18 @@ in
     };
     gammastep = {
       enable = true;
+      temperature = {
+        day = 6500;
+        night = 3700;
+      };
       provider = "geoclue2";
     };
     redshift = {
-      enable = false;
+      enable = true;
+      temperature = {
+        day = 6500;
+        night = 3700;
+      };
       provider = "geoclue2";
     };
   };
