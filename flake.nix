@@ -30,7 +30,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
-    nixpkgs-shymega.url = "github:shymega/nixpkgs/master";
+    nixpkgs-shymega.url = "github:shymega/nixpkgs/shymega/staging";
     nixfigs-priv.url = "github:shymega/nixfigs-priv/main";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     dwl-source.url = "https://codeberg.org/dwl/dwl";
