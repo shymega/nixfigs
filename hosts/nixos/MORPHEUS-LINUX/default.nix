@@ -40,6 +40,7 @@ in
 
     plymouth = {
       enable = true;
+      theme = "spinner";
     };
 
     loader = {
@@ -69,15 +70,7 @@ in
         canTouchEfiVariables = true;
         efiSysMountPoint = "/boot/efi/NIXOS";
       };
-      grub = {
-        device = "nodev";
-        efiSupport = false;
-        default = "saved";
-        enableCryptodisk = false;
-        enable = false;
-        useOSProber = false;
-        zfsSupport = false;
-      };
+      generationsDir.copyKernels = true;
       timeout = 6;
     };
 
