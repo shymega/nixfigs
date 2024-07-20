@@ -135,6 +135,7 @@ in
       awscli2
       azure-cli
       bestool
+      deckcheatz
       dwl
       emacsconf2nix
       gitkraken
@@ -147,6 +148,7 @@ in
       steamcmd
       totp
       weechatWithMyPlugins
+      wemod-launcher
       wineWowPackages.stable
       winetricks
       yubikey-manager-qt
