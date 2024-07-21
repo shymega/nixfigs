@@ -11,13 +11,6 @@
 
   boot = {
     kernelPackages = lib.mkForce pkgs.linuxPackages_rpi0;
-    loader = {
-      grub.enable = false;
-      raspberryPi = {
-        enable = true;
-        version = 0;
-      };
-    };
 
     initrd.availableKernelModules = lib.mkForce [
       "usbhid"
@@ -36,3 +29,4 @@
     swraid.enable = lib.mkForce false;
   };
 }
+
