@@ -7,6 +7,8 @@ let
   enableXanmod = false;
 in
 {
+  imports = [ ./hardware-configuration.nix ];
+
   networking.hostName = "TWINS-LINUX";
   networking.hostId = "b0798d56";
 
