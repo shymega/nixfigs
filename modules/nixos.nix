@@ -266,6 +266,7 @@ in
           inputs.nix-alien.packages.${system}.nix-alien
         ];
         wsl.enable = true;
+        wsl.defaultUser = "dzrodriguez";
       }
       ../hosts/nixos/configuration.nix
     ];
