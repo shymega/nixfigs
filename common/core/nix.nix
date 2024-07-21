@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ inputs, lib, pkgs, ... }:
+{ inputs, lib, pkgs, config, ... }:
 let
   inherit (pkgs.stdenvNoCC) isDarwin;
   inherit (pkgs.stdenvNoCC) isLinux;
@@ -13,6 +13,7 @@ in
   nix = {
     settings = {
       accept-flake-config = true;
+      extra-platforms = config.boot.binfmt.emulatedSystems;
       allowed-users = [ "@wheel" ];
       build-users-group = "nixbld";
       builders-use-substitutes = true;
