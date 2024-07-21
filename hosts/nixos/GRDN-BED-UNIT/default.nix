@@ -4,6 +4,8 @@
 
 { inputs, pkgs, lib, ... }:
 {
+  imports = [ ./hardware-configuration.nix ];
+
   networking = {
     hostName = "GRDN-BED-UNIT";
   };
