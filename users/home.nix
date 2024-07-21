@@ -113,7 +113,6 @@ in
       tmuxp
       unrar
       unzip
-      vagrant
       vdirsyncer
       virt-manager
       virtiofsd
