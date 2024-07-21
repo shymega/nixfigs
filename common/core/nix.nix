@@ -65,12 +65,10 @@ in
     };
   } // lib.optionalAttrs (isForeignNix || isNixOS)
     {
-      nixPath = [ "nixpkgs=/run/current-system/nixpkgs" ];
       daemonCPUSchedPolicy = "batch";
       daemonIOSchedPriority = 5;
       gc.dates = "06:00";
     } // lib.optionalAttrs isDarwin {
-    nixPath = [ "nixpkgs=/run/current-system/sw/nixpkgs" ];
     daemonIOLowPriority = true;
     gc.interval = { Hour = 6; Minute = 0; };
   };
