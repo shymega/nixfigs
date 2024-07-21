@@ -33,7 +33,6 @@ let
         inputs.agenix.nixosModules.default
         ../secrets/system
         (../hosts/nixos + "/${hostname}")
-        (../hosts/nixos + "/${hostname}" + "/hardware-configuration.nix")
       ] ++ baseModules ++ hardwareModules ++ homeModules ++ extraModules;
       specialArgs = { inherit self inputs nixpkgs hostname system; };
     };
