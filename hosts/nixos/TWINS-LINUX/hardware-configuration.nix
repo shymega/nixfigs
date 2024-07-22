@@ -64,6 +64,13 @@
         fsType = "xfs";
       };
 
+      "/etc/ssh" = {
+        depends = [ "/persist" ];
+        device = "/persist/etc/ssh";
+        fsType = "none";
+        neededForBoot = true;
+        options = [ "bind" ];
+      };
     };
 
   swapDevices = [{ device = "/dev/disk/by-label/SWAP"; }];
