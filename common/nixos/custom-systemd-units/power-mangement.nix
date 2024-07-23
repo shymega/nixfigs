@@ -13,12 +13,13 @@ in
         description = "Change TDP to maximum TDP when on AC power";
         wantedBy = [ "multi-user.target" "ac.target" ];
         unitConfig = { RefuseManualStart = true; Requires = "ac.target"; };
-        path = with pkgs; [
+        path = with pkgs.unstable; [
           ryzenadj
         ];
         serviceConfig.Type = "oneshot";
         script = ''
-          ryzenadj --stapm-limit=28000 --fast-limit=28000 --slow-limit=28000 --tctl-temp=90
+          	  ryzenadj --tctl-temp=97 --stapm-limit=20000 --fast-limit=20000 --stapm-time=500 --slow-limit=20000 --slow-time=30 --vrmmax-current=70000
+
         '';
       };
 
@@ -26,12 +27,12 @@ in
         description = "Change TDP to power saving TDP when on battery power";
         wantedBy = [ "battery.target" ];
         unitConfig = { RefuseManualStart = true; };
-        path = with pkgs; [
+        path = with pkgs.unstable; [
           ryzenadj
         ];
         serviceConfig.Type = "oneshot";
         script = ''
-          ryzenadj --stapm-limit=8000 --fast-limit=8000 --slow-limit=8000 --tctl-temp=90
+          	  ryzenadj --tctl-temp=97 --stapm-limit=6000 --fast-limit=6000 --stapm-time=500 --slow-limit=6000 --slow-time=30 --vrmmax-current=70000
         '';
       };
 
@@ -45,7 +46,7 @@ in
             "multi-user.target"
             "battery.target"
           ];
-          path = with pkgs; [
+          path = with pkgs.unstable; [
             powertop
           ];
           serviceConfig.Type = "oneshot";
@@ -61,7 +62,7 @@ in
           "multi-user.target"
           "battery.target"
         ];
-        path = with pkgs; [
+        path = with pkgs.unstable; [
           coreutils
           bash
         ];
