@@ -12,6 +12,10 @@
     kernelModules = [ "kvm-intel" ];
     extraModulePackages = [ ];
     resumeDevice = "/dev/disk/by-label/SWAP";
+    zfs = {
+      requestEncryptionCredentials = true;
+      forceImportAll = true;
+    };
   };
 
   zramSwap.enable = true;
