@@ -3,8 +3,9 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 { pkgs, ... }: {
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs.unstable; [
     acpi
+    ryzenadj
     curl
     encfs
     fido2luks
@@ -21,7 +22,7 @@
     smartmontools
     solo2-cli
     tmux
-    unstable.syncthing
+    syncthing
     usbutils
     wget
   ];
