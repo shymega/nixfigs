@@ -51458,7 +51458,7 @@
     "dwl-source": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-d5Cuca8w2xovOf1WrI8dSjpddrGXqqp3yM4gi5NVKIk=",
+        "narHash": "sha256-tKhl1/9+S7o8E5+LkuNJzS865/BU0ayVIgXs6Haxeh0=",
         "type": "file",
         "url": "https://codeberg.org/dwl/dwl"
       },
@@ -153637,11 +153637,11 @@
         "srvos": "srvos_95"
       },
       "locked": {
-        "lastModified": 1721858409,
+        "lastModified": 1721858438,
         "narHash": "sha256-Mzv2CeRE96EVrpWwpvWeLOr7yBsVvXMWwXjlhDsgE4o=",
         "owner": "shymega",
         "repo": "nixfigs-priv",
-        "rev": "d81287452f73067218be947dfbbceb3572e4304c",
+        "rev": "c86e9a6dd3377a67f18b19aec619ab9d6a1055de",
         "type": "github"
       },
       "original": {
