@@ -51,9 +51,9 @@ in
         memtest86.enable = true;
         netbootxyz.enable = true;
         extraInstallCommands = ''
-            echo "reboot-for-bitlocker yes" >> /boot/efi/NIXOS/loader/loader.conf
-            ${pkgs.gnused}/bin/sed -i '/default/d' /boot/efi/NIXOS/loader/loader.conf
-            echo "default @saved" >> /boot/efi/NIXOS/loader/loader.conf
+          echo "reboot-for-bitlocker yes" >> /boot/efi/NIXOS/loader/loader.conf
+          ${pkgs.gnused}/bin/sed -i '/default/d' /boot/efi/NIXOS/loader/loader.conf
+          echo "default @saved" >> /boot/efi/NIXOS/loader/loader.conf
         '';
         extraFiles = { "efi/shell/shellx64.efi" = "${pkgs.edk2-uefi-shell}/shell.efi"; };
         extraEntries = {
