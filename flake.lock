@@ -56086,7 +56086,7 @@
     "dwl-source": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-vqqEuij1WKZdWJaC343kBPYkFutoKxq5JZvoRE3wvt4=",
+        "narHash": "sha256-O5AtRGUDaGM4EwLxn32s0h7S//t3sona91wIXeCER0Q=",
         "type": "file",
         "url": "https://codeberg.org/dwl/dwl"
       },
@@ -179658,11 +179658,11 @@
     },
     "nixpkgs-master_100": {
       "locked": {
-        "lastModified": 1721889520,
-        "narHash": "sha256-3l8XkR00Tf2ccNJ+XoCJuaJRuH/gPZc63SiesmYaA4s=",
+        "lastModified": 1721892361,
+        "narHash": "sha256-3u0TfoPAAgNbBPo5FKRYX45fQaOwu/kSorNNZp1oJ1U=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "72153a607b8a9322d3a06357bdb1f5e690500db6",
+        "rev": "9a0162c8b00048cc4c238a97616e699ab5063c5a",
         "type": "github"
       },
       "original": {
