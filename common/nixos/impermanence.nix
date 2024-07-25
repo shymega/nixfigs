@@ -8,10 +8,11 @@
   environment.persistence."/persist" = {
     directories = [
       "/etc/NetworkManager/system-connections"
+      "/etc/secureboot"
+      "/opt"
+      "/root"
       "/usr/local"
       "/var/lib/NetworkManager"
-      "/root"
-      "/opt"
     ] ++ lib.optionals (config.networking.hostName == "NEO-LINUX") [
       "/var/lib/bluetooth"
       "/var/lib/cni"
