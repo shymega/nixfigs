@@ -152,6 +152,13 @@ in
         HSA_OVERRIDE_GFX_VERSION = "11.0.0"; # 780M
       };
     };
+    tlp.enable = true;
+    upower.enable = true;
+    fstrim.enable = true;
+    smartd = {
+      enable = true;
+      autodetect = true;
+    };
 
     auto-cpufreq.enable = false;
     power-profiles-daemon.enable = pkgs.lib.mkForce false;
