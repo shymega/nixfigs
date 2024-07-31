@@ -271,14 +271,14 @@ in
         secrets_filter = true;
         enter_accept = false;
         workspaces = true;
-        sync_frequency = 300;
+        sync_frequency = 1800;
         sync = {
           records = true;
         };
         daemon = {
           enabled = true;
           systemd_socket = true;
-          sync_frequency = 300;
+          sync_frequency = 1800;
         };
       };
     };
@@ -354,6 +354,18 @@ in
       };
     in
     {
+      timers = {
+        atuin-sync = {
+          Unit.Description = "Atuin auto sync";
+          Timer.OnCalendar = "*:0/30";
+          Install.WantedBy = [ "timers.target" ];
+        };
+        task-sync = {
+          Unit.Description = "Taskwarrior auto sync";
+          Timer.OnCalendar = "*:0/30";
+          Install.WantedBy = [ "timers.target" ];
+        };
+      };
       sessionVariables = {
         CLUTTER_BACKEND = "wayland";
         GDK_BACKEND = "wayland,x11";
@@ -367,7 +379,7 @@ in
         Install.WantedBy = [ "default.target" ];
         Socket = {
           ListenStream = atuinSocket;
-          Accept = false;
+          Accept = true;
           RemoveOnStop = true;
           SocketMode = [ "0600" ];
         };
@@ -386,7 +398,22 @@ in
             TimeoutStopSec = 10;
           };
         };
-
+        atuin-sync = {
+          Unit.Description = "Atuin auto sync";
+          Service = {
+            Type = "oneshot";
+            ExecStart = "${pkgs.unstable.atuin}/bin/atuin sync";
+          };
+        };
+        task-sync = {
+          Unit.Description = "Taskwarrior auto sync";
+          Service = {
+            Type = "oneshot";
+            ExecstartPre = "${pkgs.taskwarrior}/bin/task";
+            ExecStart = "${pkgs.taskwarrior}/bin/task sync";
+            ExecStartPost = "${pkgs.taskwarrior}/bin/task sync";
+          };
+        };
         atuin-daemon = {
           Unit = atuinDaemonConfig // { Requires = [ "atuin-daemon.socket" ]; };
           Service = {
