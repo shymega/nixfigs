@@ -37,6 +37,10 @@
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     dwl-source.url = "https://codeberg.org/dwl/dwl";
     dwl-source.flake = false;
+    auto-cpufreq = {
+      url = "github:AdnanHodzic/auto-cpufreq";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nur.url = "github:nix-community/NUR";
     devenv.url = "github:cachix/devenv/latest";
     hardware.url = "github:NixOS/nixos-hardware";
