@@ -132,6 +132,7 @@ in
     extraModules = [
       inputs.chaotic.nixosModules.default
       inputs.lanzaboote.nixosModules.lanzaboote
+      inputs.auto-cpufreq.nixosModules.default
       {
         environment.systemPackages = [
           inputs.agenix.packages.${system}.default
