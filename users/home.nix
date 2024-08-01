@@ -128,7 +128,7 @@ in
       awscli2
       azure-cli
       bestool
-      deckcheatz
+      #      deckcheatz
       dwl
       emacsconf2nix
       gitkraken
