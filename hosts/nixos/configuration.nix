@@ -75,6 +75,14 @@ in
         brlaser
       ];
     };
+    clight = {
+      enable = true;
+      settings = {
+        gamma = {
+          disabled = true;
+        };
+      };
+    };
     guix = {
       enable = true;
     };
