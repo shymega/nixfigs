@@ -15,6 +15,35 @@
     })
   ];
 
+  # no GUI environment
+  environment.noXlibs = lib.mkDefault true;
+
+  # don't build documentation
+  documentation.info.enable = lib.mkDefault false;
+  documentation.man.enable = lib.mkDefault false;
+
+  # don't include a 'command not found' helper
+  programs.command-not-found.enable = lib.mkDefault false;
+
+  # disable firewall (needs iptables)
+  networking.firewall.enable = lib.mkDefault false;
+
+  # disable polkit
+  security.polkit.enable = lib.mkDefault false;
+
+  # disable audit
+  security.audit.enable = lib.mkDefault false;
+
+  # disable udisks
+  services.udisks2.enable = lib.mkDefault false;
+
+  # disable containers
+  boot.enableContainers = lib.mkDefault false;
+
+  # build less locales
+  # This isn't perfect, but let's expect the user specifies an UTF-8 defaultLocale
+  i18n.supportedLocales = [ (config.i18n.defaultLocale + "/UTF-8") ];
+
   networking = {
     hostName = "DZR-OFFICE-BUSY-LIGHT-UNIT";
   };
@@ -22,7 +51,6 @@
   environment.systemPackages = with pkgs; [
     tmux
     vim
-    libraspberrypi
     raspberrypi-eeprom
     nixpkgs-fmt
   ];
