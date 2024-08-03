@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ self, inputs, ... }:
+{ self, inputs, pkgs, lib, ... }:
 let
   mkNixosConfig =
     { system ? "x86_64-linux"
@@ -179,7 +179,7 @@ in
     baseModules = [ ];
     extraModules = [
       ./24.05-compat.nix
-      "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-raspberrypi.nix"
+      (import ./sd-image-pi0v1.nix { inherit inputs pkgs lib; })
     ];
   };
 
@@ -189,7 +189,7 @@ in
     baseModules = [ ];
     extraModules = [
       ./24.05-compat.nix
-      "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-raspberrypi.nix"
+      (import ./sd-image-pi0v1.nix { inherit inputs pkgs lib; })
     ];
   };
 
