@@ -16,6 +16,7 @@
       "usbhid"
       "usb_storage"
       "xhci_pci"
+      "mmc_block"
     ];
 
     kernelParams = lib.mkAfter [
@@ -27,6 +28,9 @@
     ];
 
     swraid.enable = lib.mkForce false;
+    loader = {
+      grub.enable = false;
+      generic-extlinux-compatible.enable = true;
+    };
   };
 }
-
