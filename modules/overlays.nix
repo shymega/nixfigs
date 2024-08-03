@@ -29,6 +29,7 @@ let
     inputs.nix-alien.overlays.default
     inputs.nur.overlay
     inputs.wemod-launcher.overlays.default
+    inputs.aimu.overlays.default
   ];
 
   customOverlays = [
