@@ -403,7 +403,7 @@ in
           Unit.Description = "Taskwarrior auto sync";
           Service = {
             Type = "oneshot";
-            ExecstartPre = "${pkgs.taskwarrior}/bin/task";
+            ExecStartPre = "${pkgs.taskwarrior}/bin/task";
             ExecStart = "${pkgs.taskwarrior}/bin/task sync";
             ExecStartPost = "${pkgs.taskwarrior}/bin/task sync";
           };
