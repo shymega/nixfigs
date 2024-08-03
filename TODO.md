@@ -9,7 +9,6 @@
 - Backups - rsnapshot.
 - Cachix repo for packages.
 - Devise ZFS pool for NUC.
-- Devise ZFS pool for WM2.
 - Implement 'network utils'.
 - Implement 'network-specific' services.
 - Implement RAID scripts for physical Windows.
