@@ -150,21 +150,27 @@ in
     waydroid.enable = true;
     docker.enable = true;
     podman.enable = true;
+    lxc.enable = true;
+    lxd.enable = true;
 
     libvirtd = {
       enable = true;
       qemu = {
-        package = pkgs.qemu_kvm;
+        package = pkgs.qemu_full;
         runAsRoot = true;
         swtpm.enable = true;
         ovmf = {
           enable = true;
           packages = with pkgs; [
-            OVMFFull.fd
+            (OVMFFull.override {
+              secureBoot = true;
+              tpmSupport = true;
+            }).fd
           ] ++ (lib.optional pkgs.stdenv.isx86_64 pkgs.pkgsCross.aarch64-multiplatform.OVMF.fd);
         };
       };
       onBoot = "ignore";
+      parallelShutdown = 5;
       onShutdown = "suspend";
     };
   };
