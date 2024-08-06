@@ -158,7 +158,6 @@ in
       enable = true;
       package = pkgs.unstable.ollama;
       acceleration = "rocm";
-      sandbox = false;
       models = "/data/AI/LLMs/Ollama/Models/";
       environmentVariables = {
         HSA_OVERRIDE_GFX_VERSION = "11.0.0"; # 780M.
