@@ -58,7 +58,7 @@ in
       hub
       imagemagick
       inetutils
-      isync-patched
+      (isync-patched.override { withCyrusSaslXoauth2 = true; })
       itd
       jdk17
       jq
