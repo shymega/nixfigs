@@ -3,16 +3,15 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 final: prev: {
-  isync-patched = final.symlinkJoin {
-    name = "isync-patched";
-    version = "1.4.4";
-    paths = [
-      (prev.writeShellScriptBin "mbsync" ''
-        export SASL_PATH=${prev.cyrus_sasl.out}/lib/sasl2:${prev.cyrus-sasl-xoauth2}/lib/sasl2
-        exec ${prev.isync}/bin/mbsync "$@"
-      '')
-      prev.isync
-    ];
-  };
+  isync-patched = prev.isync.overrideAttrs (oldAttrs: rec {
+    pname = "isync";
+    version = "1.5.0";
+    src = prev.fetchurl {
+      url = "mirror://sourceforge/isync/${pname}-${version}.tar.gz";
+      sha256 = "sha256-oMgeEJOHvyedoWFFMQM5nneUav7PXFH5QTxedzVX940=";
+    };
+    withCyrusSaslXoauth2 = true;
+    dontPatch = true;
+  });
 }
 
