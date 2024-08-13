@@ -33,6 +33,7 @@
     nixpkgs-shymega.url = "github:shymega/nixpkgs/shymega/staging";
     nixfigs-priv.url = "github:shymega/nixfigs-priv/main";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+    flake-registry.url = "https://github.com/NixOS/flake-registry";
     dwl-source.url = "https://codeberg.org/dwl/dwl";
     dwl-source.flake = false;
     auto-cpufreq = {
