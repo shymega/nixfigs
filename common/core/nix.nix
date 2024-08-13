@@ -44,7 +44,9 @@ in
       cores = 0;
       max-jobs = "auto";
       system-features = [ "kvm" "big-parallel" ];
+      flake-registry = "${inputs.flake-registry}/flake-registry.json";
     };
+    nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
     distributedBuilds = true;
     extraOptions = ''
       gc-keep-outputs = false
