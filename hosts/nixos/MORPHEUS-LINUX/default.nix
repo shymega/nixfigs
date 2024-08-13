@@ -167,8 +167,9 @@ in
       models = "/data/AI/LLMs/Ollama/Models/";
       writablePaths = [ "/data/AI/LLMs/Ollama/Models/" ];
       environmentVariables = {
-        HSA_OVERRIDE_GFX_VERSION = "10.3.0"; # 680M.
+        HSA_OVERRIDE_GFX_VERSION = "11.0.0"; # 780M.
       };
+      rocmOverrideGfx = "11.0.0"; # 780M.
     };
     upower.enable = true;
     fstrim.enable = true;
