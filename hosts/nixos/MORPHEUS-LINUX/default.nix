@@ -162,8 +162,9 @@ in
     };
     ollama = {
       enable = true;
+      package = pkgs.unstable.ollama;
       acceleration = "rocm";
-      sandbox = false;
+      sandbox = true;
       models = "/data/AI/LLMs/Ollama/Models/";
       writablePaths = [ "/data/AI/LLMs/Ollama/Models/" ];
       environmentVariables = {
