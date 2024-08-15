@@ -30,16 +30,18 @@
       extraGroups = [ "wheel" "networkmanager" "dialout" "gpio" "i2c" ];
     };
   };
-  services.getty.autologinUser = "pi";
+  services = {
+    getty.autologinUser = "pi";
 
-  services.openssh = {
-    enable = true;
-    settings.PasswordAuthentication = true;
-  };
+    openssh = {
+      enable = true;
+      settings.PasswordAuthentication = true;
+    };
 
-  services.udev = {
-    extraRules = ''
-      KERNEL=="gpiochip0*", GROUP="gpio", MODE="0660"
-    '';
+    udev = {
+      extraRules = ''
+        KERNEL=="gpiochip0*", GROUP="gpio", MODE="0660"
+      '';
+    };
   };
 }

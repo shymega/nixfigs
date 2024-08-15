@@ -5,18 +5,18 @@
 { config, pkgs, lib, ... }:
 {
   imports = [ ./hardware-configuration.nix ];
+  nixpkgs = {
+    system = "armv6l-linux";
+    crossSystem = lib.systems.elaborate lib.systems.examples.raspberryPi;
 
-  nixpkgs.system = "armv6l-linux";
-  nixpkgs.crossSystem = lib.systems.elaborate lib.systems.examples.raspberryPi;
-
-  # https://github.com/NixOS/nixpkgs/issues/154163#issuecomment-1350599022
-  nixpkgs.overlays = [
-    (final: super: {
-      makeModulesClosure = x:
-        super.makeModulesClosure (x // { allowMissing = true; });
-    })
-  ];
-
+    # https://github.com/NixOS/nixpkgs/issues/154163#issuecomment-1350599022
+    overlays = [
+      (final: super: {
+        makeModulesClosure = x:
+          super.makeModulesClosure (x // { allowMissing = true; });
+      })
+    ];
+  };
   networking = {
     hostName = "DZR-PETS-CAM-UNIT";
   };
