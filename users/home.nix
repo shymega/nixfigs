@@ -17,7 +17,6 @@ in
     ./network-targets.nix
     ../secrets/user # Agenix hacky service to edit conf files
     ./programs/rofi.nix
-    inputs.nix-doom-emacs-unstraightened.hmModule
   ];
 
   home = {
@@ -198,7 +197,6 @@ in
       client.enable = true;
       startWithUserSession = true;
       socketActivation.enable = true;
-      package = pkgs.unstable.emacs29-pgtk;
     };
     mpd = {
       enable = true;
@@ -320,9 +318,9 @@ in
       nix-direnv.enable = true;
     };
     home-manager.enable = true;
-    emacs = {
+    doom-emacs = {
       enable = true;
-      package = pkgs.emacs29-pgtk;
+      doomDir = ./doom.d;
     };
     taskwarrior = {
       enable = true;
