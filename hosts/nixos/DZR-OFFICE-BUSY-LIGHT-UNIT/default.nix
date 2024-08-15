@@ -5,18 +5,18 @@
 { config, pkgs, lib, ... }:
 {
   imports = [ ./hardware-configuration.nix ];
+  nixpkgs = {
+    system = "armv6l-linux";
+    crossSystem = lib.systems.elaborate lib.systems.examples.raspberryPi;
 
-  nixpkgs.system = "armv6l-linux";
-  nixpkgs.crossSystem = lib.systems.elaborate lib.systems.examples.raspberryPi;
-
-  # https://github.com/NixOS/nixpkgs/issues/154163#issuecomment-1350599022
-  nixpkgs.overlays = [
-    (final: super: {
-      makeModulesClosure = x:
-        super.makeModulesClosure (x // { allowMissing = true; });
-    })
-  ];
-
+    # https://github.com/NixOS/nixpkgs/issues/154163#issuecomment-1350599022
+    overlays = [
+      (final: super: {
+        makeModulesClosure = x:
+          super.makeModulesClosure (x // { allowMissing = true; });
+      })
+    ];
+  };
   # no GUI environment
   environment.noXlibs = lib.mkDefault true;
 
@@ -26,9 +26,6 @@
 
   # don't include a 'command not found' helper
   programs.command-not-found.enable = lib.mkDefault false;
-
-  # disable firewall (needs iptables)
-  networking.firewall.enable = lib.mkDefault false;
 
   # disable polkit
   security.polkit.enable = lib.mkDefault false;
@@ -48,6 +45,7 @@
 
   networking = {
     hostName = "DZR-OFFICE-BUSY-LIGHT-UNIT";
+    firewall.enable = lib.mkDefault false;
   };
 
   environment.systemPackages = with pkgs; [
