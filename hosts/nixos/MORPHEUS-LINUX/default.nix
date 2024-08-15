@@ -53,16 +53,10 @@ in
         extraInstallCommands = ''
           ${pkgs.gnused}/bin/sed -i '/default/d' /boot/efi/NIXOS/loader/loader.conf
           echo "default @saved" >> /boot/efi/NIXOS/loader/loader.conf
-          echo "reboot-for-bitlocker yes" >> /boot/efi/NIXOS/loader/loader.conf
         '';
-        #        rebootForBitlocker = true;
+        rebootForBitlocker = true;
         extraFiles = { "efi/shell/shellx64.efi" = "${pkgs.edk2-uefi-shell}/shell.efi"; };
         extraEntries = {
-          "win11.conf" = ''
-            title Windows 11
-            efi /EFI/SHELL/SHELLX64.EFI
-            options -nointerrupt -nomap -noversion HD0b:EFI\MICROSOFT\BOOT\BOOTMGFW.EFI
-          '';
           "bazzite.conf" = ''
             title Bazzite (SteamOS)
             efi /EFI/SHELL/SHELLX64.EFI
@@ -182,8 +176,9 @@ in
     udev = {
       packages = with pkgs; [ gnome.gnome-settings-daemon ];
       extraRules = ''
-        SUBSYSTEM=="power_supply", KERNEL=="ADP1", ATTR{online}=="0", RUN+="${pkgs.systemd}/bin/systemctl --no-block start battery.target"
-        SUBSYSTEM=="power_supply", KERNEL=="ADP1", ATTR{online}=="1", RUN+="${pkgs.systemd}/bin/systemctl --no-block start ac.target"
+                        SUBSYSTEM=="power_supply", KERNEL=="ADP1", ATTR{online}=="0", RUN+="${pkgs.systemd}/bin/systemctl --no-block start battery.target"
+                        SUBSYSTEM=="power_supply", KERNEL=="ADP1", ATTR{online}=="1", RUN+="${pkgs.systemd}/bin/systemctl --no-block start ac.target"
+        #		SUBSYSTEM=="usb", ATTRS{idVendor}=="28de", ATTRS{idProduct}=="1142", TAG+="systemd", ENV{SYSTEMD_WANTS}="kvm-device-selected.service"
       '';
     };
     ofono = {
