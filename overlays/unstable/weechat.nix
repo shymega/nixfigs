@@ -13,10 +13,8 @@ _final: prev: {
           buffer_autoset
           colorize_nicks
           url_hint
-          wee-slack
           weechat-autosort
           weechat-go
-          weechat-matrix
           weechat-notify-send
           zncplayback
         ];
