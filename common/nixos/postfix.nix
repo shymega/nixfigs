@@ -50,6 +50,7 @@
       sender_dependent_default_transport_maps = hash:/etc/postfix/sender_relay
 
       smtp_sasl_auth_enable = yes
+      smtp_tls_security_level = may
       smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
       smtp_sasl_security_options = noanonymous
       smtp_use_tls = yes
