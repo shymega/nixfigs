@@ -280,7 +280,7 @@ in
       package = pkgs.unstable.atuin;
       settings = {
         key_path = config.age.secrets.atuin_key.path;
-        sync_address = "https://shynet-atuin-server.fly.dev";
+        sync_address = "https://api.atuin.sh";
         auto_sync = true;
         dialect = "uk";
         secrets_filter = true;
