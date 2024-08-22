@@ -25,7 +25,6 @@
     rtkit.enable = true;
     polkit.enable = true;
   };
-  users.users."dzrodriguez".shell = lib.mkForce pkgs.fish;
 
   services = {
     dbus.enable = true;
