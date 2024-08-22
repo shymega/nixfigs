@@ -1,12 +1,18 @@
-# SPDX-FileCopyrightText: 2023 Dom Rodriguez <shymega@shymega.org.uk>
+# SPDX-FileCopyrightText: 2024 Dom Rodriguez <shymega@shymega.org.uk
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ self, config, pkgs, ... }:
+#
+
+{ lib
+, self
+, config
+, pkgs
+, ...
+}:
 let
-  inherit (pkgs.stdenvNoCC) isLinux;
-  inherit (pkgs) lib;
-  isNixOS = builtins.pathExists /etc/nixos && builtins.pathExists /nix && isLinux;
+  inherit (lib.my) isNixOS;
+  inherit (pkgs.lib) optionals hasSuffix;
 in
 {
   networking.networkmanager = {
@@ -14,7 +20,7 @@ in
     wifi.macAddress = "stable";
     wifi.powersave = true;
     enable = true;
-    dispatcherScripts = lib.optionals (isNixOS && lib.hasSuffix "-LINUX" config.networking.hostName) [
+    dispatcherScripts = optionals (isNixOS && hasSuffix "-LINUX" config.networking.hostName) [
       {
         source = "${self}/static/nixos/rootfs/etc/NetworkManager/dispatcher.d/05-wireless-toggle";
         type = "basic";
