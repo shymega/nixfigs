@@ -1,10 +1,10 @@
-# SPDX-FileCopyrightText: 2023 Dom Rodriguez <shymega@shymega.org.uk>
+# SPDX-FileCopyrightText: 2024 Dom Rodriguez <shymega@shymega.org.uk
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ python3Packages
-, fetchPypi
-}:
+#
+
+{ python3Packages, fetchPypi }:
 python3Packages.buildPythonApplication rec {
   pname = "totp";
   version = "1.3.0";
@@ -21,7 +21,5 @@ python3Packages.buildPythonApplication rec {
     setuptools_scm
   ];
 
-  dependencies = with python3Packages; [
-    onetimepass
-  ];
+  dependencies = with python3Packages; [ onetimepass ];
 }

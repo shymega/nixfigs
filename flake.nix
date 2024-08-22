@@ -1,44 +1,124 @@
-# SPDX-FileCopyrightText: 2023 Dom Rodriguez <shymega@shymega.org.uk>
+# SPDX-FileCopyrightText: 2024 Dom Rodriguez <shymega@shymega.org.uk
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
 {
-  description = "@shymega's system Flake";
-
   nixConfig = {
     extra-trusted-substituters = [
-      "https://cache.dataaturservice.se/spectrum"
+      "https://cache.dataaturservice.se/spectrum/"
       "https://cache.nixos.org/"
+      "https://deckcheatz-nightlies.cachix.org"
+      "https://deploy-rs.cachix.org/"
       "https://devenv.cachix.org"
       "https://nix-community.cachix.org"
       "https://nix-gaming.cachix.org"
       "https://nix-on-droid.cachix.org"
+      "https://numtide.cachix.org"
       "https://pre-commit-hooks.cachix.org"
     ];
     extra-trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "deckcheatz-nightlies.cachix.org-1:ygkraChLCkqqirdkGjQ68Y3LgVrdFB2bErQfj5TbmxU="
+      "deploy-rs.cachix.org-1:xfNobmiwF/vzvK1gpfediPwpdIP0rpDV2rYqx40zdSI="
       "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
       "nix-on-droid.cachix.org-1:56snoMJTXmDRC1Ei24CmKoUqvHJ9XCp+nidK7qkMQrU="
+      "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE="
       "pre-commit-hooks.cachix.org-1:Pkk3Panw5AW24TOv6kz3PvLhlH8puAsJTBbOPmBo7Rc="
       "spectrum-os.org-2:foQk3r7t2VpRx92CaXb5ROyy/NBdRJQG2uX2XJMYZfU="
     ];
   };
 
+  outputs =
+    inputs:
+    let
+      inherit (inputs) self;
+      genPkgs =
+        system:
+        import inputs.nixpkgs {
+          inherit system;
+          overlays = builtins.attrValues self.overlays;
+          config = self.nixpkgs-config;
+        };
+
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
+      treeFmtEachSystem = f: inputs.nixpkgs.lib.genAttrs systems (system: f inputs.nixpkgs.legacyPackages.${system});
+      treeFmtEval = treeFmtEachSystem (pkgs: inputs.treefmt-nix.lib.evalModule pkgs ./nix/formatter.nix);
+
+      forEachSystem = inputs.nixpkgs.lib.genAttrs systems;
+    in
+    rec {
+      nixosModules = import ./modules/nixos;
+      homeModules = import ./modules/home-manager;
+      darwinModules = import ./modules/darwin;
+      homeModule = homeModules;
+      hmModules = homeModules;
+      hmModule = homeModules;
+      hosts = import ./hosts { inherit inputs self; };
+      nixosConfigurations = import ./hosts/nixos { inherit inputs self; };
+      darwinConfigurations = import ./hosts/darwin { inherit inputs; };
+      homeConfigurations = import ./homes { inherit inputs; };
+      overlays = import ./overlays { inherit inputs; inherit (inputs.nixpkgs) lib; };
+      secrets = import ./secrets/system // import ./secrets/user;
+      deploy = import ./nix/deploy.nix { inherit self inputs; inherit (inputs.nixpkgs) lib; };
+      # for `nix fmt`
+      formatter = treeFmtEachSystem (pkgs: treeFmtEval.${pkgs.system}.config.build.wrapper);
+      # for `nix flake check`
+      checks =
+        treeFmtEachSystem
+          (pkgs: {
+            formatting = treeFmtEval.${pkgs.system}.config.build.wrapper;
+          })
+        // forEachSystem (system: {
+          pre-commit-check = import ./nix/checks.nix {
+            inherit
+              self
+              system
+              inputs;
+            inherit (inputs.nixpkgs) lib;
+          };
+        });
+      devShells = forEachSystem (
+        system:
+        let
+          pkgs = genPkgs system;
+        in
+        import ./nix/devshell.nix { inherit pkgs self system; }
+      );
+      nixpkgs-config = {
+        allowUnfree = true;
+        allowUnsupportedSystem = true;
+        allowBroken = true;
+        allowInsecurePredicate = _: true;
+      };
+      sdImages = rec {
+        SMITH-LINUX = self.nixosConfigurations.SMITH-LINUX.config.system.build.sdImage;
+        GRDN-BED-UNIT = self.nixosConfigurations.GRDN-BED-UNIT.config.system.build.sdImage;
+        DZR-OFFICE-BUSY-LIGHT-UNIT = self.nixosConfigurations.DZR-OFFICE-BUSY-LIGHT-UNIT.config.system.build.sdImage;
+        DZR-PETS-CAM-UNIT = self.nixosConfigurations.DZR-PETS-CAM-UNIT.config.system.build.sdImage;
+        CLOCKWORK-DT-CM4 = self.nixosConfigurations.CLOCKWORK-DT-CM4.config.system.build.sdImage;
+        CLOCKWORK-UC-CM4 = self.nixosConfigurations.CLOCKWORK-UC-CM4.config.system.build.sdImage;
+        all = SMITH-LINUX // GRDN-BED-UNIT // DZR-OFFICE-BUSY-LIGHT-UNIT // DZR-PETS-CAM-UNIT // CLOCKWORK-DT-CM4 // CLOCKWORK-UC-CM4;
+      };
+    };
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixpkgs-shymega.url = "github:shymega/nixpkgs/shymega/staging";
-    nixfigs-priv.url = "github:shymega/nixfigs-priv/main";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     flake-registry = {
       url = "github:NixOS/flake-registry";
       flake = false;
     };
-    dwl-source.url = "https://codeberg.org/dwl/dwl";
-    dwl-source.flake = false;
+    dwl-source = {
+      url = "https://codeberg.org/dwl/dwl";
+      flake = false;
+    };
     auto-cpufreq = {
       url = "github:AdnanHodzic/auto-cpufreq/a1ac308be7b558f85c91a6a3e86cbc0cebdadbbc";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -91,9 +171,6 @@
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-on-droid = {
-      url = "github:nix-community/nix-on-droid/release-24.05";
-    };
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
       inputs = {
@@ -101,11 +178,10 @@
         flake-compat.follows = "flake-compat";
       };
     };
-    pre-commit-hooks = {
-      url = "github:cachix/pre-commit-hooks.nix";
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        flake-compat.follows = "flake-compat";
       };
     };
     stylix = {
@@ -124,65 +200,16 @@
       url = "github:tadfisher/android-nixpkgs/stable";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-doom-emacs-unstraightened.url = "github:marienz/nix-doom-emacs-unstraightened";
-    wemod-launcher.url = "github:shymega/wemod-launcher/refactor-shymega";
-    deckcheatz.url = "github:deckcheatz/deckcheatz/develop";
-    emacsconf2nix.url = "github:shymega/emacsconf2nix";
-    bestool.url = "github:shymega/bestool/shymega-all-fixes";
-    nix-gaming.url = "github:fufexan/nix-gaming";
     aimu.url = "github:shymega/aimu/refactor-shymega";
+    base16-schemes.url = "github:SenchoPens/base16.nix";
+    bestool.url = "github:shymega/bestool/shymega-all-fixes";
+    deckcheatz.url = "github:deckcheatz/deckcheatz/develop";
+    dzr-taskwarrior-recur.url = "github:shymega/dzr-taskwarrior-recur";
+    emacsconf2nix.url = "github:shymega/emacsconf2nix";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    nix-doom-emacs-unstraightened.url = "github:marienz/nix-doom-emacs-unstraightened";
+    nix-gaming.url = "github:fufexan/nix-gaming";
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+    wemod-launcher.url = "github:shymega/wemod-launcher/refactor-shymega";
   };
-
-  outputs = { self, ... } @ inputs:
-    let
-      inherit (inputs.nixpkgs) lib;
-
-      # TODO: Add RISC-V - specific Cache, and Nixpkgs. For Pine64/other RISC-V SoCs.
-      forAllUpstreamSystems = inputs.nixpkgs.lib.genAttrs [
-        "aarch64-darwin"
-        "aarch64-linux"
-        "x86_64-darwin"
-        "x86_64-linux"
-      ];
-      pkgs = forAllUpstreamSystems (system:
-        import inputs.nixpkgs {
-          inherit system;
-          overlays = builtins.attrValues self.overlays ++ [
-            (import ./pkgs/dwl/dwl.nix)
-          ];
-          config = {
-            allowUnfree = true;
-            allowBroken = false;
-            allowInsecure = false;
-            allowUnsupportedSystem = false;
-          };
-        });
-    in
-    rec {
-      overlays = import ./modules/overlays.nix { inherit self inputs lib; };
-      devShells = forAllUpstreamSystems (system:
-        let
-          pkgs = import inputs.nixpkgs {
-            inherit system;
-            overlays = builtins.attrValues self.overlays;
-            config = {
-              allowUnfree = true;
-              allowBroken = false;
-              allowInsecure = false;
-              allowUnsupportedSystem = false;
-            };
-          };
-        in
-        import ./modules/devshell.nix { inherit inputs pkgs self system; });
-
-      nixosConfigurations = (import ./modules/nixos.nix { inherit self inputs pkgs lib; }) // (import ./modules/wsl.nix { inherit self inputs pkgs; }) // (import ./modules/mobile-nixos.nix { inherit self inputs pkgs; }) // inputs.nixfigs-priv.outputs.nixosConfigurations;
-      homeConfigurations = import ./modules/home-manager.nix { inherit self inputs pkgs; };
-      nixOnDroidConfigurations = import ./modules/nix-on-droid.nix { inherit self inputs pkgs; };
-      darwinConfigurations = import ./modules/darwin.nix { inherit self inputs pkgs; };
-      secrets-system = import ./secrets/system;
-      secrets = secrets-system;
-      secrets-user = import ./secrets/user;
-      common-core = import ./common/core { inherit self inputs pkgs; };
-      common-nixos = import ./common/nixos { inherit self inputs pkgs; };
-    };
 }
