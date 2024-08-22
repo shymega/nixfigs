@@ -4,7 +4,9 @@
   boot = {
     loader.systemd-boot.enable = lib.mkForce false;
     loader.grub = {
+      enable = true;
       efiSupport = lib.mkForce false;
+      devices = [ "/dev/sdas" ];
     };
     initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "xen_blkfront" ];
     initrd.kernelModules = [ "nvme" ];
