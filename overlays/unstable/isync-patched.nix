@@ -1,9 +1,11 @@
-# SPDX-FileCopyrightText: 2023 Dom Rodriguez <shymega@shymega.org.uk>
+# SPDX-FileCopyrightText: 2024 Dom Rodriguez <shymega@shymega.org.uk
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-final: prev: {
-  isync-patched = prev.isync.overrideAttrs (oldAttrs: rec {
+#
+
+_final: prev: {
+  isync-patched = prev.isync.overrideAttrs (_oldAttrs: rec {
     pname = "isync";
     version = "1.5.0";
     src = prev.fetchurl {
@@ -14,4 +16,3 @@ final: prev: {
     dontPatch = true;
   });
 }
-
