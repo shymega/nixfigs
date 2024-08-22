@@ -15,7 +15,8 @@
       };
     };
     initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "xen_blkfront" ];
-    initrd.kernelModules = [ "nvme" ];
+    initrd.kernelModules = [ "nvme" "virtio_Gpu" ];
+    kernelParams = [ "console=tty "];
   };
   fileSystems."/" = { device = "/dev/sda1"; fsType = "ext4"; };
   fileSystems."/boot/efi" = { device = "/dev/sda2"; fsType = "vfat"; };
