@@ -1,11 +1,17 @@
-# SPDX-FileCopyrightText: 2023 Dom Rodriguez <shymega@shymega.org.uk>
+# SPDX-FileCopyrightText: 2024 Dom Rodriguez <shymega@shymega.org.uk
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ config, pkgs, lib, ... }:
+#
+
+{ config
+, pkgs
+, lib
+, ...
+}:
 let
   cfg = config.nixfigs.fonts;
-  inherit (pkgs.stdenvNoCC) isLinux;
+  inherit (lib.my) isLinux;
 in
 with lib;
 {
@@ -19,7 +25,7 @@ with lib;
       xdg.enable = mkOption {
         type = with types; bool;
         description = "Enables XDG font symlinking.";
-        default = isLinux && config.nixfigs.fonts.enable;
+        default = config.nixfigs.fonts.enable;
       };
     };
   };
@@ -40,8 +46,6 @@ with lib;
         vistafonts
       ];
     })
-    (mkIf (config.nixfigs.fonts.xdg.enable && isLinux) {
-      fonts.fontDir.enable = true;
-    })
+    (mkIf (config.nixfigs.fonts.xdg.enable && isLinux) { fonts.fontDir.enable = true; })
   ];
 }
