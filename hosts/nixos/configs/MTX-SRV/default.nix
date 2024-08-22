@@ -120,15 +120,19 @@
   };
 
   virtualisation = {
-    docker = {
-      enable = true;
-      rootless = {
-        enable = true;
-        setSocketVariable = true;
-      };
+    containers.enable = true;
+    podman = {
+      enable = lib.mkForce true;
+      dockerCompat = true;
+      defaultNetwork.settings.dns_enabled = true;
     };
-    podman.enable = lib.mkForce false;
+    docker.enable = lib.mkForce false;
   };
+
+  environment.systemPackages = with pkgs; [
+    podman-compose
+    dzr-taskwarrior-recur
+  ];
 
   programs = {
     zsh.enable = true;
@@ -137,8 +141,6 @@
   };
 
   system.stateVersion = "24.05";
-
-  environment.systemPackages = with pkgs; [ dzr-taskwarrior-recur ];
 
   services.openssh.authorizedKeysFiles = lib.mkOverride 40 [
     "%h/.ssh/authorized_keys"
