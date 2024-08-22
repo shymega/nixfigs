@@ -63,8 +63,8 @@
   };
 
   networking = {
-    hostName = "dial-in";
-    domain = "rnet.odriguez.org.uk";
+    hostName = "delta-zero";
+    domain = "odriguez.org.uk";
 
     timeServers = lib.mkForce [ "uk.pool.ntp.org" ];
     firewall = {
