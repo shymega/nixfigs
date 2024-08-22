@@ -273,6 +273,25 @@ in
     deployable = true;
   };
 
+  MTX-SRV = mkHost {
+    type = "nixos";
+    address = "mtx.shymega.org.uk";
+    hostname = "MTX-SRV";
+    username = "dzrodriguez";
+    hostPlatform = "aarch64-linux";
+    extraModules = [
+      inputs.srvos.nixosModules.server
+      inputs.srvos.nixosModules.hardware-hetzner-cloud-arm
+      inputs.srvos.nixosModules.mixins-terminfo
+      inputs.hardware.nixosModules.common-pc-ssd
+      inputs.hardware.nixosModules.common-pc
+    ];
+    pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICtVMEyJgGsd26adPAyjYooDIfD30Ps0DzVlt3NnWorA";
+    remoteBuild = true;
+    deployable = true;
+  };
+
+
   "dzrodriguez@x86_64-linux" = mkHost {
     type = "home-manager";
     username = "dzrodriguez";
