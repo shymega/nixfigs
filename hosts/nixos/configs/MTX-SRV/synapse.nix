@@ -67,6 +67,7 @@ in
       };
       extraConfigFiles = [
         config.age.secrets.synapse_secret.path
+        ./extra_synapse_conf.yaml
       ];
     };
   };
