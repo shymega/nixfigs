@@ -4,9 +4,12 @@
 
 { config, pkgs, lib, ... }:
 let
-  domain = "dial-in.rnet.rodriguez.org.uk";
+  hostname = "dial-in";
+  fqdn = "${hostname}.${domain}";
+  domain = "rnet.rodriguez.org.uk";
 in
 {
+
   imports = [ ./hardware-configuration.nix ];
 
   time.timeZone = "Europe/London";
@@ -52,7 +55,7 @@ in
   };
   networking = {
     hostName = "dial-in";
-    domain = "rnet.odriguez.org.uk";
+    domain = "rnet.rodriguez.org.uk";
 
     timeServers = lib.mkForce [ "uk.pool.ntp.org" ];
     firewall = {
@@ -91,6 +94,20 @@ in
     "/etc/ssh/authorized_keys.d/%u"
   ];
 
+  security.acme = {
+    defaults = {
+      email = "rnet+certs@rodriguez.org.uk";
+      dnsProvider = "cloudflare";
+      credentialFiles = {
+        "CLOUDFLARE_DNS_API_KEY_FILE" = config.age.secrets.cloudflare_dns_token.path;
+      };
+    };
+    certs."${fqdn}" = {
+      group = "nginx";
+    };
+    acceptTerms = true;
+  };
+
   services = {
     headscale = {
       enable = true;
@@ -99,17 +116,30 @@ in
       settings = {
         logtail.enabled = false;
         dns_config = { baseDomain = "rodriguez.org.uk"; };
-        server_url = "https://${domain}";
+        server_url = "https://${fqdn}";
       };
     };
 
-    nginx.virtualHosts.${domain} = {
-      forceSSL = true;
-      enableACME = true;
-      locations."/" = {
-        proxyPass =
-          "http://localhost:${toString config.services.headscale.port}";
-        proxyWebsockets = true;
+    nginx = {
+      enable = true;
+      recommendedTlsSettings = true;
+      recommendedOptimisation = true;
+      recommendedGzipSettings = true;
+      recommendedProxySettings = true;
+      virtualHosts.${fqdn} = {
+        listen = [
+          { addr = "::"; port = 443; ssl = true; }
+          { addr = "0.0.0.0"; port = 443; ssl = true; }
+        ];
+        enableACME = true;
+        forceSSL = true;
+        locations = {
+          "/" = {
+            proxyPass =
+              "http://localhost:${toString config.services.headscale.port}";
+            proxyWebsockets = true;
+          };
+        };
       };
     };
   };
