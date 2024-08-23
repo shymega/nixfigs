@@ -13,6 +13,7 @@ _final: prev: {
           buffer_autoset
           colorize_nicks
           url_hint
+          weechat-matrix
           weechat-autosort
           weechat-go
           weechat-notify-send
