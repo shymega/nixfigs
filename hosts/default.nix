@@ -36,7 +36,6 @@ let
     , hostPlatform ? "x86_64-linux"
     , username ? "dzrodriguez"
     , baseModules ? [
-        ../common
         inputs.agenix.nixosModules.default
         inputs.auto-cpufreq.nixosModules.default
         {
@@ -45,6 +44,7 @@ let
             inputs.nix-alien.packages.${hostPlatform}.nix-alien
           ];
         }
+        ../common
       ]
     , whopper ? true
     , hardwareModules ? [ ]
