@@ -49,8 +49,8 @@ in
         };
       };
     };
-    zerotierone.enable = true;
-    tailscale.enable = true;
+    zerotierone.enable = false;
+    tailscale.enable = false;
     cloud-init.enable = lib.mkForce false;
     fail2ban = {
       enable = true;
@@ -136,7 +136,7 @@ in
       port = 8080;
       settings = {
         logtail.enabled = false;
-        dns_config = { baseDomain = "rodriguez.org.uk"; };
+        dns_config = { baseDomain = "rnet.rodriguez.org.uk"; };
         server_url = "https://${fqdn}";
       };
     };
@@ -149,7 +149,7 @@ in
       recommendedProxySettings = true;
       virtualHosts.${fqdn} = {
         listen = [
-          { addr = "::"; port = 443; ssl = true; }
+          { addr = "[::]"; port = 443; ssl = true; }
           { addr = "0.0.0.0"; port = 443; ssl = true; }
         ];
         enableACME = true;
@@ -157,7 +157,7 @@ in
         locations = {
           "/" = {
             proxyPass =
-              "http://localhost:${toString config.services.headscale.port}";
+              "http://127.0.0.1:8080";
             proxyWebsockets = true;
           };
         };
