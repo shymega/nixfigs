@@ -163,6 +163,48 @@ in
       };
     };
 
+    mautrix-slack = {
+      enable = true;
+      registerToSynapse = true;
+      settings = {
+        appservice = {
+          as_token = "";
+          bot = {
+            displayname = "Slack Bridge Bot";
+            username = "slackbot";
+          };
+          database = {
+            type = "sqlite3";
+            uri = "/var/lib/mautrix-slack/mautrix-slack.db";
+          };
+          hostname = "[::]";
+          hs_token = "";
+          id = "slack";
+          port = 29318;
+        };
+        bridge = {
+          permissions = {
+            "@shymega:mtx.shymega.org.uk" = "admin";
+          };
+
+          command_prefix = "!wa";
+          displayname_template = "{{if .BusinessName}}{{.BusinessName}}{{else if .PushName}}{{.PushName}}{{else}}{{.JID}}{{end}} (WA)";
+          double_puppet_server_map = { };
+          login_shared_secret_map = { };
+          permissions = {
+            "*" = "relay";
+          };
+          relay = {
+            enabled = true;
+          };
+          username_template = "slack_{{.}}";
+        };
+        homeserver = {
+          address = "https://mtx.shymega.org.uk";
+        };
+      };
+    };
+
     mautrix-telegram = {
       enable = true;
       settings = {
