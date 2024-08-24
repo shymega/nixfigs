@@ -69,7 +69,7 @@ in
         ];
         allow_guest_access = false;
         enable_registration = false;
-        app_service_config_files = lib.optionals (config.networking.hostName == "mtx") [
+        app_service_config_files = lib.optionals (config.networking.hostName == "mtx" && builtins.pathExists /var/lib/mautrix-meta-facebook/meta-registration.yaml) [
           /var/lib/mautrix-meta-facebook/meta-registration.yaml
           /var/lib/mautrix-meta-instagram/meta-registration.yaml
           /var/lib/mautrix-meta-messenger/meta-registration.yaml
