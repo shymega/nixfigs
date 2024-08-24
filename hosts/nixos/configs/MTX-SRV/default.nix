@@ -32,6 +32,19 @@
   };
 
   services = {
+    cloudflared = {
+      enable = true;
+      package = pkgs.unstable.cloudflared;
+      tunnels = {
+        "7213480a-b800-4a9b-89a9-82e984637ca7" = {
+          ingress = {
+            "ssh.mtx.shymega.org.uk" = "ssh://localhost:22";
+          };
+          credentialsFile = "/var/lib/cloudflared/7213480a-b800-4a9b-89a9-82e984637ca7.json";
+          default = "http_status:404";
+        };
+      };
+    };
     dbus.enable = true;
     zerotierone.enable = true;
     tailscale.enable = true;
