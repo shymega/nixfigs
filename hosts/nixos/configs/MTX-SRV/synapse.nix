@@ -57,7 +57,7 @@ in
         listeners = [
           {
             port = 8008;
-            bind_addresses = [ "::1" "127.0.0.1" "fdd0:3aca:b4a2:2c4b::1" "10.89.1.1" ];
+            bind_addresses = [ "::1" "127.0.0.1" ];
             type = "http";
             tls = false;
             x_forwarded = true;
@@ -69,7 +69,7 @@ in
         ];
         allow_guest_access = false;
         enable_registration = false;
-        app_service_config_files = lib.optionals (config.networking.hostName == "mtx" && builtins.pathExists /var/lib/mautrix-meta-facebook/meta-registration.yaml) [
+        app_service_config_files = lib.optionals (config.networking.hostName == "mtx" && builtins.hasAttr "enable" config.services.matrix-synapse) [
           /var/lib/mautrix-meta-facebook/meta-registration.yaml
           /var/lib/mautrix-meta-instagram/meta-registration.yaml
           /var/lib/mautrix-meta-messenger/meta-registration.yaml
