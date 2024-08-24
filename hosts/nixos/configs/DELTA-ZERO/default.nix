@@ -33,7 +33,7 @@
       tunnels = {
         "944fbebc-5b7e-4702-b6e9-d759a8a7709a" = {
           ingress = {
-            "ssh.delta-zero.rodriguez.org.uk" = "ssh://localhost:22";
+            "ssh.delta-zero.rodriguez.org.uk".service = "ssh://localhost:22";
           };
           credentialsFile = "/var/lib/cloudflared/944fbebc-5b7e-4702-b6e9-d759a8a7709a.json";
           default = "http_status:404";
