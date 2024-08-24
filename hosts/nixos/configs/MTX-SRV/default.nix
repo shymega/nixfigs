@@ -10,8 +10,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./synapse.nix
-  ];
+  ] ++ lib.optional (builtins.pathExists /etc/systemd/system/cloudflared-tunnel-cbd977f4-46c2-4b8a-bd4f-ad3a30a16b8d.service) ./synapse.nix;
 
   boot.tmp.cleanOnBoot = true;
   zramSwap.enable = true;
