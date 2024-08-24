@@ -34,7 +34,7 @@ in
       tunnels = {
         "2d28367c-b672-43e3-b2db-74b13a402797" = {
           ingress = {
-            "ssh.dial-in.rnet.rodriguez.org.uk" = "ssh://localhost:22";
+            "ssh.dial-in.rnet.rodriguez.org.uk".service = "ssh://localhost:22";
           };
           credentialsFile = "/var/lib/cloudflared/2d28367c-b672-43e3-b2db-74b13a402797.json";
           default = "http_status:404";
