@@ -41,11 +41,11 @@ let
     inputs.nixpkgs.lib.nixosSystem {
       pkgs = lib.my.genPkgs hostPlatform;
       modules =
-        [
+        baseModules ++ [
           (../../secrets/system)
           (./configs + "/${hostname}")
         ]
-        ++ extraModules ++ hardwareModules ++ baseModules ++ (lib.optional whopper (import ./monolith.nix));
+        ++ extraModules ++ hardwareModules ++ (lib.optional whopper (import ./monolith.nix));
       specialArgs = {
         hostAddress = address;
         hostType = type;
