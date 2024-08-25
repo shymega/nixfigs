@@ -41,18 +41,10 @@ in
         };
         "9a7340e1-969f-434f-88b9-477b130bb791" = {
           ingress = {
-            "vpn.dial-in.rnet.rodriguez.org.uk" = "ssh://localhost:22";
+            "vpn.dial-in.rnet.rodriguez.org.uk" = "http://localhost:8080";
           };
           credentialsFile = "/var/lib/cloudflared/9a7340e1-969f-434f-88b9-477b130bb791.json";
           default = "http_status:404";
-          credentialsFile = "/var/lib/cloudflared/2d28367c-b672-43e3-b2db-74b13a402797.json";
-        };
-        "9a7340e1-969f-434f-88b9-477b130bb791" = {
-          ingress = {
-            "vpn.dial-in.rnet.rodriguez.org.uk".service = "http://localhost:8080";
-          };
-          default = "http_status:404";
-          credentialsFile = "/var/lib/cloudflared/9a7340e1-969f-434f-88b9-477b130bb791.json";
         };
       };
     };
