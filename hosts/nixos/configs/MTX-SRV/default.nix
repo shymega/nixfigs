@@ -10,6 +10,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./synapse.nix
   ];
 
   boot.tmp.cleanOnBoot = true;
