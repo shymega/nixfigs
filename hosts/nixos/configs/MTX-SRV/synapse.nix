@@ -33,7 +33,8 @@ in
             "/".extraConfig = ''
               return 404;
             '';
-            "~ ^(/_matrix|/synapse|/client)".proxyPass = "http://localhost:8008";
+            "/_matrix".proxyPass = "http://127.0.0.1:8008";
+            "/_synapse".proxyPass = "http://127.0.0.1:8008";
           };
         };
       };
@@ -43,7 +44,12 @@ in
       enable = true;
       settings = {
         database.name = "sqlite3";
+        presence.enabled = false;
         server_name = fqdn;
+        enable_metrics = true;
+        report_stats = true;
+        dynamic_thumbnails = true;
+        suppress_key_server_warning = true;
         public_baseurl = baseUrl;
         listeners = [
           {
@@ -58,12 +64,12 @@ in
             }];
           }
         ];
-        allow_guest_access = false;
+        allow_guest_access = true;
         enable_registration = false;
       };
       extraConfigFiles = [
         config.age.secrets.synapse_secret.path
-        ./extra_synapse_conf.yaml
+        ./tweaks.yaml
       ];
     };
 
