@@ -94,16 +94,6 @@
 
   systemd = {
     network.wait-online.anyInterface = true;
-    services.tailscaled = {
-      after = [
-        "network-online.target"
-        "systemd-resolved.service"
-      ];
-      wants = [
-        "network-online.target"
-        "systemd-resolved.service"
-      ];
-    };
   };
 
   users.mutableUsers = false;
