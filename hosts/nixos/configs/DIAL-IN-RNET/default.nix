@@ -50,7 +50,7 @@ in
       };
     };
     zerotierone.enable = false;
-    tailscale.enable = false;
+    tailscale.enable = lib.mkForce false;
     cloud-init.enable = lib.mkForce false;
     fail2ban = {
       enable = true;
