@@ -153,64 +153,6 @@
     "/etc/ssh/authorized_keys.d/%u"
   ];
 
-  services.dovecot2 = {
-    enable = true;
-    user = "dzrodriguez";
-    group = "users";
-    mailLocation = "maildir:${config.users.users."dzrodriguez".home}/.mail/%d/%u/:LAYOUT = fs:INBOX=$ {
-          config.users.users." dzrodriguez ".home
-            }/.mail/%d/%u/INBOX";
-    enablePAM = false;
-    enableImap = true;
-    enablePop3 = false;
-    modules = [ pkgs.dovecot_pigeonhole ];
-    protocols = [ "sieve" ];
-    extraConfig = ''
-        listen = 127.0.0.1, ::1
-        mail_uid = 1001
-        mail_gid = 100
-        mail_privileged_group = users
-
-        namespace inbox {
-            inbox = yes
-            location =
-
-            mailbox Drafts {
-              special_use = \Drafts
-              auto = subscribe
-            }
-
-            mailbox "Junk Email" {
-              special_use = \Junk
-            }
-
-            mailbox "Sent Items" {
-              special_use = \Sent
-              auto = subscribe
-            }
-
-            mailbox "Deleted Items" {
-              special_use = \Trash
-              auto = subscribe
-            }
-
-            prefix =
-            separator = /
-        }
-
-        passdb {
-            driver = static
-            args = nopassword
-        }
-
-        plugin {
-      	  sieve = file:${config.users.users."dzrodriguez".home}/.mail/%d/%u/.sieve;active=${
-            config.users.users."dzrodriguez".home
-            }/.mail/%d/%u/.dovecot.sieve
-        }
-    '';
-  };
-
   services.cron.enable = true;
 
   users = {
