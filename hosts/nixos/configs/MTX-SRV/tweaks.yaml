@@ -1,0 +1,3 @@
+limit_remote_rooms:
+  enabled: true
+  complexity: 3.0
