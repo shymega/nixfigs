@@ -36,11 +36,11 @@
       enable = true;
       package = pkgs.unstable.cloudflared;
       tunnels = {
-        "7213480a-b800-4a9b-89a9-82e984637ca7" = {
+        "5da5dbaf-7519-466b-bc94-49ad85cbf05d" = {
           ingress = {
             "ssh.mtx.shymega.org.uk" = "ssh://localhost:22";
           };
-          credentialsFile = "/var/lib/cloudflared/7213480a-b800-4a9b-89a9-82e984637ca7.json";
+          credentialsFile = "/var/lib/cloudflared/5da5dbaf-7519-466b-bc94-49ad85cbf05d.json";
           default = "http_status:404";
         };
       };
