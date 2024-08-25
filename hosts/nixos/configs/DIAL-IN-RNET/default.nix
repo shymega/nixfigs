@@ -32,11 +32,18 @@ in
       enable = true;
       package = pkgs.unstable.cloudflared;
       tunnels = {
-        "926d47c1-cd90-44ba-95a5-b38c05d99a6e" = {
+        "2d28367c-b672-43e3-b2db-74b13a402797" = {
           ingress = {
             "ssh.dial-in.rnet.rodriguez.org.uk" = "ssh://localhost:22";
           };
-          credentialsFile = "/var/lib/cloudflared/926d47c1-cd90-44ba-95a5-b38c05d99a6e.json";
+          credentialsFile = "/var/lib/cloudflared/2d28367c-b672-43e3-b2db-74b13a402797.json";
+          default = "http_status:404";
+        };
+        "9a7340e1-969f-434f-88b9-477b130bb791" = {
+          ingress = {
+            "vpn.dial-in.rnet.rodriguez.org.uk" = "ssh://localhost:22";
+          };
+          credentialsFile = "/var/lib/cloudflared/9a7340e1-969f-434f-88b9-477b130bb791.json";
           default = "http_status:404";
         };
       };
