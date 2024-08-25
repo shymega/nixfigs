@@ -50,13 +50,6 @@
           credentialsFile = "/var/lib/cloudflared/8b244c80-6329-4c5f-84c1-4c7e79e737da.json";
           default = "http_status:404";
         };
-        "8b244c80-6329-4c5f-84c1-4c7e79e737da" = {
-          ingress = {
-            "mtx.shymega.org.uk" = "http://localhost:8008";
-          };
-          credentialsFile = "/var/lib/cloudflared/8b244c80-6329-4c5f-84c1-4c7e79e737da.json";
-          default = "http_status:404";
-        };
       };
     };
     dbus.enable = true;
