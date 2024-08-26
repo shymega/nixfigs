@@ -3,5 +3,7 @@ let
   configs = self.nixosConfigurations;
 in
 {
-  MTX-SRV = configs.MTX-SRV.config.formats.proxmox-lxc;
+  x86_64-linux = {
+    MTX-SRV = configs.MTX-SRV.config.formats.proxmox-lxc;
+  };
 }
