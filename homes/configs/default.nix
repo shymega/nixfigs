@@ -129,6 +129,7 @@ in
         zathura
         zellij
         zenmonitor
+        weechatWithMyPlugins
         zip
         zoxide
       ]
@@ -149,7 +150,6 @@ in
         qemu_full
         steamcmd
         totp
-        weechatWithMyPlugins
         wemod-launcher
         wezterm
         wineWowPackages.stable
