@@ -49,7 +49,7 @@ in
           hostName = "eu.nixbuild.net";
           sshUser = "${config.networking.hostName}-build-client";
           systems = [ "aarch64-linux" "i686-linux" "armv7-linux" "x86_64-linux" ];
-          maxJobs = 100;
+          maxJobs = 2;
           supportedFeatures = [ "benchmark" "big-parallel" ];
           protocol = "ssh-ng";
         }
