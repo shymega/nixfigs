@@ -30,24 +30,53 @@ in
           enableACME = true;
           forceSSL = true;
           locations = {
+            "/_matrix".proxyPass = "http://127.0.0.1:8008";
+            "/_synapse".proxyPass = "http://127.0.0.1:8008";
             "/".extraConfig = ''
               return 404;
             '';
-            "/_matrix".proxyPass = "http://127.0.0.1:8008";
-            "/_synapse".proxyPass = "http://127.0.0.1:8008";
           };
+          extraConfig =
+            ''
+              # Cloudflare IPv4 addresses
+              set_real_ip_from 173.245.48.0/20;
+              set_real_ip_from 103.21.244.0/22;
+              set_real_ip_from 103.22.200.0/22;
+              set_real_ip_from 103.31.4.0/22;
+              set_real_ip_from 141.101.64.0/18;
+              set_real_ip_from 108.162.192.0/18;
+              set_real_ip_from 190.93.240.0/20;
+              set_real_ip_from 188.114.96.0/20;
+              set_real_ip_from 197.234.240.0/22;
+              set_real_ip_from 198.41.128.0/17;
+              set_real_ip_from 162.158.0.0/15;
+              set_real_ip_from 104.16.0.0/13;
+              set_real_ip_from 104.24.0.0/14;
+              set_real_ip_from 172.64.0.0/13;
+              set_real_ip_from 131.0.72.0/22;
+
+
+              # Cloudflare IPv6 addresses
+              set_real_ip_from 2400:cb00::/32;
+              set_real_ip_from 2606:4700::/32;
+              set_real_ip_from 2803:f800::/32;
+              set_real_ip_from 2405:b500::/32;
+              set_real_ip_from 2405:8100::/32;
+              set_real_ip_from 2a06:98c0::/29;
+              set_real_ip_from 2c0f:f248::/32;
+
+              real_ip_header CF-Connecting-IP;
+            '';
         };
       };
     };
+
 
     matrix-synapse = {
       enable = true;
       settings = {
         database.name = "sqlite3";
-        presence.enabled = false;
         server_name = fqdn;
-        enable_metrics = true;
-        report_stats = true;
         dynamic_thumbnails = true;
         suppress_key_server_warning = true;
         public_baseurl = baseUrl;
@@ -60,8 +89,15 @@ in
             x_forwarded = true;
             resources = [{
               names = [ "client" "federation" ];
-              compress = true;
+              compress = false;
             }];
+          }
+          {
+            port = 9001;
+            type = "metrics";
+            tls = false;
+            bind_addresses = [ "::1" "127.0.0.1" ];
+            resources = [ ];
           }
         ];
         allow_guest_access = true;
@@ -77,7 +113,7 @@ in
       enable = true;
       registerToSynapse = true;
       settings = {
-        appservice = rec {
+        appservice = rec  {
           as_token = "";
           bot = {
             displayname = "WhatsApp Bridge Bot";
