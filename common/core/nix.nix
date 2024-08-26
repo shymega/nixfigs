@@ -33,7 +33,7 @@ in
         PubkeyAcceptedKeyTypes ssh-ed25519
         ServerAliveInterval 60
         IPQoS throughput
-        IdentityFile /run/agenix/nixbuild_ssh_priv_key
+        IdentityFile ${config.age.secrets.nixbuild_ssh_priv_key.path}
     '';
     knownHosts = {
       nixbuild = {
