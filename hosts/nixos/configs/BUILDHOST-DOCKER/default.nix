@@ -18,7 +18,7 @@ in
     };
     acceptTerms = true;
   };
-  
+
   networking.hostName = "hydra";
   networking.domain = "shymega.org.uk";
 
@@ -59,16 +59,17 @@ in
           supportedFeatures = [ "benchmark" "big-parallel" ];
           protocol = "ssh-ng";
         }
-    { hostName = "localhost";
-      protocol = null;
-      system = "x86_64-linux";
-      supportedFeatures = ["kvm" "nixos-test" "big-parallel" "benchmark"];
-      maxJobs = 8;
-    }
+        {
+          hostName = "localhost";
+          protocol = null;
+          system = "x86_64-linux";
+          supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
+          maxJobs = 8;
+        }
       ];
     };
 
-      nix = {
+  nix = {
     settings.trusted-users = [ "root" "hydra" ];
     extraOptions = ''
       experimental-features = nix-command flakes ca-derivations
@@ -76,10 +77,10 @@ in
   };
 
   nix.settings.allowed-uris = [
-  "github:"
-  "git+https://github.com/"
-  "git+ssh://github.com/"
-];
+    "github:"
+    "git+https://github.com/"
+    "git+ssh://github.com/"
+  ];
 
-    system.stateVersion = "24.05";
+  system.stateVersion = "24.05";
 }
