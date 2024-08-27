@@ -49,7 +49,7 @@ in
           hostName = "eu.nixbuild.net";
           sshUser = "${config.networking.hostName}-build-client";
           systems = [ "aarch64-linux" "i686-linux" "armv7-linux" "x86_64-linux" ];
-          maxJobs = 2;
+          maxJobs = 4;
           supportedFeatures = [ "benchmark" "big-parallel" ];
           protocol = "ssh-ng";
         }
@@ -66,6 +66,7 @@ in
         ];
         sandbox = isForeignNix || isNixOS;
         substituters = [
+          "https://attic.mildlyfunctional.gay/nixbsd"
           "https://cache.dataaturservice.se/spectrum/"
           "https://cache.nixos.org/"
           "https://deckcheatz-nightlies.cachix.org"
@@ -76,7 +77,7 @@ in
           "https://nix-on-droid.cachix.org"
           "https://numtide.cachix.org"
           "https://pre-commit-hooks.cachix.org"
-          "https://attic.mildlyfunctional.gay/nixbsd"
+          "ssh://eu.nixbuild.net"
         ];
         trusted-public-keys = [
           "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
@@ -87,6 +88,7 @@ in
           "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
           "nix-on-droid.cachix.org-1:56snoMJTXmDRC1Ei24CmKoUqvHJ9XCp+nidK7qkMQrU="
           "nixbsd:gwcQlsUONBLrrGCOdEboIAeFq9eLaDqfhfXmHZs1mgc="
+          "nixbuild.net/VNUM6K-1:ha1G8guB68/E1npRiatdXfLZfoFBddJ5b2fPt3R9JqU="
           "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE="
           "pre-commit-hooks.cachix.org-1:Pkk3Panw5AW24TOv6kz3PvLhlH8puAsJTBbOPmBo7Rc="
           "spectrum-os.org-2:foQk3r7t2VpRx92CaXb5ROyy/NBdRJQG2uX2XJMYZfU="
