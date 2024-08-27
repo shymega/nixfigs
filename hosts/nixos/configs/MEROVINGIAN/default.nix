@@ -18,7 +18,6 @@
       "fs.inotify.max_user_watches" = "819200";
       "kernel.printk" = "3 3 3 3";
     };
-    binfmt.emulatedSystems = [ "x86_64-linux" ];
   };
 
   security = {
