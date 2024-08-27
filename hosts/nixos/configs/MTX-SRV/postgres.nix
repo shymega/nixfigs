@@ -3,7 +3,7 @@
   services = {
     postgresql = {
       enable = true;
-      ensureDatabases = [ "mautrix_slack" "mautrix_whatsapp" "mautrix_meta_facebook" "mautrix_meta_instagram" "mautrix_meta_messenger" "mautrix_telegram" ];
+      ensureDatabases = [ "mautrix_slack" "mautrix_whatsapp" "mautrix_meta_facebook" "mautrix_meta_instagram" "mautrix_meta_messenger" "mautrix_telegram" "matrix-synapse-syncv3" ];
       enableTCPIP = true;
       settings.port = 5432;
       authentication = pkgs.lib.mkOverride 10 ''
