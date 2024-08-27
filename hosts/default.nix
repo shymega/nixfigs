@@ -242,6 +242,30 @@ in
     deployable = false;
   };
 
+  MEROVINGIAN = mkHost rec {
+    type = "nixos";
+    address = "merovingian.rodriguez.org.uk";
+    hostname = "MEROVINGIAN";
+    username = "dzrodriguez";
+    monolithConfig = false;
+    hostPlatform = "x86_64-linux";
+    extraModules = [
+      inputs.srvos.nixosModules.server
+      inputs.srvos.nixosModules.mixins-terminfo
+      inputs.hardware.nixosModules.common-pc-ssd
+      inputs.hardware.nixosModules.common-pc
+      inputs.proxmox-nixos.nixosModules.proxmox-ve
+      (_: {
+        nixpkgs.overlays = [
+          inputs.proxmox-nixos.overlays.${hostPlatform}
+        ];
+      })
+    ];
+    pubkey = "";
+    remoteBuild = true;
+    deployable = true;
+  };
+
   DELTA-ZERO = mkHost {
     type = "nixos";
     address = "delta-zero.rodriguez.org.uk";
