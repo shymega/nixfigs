@@ -16,58 +16,30 @@ in
 
   services = {
     nginx = {
-      enable = true;
+      enable = false;
       recommendedTlsSettings = true;
       recommendedOptimisation = true;
       recommendedGzipSettings = true;
       recommendedProxySettings = true;
       virtualHosts = {
         "${fqdn}" = {
-          listen = [
-            { addr = "[::]"; port = 443; ssl = true; }
-            { addr = "0.0.0.0"; port = 443; ssl = true; }
-          ];
           enableACME = true;
-          forceSSL = true;
+          onlySSL = true;
           locations = {
-            "/_matrix".proxyPass = "http://127.0.0.1:8008";
-            "/_synapse".proxyPass = "http://127.0.0.1:8008";
-            "~ ^/(client/|_matrix/client/unstable/org.matrix.msc3575/sync)".proxyPass = "http://127.0.0.1:8009";
+            "~ ^(/_matrix|/_synapse/client)" = {
+              proxyPass = "http://127.0.0.1:8008";
+              extraConfig = ''
+                client_max_body_size 200M;
+              '';
+            };
+            "~ ^/(client/|_matrix/client/unstable/org.matrix.msc3575/sync)" = {
+              priority = 800;
+              proxyPass = "http://localhost:8009";
+            };
             "/".extraConfig = ''
               return 404;
             '';
           };
-          extraConfig =
-            ''
-              # Cloudflare IPv4 addresses
-              set_real_ip_from 173.245.48.0/20;
-              set_real_ip_from 103.21.244.0/22;
-              set_real_ip_from 103.22.200.0/22;
-              set_real_ip_from 103.31.4.0/22;
-              set_real_ip_from 141.101.64.0/18;
-              set_real_ip_from 108.162.192.0/18;
-              set_real_ip_from 190.93.240.0/20;
-              set_real_ip_from 188.114.96.0/20;
-              set_real_ip_from 197.234.240.0/22;
-              set_real_ip_from 198.41.128.0/17;
-              set_real_ip_from 162.158.0.0/15;
-              set_real_ip_from 104.16.0.0/13;
-              set_real_ip_from 104.24.0.0/14;
-              set_real_ip_from 172.64.0.0/13;
-              set_real_ip_from 131.0.72.0/22;
-
-
-              # Cloudflare IPv6 addresses
-              set_real_ip_from 2400:cb00::/32;
-              set_real_ip_from 2606:4700::/32;
-              set_real_ip_from 2803:f800::/32;
-              set_real_ip_from 2405:b500::/32;
-              set_real_ip_from 2405:8100::/32;
-              set_real_ip_from 2a06:98c0::/29;
-              set_real_ip_from 2c0f:f248::/32;
-
-              real_ip_header CF-Connecting-IP;
-            '';
         };
       };
     };
@@ -76,6 +48,27 @@ in
     matrix-synapse = {
       enable = true;
       settings = {
+        report_stats = false;
+        enable_metrics = false;
+        enable_registration = false;
+        url_preview_enabled = false;
+        registration_requires_token = true;
+        enable_search = true;
+        allow_public_rooms_over_federation = true;
+        redaction_retention_period = 1;
+        max_upload_size = "200M";
+        experimental_features = {
+          # Room summary api
+          msc3266_enabled = true;
+          # Removing account data
+          msc3391_enabled = true;
+          # Thread notifications
+          msc3773_enabled = true;
+          # Remotely toggle push notifications for another client
+          msc3881_enabled = true;
+          # Remotely silence local notifications
+          msc3890_enabled = true;
+        };
         database.name = "sqlite3";
         server_name = fqdn;
         dynamic_thumbnails = true;
@@ -84,7 +77,7 @@ in
         listeners = [
           {
             port = 8008;
-            bind_addresses = [ "::1" "127.0.0.1" ];
+            bind_addresses = [ "127.0.0.1" ];
             type = "http";
             tls = false;
             x_forwarded = true;
@@ -97,12 +90,11 @@ in
             port = 9001;
             type = "metrics";
             tls = false;
-            bind_addresses = [ "::1" "127.0.0.1" ];
+            bind_addresses = [ "127.0.0.1" ];
             resources = [ ];
           }
         ];
         allow_guest_access = true;
-        enable_registration = false;
       };
       extraConfigFiles = [
         config.age.secrets.synapse_secret.path
@@ -111,8 +103,9 @@ in
     };
 
     matrix-sliding-sync.enable = true;
-    matrix-sliding-sync.settings.SYNCV3_SERVER = "https://mtx.shymega.org.uk";
-    matrix-sliding-sync.settings.SYNCV3_DB = "postgresql:///matrix@matrix-synapse-syncv3?host=/run/postgresql";
+    matrix-sliding-sync.settings.SYNCV3_SERVER = "http://localhost:8008";
+    matrix-sliding-sync.settings.SYNCV3_DB = "host=localhost port=5432 dbname=matrix_synapse user=matrix_synapse_syncv3 user=matrix password=matrix4me sslmode=disable connect_timeout=10";
+    matrix-sliding-sync.settings.SYNCV3_BINDADDR = "127.0.0.1:8009";
     matrix-sliding-sync.environmentFile = config.age.secrets."matrix-sliding-sync-env".path;
 
     mautrix-whatsapp = {
