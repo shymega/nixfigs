@@ -31,7 +31,7 @@ in
         PubkeyAcceptedKeyTypes ssh-ed25519
         ServerAliveInterval 60
         IPQoS throughput
-        IdentityFile ${config.age.secrets.nixbuild_ssh_pub_key.path}
+        IdentityAgent /home/dzrodriguez/.1password/agent.sock
     '';
     knownHosts = {
       nixbuild = {
