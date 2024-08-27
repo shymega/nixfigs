@@ -1,3 +1,8 @@
+serve_server_wellknown: true
+extra_well_known_client_content:
+  "org.matrix.msc3575.proxy":
+    "url": "https://mtx-sync3.shymega.org.uk"
+
 sync_response_cache_duration: 300m
 presence:
   enabled: false
