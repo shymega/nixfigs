@@ -225,6 +225,7 @@ in
     address = "GRDN-BED-UNIT.dzr.devices.10bsk.rnet.rodriguez.org.uk";
     hostname = "GRDN-BED-UNIT";
     hostPlatform = "aarch64-linux";
+    hostRole = "server";
     monolithConfig = false;
     hardwareModules = [ inputs.hardware.nixosModules.raspberry-pi-4 ];
     extraModules = [
@@ -249,6 +250,7 @@ in
     username = "dzrodriguez";
     monolithConfig = false;
     hostPlatform = "x86_64-linux";
+    hostRole = "server";
     extraModules = [
       inputs.srvos.nixosModules.server
       inputs.srvos.nixosModules.mixins-terminfo
@@ -273,6 +275,7 @@ in
     username = "dzrodriguez";
     monolithConfig = false;
     hostPlatform = "aarch64-linux";
+    hostRole = "server";
     extraModules = [
       inputs.srvos.nixosModules.server
       inputs.srvos.nixosModules.hardware-hetzner-cloud-arm
@@ -292,6 +295,7 @@ in
     username = "dzrodriguez";
     monolithConfig = false;
     hostPlatform = "aarch64-linux";
+    hostRole = "server";
     extraModules = [
       inputs.srvos.nixosModules.server
       inputs.srvos.nixosModules.hardware-hetzner-cloud-arm
@@ -310,6 +314,7 @@ in
     hostname = "MTX-SRV";
     username = "dzrodriguez";
     monolithConfig = false;
+    hostRole = "server";
     hostPlatform = "aarch64-linux";
     extraModules = [
       inputs.srvos.nixosModules.server
@@ -331,6 +336,7 @@ in
     baseModules = [ inputs.agenix.nixosModules.default ];
     monolithConfig = false;
     hostPlatform = "aarch64-linux";
+    hostRole = "server";
     pubkey = "";
     remoteBuild = true;
     deployable = false;
@@ -356,6 +362,7 @@ in
     hostPlatform = "armv6l-linux";
     remoteBuild = true;
     deployable = false;
+    hostRole = "minimal";
     monolithConfig = false;
     hostname = "DZR-OFFICE-BUSY-LIGHT-UNIT";
     extraModules = [
@@ -376,6 +383,7 @@ in
     hostPlatform = "armv6l-linux";
     remoteBuild = true;
     deployable = false;
+    hostRole = "minimal";
     monolithConfig = false;
     hostname = "DZR-PETS-CAM-UNIT";
     extraModules = [
@@ -400,6 +408,7 @@ in
     remoteBuild = true;
     deployable = false;
     monolithConfig = false;
+    hostRole = "minimal";
     hardwareModules = [ inputs.hardware.nixosModules.raspberry-pi-4 ];
     extraModules = [
       ../nix/24.05-compat.nix
@@ -422,6 +431,7 @@ in
     username = "dzrodriguez";
     hostPlatform = "aarch64-linux";
     hostname = "CLOCKWORK-DT-CM4";
+    hostRole = "minimal";
     remoteBuild = true;
     deployable = false;
     monolithConfig = false;
