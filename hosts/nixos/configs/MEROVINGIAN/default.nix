@@ -15,7 +15,7 @@
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     loader.grub.enable = true;
-    loader.grub.device = "/dev/sda" ;
+    loader.grub.device = "/dev/sda";
     kernel.sysctl = {
       "fs.inotify.max_user_watches" = "819200";
       "kernel.printk" = "3 3 3 3";
