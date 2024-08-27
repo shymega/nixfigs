@@ -26,10 +26,10 @@ in
     package = pkgs.nixFlakes;
     settings = {
       builders-use-substitutes = true;
+      access-tokens = "@${config.age.secrets.nix_conf_access_tokens.path}";
     };
     extraOptions = ''
       builders = @/etc/nix/machines
-      !${config.age.secrets.nix_conf_access_tokens.path}
     '';
   };
 
