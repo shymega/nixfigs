@@ -46,16 +46,7 @@ in
       forceSSL = true;
       enableACME = true;
       # forward all Matrix API calls to synapse
-      locations."/_matrix" = {
-        proxyPass = "http://127.0.0.1:8008";
-        extraConfig = ''
-          proxy_connect_timeout       300;
-          proxy_send_timeout          300;
-          proxy_read_timeout          300;
-          send_timeout                300;
-        '';
-      };
-      locations."/_synapse" = {
+      locations."~ ^(/_matrix|/_synapse/_client)" = {
         proxyPass = "http://127.0.0.1:8008";
         extraConfig = ''
           proxy_connect_timeout       300;
