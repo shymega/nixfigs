@@ -70,6 +70,7 @@ in
           "https://cache.dataaturservice.se/spectrum/"
           "https://cache.nixos.org/"
           "https://deckcheatz-nightlies.cachix.org"
+          "https://cache.saumon.network/proxmox-nixos"
           "https://deploy-rs.cachix.org/"
           "https://devenv.cachix.org"
           "https://nix-community.cachix.org"
@@ -82,6 +83,7 @@ in
         trusted-public-keys = [
           "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
           "deckcheatz-nightlies.cachix.org-1:ygkraChLCkqqirdkGjQ68Y3LgVrdFB2bErQfj5TbmxU="
+          "proxmox-nixos:nveXDuVVhFDRFx8Dn19f1WDEaNRJjPrF2CPD2D+m1ys="
           "deploy-rs.cachix.org-1:xfNobmiwF/vzvK1gpfediPwpdIP0rpDV2rYqx40zdSI="
           "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
           "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
