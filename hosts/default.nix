@@ -448,18 +448,17 @@ in
     ];
   };
   ## End ClockworkPi DevTerm (CM4) ##
-
-  INSTALLER-SERVER-ISO = mkHost {
+  INSTALLER-SERVER-ISO-X86 = mkHost {
     type = "nixos";
-    address = "install.shymega.org.uk";
+    address = "install-server.shymega.org.uk";
     username = "dzrodriguez";
-    hostPlatform = "aarch64-linux";
+    hostPlatform = "x86_64-linux";
     hostname = "INSTALLER-SERVER-ISO";
     hostRole = "minimal";
     remoteBuild = false;
     deployable = false;
     monolithConfig = false;
-    baseModules = [ ] ;
+    baseModules = [ ];
     extraModules = [
       inputs.srvos.nixosModules.server
       inputs.srvos.nixosModules.mixins-terminfo
@@ -468,5 +467,70 @@ in
       ../nix/24.05-compat.nix
       "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
     ];
-  };
+  }; # TODO: Add Headscale as domain?
+
+  INSTALLER-WORKSTATION-ISO-X86 = mkHost {
+    type = "nixos";
+    address = "install-server.shymega.org.uk";
+    username = "dzrodriguez";
+    hostPlatform = "x86_64-linux";
+    hostname = "INSTALLER-WORKSTATION-ISO";
+    hostRole = "minimal";
+    remoteBuild = false;
+    deployable = false;
+    monolithConfig = false;
+    baseModules = [ ];
+    extraModules = [
+      inputs.srvos.nixosModules.server
+      inputs.srvos.nixosModules.mixins-terminfo
+      inputs.hardware.nixosModules.common-pc-ssd
+      inputs.hardware.nixosModules.common-pc
+      ../nix/24.05-compat.nix
+      "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+    ];
+  }; # TODO: Add Headscale as domain?
+
+  INSTALLER-SERVER-ISO-ARM = mkHost {
+    type = "nixos";
+    address = "install-server.shymega.org.uk";
+    username = "dzrodriguez";
+    hostPlatform = "aarch64-linux";
+    hostname = "INSTALLER-SERVER-ISO";
+    hostRole = "minimal";
+    remoteBuild = false;
+    deployable = false;
+    monolithConfig = false;
+    baseModules = [ ];
+    extraModules = [
+      inputs.srvos.nixosModules.server
+      inputs.srvos.nixosModules.mixins-terminfo
+      inputs.hardware.nixosModules.common-pc-ssd
+      inputs.hardware.nixosModules.common-pc
+      ../nix/24.05-compat.nix
+      "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+    ];
+  }; # TODO: Add Headscale as domain?
+
+  INSTALLER-WORKSTATION-ISO-ARM = mkHost {
+    type = "nixos";
+    address = "install-server.shymega.org.uk";
+    username = "dzrodriguez";
+    hostPlatform = "aarch64-linux";
+    hostname = "INSTALLER-WORKSTATION-ISO";
+    hostRole = "minimal";
+    remoteBuild = false;
+    deployable = false;
+    monolithConfig = false;
+    baseModules = [ ];
+    extraModules = [
+      inputs.srvos.nixosModules.server
+      inputs.srvos.nixosModules.mixins-terminfo
+      inputs.hardware.nixosModules.common-pc-ssd
+      inputs.hardware.nixosModules.common-pc
+      ../nix/24.05-compat.nix
+      "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+    ];
+  }; # TODO: Add Headscale as domain?
+
+
 }
