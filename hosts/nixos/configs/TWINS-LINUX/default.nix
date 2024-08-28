@@ -7,7 +7,7 @@
 , ...
 }:
 let
-  enableXanmod = true;
+  enableXanmod = false;
 in
 {
   imports = [ ./hardware-configuration.nix ];
