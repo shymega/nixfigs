@@ -152,11 +152,11 @@ in
     matrix-sliding-sync = {
       enable = true;
       package = pkgs.unstable.matrix-sliding-sync;
-      createDatabase = true;
+      createDatabase = false;
       environmentFile = config.age.secrets.matrix-sliding-sync-env.path;
       settings = {
         SYNCV3_SERVER = "http://127.0.0.1:8008";
-        SYNCV3_DB = "host=127.0.0.1 port=5432 dbname=matrix_syncv3 user=matrix password=matrix4me sslmode=disable connect_timeout=10";
+        SYNCV3_DB = "host=127.0.0.1 port=5432 dbname=matrix_sliding_syncv3 user=matrix password=matrix4me sslmode=disable connect_timeout=10";
         SYNCV3_LOG_LEVEL = "trace";
         SYNCV3_BINDADDR = "127.0.0.1:8009";
       };
