@@ -43,7 +43,7 @@
       };
       synapse_secret = {
         file = ./synapse_secret.age;
-        group = "users";
+        group = "matrix-synapse";
         mode = "0640";
       };
       cloudflare_dns_token = {
@@ -63,7 +63,7 @@
       };
       matrix-sliding-sync-env = {
         file = ./matrix-sliding-sync-env.age;
-        group = "users";
+        group = "nogroup";
         mode = "0640";
       };
     };
