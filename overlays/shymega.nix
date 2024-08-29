@@ -20,6 +20,6 @@ in
   shymega = import inputs.nixpkgs-shymega {
     inherit (prev) system;
     config = inputs.self.nixpkgs-config;
-    overlays = builtins.attrValues shymegaOverlays ++ (import ../scripts);
+    overlays = builtins.attrValues shymegaOverlays;
   };
 }
