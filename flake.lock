@@ -670,7 +670,7 @@
     "dwl-source": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-bD7WXDqU65tiZaX2CNbFLf8UKiE+enKD88LUYutcgsQ=",
+        "narHash": "sha256-DYtpOww9LJKgko5G88SyVJG65JslQV51uPKjSBJUDRM=",
         "type": "file",
         "url": "https://codeberg.org/dwl/dwl"
       },
@@ -1836,27 +1836,6 @@
       "original": {
         "owner": "nix-community",
         "repo": "lanzaboote",
-        "type": "github"
-      }
-    },
-    "matrix-synapse-aio-nix": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1724933672,
-        "narHash": "sha256-pvLhIQosMy6lhFsO11tL/Z71+WGLF8mAkzFX4YAIxrU=",
-        "owner": "shymega",
-        "repo": "matrix-synapse-aio.nix",
-        "rev": "d530190e90640c23507ece915c8fa1f6249958d3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "shymega",
-        "ref": "refactor",
-        "repo": "matrix-synapse-aio.nix",
         "type": "github"
       }
     },
@@ -3188,7 +3167,6 @@
         "home-manager": "home-manager_2",
         "impermanence": "impermanence",
         "lanzaboote": "lanzaboote",
-        "matrix-synapse-aio-nix": "matrix-synapse-aio-nix",
         "nix-alien": "nix-alien",
         "nix-darwin": "nix-darwin",
         "nix-doom-emacs-unstraightened": "nix-doom-emacs-unstraightened",
