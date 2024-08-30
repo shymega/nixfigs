@@ -1,18 +1,17 @@
-{ pkgs ? import <nixpkgs> { }
-,
-}:
+_final: prev:
+with prev.lib;
 let
-  inherit (pkgs) lib;
-  scripts = builtins.filter (f: f != "default.nix") (builtins.attrNames (builtins.readDir ../pkgs/scripts));
-  getFilename = x: (lib.nameValuePair (lib.removeSuffix ".sh" x));
-  scriptMapFunction = script: pkgs:
+  # Credit: https://www.reddit.com/r/NixOS/comments/15hedyu/install_directory_full_of_scripts_recursively/
+  # This function extracts the basename of a file
+  basename = path: lists.last (strings.splitString "/" (toString path));
+  # Generate a flat list of files recursively
+  files = filesystem.listFilesRecursive ../scripts;
+  mapScriptFn = file:
     let
-      filename = getFilename script;
-      contents = builtins.readFile ../pkgs/scripts/${filename};
+      base = basename file;
     in
     {
-      "${filename}" = pkgs.callPackage (pkgs.writeScriptBin "${filename}" contents);
+      "${base}" = prev.writeScriptBin base (builtins.readFile file);
     };
-  run = builtins.map scriptMapFunction scripts;
 in
-run
+forEach files mapScriptFn
