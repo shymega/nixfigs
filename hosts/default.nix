@@ -67,13 +67,13 @@ let
           baseModules
           deployable
           embedHm
-          overlays
           extraModules
           hardwareModules
           hostPlatform
           hostRole
           hostname
           monolithConfig
+          overlays
           pubkey
           remoteBuild
           type
@@ -85,18 +85,18 @@ let
       assert (hasSuffix "darwin" hostPlatform);
       {
         inherit
-          type
-          hostPlatform
           address
+          baseModules
+          deployable
+          extraModules
+          hardwareModules
+          hostPlatform
+          hostname
+          monolithConfig
           pubkey
           remoteBuild
+          type
           username
-          hostname
-          extraModules
-          deployable
-          baseModules
-          monolithConfig
-          hardwareModules
           ;
       }
     else if type == "home-manager" then
@@ -104,11 +104,11 @@ let
       assert pubkey == null;
       {
         inherit
-          type
-          hostPlatform
-          username
-          hostname
           deployable
+          hostPlatform
+          hostname
+          type
+          username
           ;
       }
     else
@@ -132,6 +132,7 @@ in
       { environment.systemPackages = [ inputs.nixpkgs.legacyPackages.${hostPlatform}.sbctl ]; }
     ];
     pubkey = "";
+    embedHm = true;
     remoteBuild = true;
     deployable = true;
   };
@@ -152,6 +153,7 @@ in
     address = "MORPHEUS-LINUX.dzr.devices.10bsk.rnet.rodriguez.org.uk";
     hostname = "MORPHEUS-LINUX";
     hostPlatform = "x86_64-linux";
+    embedHm = true;
     hardwareModules = [ inputs.hardware.nixosModules.gpd-win-max-2-2023 ];
     extraModules = [
       inputs.chaotic.nixosModules.default
