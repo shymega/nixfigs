@@ -41,5 +41,4 @@ let
 in
 {
   "./atuin_key.age".publicKeys = personal ++ rnet;
-  "./nix_conf_access_tokens.age".publicKeys = personal ++ rnet;
 }
