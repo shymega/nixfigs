@@ -8,25 +8,27 @@
 (use-package! w3m
   :ensure t)
 
-(defvar gnus-select-method '(nntp "news.gmane.io"))
+(defvar gnus-select-method nil)
 
 (defvar gnus-secondary-select-methods
   '((nnimap "dominic.rodriguez@rodriguez.org.uk"
-            (nnimap-stream network)
-            (nnimap-address "localhost")
-            (nnir-search-engine imap)
-            (nnimap-user "dominic.rodriguez@rodriguez.org.uk"))
+     (nnimap-stream network)
+     (nnimap-address "localhost")
+     (nnir-search-engine imap)
+     (nnimap-user "dominic.rodriguez@rodriguez.org.uk"))
     (nnimap "shymega@shymega.org.uk"
             (nnimap-stream network)
             (nnimap-address "localhost")
             (nnir-search-engine imap)
             (nnimap-user "shymega@shymega.org.uk"))
-    (nntp "nntp-oss")
-    (nnimap "rnet@rodriguez.org.uk"
-            (nnimap-stream network)
-            (nnimap-address "localhost")
-            (nnir-search-engine imap)
-            (nnimap-user "rnet@rodriguez.org.uk"))))
+    (nntp "localhost"
+          (nntp-address "localhost")
+          (nntp-port-number 1119))
+  (nnimap "rnet@rodriguez.org.uk"
+          (nnimap-stream network)
+          (nnimap-address "localhost")
+          (nnir-search-engine imap)
+          (nnimap-user "rnet@rodriguez.org.uk"))))
 
 (defvar mm-text-html-renderer 'w3m)
 
@@ -36,8 +38,8 @@
   "Return account's signature specifed by ACC in $HOME/.mutt/accounts/%s.sig."
   (with-temp-buffer
     (insert-file-contents
-      (expand-file-name (format "%s/.config/neomutt/conf.d/accounts.d//%s.sig"
-                                (getenv "HOME") acc)))
+     (expand-file-name (format "%s/.config/neomutt/conf.d/accounts.d//%s.sig"
+                               (getenv "HOME") acc)))
     (buffer-string)))
 
 (defvar gnus-posting-styles
@@ -89,16 +91,16 @@
                               (("shymega@shymega.org.uk" visible nil nil))
                               (("rnet@rodriguez.org.uk" visible nil nil))))
 (defvar gnus-topic-alist '(
-                       ("dominic.rodriguez@rodriguez.org.uk"
-                        "nnimap+dominic.rodriguez:INBOX"
-                        "nnimap+dominic.rodriguez:INBOX")
-                       ("shymega@shymega.org.uk"
-                        "nnimap+shymega:INBOX"
-                        "nnimap+shymega:INBOX")
-                       ("rnet@rodriguez.org.uk"
-                        "nnimap+rnet:INBOX"
-                        "nnimap+rnet:INBOX")
-                       ("Gnus")))
+                           ("dominic.rodriguez@rodriguez.org.uk"
+                            "nnimap+dominic.rodriguez:INBOX"
+                            "nnimap+dominic.rodriguez:INBOX")
+                           ("shymega@shymega.org.uk"
+                            "nnimap+shymega:INBOX"
+                            "nnimap+shymega:INBOX")
+                           ("rnet@rodriguez.org.uk"
+                            "nnimap+rnet:INBOX"
+                            "nnimap+rnet:INBOX")
+                           ("Gnus")))
 
 (defun start-gnus ()
   "Start GNUS with demon handlers."
