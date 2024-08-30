@@ -45,8 +45,10 @@ let
         baseModules ++ [
           (./configs + "/${hostname}")
           ../../modules/nixos/generators.nix
-          ../../secrets/system
-          inputs.agenix.nixosModules.default
+          (if embedHm then
+            ./home-manager-personal.nix
+          else
+            [ ])
         ]
         ++ extraModules ++ hardwareModules
         ++ (lib.optional monolithConfig (import ./monolith.nix));
@@ -59,7 +61,10 @@ let
           self
           inputs
           lib
+          username
+          embedHm
           hostRole
+          specialArgs
           deployable
           hostname
           hostPlatform
