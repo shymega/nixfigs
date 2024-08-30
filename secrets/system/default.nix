@@ -72,6 +72,22 @@
         group = "users";
         mode = "0640";
       };
+      "restic_env" = {
+        file = ./restic/env.age;
+        group = "users";
+        mode = "0640";
+      };
+      "restic_repo" = {
+        file = ./restic/repo.age;
+        group = "users";
+        mode = "0640";
+      };
+      "restic_pw" = {
+        file = ./restic/pw.age;
+        group = "users";
+        mode = "0640";
+      };
+
     };
   };
 }
