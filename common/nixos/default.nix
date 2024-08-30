@@ -32,6 +32,7 @@
       if hostname == "NEO-LINUX" || hostname == "MORPHEUS-LINUX" || hostname == "TWINS-LINUX" then
         [
           ./appimage.nix
+          ./davmail.nix
           ./fido2.nix
           ./graphical.nix
           ./impermanence.nix
