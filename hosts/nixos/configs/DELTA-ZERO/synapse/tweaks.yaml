@@ -1,5 +1,3 @@
 sync_response_cache_duration: 200m
 presence:
   enabled: true
-experimental_features:
-  faster_joins: True
