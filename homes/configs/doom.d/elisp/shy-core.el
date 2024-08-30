@@ -14,10 +14,6 @@
  save-interprogram-paste-before-kill nil
  interprogram-paste-function 'x-cut-buffer-or-selection-value)
 
-(unless (server-running-p)
-  (message "Starting Emacs daemon...")
-  (server-start))
-
 (add-to-list 'auto-mode-alist '("\\.log\\'" . auto-revert-mode))
 
 (setq scroll-margin 5
