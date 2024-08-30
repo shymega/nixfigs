@@ -18,7 +18,7 @@
       initialScript = pkgs.writeText "backend-initScript" ''
         CREATE ROLE matrix WITH LOGIN PASSWORD 'matrix4me' CREATEDB;
       '';
-      ensureDatabases = [ "mautrix_slack" "mautrix_whatsapp" "mautrix_meta_facebook" "mautrix_meta_instagram" "mautrix_meta_messenger" "mautrix_telegram" "matrix_synapse_syncv3" ];
+      ensureDatabases = [ "mautrix_slack" "mautrix_whatsapp" "mautrix_meta_facebook" "mautrix_meta_instagram" "mautrix_meta_messenger" "mautrix_telegram" ];
 
       settings = {
         # https://pgconfigurator.cybertec.at/
