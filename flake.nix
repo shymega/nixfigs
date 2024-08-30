@@ -216,7 +216,7 @@
     base16-schemes.url = "github:SenchoPens/base16.nix";
     bestool.url = "github:shymega/bestool/shymega-all-fixes";
     deckcheatz.url = "github:deckcheatz/deckcheatz/develop";
-    dzr-taskwarrior-recur.url = "github.com:shymega/dzr-taskwarrior-recur";
+    dzr-taskwarrior-recur.url = "github:shymega/dzr-taskwarrior-recur";
     emacsconf2nix.url = "github:shymega/emacsconf2nix";
     flake-parts.url = "github:hercules-ci/flake-parts";
     nix-doom-emacs-unstraightened.url = "github:marienz/nix-doom-emacs-unstraightened";
