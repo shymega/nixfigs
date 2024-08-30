@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  fqdn = "mtx.shymega.org.uk";
+  fqdn = "matrix.rodriguez.org.uk";
 in
 {
   disabledModules = [
@@ -11,6 +11,7 @@ in
     ../../../../modules/nixos/mautrix-whatsapp.nix
     ./postgres.nix
     ./security.nix
+    ./nginx.nix
     ./sliding-sync.nix
     ./synapse-main.nix
   ];
@@ -18,8 +19,6 @@ in
   environment.systemPackages = [ pkgs.synapse ];
 
   services = {
-    redis.servers."".enable = true;
-
     mautrix-whatsapp = {
       enable = false;
       registerToSynapse = false;
@@ -37,7 +36,6 @@ in
           };
           address = "http://127.0.0.1:${toString port}";
           hostname = "127.0.0.1";
-          hs_token = "";
           id = "whatsapp";
           port = 29318;
         };
@@ -47,7 +45,7 @@ in
           double_puppet_server_map = { };
           login_shared_secret_map = { };
           permissions = {
-            "@shymega:mtx.shymega.org.uk" = "admin";
+            "@shymega:rodriguez.org.uk" = "admin";
           };
           relay = {
             enabled = true;
@@ -56,7 +54,7 @@ in
         };
         homeserver = {
           address = "https://${fqdn}";
-          domain = "${fqdn}";
+          domain = "rodriguez.org.uk";
         };
         logging = {
           min_level = "debug";
@@ -78,8 +76,8 @@ in
       settings = {
         homeserver = {
           software = "standard";
-          domain = "${fqdn}";
-          address = "https://mtx.shymega.org.uk";
+          domain = "rodriguez.org.uk";
+          address = "https://matrix.rodriguez.org.uk";
         };
         database = {
           type = "postgres";
@@ -101,7 +99,7 @@ in
 
         bridge = {
           permissions = {
-            "@shymega:mtx.shymega.org.uk" = "admin";
+            "@shymega:rodriguez.org.uk" = "admin";
           };
 
         };
@@ -115,8 +113,8 @@ in
       settings = {
         homeserver = {
           software = "standard";
-          domain = "${fqdn}";
-          address = "https://mtx.shymega.org.uk";
+          domain = "rodriguez.org.uk";
+          address = "https://matrix.rodriguez.org.uk";
         };
         database = {
           type = "postgres";
@@ -140,7 +138,7 @@ in
 
         bridge = {
           permissions = {
-            "@shymega:mtx.shymega.org.uk" = "admin";
+            "@shymega:rodriguez.org.uk" = "admin";
           };
 
         };
@@ -155,8 +153,8 @@ in
         settings = {
           homeserver = {
             software = "standard";
-            domain = "${fqdn}";
-            address = "https://mtx.shymega.org.uk";
+            domain = "rodriguez.org.uk";
+            address = "https://matrix.rodriguez.org.uk";
           };
           database = {
             type = "postgres";
@@ -177,7 +175,7 @@ in
 
           bridge = {
             permissions = {
-              "@shymega:mtx.shymega.org.uk" = "admin";
+              "@shymega:rodriguez.org.uk" = "admin";
             };
           };
         };
@@ -190,8 +188,8 @@ in
         settings = {
           homeserver = {
             software = "standard";
-            address = "https://mtx.shymega.org.uk";
-            domain = "${fqdn}";
+            address = "https://matrix.rodriguez.org.uk";
+            domain = "rodriguez.org.uk";
           };
           database = {
             type = "postgres";
@@ -212,7 +210,7 @@ in
 
           bridge = {
             permissions = {
-              "@shymega:mtx.shymega.org.uk" = "admin";
+              "@shymega:rodriguez.org.uk" = "admin";
             };
           };
         };
@@ -225,7 +223,7 @@ in
         settings = {
           homeserver = {
             software = "standard";
-            address = "https://mtx.shymega.org.uk";
+            address = "https://matrix.rodriguez.org.uk";
           };
           database = {
             type = "postgres";
@@ -254,13 +252,13 @@ in
 
           bridge = {
             permissions = {
-              "@shymega:mtx.shymega.org.uk" = "admin";
+              "@shymega:rodriguez.org.uk" = "admin";
             };
 
           };
 
           meta.mode = "messenger";
-          homeserver.domain = "mtx.shymega.org.uk";
+          homeserver.domain = "matrix.rodriguez.org.uk";
         };
       };
     };
