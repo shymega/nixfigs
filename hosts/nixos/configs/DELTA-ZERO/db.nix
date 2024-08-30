@@ -11,7 +11,7 @@
     database = "matrix_synapse";
     sslmode = "disable";
     host = "127.0.0.1";
-    application_name = "matrix-synapse (rory.gay) - ${if workerName == null then throw "synapse/db.nix: workerName unspecified" else workerName}";
+    application_name = "matrix-synapse (rodriguez.org.uk) - ${if workerName == null then throw "synapse/db.nix: workerName unspecified" else workerName}";
     cp_min =
       if dbGroup == "solo" then
         1
