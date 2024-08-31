@@ -1,6 +1,6 @@
-{ pkgs, ... }:
+{ inputs, pkgs, ... }:
 let
-  fqdn = "mtx.shymega.org.uk";
+  fqdn = "matrix.rodriguez.org.uk";
 in
 {
   disabledModules = [ "services/matrix/mautrix-whatsapp.nix" ];
@@ -10,6 +10,8 @@ in
     ../../../../modules/nixos/nixos-matrix/synapse-module
     ../../../../modules/nixos/nixos-matrix/sliding-sync
     ./security.nix
+    ./synapse-main.nix
+    ./nginx.nix
     ./postgres.nix
   ];
   nixpkgs.overlays = [
@@ -21,101 +23,7 @@ in
   environment.systemPackages = [ pkgs.synapse ];
 
   services = {
-    matrix-synapse-next = {
-      enable = true;
-
-      workers.federationSenders = 1;
-      workers.federationReceivers = 1;
-      workers.initialSyncers = 1;
-      workers.normalSyncers = 1;
-      workers.eventPersisters = 2;
-      workers.useUserDirectoryWorker = true;
-
-      enableNginx = true;
-
-      settings = {
-        extraConfigFiles = [
-          config.age.secrets.synapse_secret.path
-          ./synapse/tweaks.yaml
-          ./synapse/logging.yaml
-        ];
-
-        public_baseurl = "https://mtx.shymega.org.uk";
-        server_name = "mtx.shymega.org.uk";
-        database = {
-          name = "psycopg2";
-          args = {
-            user = "matrix";
-            password = "matrix4me";
-            port = 5432;
-            database = "matrix_synapse";
-            sslmode = "disable";
-            host = "127.0.0.1";
-            cp_min = 5;
-            cp_max = 10;
-          };
-        };
-        report_stats = true;
-        enable_metrics = true;
-        enable_registration = true;
-        registration_requires_token = true;
-        enable_search = true;
-        allow_public_rooms_over_federation = true;
-        max_upload_size = "20M";
-        allow_public_rooms_without_auth = true;
-        federation = {
-          client_timeout = "60s";
-          max_short_retries = 12;
-          max_short_retry_delay = "5s";
-          max_long_retries = 5;
-          max_long_retry_delay = "30s";
-        };
-        presence = {
-          enable = true;
-          update_interval = 60;
-        };
-        require_membership_for_aliases = false;
-        redaction_retention_period = null;
-        user_ips_max_age = null;
-        allow_device_name_lookup_over_federation = true;
-        experimental_features = {
-          msc2815_enabled = true; # Redacted event content
-          msc3026_enabled = true; # Busy presence
-          msc3916_authenticated_media_enabled = true; # Authenticated media
-          # Room summary api
-          msc3266_enabled = true;
-          # Removing account data
-          msc3391_enabled = true;
-          # Thread notifications
-          msc3773_enabled = true;
-          # Remotely toggle push notifications for another client
-          msc3881_enabled = true;
-          # Remotely silence local notifications
-          msc3890_enabled = true;
-        };
-        enableSlidingSync = true;
-      };
-      sliding-sync = {
-        enable = true;
-        environmentFile = config.age.secrets.matrix-sliding-sync-env.path;
-        publicBaseUrl = "https://mtx.shymega.org.uk";
-        settings = {
-          SYNCV3_SERVER = "http://localhost:8008";
-          SYNCV3_DB = "host=localhost port=5432 dbname=matrix_syncv3 user=matrix password=matrix4me sslmode=disable connect_timeout=10";
-          SYNCV3_LOG_LEVEL = "trace";
-          SYNCV3_BINDADDR = "127.0.0.1:8009";
-        };
-      };
-    };
-
     redis.servers."".enable = true;
-    #        app_service_config_files = [
-    #          /var/lib/mautrix-meta-facebook/meta-registration.yaml
-    #          /var/lib/mautrix-meta-instagram/meta-registration.yaml
-    #          /var/lib/mautrix-meta-messenger/meta-registration.yaml
-    #          /var/lib/mautrix-slack/slack-registration.yaml
-    #          /var/lib/mautrix-whatsapp/whatsapp-registration.yaml
-    #        ];
 
     mautrix-whatsapp = {
       enable = true;
