@@ -311,10 +311,10 @@ in
     deployable = true;
   };
 
-  MATRIX-SRV = mkHost {
+  MATRIX-LXC = mkHost {
     type = "nixos";
     address = "matrix.rodriguez.org.uk";
-    hostname = "MATRIX-SRV";
+    hostname = "MATRIX-LXC";
     username = "dzrodriguez";
     monolithConfig = false;
     hostRole = "server";
