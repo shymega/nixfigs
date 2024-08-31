@@ -7,8 +7,6 @@ in
   imports = [
     ../../../../modules/nixos/mautrix-slack.nix
     ../../../../modules/nixos/mautrix-whatsapp.nix
-    ../../../../modules/nixos/nixos-matrix/synapse-module
-    ../../../../modules/nixos/nixos-matrix/sliding-sync
     ./security.nix
     ./synapse-main.nix
     ./postgres.nix
