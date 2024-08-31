@@ -32,8 +32,8 @@ let
   ];
 
   customOverlays = [
-    (import ./master.nix { inherit inputs lib; })
-    (import ./shymega.nix { inherit inputs lib; })
+    #    (import ./master.nix { inherit inputs lib; })
+    #    (import ./shymega.nix { inherit inputs lib; })
     (import ./unstable.nix { inherit inputs lib; })
   ];
 in
