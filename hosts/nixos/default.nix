@@ -19,6 +19,7 @@ let
     , hostPlatform
     , type
     , extraModules
+    , username
     , deployable
     , monolithConfig
     , overlays
@@ -29,16 +30,12 @@ let
     , ...
     }:
     let
-      lib = inputs.nixpkgs.lib.extend
-        (
-          _final: prev: {
-            my = import ../../lib {
-              inherit self inputs;
-              lib = prev;
-              pkgs = genPkgs hostPlatform overlays;
-            };
-          }
-        ) // inputs.nixpkgs.lib;
+      libx = import ../../lib {
+        inherit self inputs;
+        inherit (inputs.nixpkgs) lib;
+        pkgs = genPkgs hostPlatform overlays;
+      };
+      inherit (inputs.nixpkgs) lib;
     in
     inputs.nixpkgs.lib.nixosSystem rec {
       system = hostPlatform;
@@ -49,9 +46,27 @@ let
           ../../modules/nixos/generators.nix
         ]
         ++ extraModules ++ hardwareModules
-        ++ (lib.optionals embedHm [
-          ./home-manager-personal.nix
-        ])
+        ++ (lib.optional embedHm inputs.home-manager.nixosModules.home-manager)
+        ++ (lib.optional embedHm {
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            users.${username} = import ../../homes/configs;
+            extraSpecialArgs = {
+              inherit self
+                inputs
+                embedHm
+                username
+                hostRole
+                specialArgs
+                deployable
+                hostname
+                libx
+                hostPlatform;
+              system = hostPlatform;
+            };
+          };
+        })
         ++ (lib.optional monolithConfig (import ./monolith.nix));
       specialArgs = {
         hostAddress = address;
@@ -62,7 +77,9 @@ let
           self
           inputs
           lib
+          libx
           embedHm
+          username
           hostRole
           specialArgs
           deployable

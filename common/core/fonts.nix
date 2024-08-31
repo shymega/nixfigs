@@ -7,11 +7,12 @@
 { config
 , pkgs
 , lib
+, libx
 , ...
 }:
 let
   cfg = config.nixfigs.fonts;
-  inherit (lib.my) isLinux;
+  inherit (libx) isLinux;
 in
 with lib;
 {
