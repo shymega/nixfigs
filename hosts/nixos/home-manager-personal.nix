@@ -1,4 +1,5 @@
-{ self
+{ config
+, self
 , hostAddress
 , hostType
 , pkgs
@@ -14,17 +15,18 @@
 , hostPlatform
 , ...
 }:
-inputs.home-manager.nixosModules.home-manager
 {
+  imports = [inputs.home-manager.nixosModules.home-manager];
   home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    users."dzrodriguez" = import ../../homes;
-    extraSpecialArgs = {
+    home-manager.useGlobalPkgs = true;
+     home-manager.useUserPackages = true;
+     home-manager.users."dzrodriguez" = import ../../homes;
+     home-manager.extraSpecialArgs = {
       inherit
         hostAddress
         hostType
         pkgs
+        config
         system
         self
         inputs
