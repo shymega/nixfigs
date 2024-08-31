@@ -16,12 +16,12 @@
 , ...
 }:
 {
-  imports = [inputs.home-manager.nixosModules.home-manager];
+  imports = [ inputs.home-manager.nixosModules.home-manager ];
   home-manager = {
     home-manager.useGlobalPkgs = true;
-     home-manager.useUserPackages = true;
-     home-manager.users."dzrodriguez" = import ../../homes;
-     home-manager.extraSpecialArgs = {
+    home-manager.useUserPackages = true;
+    home-manager.users."dzrodriguez" = import ../../homes;
+    home-manager.extraSpecialArgs = {
       inherit
         hostAddress
         hostType
