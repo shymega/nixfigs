@@ -1,1 +1,0 @@
-import ../../nix/scripts.nix
