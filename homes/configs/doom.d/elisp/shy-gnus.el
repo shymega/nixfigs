@@ -8,7 +8,9 @@
 (use-package! w3m
   :ensure t)
 
-(defvar gnus-select-method nil)
+(defvar gnus-select-method '(nntp "leafnode-nntp"
+          (nntp-address "localhost")
+          (nntp-port-number 1119)))
 
 (defvar gnus-secondary-select-methods
   '((nnimap "dominic.rodriguez@rodriguez.org.uk"
@@ -21,9 +23,6 @@
             (nnimap-address "localhost")
             (nnir-search-engine imap)
             (nnimap-user "shymega@shymega.org.uk"))
-    (nntp "localhost"
-          (nntp-address "localhost")
-          (nntp-port-number 1119))
   (nnimap "rnet@rodriguez.org.uk"
           (nnimap-stream network)
           (nnimap-address "localhost")
