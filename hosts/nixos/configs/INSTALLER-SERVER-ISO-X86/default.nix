@@ -5,7 +5,7 @@
   users.users."root".hashedPassword = null;
   users.users."root".openssh.authorizedKeys.keys = config.users.users."nixos".openssh.authorizedKeys.keys;
   users.users."nixos".openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN+E0hk4exiTZiO/UjGW8q1gu129RWcClCd60HrVUZ1c"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINrrpI4JTUIr0TC39r1K3nxyieCLi1aqH413+7ulSy5t"
   ];
   users.users."nixos".password = null;
   users.users."nixos".initialPassword = null;
