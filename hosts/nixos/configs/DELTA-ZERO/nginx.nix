@@ -22,7 +22,7 @@
     recommendedTlsSettings = true;
     recommendedZstdSettings = true;
     clientMaxBodySize = config.services.matrix-synapse.settings.max_upload_size;
-    virtualHosts = {
+    virtualHosts = import ./workers // {
       "matrix.rodriguez.org.uk" = import ./matrix-nginx.nix;
     };
   };
