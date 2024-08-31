@@ -14,10 +14,6 @@ let
   inherit (lib.my) isDarwin isForeignNix isNixOS;
 in
 {
-  imports = [
-    inputs.agenix.nixosModules.default
-    ../../secrets/system
-  ];
   environment.etc."nix/overlays-compat/overlays.nix".text = ''
     final: prev:
     with prev.lib;
