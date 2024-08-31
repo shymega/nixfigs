@@ -38,6 +38,7 @@
           ./graphical.nix
           ./impermanence.nix
           ./keychron.nix
+          ./leafnode.nix
           ./matrix.nix
           ./networking.nix
           ./postfix.nix
