@@ -7,6 +7,7 @@
 , config
 , username
 , system
+, self
 , lib
 , libx
 , ...
@@ -20,10 +21,16 @@ in
   imports = [
     ./network-targets.nix
     (import ./programs/rofi.nix { inherit lib pkgs; })
+    inputs.agenix.homeManagerModules.default
+    inputs.nix-doom-emacs-unstraightened.hmModule
+    inputs.nix-index-database.hmModules.nix-index
+    ../../secrets/user
+    ({ config, ... }: {
+      nixpkgs.config = self.nixpkgs-config;
+    })
   ];
 
   nix = {
-    package = pkgs.nixFlakes;
     settings = rec {
       substituters = [
         "https://attic.mildlyfunctional.gay/nixbsd"
