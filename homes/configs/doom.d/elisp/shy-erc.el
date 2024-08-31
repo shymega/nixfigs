@@ -17,14 +17,7 @@
 	(remq 'erc-notice-face erc-track-faces-priority-list)))
 
 
-(setq
-  erc-kill-buffer-on-part t
-  erc-prompt (lambda () (concat (buffer-name) ">"))
-  erc-prompt-for-password nil
-  erc-server-reconnect-attempts 3
-  erc-server-reconnect-timeout 30
-  erc-track-exclude-server-buffer t
-  erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT")
+(setopt
   erc-auto-query 'bury
   erc-button-url-regexp "\\([-a-zA-Z0-9_=!?#$@~`%&*+\\/:;,]+\\.\\)+[-a-zA-Z0-9_=!?#$@~`%&*+\\/:;,]*[-a-zA-Z0-9\\/]"
   erc-current-nick-highlight-type 'nick
@@ -37,15 +30,28 @@
   erc-interpret-mirc-color t
   erc-join-buffer 'bury
   erc-keywords nil
+  erc-kill-buffer-on-part t
   erc-kill-queries-on-quit nil
   erc-lurker-hide-list '("JOIN" "PART" "QUIT")
+  erc-prompt (lambda () (concat (buffer-name) ">"))
+  erc-prompt-for-password nil
   erc-rename-buffers t
+  erc-server-reconnect-attempts 3
+  erc-server-reconnect-timeout 30
   erc-timestamp-format "[%H:%M] "
   erc-timestamp-only-if-changed-flag nil
+  erc-track-exclude-server-buffer t
   erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE" "324" "329" "332" "333" "353" "477")
+  erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT")
   erc-track-faces-priority-list '(erc-current-nick-face erc-keyword-face)
   erc-track-priority-faces-only 'all
   erc-track-use-faces t
+erc-auto-query 'window-noselect
+erc-fill-column 100
+erc-fill-function 'erc-fill-static
+erc-kill-buffer-on-part t
+erc-track-shorten-start 8
+erc-track-visibility nil
   erc-track-exclude-types '("JOIN" "NICK" "QUIT" "MODE"))
 
 (defun shymega/erc-mode-hook ()
