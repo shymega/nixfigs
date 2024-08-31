@@ -33,7 +33,6 @@
         [
           ./appimage.nix
           ./automount.nix
-          ./backups.nix
           ./davmail.nix
           ./fido2.nix
           ./graphical.nix
@@ -46,6 +45,13 @@
           inputs.lanzaboote.nixosModules.lanzaboote
           inputs.nix-index-database.nixosModules.nix-index
           inputs.stylix.nixosModules.stylix
+        ]
+      else
+        [ ]
+    ) ++ (
+      if hostname == "MORPHEUS-LINUX" then
+        [
+          ./backups.nix
         ]
       else
         [ ]
