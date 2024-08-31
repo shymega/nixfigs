@@ -45,6 +45,8 @@ let
         baseModules ++ [
           (./configs + "/${hostname}")
           ../../modules/nixos/generators.nix
+          ../../secrets/system
+          inputs.agenix.nixosModules.default
         ]
         ++ extraModules ++ hardwareModules
         ++ (lib.optional monolithConfig (import ./monolith.nix));
