@@ -7,6 +7,7 @@
 , config
 , username
 , system
+, osConfig ? null
 , self
 , lib
 , libx
@@ -30,7 +31,7 @@ in
     })
   ];
 
-  nix = {
+  nix = if osConfig == null then {
     settings = rec {
       substituters = [
         "https://attic.mildlyfunctional.gay/nixbsd"
@@ -70,6 +71,10 @@ in
       builders = @/etc/nix/machines
       !include ${config.age.secrets.nix_conf_access_tokens.path}
     '';
+  } else {
+    settings = {
+      inherit (osConfig.nix.settings) substituters trusted-public-keys;
+    };
   };
 
   home = {
