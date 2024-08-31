@@ -8,14 +8,19 @@ in
     ../../../../modules/nixos/mautrix-slack.nix
     ../../../../modules/nixos/mautrix-whatsapp.nix
     ./security.nix
-    ./synapse-main.nix
     ./postgres.nix
+    ./nginx.nix
+    ./synapse-main.nix
   ];
   nixpkgs.overlays = [
     (_final: _prev: {
       inherit (inputs.nixpkgs-master.legacyPackages.${pkgs.stdenv.hostPlatform.system}) matrix-synapse-unwrapped;
     })
   ];
+
+  system.activationScripts."mautrix-perms".text = ''
+    ${pkgs.coreutils}/bin/chgrp -Rv matrix-synapse /var/lib/mautrix-meta-facebook /var/lib/mautrix-meta-instagram /var/lib/mautrix-meta-messenger /var/lib/mautrix-slack /var/lib/mautrix-telegram /var/lib/mautrix-whatsapp
+  '';
 
   environment.systemPackages = [ pkgs.synapse ];
 
@@ -56,6 +61,8 @@ in
           username_template = "whatsapp_{{.}}";
         };
         homeserver = {
+          software = "standard";
+
           address = "https://${fqdn}";
           domain = "rodriguez.org.uk";
         };
@@ -80,7 +87,7 @@ in
         homeserver = {
           software = "standard";
           domain = "rodriguez.org.uk";
-          address = "https://matrix.rodriguez.org.uk";
+          address = "https://${fqdn}";
         };
         database = {
           type = "postgres";
@@ -117,7 +124,7 @@ in
         homeserver = {
           software = "standard";
           domain = "rodriguez.org.uk";
-          address = "https://matrix.rodriguez.org.uk";
+          address = "https://${fqdn}";
         };
         database = {
           type = "postgres";
@@ -157,7 +164,7 @@ in
           homeserver = {
             software = "standard";
             domain = "rodriguez.org.uk";
-            address = "https://matrix.rodriguez.org.uk";
+            address = "https://${fqdn}";
           };
           database = {
             type = "postgres";
@@ -191,7 +198,7 @@ in
         settings = {
           homeserver = {
             software = "standard";
-            address = "https://matrix.rodriguez.org.uk";
+            address = "https://${fqdn}";
             domain = "rodriguez.org.uk";
           };
           database = {
@@ -226,7 +233,8 @@ in
         settings = {
           homeserver = {
             software = "standard";
-            address = "https://matrix.rodriguez.org.uk";
+            domain = "rodriguez.org.uk";
+            address = "https://${fqdn}";
           };
           database = {
             type = "postgres";
@@ -261,7 +269,6 @@ in
           };
 
           meta.mode = "messenger";
-          homeserver.domain = "matrix.rodriguez.org.uk";
         };
       };
     };
