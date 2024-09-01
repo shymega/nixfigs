@@ -14,13 +14,6 @@
       fsType = "zfs";
     };
 
-    #    "/data/Games" =
-    #      {
-    #        device = "zdata/shared/games";
-    #        fsType = "zfs";
-    #        neededForBoot = false;
-    #      };
-
     "/data/AI" = {
       device = "zdata/shared/ai";
       fsType = "zfs";
@@ -68,32 +61,8 @@
       fsType = "ext4";
     };
 
-    "/boot/efi/BAZZITE" = {
-      device = "/dev/disk/by-label/ESP_BAZZITE";
-      fsType = "vfat";
-      neededForBoot = false;
-      options = [
-        "fmask=0022"
-        "dmask=0022"
-        "nofail"
-        "ro"
-      ];
-    };
-
-    "/boot/efi/WINNT" = {
-      device = "/dev/disk/by-label/ESP_WINNT";
-      fsType = "vfat";
-      neededForBoot = false;
-      options = [
-        "fmask=0022"
-        "dmask=0022"
-        "nofail"
-        "ro"
-      ];
-    };
-
-    "/boot/efi/NIXOS" = {
-      device = "/dev/disk/by-label/ESP_NIXOS";
+    "/boot/efi" = {
+      device = "/dev/disk/by-label/ESP";
       fsType = "vfat";
       neededForBoot = true;
       options = [
@@ -102,15 +71,6 @@
       ];
     };
 
-    "/boot/efi/PRIMARY" = {
-      device = "/dev/disk/by-label/ESP_PRIMARY";
-      fsType = "vfat";
-      neededForBoot = false;
-      options = [
-        "fmask=0022"
-        "dmask=0022"
-      ];
-    };
     "/etc/ssh" = {
       depends = [ "/persist" ];
       device = "/persist/etc/ssh";
