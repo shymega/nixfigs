@@ -59,4 +59,12 @@ rec {
       overlays = builtins.attrValues self.overlays;
       config = self.nixpkgs-config;
     };
+  hasSuffix =
+    suffix: content:
+    let
+      inherit (builtins) stringLength substring;
+      lenContent = stringLength content;
+      lenSuffix = stringLength suffix;
+    in
+    lenContent >= lenSuffix && substring (lenContent - lenSuffix) lenContent content == suffix;
 }
