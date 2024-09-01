@@ -322,7 +322,6 @@ in
         editor = "${pkgs.emacs}/bin/emacslient -cq";
       };
     };
-
     yt-dlp.enable = true;
     htop.enable = true;
     fish = {
@@ -418,7 +417,7 @@ in
       provideEmacs = true;
       experimentalFetchTree = true;
       doomDir = inputs.nixfigs-doom-emacs;
-      doomLocalDir = "${homeDirectory}/.local/share/state/doom";
+      doomLocalDir = "${homeDirectory}/.local/state/doom-emacs";
     };
     taskwarrior = {
       enable = true;
