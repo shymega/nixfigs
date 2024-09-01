@@ -10,9 +10,7 @@
 
 (setq
  x-select-enable-clipboard t
- x-select-enable-primary nil
- save-interprogram-paste-before-kill nil
- interprogram-paste-function 'x-cut-buffer-or-selection-value)
+ x-select-enable-primary nil)
 
 (add-to-list 'auto-mode-alist '("\\.log\\'" . auto-revert-mode))
 
