@@ -417,7 +417,7 @@ in
       provideEmacs = true;
       experimentalFetchTree = true;
       doomDir = inputs.nixfigs-doom-emacs;
-      doomLocalDir = "${homeDirectory}/.local/state/doom-emacs";
+      doomLocalDir = "${homeDirectory}/.local/state/doom";
     };
     taskwarrior = {
       enable = true;
