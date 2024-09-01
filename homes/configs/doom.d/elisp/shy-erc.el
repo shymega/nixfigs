@@ -16,43 +16,42 @@
   (setq erc-track-faces-priority-list
 	(remq 'erc-notice-face erc-track-faces-priority-list)))
 
-
 (setopt
-  erc-auto-query 'bury
-  erc-button-url-regexp "\\([-a-zA-Z0-9_=!?#$@~`%&*+\\/:;,]+\\.\\)+[-a-zA-Z0-9_=!?#$@~`%&*+\\/:;,]*[-a-zA-Z0-9\\/]"
-  erc-current-nick-highlight-type 'nick
-  erc-fill-column 80
-  erc-fill-function 'erc-fill-static
-  erc-fill-prefix "      "
-  erc-fill-static-center 0
-  erc-fill-static-center 20
-  erc-insert-timestamp-function 'erc-insert-timestamp-left
-  erc-interpret-mirc-color t
-  erc-join-buffer 'bury
-  erc-keywords nil
-  erc-kill-buffer-on-part t
-  erc-kill-queries-on-quit nil
-  erc-lurker-hide-list '("JOIN" "PART" "QUIT")
-  erc-prompt (lambda () (concat (buffer-name) ">"))
-  erc-prompt-for-password nil
-  erc-rename-buffers t
-  erc-server-reconnect-attempts 3
-  erc-server-reconnect-timeout 30
-  erc-timestamp-format "[%H:%M] "
-  erc-timestamp-only-if-changed-flag nil
-  erc-track-exclude-server-buffer t
-  erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE" "324" "329" "332" "333" "353" "477")
-  erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT")
-  erc-track-faces-priority-list '(erc-current-nick-face erc-keyword-face)
-  erc-track-priority-faces-only 'all
-  erc-track-use-faces t
-erc-auto-query 'window-noselect
-erc-fill-column 100
-erc-fill-function 'erc-fill-static
-erc-kill-buffer-on-part t
-erc-track-shorten-start 8
-erc-track-visibility nil
-  erc-track-exclude-types '("JOIN" "NICK" "QUIT" "MODE"))
+ erc-auto-query 'bury
+ erc-button-url-regexp "\\([-a-zA-Z0-9_=!?#$@~`%&*+\\/:;,]+\\.\\)+[-a-zA-Z0-9_=!?#$@~`%&*+\\/:;,]*[-a-zA-Z0-9\\/]"
+ erc-current-nick-highlight-type 'nick
+ erc-fill-column 80
+ erc-fill-function 'erc-fill-static
+ erc-fill-prefix "      "
+ erc-fill-static-center 0
+ erc-fill-static-center 20
+ erc-insert-timestamp-function 'erc-insert-timestamp-left
+ erc-interpret-mirc-color t
+ erc-join-buffer 'bury
+ erc-keywords nil
+ erc-kill-buffer-on-part t
+ erc-kill-queries-on-quit nil
+ erc-lurker-hide-list '("JOIN" "PART" "QUIT")
+ erc-prompt (lambda () (concat (buffer-name) ">"))
+ erc-prompt-for-password nil
+ erc-rename-buffers t
+ erc-server-reconnect-attempts 3
+ erc-server-reconnect-timeout 30
+ erc-timestamp-format "[%H:%M] "
+ erc-timestamp-only-if-changed-flag nil
+ erc-track-exclude-server-buffer t
+ erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE" "324" "329" "332" "333" "353" "477")
+ erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT")
+ erc-track-faces-priority-list '(erc-current-nick-face erc-keyword-face)
+ erc-track-priority-faces-only 'all
+ erc-track-use-faces t
+ erc-auto-query 'window-noselect
+ erc-fill-column 100
+ erc-fill-function 'erc-fill-static
+ erc-kill-buffer-on-part t
+ erc-track-shorten-start 8
+ erc-track-visibility nil
+ erc-track-exclude-types '("JOIN" "NICK" "QUIT" "MODE"))
 
 (defun shymega/erc-mode-hook ()
   "Set up ERC, hook."
@@ -77,11 +76,11 @@ erc-track-visibility nil
   (interactive)
   (dolist (network erc-networks)
     (let ((erc-sasl-auth-source-function #'erc-auth-source-search))
-    (erc-tls :server "chat.sr.ht"
-             :port "6697"
-             :nick "shymega"
-             :user (get-chat-sr-ht-user network)
-             :password (get-chat-sr-ht-pw)))))
+      (erc-tls :server "chat.sr.ht"
+               :port "6697"
+               :nick "shymega"
+               :user (get-chat-sr-ht-user network)
+               :password (get-chat-sr-ht-pw)))))
 
 (use-package erc-hl-nicks
   :ensure t
@@ -90,7 +89,7 @@ erc-track-visibility nil
   (add-to-list 'erc-modules 'hl-nicks))
 
 (setopt erc-modules '(autoaway
-                       autojoin
+                      autojoin
                       button
                       completion
                       fill
