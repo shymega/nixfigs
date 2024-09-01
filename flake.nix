@@ -225,6 +225,14 @@
       url = "github:shymega/nixfigs-doom-emacs";
       flake = false;
     };
+    doom-emacs-src = {
+      url = "github:syl20bnr/spacemacs";
+      flake = false;
+    };
+    spacemacs-src = {
+      url = "github:doomemacs/doomemacs";
+      flake = false;
+    };
     shypkgs-private.url = "github:shymega/shypkgs-private";
     shypkgs-public.url = "github:shymega/shypkgs-public";
   };
