@@ -533,17 +533,19 @@ in
 
   xdg = {
     enable = true;
-    configFile."doom" = {
-      source = inputs.nixfigs-doom-emacs;
-      recursive = true;
-    };
-    configFile."emacs.src/doom-emacs" = {
-      source = inputs.doom-emacs-src;
-      recursive = true;
-    };
-    configFile."emacs.src/spacemacs" = {
-      source = inputs.spacemacs-src;
-      recursive = true;
+    configFile = {
+      "doom" = {
+        source = inputs.nixfigs-doom-emacs;
+        recursive = true;
+      };
+      "emacs.src/doom-emacs" = {
+        source = inputs.doom-emacs-src;
+        recursive = true;
+      };
+      "emacs.src/spacemacs" = {
+        source = inputs.spacemacs-src;
+        recursive = true;
+      };
     };
   };
 }
