@@ -30,12 +30,12 @@ in
 
   programs.ssh = {
     extraConfig = ''
-      Host eu.nixbuild.net
-        HostName eu.nixbuild.net
-        PubkeyAcceptedKeyTypes ssh-ed25519
-        ServerAliveInterval 60
-        IPQoS throughput
-#        IdentityFile ${config.age.secrets.nixbuild_ssh_pub_key.path}
+            Host eu.nixbuild.net
+              HostName eu.nixbuild.net
+              PubkeyAcceptedKeyTypes ssh-ed25519
+              ServerAliveInterval 60
+              IPQoS throughput
+      #        IdentityFile ${config.age.secrets.nixbuild_ssh_pub_key.path}
     '';
     knownHosts = {
       nixbuild = {
