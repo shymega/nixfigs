@@ -27,8 +27,8 @@
       device = "/dev/disk/by-label/NIXOS";
       fsType = "ext4";
     };
-    "/boot" = {
-      device = "/dev/disk/by-label/BOOT";
+    "/boot/efi" = {
+      device = "/dev/disk/by-label/ESP";
       fsType = "vfat";
     };
   };
