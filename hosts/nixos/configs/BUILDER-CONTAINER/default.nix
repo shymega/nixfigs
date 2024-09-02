@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ modulesPath, lib, ...}:
+{ modulesPath, lib, ... }:
 {
   imports = [
     "${toString modulesPath}/virtualisation/docker-image.nix"
