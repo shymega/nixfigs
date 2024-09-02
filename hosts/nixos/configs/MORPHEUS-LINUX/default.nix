@@ -146,7 +146,7 @@ in
   services = {
     handheld-daemon = {
       enable = true;
-      package = pkgs.unstable.handheld-daemon;
+      package = pkgs.handheld-daemon;
       user = "dzrodriguez";
     };
     zfs = {
