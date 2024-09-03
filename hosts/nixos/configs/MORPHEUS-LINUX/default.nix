@@ -62,7 +62,7 @@ in
           ${pkgs.gnused}/bin/sed -i '/default/d' /boot/efi/loader/loader.conf
           echo "default @saved" >> /boot/efi/loader/loader.conf
         '';
-        rebootForBitlocker = true;
+        #        rebootForBitlocker = true;
         extraFiles = {
           "efi/shell/shellx64.efi" = "${pkgs.edk2-uefi-shell}/shell.efi";
         };
