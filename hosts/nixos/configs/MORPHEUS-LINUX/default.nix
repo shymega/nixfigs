@@ -20,14 +20,15 @@ in
       "zdata"
       "zosroot"
     ];
-    zfs.devNodes = "/dev/disk/by-partuuid/";
+    zfs.devNodes = "/dev/disk/by-partuuid";
+    zfs.forceImportAll = true;
 
     initrd.supportedFilesystems = [
       "ntfs"
       "zfs"
     ];
 
-    kernelParams = pkgs.lib.mkAfter [ "usbcore.autosuspend=-1" ];
+    kernelParams = pkgs.lib.mkAfter [ "usbcore.autosuspend=-1" "nohibernate" ];
 
     kernelPackages =
       if enableXanmod then
