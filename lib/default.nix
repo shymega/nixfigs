@@ -59,6 +59,10 @@ rec {
       overlays = builtins.attrValues self.overlays;
       config = self.nixpkgs-config;
     };
+  hasRole = r: allRoles:
+    builtins.elem r allRoles;
+  hasRoles = r: allRoles:
+    builtins.all (role: hasRole role allRoles) r;
   hasSuffix =
     suffix: content:
     let
