@@ -8,7 +8,6 @@ let
 in
 {
   imports = [
-    "${toString modulesPath}/virtualisation/docker-image.nix"
     ../../../../secrets/system
   ];
 
