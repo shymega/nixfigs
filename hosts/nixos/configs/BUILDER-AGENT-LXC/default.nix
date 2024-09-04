@@ -14,6 +14,7 @@
       grub.enable = lib.mkForce false;
       systemd-boot.enable = lib.mkForce false;
     };
+    binfmt.emulatedSystems = [ "armv6l-linux" "armv7l-linux" "aarch64-linux" ];
   };
   services.journald.console = "/dev/console";
 
