@@ -1,11 +1,10 @@
 { lib
 , config
-, pkgs
 , ...
 }:
 with lib;
 let
-  rtmpOverlay = final: prev: {
+  rtmpOverlay = _final: prev: {
     nginxStable = prev.nginxStable.override (oldAttrs: {
       modules = oldAttrs.modules ++ [ prev.nginxModules.rtmp ];
     });
