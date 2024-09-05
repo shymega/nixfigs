@@ -115,6 +115,7 @@ in
   };
 
   hardware = {
+    gpd.ppt.enable = lib.mkForce false;
     opengl = {
       enable = true;
       driSupport32Bit = true;
@@ -144,23 +145,6 @@ in
     "armv6l-linux"
     "armv7l-linux"
   ];
-
-  programs = {
-    auto-cpufreq = {
-      enable = true;
-      settings = {
-        charger = {
-          governor = "performance";
-          turbo = "auto";
-        };
-
-        battery = {
-          governor = "powersave";
-          turbo = "auto";
-        };
-      };
-    };
-  };
 
   services = {
     handheld-daemon = {
@@ -222,6 +206,19 @@ in
       extraConfig = ''
         LidSwitchIgnoreInhibited=no
       '';
+    };
+    auto-cpufreq = {
+      enable = true;
+      settings = {
+        battery = {
+          governor = "powersave";
+          turbo = "never";
+        };
+        charger = {
+          governor = "powersave";
+          turbo = "auto";
+        };
+      };
     };
   };
 
