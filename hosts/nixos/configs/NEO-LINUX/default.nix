@@ -6,7 +6,7 @@
 
 { config, pkgs, ... }:
 let
-  enableXanmod = false;
+  enableXanmod = true;
 in
 {
   imports = [ ./hardware-configuration.nix ];
