@@ -128,7 +128,10 @@ in
       extraPackages32 = [ pkgs.driversi686Linux.amdvlk ];
     };
     i2c.enable = true;
-    sensor.iio.enable = true;
+    sensor.iio = {
+      enable = true;
+      bmi260.enable = true;
+    };
     cpu.amd.ryzen-smu.enable = true;
     graphics = {
       extraPackages = with pkgs; [
