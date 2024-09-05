@@ -2856,11 +2856,11 @@
     "nixfigs-doom-emacs": {
       "flake": false,
       "locked": {
-        "lastModified": 1725314047,
-        "narHash": "sha256-QZOe8Mfhljc8P2RLj9S5sA33nC6DKwKyUfuuFf6+ZAE=",
+        "lastModified": 1725564528,
+        "narHash": "sha256-J/Hx6iR7wW6HNjwaVdIVONzS2DCLxWp5nzH4anXDbm8=",
         "owner": "shymega",
         "repo": "nixfigs-doom-emacs",
-        "rev": "bab8fd1119fece48ebacd3157ac7091e5eb81156",
+        "rev": "e313d2a62e62fa5369f4f5b4dca4292093d9cd97",
         "type": "github"
       },
       "original": {
