@@ -192,7 +192,7 @@ in
         awscli2
         azure-cli
         bestool
-        emacsconf2nix
+        emacs2nix
         gitkraken
         google-chrome
         google-cloud-sdk
