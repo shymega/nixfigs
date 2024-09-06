@@ -111,18 +111,28 @@ in
     cpuFreqGovernor = "powersave";
   };
 
+  environment.variables = {
+    # VAAPI and VDPAU config for accelerated video.
+    # See https://wiki.archlinux.org/index.php/Hardware_video_acceleration
+    "VDPAU_DRIVER" = "radeonsi";
+    "LIBVA_DRIVER_NAME" = "radeonsi";
+  };
+
   hardware = {
     gpd.ppt.enable = lib.mkForce false;
     opengl = {
       enable = true;
       driSupport32Bit = true;
-      extraPackages = with pkgs; [
+      extraPackages = with pkgs.unstable; [
+        amdvlk
         rocm-opencl-icd
         vaapiVdpau
         rocm-opencl-runtime
         libvdpau-va-gl
       ];
-      extraPackages32 = [ pkgs.driversi686Linux.amdvlk ];
+      extraPackages32 = with pkgs.unstable; [
+        driversi686Linux.amdvlk
+      ];
     };
     i2c.enable = true;
     sensor.iio = {
@@ -130,16 +140,7 @@ in
       bmi260.enable = true;
     };
     cpu.amd.ryzen-smu.enable = true;
-    graphics = {
-      extraPackages = with pkgs; [
-        amdvlk
-      ];
-      extraPackages32 = with pkgs; [
-        driversi686Linux.amdvlk
-      ];
-    };
   };
-
   boot.binfmt.emulatedSystems = [
     "aarch64-linux"
     "armv6l-linux"
