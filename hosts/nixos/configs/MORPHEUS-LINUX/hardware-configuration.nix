@@ -15,7 +15,7 @@
         "sdhci_pci"
         "hid_apple"
       ];
-      kernelModules = [ ];
+      kernelModules = [ "amdgpu" ];
     };
     kernelModules = [
       "kvm-amd"
