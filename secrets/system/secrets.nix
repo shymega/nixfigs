@@ -25,7 +25,7 @@ let
   rnet-machines = [
     DELTA-ZERO
     DIAL-IN
-    MEROVINGIAN 
+    MEROVINGIAN
     MTX-SRV
   ];
 in
