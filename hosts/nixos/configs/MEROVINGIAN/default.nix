@@ -103,10 +103,8 @@
     timeServers = lib.mkForce [ "uk.pool.ntp.org" ];
     firewall = {
       enable = true;
-      allowedTCPPorts = [
+      allowedTCPPorts = lib.mkForce [
         22
-        80
-        443
       ];
       checkReversePath = false;
       extraCommands = ''
