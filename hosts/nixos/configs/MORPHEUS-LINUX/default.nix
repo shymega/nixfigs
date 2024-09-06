@@ -199,7 +199,7 @@ in
         ACTION=="add|change", SUBSYSTEM=="usb", ATTR{idVendor}=="2c7c", ATTR{idProduct}=="0125", ATTR{power/autosuspend}="-1"
 
         # Workstation - docked.
-        SUBSYSTEM=="usb", ACTION=="add", ATTR{ID_VENDOR}=="17ef", ATTR{ID_MODEL}=="3060", SYMLINK+="tp_mini_dock", TAG+="systemd"
+        SUBSYSTEM=="usb", ACTION=="add|change", ATTR{idVendor}=="17ef", ATTR{idProduct}=="3060", SYMLINK+="homeofficedock", TAG+="systemd"
 
         SUBSYSTEM=="i2c", KERNEL=="i2c-GXTP7385:00", ATTR{power/wakeup}="disabled"
       '';
