@@ -28,8 +28,8 @@ in
     redis.servers."".enable = true;
 
     mautrix-whatsapp = {
-      enable = true;
-      registerToSynapse = true;
+      enable = false;
+      registerToSynapse = false;
 
       settings = {
         appservice = rec  {
@@ -80,8 +80,8 @@ in
     };
 
     mautrix-slack = {
-      enable = true;
-      registerToSynapse = true;
+      enable = false;
+      registerToSynapse = false;
 
       settings = {
         homeserver = {
@@ -157,8 +157,8 @@ in
 
     mautrix-meta.instances = {
       "facebook" = {
-        enable = true;
-        registerToSynapse = true;
+        enable = false;
+        registerToSynapse = false;
 
         settings = {
           homeserver = {
@@ -192,8 +192,8 @@ in
       };
 
       "instagram" = {
-        enable = true;
-        registerToSynapse = true;
+        enable = false;
+        registerToSynapse = false;
 
         settings = {
           homeserver = {
@@ -227,8 +227,8 @@ in
       };
 
       "messenger" = {
-        enable = true;
-        registerToSynapse = true;
+        enable = false;
+        registerToSynapse = false;
 
         settings = {
           homeserver = {
