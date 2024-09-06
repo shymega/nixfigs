@@ -9,6 +9,7 @@ let
   dzrodriguez-TWINS-LINUX = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIOZyVmZ3OdKl2f1kLSEnwwKaO8ecDKEbwLYXDAllIvU ";
   dzrodriguez-MORPHEUS-LINUX = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIgAqM0gz24k8J1vqe3cp1MI48cSok6mtdMIYnT1d8CR";
   nixos-MORPHEUS-WSL = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICbxdHlDVWPqpUTifSdvO3wMVg43u2coy+akmIYkaQ9W";
+  dzrodriguez-MEROVINGIAN = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK/WR2YwZySIwDPrmLwoWSzGf7/zZOYj/bMpLF53VPf+";
   personal-users = [
     dzrodriguez-NEO-LINUX
     dzrodriguez-TWINS-LINUX
@@ -16,7 +17,7 @@ let
     nixos-MORPHEUS-WSL
   ];
 
-  rnet-users = [ ];
+  rnet-users = [ dzrodriguez-MEROVINGIAN ];
 in
 {
   "atuin_key.age".publicKeys = personal-users ++ rnet-users;
