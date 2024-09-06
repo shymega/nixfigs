@@ -31,6 +31,11 @@
       device = "/dev/disk/by-label/ESP";
       fsType = "vfat";
     };
+    "/data" = {
+      device = "tank/data";
+      fsType = "zfs";
+      neededForBoot = false;
+    };
   };
 
   swapDevices = [ ];
