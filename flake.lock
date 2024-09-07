@@ -2958,11 +2958,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1725749909,
-        "narHash": "sha256-z6tE76iVykVY8tGoNZnvm0q50VjxDPhn6YQNPFH1K2c=",
+        "lastModified": 1725750790,
+        "narHash": "sha256-N8eRHvJqZvrCqjqD4bmAXo/g7cjDEZzc2chKmRBElFo=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "193565cfe3ff415029ee805fbcbe1c2b2e1a01e3",
+        "rev": "1b0f0ef925bb653e78cc8ea78d60e9643f9b2e4f",
         "type": "github"
       },
       "original": {
@@ -4154,11 +4154,11 @@
     "spacemacs-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1725736303,
-        "narHash": "sha256-X/unagq7lJ7wSoaO5ULkOAX0lNkmv/sJmNS3sW24APM=",
+        "lastModified": 1725750277,
+        "narHash": "sha256-1lPdA5cOH4yp0qjbElKxoNyS/uiDTMhZycsqSYo+co8=",
         "owner": "doomemacs",
         "repo": "doomemacs",
-        "rev": "ac1122ae67d762e09fc6684945b52adff96cf1dc",
+        "rev": "0dc1084e8a915d778af7cc5774477ffb3daa0b0a",
         "type": "github"
       },
       "original": {
