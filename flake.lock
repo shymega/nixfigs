@@ -875,23 +875,23 @@
         "type": "github"
       }
     },
-    "emacs2nix": {
+    "emacs2nixpkg": {
       "inputs": {
         "flake-compat": "flake-compat_13",
         "flake-utils": "flake-utils_13",
         "nixpkgs": "nixpkgs_13"
       },
       "locked": {
-        "lastModified": 1725533894,
-        "narHash": "sha256-QSWxv0XYOaQIkpAaxBJdsYhh2aF3zZGA0Cg+N8iiWRo=",
+        "lastModified": 1725811162,
+        "narHash": "sha256-6Qgxwee89xMwlr/RaDywLQ3LItl3ehxMSCnm1wHX+C4=",
         "owner": "shymega",
-        "repo": "emacs2nix",
-        "rev": "6a40609fb19f6fb230389ba53b8a730dbbe899c6",
+        "repo": "emacs2nixpkg",
+        "rev": "505f8b7768b66368bcdec10254dabb169ef7538a",
         "type": "github"
       },
       "original": {
         "owner": "shymega",
-        "repo": "emacs2nix",
+        "repo": "emacs2nixpkg",
         "type": "github"
       }
     },
@@ -4040,7 +4040,7 @@
         "doom-emacs-src": "doom-emacs-src",
         "dzr-taskwarrior-recur": "dzr-taskwarrior-recur",
         "ei-wlroots-proxy": "ei-wlroots-proxy",
-        "emacs2nix": "emacs2nix",
+        "emacs2nixpkg": "emacs2nixpkg",
         "flake-compat": "flake-compat_14",
         "flake-registry": "flake-registry",
         "flake-utils": "flake-utils_14",
