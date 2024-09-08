@@ -215,7 +215,7 @@
     bestool.url = "github:shymega/bestool/shymega-all-fixes";
     deckcheatz.url = "github:deckcheatz/deckcheatz/develop";
     dzr-taskwarrior-recur.url = "github:shymega/dzr-taskwarrior-recur";
-    emacs2nix.url = "github:shymega/emacs2nix";
+    emacs2nixpkg.url = "github:shymega/emacs2nixpkg";
     nix-doom-emacs-unstraightened.url = "github:marienz/nix-doom-emacs-unstraightened";
     cosmo-codios-codid.url = "github:cosmo-codios/codid";
     ei-wlroots-proxy.url = "github:input-leap/ei-wlroots-proxy";
