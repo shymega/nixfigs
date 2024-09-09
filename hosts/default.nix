@@ -454,7 +454,7 @@ in
   };
   ## End ClockworkPi DevTerm (CM4) ##
 
-  INSTALLER-SERVER-ISO-X86 = mkHost {
+  INSTALLER-SERVER-ISO-X86-64 = mkHost {
     type = "nixos";
     address = "install-server.shymega.org.uk";
     username = "dzrodriguez";
@@ -475,7 +475,7 @@ in
     ];
   }; # TODO: Add Headscale as domain?
 
-  INSTALLER-WORKSTATION-ISO-X86 = mkHost {
+  INSTALLER-WORKSTATION-ISO-X86-64 = mkHost {
     type = "nixos";
     address = "install-workstation.shymega.org.uk";
     username = "dzrodriguez";
