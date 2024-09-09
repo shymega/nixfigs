@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ inputs, config, pkgs, lib, ... }:
+{ inputs, config, pkgs, ... }:
 let
   enableXanmod = true;
 in
