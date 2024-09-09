@@ -568,5 +568,17 @@ in
         recursive = true;
       };
     };
+    portal = {
+      config = {
+        sway = {
+          default = [ "wlr" "gtk" ];
+          "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
+          "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
+          "org.freedesktop.impl.portal.Screencast" = [ "wlr" ];
+        };
+      };
+      extraPortals = with pkgs; [ xdg-desktop-portal-gtk xdg-desktop-portal-wlr ];
+      xdgOpenUsePortal = true;
+    };
   };
 }
