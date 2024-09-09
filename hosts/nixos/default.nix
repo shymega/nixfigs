@@ -50,6 +50,7 @@ let
         ++ (lib.optional embedHm {
           home-manager = {
             useGlobalPkgs = true;
+            backupFileExtension = "hm.bak";
             useUserPackages = true;
             users.${username} = import ../../homes/configs;
             extraSpecialArgs = {
