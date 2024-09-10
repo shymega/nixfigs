@@ -19,7 +19,8 @@ in
       "zfs"
     ];
     zfs.extraPools = [
-      "zdata" "zroot"
+      "zdata"
+      "zroot"
     ];
     zfs.devNodes = "/dev/disk/by-partuuid";
 
@@ -28,7 +29,7 @@ in
       "zfs"
     ];
 
-    kernelParams = pkgs.lib.mkAfter [ "usbcore.autosuspend=-1" "nohibernate" ];
+    kernelParams = pkgs.lib.mkAfter [ "amdgpu" "amd_pstate=guided" "nohibernate" ];
 
     kernelPackages =
       if enableXanmod then
@@ -113,37 +114,25 @@ in
     cpuFreqGovernor = "powersave";
   };
 
-  environment.variables = {
-    # VAAPI and VDPAU config for accelerated video.
-    # See https://wiki.archlinux.org/index.php/Hardware_video_acceleration
-    "VDPAU_DRIVER" = "radeonsi";
-    "LIBVA_DRIVER_NAME" = "radeonsi";
-  };
-
   hardware = {
     gpd.ppt.enable = lib.mkForce false;
-    opengl = {
-      enable = true;
-      driSupport32Bit = true;
-      extraPackages = with pkgs.unstable; [
-        amdvlk
-        rocm-opencl-icd
-        rocm-opencl-runtime
-      ];
-      extraPackages32 = with pkgs.unstable; [
-        driversi686Linux.amdvlk
-      ];
-    };
     graphics = {
       enable = true;
-      extraPackages = with pkgs.unstable; [
-        amdvlk
-        rocm-opencl-icd
-        rocm-opencl-runtime
-      ];
-      extraPackages32 = with pkgs.unstable; [
-        driversi686Linux.amdvlk
-      ];
+     driSupport32Bit = true;
+ extraPackages = with pkgs; [
+    # VA-API and VDPAU
+    vaapiVdpau
+
+    # AMD ROCm OpenCL runtime
+    rocmPackages.clr
+    rocmPackages.clr.icd
+
+    # AMDVLK drivers can be used in addition to the Mesa RADV drivers.
+    #amdvlk
+  ];
+ extraPackages32 = with pkgs; [
+    driversi686Linux.amdvlk
+  ];
     };
     i2c.enable = true;
     sensor.iio = {
