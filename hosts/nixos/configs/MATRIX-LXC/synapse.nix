@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 Various Authors <generic@example.com>
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
 { pkgs, inputs, config, ... }:
 let
   fqdn = "${config.networking.hostName}.${config.networking.domain}";
