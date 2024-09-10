@@ -49,7 +49,7 @@ let
       ]
     , monolithConfig ? true
     , overlays ? [ ]
-    , hostRole ? "workstation"
+    , hostRoles ? [ "workstation" ]
     , hardwareModules ? [ ]
     , extraModules ? [ ]
     , pubkey ? null
@@ -70,7 +70,7 @@ let
           extraModules
           hardwareModules
           hostPlatform
-          hostRole
+          hostRoles
           hostname
           monolithConfig
           overlays
@@ -106,6 +106,7 @@ let
         inherit
           deployable
           hostPlatform
+          hostRoles
           hostname
           type
           username
@@ -141,7 +142,7 @@ in
     type = "nixos";
     address = "NEO-WINDOWS.dzr.devices.10bsk.rnet.rodriguez.org.uk";
     hostname = "NEO-WSL";
-    hostRole = "minimal";
+    hostRoles = [ "minimal" ];
     hostPlatform = "x86_64-linux";
     pubkey = "";
     remoteBuild = true;
@@ -153,9 +154,9 @@ in
     address = "NEO-JOVIAN.dzr.devices.10bsk.rnet.rodriguez.org.uk";
     hostname = "NEO-JOVIAN";
     hostPlatform = "x86_64-linux";
-    embedHm = true;
+    embedHm = false;
     monolithConfig = true;
-    hostRole = "gaming";
+    hostRoles = [ "gaming" ];
     extraModules = [
       ../nix/24.05-compat.nix
       inputs.chaotic.nixosModules.default
@@ -186,7 +187,7 @@ in
     type = "nixos";
     address = "MORPHEUS-WINDOWS.dzr.devices.10bsk.rnet.rodriguez.org.uk";
     hostname = "MORPHEUS-WINDOWS";
-    hostRole = "minimal";
+    hostRoles = [ "minimal" ];
     hostPlatform = "x86_64-linux";
     pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBqOAfNq3lGPElJ0L6qAqQLDykRWsN9dE4sMZkD6YVKu";
     remoteBuild = true;
@@ -198,9 +199,9 @@ in
     address = "MORPHEUS-JOVIAN.dzr.devices.10bsk.rnet.rodriguez.org.uk";
     hostname = "MORPHEUS-JOVIAN";
     hostPlatform = "x86_64-linux";
-    embedHm = true;
+    embedHm = false;
     monolithConfig = true;
-    hostRole = "gaming";
+    hostRoles = [ "gaming" ];
     extraModules = [
       ../nix/24.05-compat.nix
       inputs.chaotic.nixosModules.default
@@ -230,7 +231,7 @@ in
     type = "nixos";
     address = "TWINS-WINDOWS.dzr.devices.10bsk.rnet.rodriguez.org.uk";
     hostname = "TWINS-WINDOWS";
-    hostRole = "minimal";
+    hostRoles = [ "minimal" ];
     hostPlatform = "x86_64-linux";
     pubkey = "";
     remoteBuild = true;
@@ -242,9 +243,9 @@ in
     address = "TRINITY-JOVIAN.dzr.devices.10bsk.rnet.rodriguez.org.uk";
     hostname = "TRINITY-JOVIAN";
     hostPlatform = "x86_64-linux";
-    embedHm = true;
+    embedHm = false;
     monolithConfig = true;
-    hostRole = "gaming";
+    hostRoles = [ "gaming" ];
     extraModules = [
       ../nix/24.05-compat.nix
       inputs.chaotic.nixosModules.default
@@ -260,7 +261,7 @@ in
     hostname = "SMITH-LINUX";
     hostPlatform = "aarch64-linux";
     monolithConfig = false;
-    hostRole = "minimal";
+    hostRoles = [ "minimal" ];
     hardwareModules = [ inputs.hardware.nixosModules.raspberry-pi-4 ];
     extraModules = [
       ../nix/24.05-compat.nix
@@ -282,7 +283,7 @@ in
     address = "GRDN-BED-UNIT.dzr.devices.10bsk.rnet.rodriguez.org.uk";
     hostname = "GRDN-BED-UNIT";
     hostPlatform = "aarch64-linux";
-    hostRole = "minimal";
+    hostRoles = [ "minimal" ];
     monolithConfig = false;
     hardwareModules = [ inputs.hardware.nixosModules.raspberry-pi-4 ];
     extraModules = [
@@ -307,7 +308,7 @@ in
     username = "dzrodriguez";
     monolithConfig = false;
     hostPlatform = "aarch64-linux";
-    hostRole = "server";
+    hostRoles = [ "server" ];
     extraModules = [
       inputs.srvos.nixosModules.server
       inputs.srvos.nixosModules.hardware-hetzner-cloud-arm
@@ -327,7 +328,7 @@ in
     username = "dzrodriguez";
     monolithConfig = false;
     hostPlatform = "aarch64-linux";
-    hostRole = "server";
+    hostRoles = [ "server" ];
     extraModules = [
       inputs.srvos.nixosModules.server
       inputs.srvos.nixosModules.hardware-hetzner-cloud-arm
@@ -346,7 +347,7 @@ in
     hostname = "MATRIX-LXC";
     username = "dzrodriguez";
     monolithConfig = false;
-    hostRole = "server";
+    hostRoles = [ "server" ];
     hostPlatform = "x86_64-linux";
     extraModules = [
       inputs.srvos.nixosModules.server
@@ -368,7 +369,7 @@ in
     baseModules = [ inputs.agenix.nixosModules.default ];
     monolithConfig = false;
     hostPlatform = "x86_64-linux";
-    hostRole = "server";
+    hostRoles = [ "server" ];
     pubkey = "";
     remoteBuild = true;
     deployable = false;
@@ -382,7 +383,7 @@ in
     baseModules = [ inputs.agenix.nixosModules.default ];
     monolithConfig = false;
     hostPlatform = "x86_64-linux";
-    hostRole = "server";
+    hostRoles = [ "server" ];
     pubkey = "";
     remoteBuild = true;
     deployable = false;
@@ -408,7 +409,7 @@ in
     hostPlatform = "armv6l-linux";
     remoteBuild = true;
     deployable = false;
-    hostRole = "minimal";
+    hostRoles = [ "minimal" ];
     monolithConfig = false;
     hostname = "DZR-OFFICE-BUSY-LIGHT-UNIT";
     extraModules = [
@@ -429,7 +430,7 @@ in
     hostPlatform = "armv6l-linux";
     remoteBuild = true;
     deployable = false;
-    hostRole = "minimal";
+    hostRoles = [ "minimal" ];
     monolithConfig = false;
     hostname = "DZR-PETS-CAM-UNIT";
     extraModules = [
@@ -454,7 +455,7 @@ in
     remoteBuild = true;
     deployable = false;
     monolithConfig = false;
-    hostRole = "minimal";
+    hostRoles = [ "minimal" ];
     hardwareModules = [ inputs.hardware.nixosModules.raspberry-pi-4 ];
     extraModules = [
       ../nix/24.05-compat.nix
@@ -477,7 +478,7 @@ in
     username = "dzrodriguez";
     hostPlatform = "aarch64-linux";
     hostname = "CLOCKWORK-DT-CM4";
-    hostRole = "minimal";
+    hostRoles = [ "minimal" ];
     remoteBuild = true;
     deployable = false;
     monolithConfig = false;
@@ -501,7 +502,7 @@ in
     username = "dzrodriguez";
     hostPlatform = "x86_64-linux";
     hostname = "INSTALLER-SERVER-ISO-X86-64";
-    hostRole = "minimal";
+    hostRoles = [ "minimal" ];
     remoteBuild = false;
     deployable = false;
     monolithConfig = false;
@@ -522,7 +523,7 @@ in
     username = "dzrodriguez";
     hostPlatform = "x86_64-linux";
     hostname = "INSTALLER-WORKSTATION-ISO-x86-64";
-    hostRole = "minimal";
+    hostRoles = [ "minimal" ];
     remoteBuild = false;
     deployable = false;
     monolithConfig = false;
@@ -543,7 +544,7 @@ in
     username = "dzrodriguez";
     hostPlatform = "aarch64-linux";
     hostname = "INSTALLER-SERVER-ISO-ARM";
-    hostRole = "minimal";
+    hostRoles = [ "minimal" ];
     remoteBuild = false;
     deployable = false;
     monolithConfig = false;
@@ -564,7 +565,7 @@ in
     username = "dzrodriguez";
     hostPlatform = "aarch64-linux";
     hostname = "INSTALLER-WORKSTATION-ISO-ARM";
-    hostRole = "minimal";
+    hostRoles = [ "minimal" ];
     remoteBuild = false;
     deployable = false;
     monolithConfig = false;
