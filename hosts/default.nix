@@ -475,7 +475,7 @@ in
     address = "install-server.shymega.org.uk";
     username = "dzrodriguez";
     hostPlatform = "x86_64-linux";
-    hostname = "INSTALLER-SERVER-ISO";
+    hostname = "INSTALLER-SERVER-ISO-X86-64";
     hostRole = "minimal";
     remoteBuild = false;
     deployable = false;
@@ -496,7 +496,7 @@ in
     address = "install-workstation.shymega.org.uk";
     username = "dzrodriguez";
     hostPlatform = "x86_64-linux";
-    hostname = "INSTALLER-WORKSTATION-ISO";
+    hostname = "INSTALLER-WORKSTATION-ISO-x86-64";
     hostRole = "minimal";
     remoteBuild = false;
     deployable = false;
@@ -517,7 +517,7 @@ in
     address = "install-server.shymega.org.uk";
     username = "dzrodriguez";
     hostPlatform = "aarch64-linux";
-    hostname = "INSTALLER-SERVER-ISO";
+    hostname = "INSTALLER-SERVER-ISO-ARM";
     hostRole = "minimal";
     remoteBuild = false;
     deployable = false;
@@ -538,7 +538,7 @@ in
     address = "install-workstation.shymega.org.uk";
     username = "dzrodriguez";
     hostPlatform = "aarch64-linux";
-    hostname = "INSTALLER-WORKSTATION-ISO";
+    hostname = "INSTALLER-WORKSTATION-ISO-ARM";
     hostRole = "minimal";
     remoteBuild = false;
     deployable = false;
