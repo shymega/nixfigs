@@ -14,9 +14,10 @@ in
   environment.etc."crypttab".text = ''
     homecrypt /dev/disk/by-label/HOMECRYPT /persist/etc/.homecrypt.bin
   '';
-  networking.hostName = "NEO-LINUX";
-  networking.hostId = "7f9080b5";
-
+  networking = {
+    hostName = "NEO-LINUX";
+    hostId = "971581e3";
+  };
   boot = {
     supportedFilesystems = [
       "ntfs"
