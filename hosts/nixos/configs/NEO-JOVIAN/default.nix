@@ -51,27 +51,25 @@ in
     cpuFreqGovernor = "powersave";
   };
 
-  environment.variables = {
-    # VAAPI and VDPAU config for accelerated video.
-    # See https://wiki.archlinux.org/index.php/Hardware_video_acceleration
-    "VDPAU_DRIVER" = "radeonsi";
-    "LIBVA_DRIVER_NAME" = "radeonsi";
-  };
-
   hardware = {
-    opengl = {
+    graphics = {
       enable = true;
       driSupport32Bit = true;
-      extraPackages = with pkgs.unstable; [
-        amdvlk
-        rocm-opencl-icd
+      extraPackages = with pkgs; [
+        # VA-API and VDPAU
         vaapiVdpau
-        rocm-opencl-runtime
-        libvdpau-va-gl
+
+        # AMD ROCm OpenCL runtime
+        rocmPackages.clr
+        rocmPackages.clr.icd
       ];
-      extraPackages32 = with pkgs.unstable; [
-        driversi686Linux.amdvlk
-      ];
+    };
+    amdgpu = {
+      amdvlk = {
+        enable = true;
+        support32Bit.enable = true;
+      };
+      opencl.enable = true;
     };
     i2c.enable = true;
     cpu.amd.ryzen-smu.enable = true;
