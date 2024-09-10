@@ -9,8 +9,10 @@ in
 {
   imports = [ ./hardware-configuration.nix ];
 
-  networking.hostName = "MORPHEUS-LINUX";
-  networking.hostId = "e8a03c89";
+  networking = {
+    hostName = "MORPHEUS-LINUX";
+    hostId = "2355a46c";
+  };
   boot = {
     supportedFilesystems = [
       "ntfs"
