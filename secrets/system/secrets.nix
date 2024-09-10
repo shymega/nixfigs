@@ -38,8 +38,8 @@ in
   "geoclue_url.age".publicKeys = personal-machines;
   "zerotier_networks.age".publicKeys = personal-machines ++ rnet-machines;
   "wireless.age".publicKeys = personal-machines;
-  "synapse_secret.age".publicKeys = DELTA-ZERO;
-  "cloudflare_dns_token.age".publicKeys = DELTA-ZERO;
+  "synapse_secret.age".publicKeys = [ DELTA-ZERO ];
+  "cloudflare_dns_token.age".publicKeys = [ DELTA-ZERO ];
   "nixbuild_ssh_priv_key.age".publicKeys = personal-machines;
   "nixbuild_ssh_pub_key.age".publicKeys = personal-machines;
   "matrix-sliding-sync-env.age".publicKeys = rnet-machines;
