@@ -19,7 +19,7 @@ in
       "zfs"
     ];
     zfs.extraPools = [
-      "zdata"
+      "zdata" "zroot"
     ];
     zfs.devNodes = "/dev/disk/by-partuuid";
 
@@ -91,7 +91,7 @@ in
         unitConfig.DefaultDependencies = "no";
         serviceConfig.Type = "oneshot";
         script = ''
-          zfs rollback -r zdata/crypt/root/nixos/linux/local/root/@blank
+          zfs rollback -r zroot/crypt/nixos/linux/local/root@blank
         '';
       };
     };
@@ -128,9 +128,18 @@ in
       extraPackages = with pkgs.unstable; [
         amdvlk
         rocm-opencl-icd
-        vaapiVdpau
         rocm-opencl-runtime
-        libvdpau-va-gl
+      ];
+      extraPackages32 = with pkgs.unstable; [
+        driversi686Linux.amdvlk
+      ];
+    };
+    graphics = {
+      enable = true;
+      extraPackages = with pkgs.unstable; [
+        amdvlk
+        rocm-opencl-icd
+        rocm-opencl-runtime
       ];
       extraPackages32 = with pkgs.unstable; [
         driversi686Linux.amdvlk
@@ -238,7 +247,7 @@ in
 
   programs.steam = {
     enable = true;
-    gamescopeSession.enable = true;
+    gamescopeSession.enable = false;
     package = pkgs.steam.override {
       extraPkgs =
         pkgs: with pkgs; [
