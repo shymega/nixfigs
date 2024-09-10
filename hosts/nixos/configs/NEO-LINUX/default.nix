@@ -121,6 +121,7 @@ in
     "aarch64-linux"
     "armv6l-linux"
     "armv7l-linux"
+    "i686-linux"
   ];
 
   services = {
