@@ -118,21 +118,21 @@ in
     gpd.ppt.enable = lib.mkForce false;
     graphics = {
       enable = true;
-     driSupport32Bit = true;
- extraPackages = with pkgs; [
-    # VA-API and VDPAU
-    vaapiVdpau
+      driSupport32Bit = true;
+      extraPackages = with pkgs; [
+        # VA-API and VDPAU
+        vaapiVdpau
 
-    # AMD ROCm OpenCL runtime
-    rocmPackages.clr
-    rocmPackages.clr.icd
+        # AMD ROCm OpenCL runtime
+        rocmPackages.clr
+        rocmPackages.clr.icd
 
-    # AMDVLK drivers can be used in addition to the Mesa RADV drivers.
-    #amdvlk
-  ];
- extraPackages32 = with pkgs; [
-    driversi686Linux.amdvlk
-  ];
+        # AMDVLK drivers can be used in addition to the Mesa RADV drivers.
+        #amdvlk
+      ];
+      extraPackages32 = with pkgs; [
+        driversi686Linux.amdvlk
+      ];
     };
     i2c.enable = true;
     sensor.iio = {
