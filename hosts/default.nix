@@ -176,6 +176,19 @@ in
     deployable = false;
   };
 
+  MORPHEUS-JOVIAN = mkHost {
+    type = "nixos";
+    address = "MORPHEUS-JOVIAN.dzr.devices.10bsk.rnet.rodriguez.org.uk";
+    hostname = "MORPHEUS-JOVIAN";
+    hostPlatform = "x86_64-linux";
+    hardwareModules = [ inputs.jovian-nixos.nixosModules.default ];
+    extraModules = [
+      ../nix/24.05-compat.nix
+    ];
+    remoteBuild = true;
+    deployable = false;
+  };
+
   TWINS-LINUX = mkHost rec {
     type = "nixos";
     address = "TWINS-LINUX.dzr.devices.10bsk.rnet.rodriguez.org.uk";
@@ -203,12 +216,15 @@ in
     deployable = false;
   };
 
-  TRINITY-LINUX = mkHost {
+  TRINITY-JOVIAN = mkHost {
     type = "nixos";
-    address = "TRINITY-LINUX.dzr.devices.10bsk.rnet.rodriguez.org.uk";
-    hostname = "TRINITY-LINUX";
+    address = "TRINITY-JOVIAN.dzr.devices.10bsk.rnet.rodriguez.org.uk";
+    hostname = "TRINITY-JOVIAN";
     hostPlatform = "x86_64-linux";
     hardwareModules = [ inputs.jovian-nixos.nixosModules.default ];
+    extraModules = [
+      ../nix/24.05-compat.nix
+    ];
     remoteBuild = true;
     deployable = false;
   };
