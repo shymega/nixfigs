@@ -121,6 +121,7 @@
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixpkgs-shymega.url = "github:shymega/nixpkgs/shymega/staging";
     nixfigs-secrets.url = "github:shymega/nixfigs-secrets";
+    nixfigs-priv.url = "github:shymega/nixfigs-priv";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     flake-registry = {
       url = "github:NixOS/flake-registry";
