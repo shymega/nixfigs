@@ -158,7 +158,10 @@ in
     monolithConfig = true;
     hostRoles = [ "gaming" ];
     extraModules = [
-      ../nix/24.05-compat.nix
+      inputs.hardware.nixosModules.common-cpu-amd
+      inputs.hardware.nixosModules.common-gpu-amd
+      inputs.hardware.nixosModules.common-pc-ssd
+      inputs.hardware.nixosModules.common-pc
       inputs.chaotic.nixosModules.default
     ];
     pubkey = null;
@@ -204,7 +207,10 @@ in
     hostRoles = [ "gaming" ];
     hardwareModules = [ inputs.hardware.nixosModules.gpd-win-max-2-2023 ];
     extraModules = [
-      ../nix/24.05-compat.nix
+      inputs.hardware.nixosModules.common-cpu-amd
+      inputs.hardware.nixosModules.common-gpu-amd
+      inputs.hardware.nixosModules.common-pc-ssd
+      inputs.hardware.nixosModules.common-pc
       inputs.chaotic.nixosModules.default
     ];
     pubkey = null;
@@ -248,7 +254,10 @@ in
     monolithConfig = true;
     hostRoles = [ "gaming" ];
     extraModules = [
-      ../nix/24.05-compat.nix
+      inputs.hardware.nixosModules.common-cpu-amd
+      inputs.hardware.nixosModules.common-gpu-amd
+      inputs.hardware.nixosModules.common-pc-ssd
+      inputs.hardware.nixosModules.common-pc
       inputs.chaotic.nixosModules.default
     ];
     pubkey = null;
