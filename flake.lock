@@ -7771,11 +7771,11 @@
         "srvos": "srvos_2"
       },
       "locked": {
-        "lastModified": 1726082545,
-        "narHash": "sha256-r6GmRi+bFv1+HXSD+CnXqjSt4ScgUR0yJj0AVUIhA40=",
+        "lastModified": 1726089006,
+        "narHash": "sha256-+lURADyOglTZgKtLZM5DsSxPBMtfsIimV++P1uQkVz0=",
         "owner": "shymega",
         "repo": "nixfigs-priv",
-        "rev": "47affb7f3bfae21c80ac54d0cd10ff0e9f8fe177",
+        "rev": "f6707ddb523dd540f86b4fabe1703b7ed80bfa87",
         "type": "github"
       },
       "original": {
@@ -7790,11 +7790,11 @@
         "nixpkgs": "nixpkgs_59"
       },
       "locked": {
-        "lastModified": 1726082452,
-        "narHash": "sha256-wx2xD/uuk6yQ7wEbQ+CahAMierzP8XmrRk9dujHhHd0=",
+        "lastModified": 1726089014,
+        "narHash": "sha256-4/qEHcmOwZ/ba2z0M6MKwZTPG6Hz5rdvOe0PaWItO3o=",
         "owner": "shymega",
         "repo": "nixfigs-secrets",
-        "rev": "9317851379dbab6aa427a967b476ca3f04074393",
+        "rev": "3dadc61157b0ba8364f5e95ccdeba038132193d1",
         "type": "github"
       },
       "original": {
@@ -7809,11 +7809,11 @@
         "nixpkgs": "nixpkgs_61"
       },
       "locked": {
-        "lastModified": 1726082452,
-        "narHash": "sha256-wx2xD/uuk6yQ7wEbQ+CahAMierzP8XmrRk9dujHhHd0=",
+        "lastModified": 1726089014,
+        "narHash": "sha256-4/qEHcmOwZ/ba2z0M6MKwZTPG6Hz5rdvOe0PaWItO3o=",
         "owner": "shymega",
         "repo": "nixfigs-secrets",
-        "rev": "9317851379dbab6aa427a967b476ca3f04074393",
+        "rev": "3dadc61157b0ba8364f5e95ccdeba038132193d1",
         "type": "github"
       },
       "original": {
@@ -7828,11 +7828,11 @@
         "nixpkgs": "nixpkgs_65"
       },
       "locked": {
-        "lastModified": 1726082452,
-        "narHash": "sha256-wx2xD/uuk6yQ7wEbQ+CahAMierzP8XmrRk9dujHhHd0=",
+        "lastModified": 1726089014,
+        "narHash": "sha256-4/qEHcmOwZ/ba2z0M6MKwZTPG6Hz5rdvOe0PaWItO3o=",
         "owner": "shymega",
         "repo": "nixfigs-secrets",
-        "rev": "9317851379dbab6aa427a967b476ca3f04074393",
+        "rev": "3dadc61157b0ba8364f5e95ccdeba038132193d1",
         "type": "github"
       },
       "original": {
@@ -7857,11 +7857,11 @@
         "srvos": "srvos_3"
       },
       "locked": {
-        "lastModified": 1726082292,
-        "narHash": "sha256-86mDFY6lUT68MKvXt34oOpKXGI4Vu9i3CslUltT+KAc=",
+        "lastModified": 1726089008,
+        "narHash": "sha256-n3GRSewqpP2ORgd7hGRIlib4c9wNOUJsf/ZrTtGBuQw=",
         "owner": "shymega",
         "repo": "nixfigs-work",
-        "rev": "d2460232671d89a7e1cb60d7045536459025d669",
+        "rev": "572113a285328314df0005fde7f94a03b5d66949",
         "type": "github"
       },
       "original": {
@@ -8160,11 +8160,11 @@
     },
     "nixpkgs-master_5": {
       "locked": {
-        "lastModified": 1726084284,
-        "narHash": "sha256-03PHbUiwSl7Jv6Qv0gt2QUia5e0Dkqum2FLmKtmJBLU=",
+        "lastModified": 1726088833,
+        "narHash": "sha256-MOwqzUjXk/XTwd702508NLgEUmXxZob5n5Tzmrh67M0=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "f068d05e36020bb98e3b960cd60d8351f588e148",
+        "rev": "1aa23f39cb41c750ad1f5da4774ce2daafcc9018",
         "type": "github"
       },
       "original": {
@@ -10184,11 +10184,11 @@
     },
     "nur_3": {
       "locked": {
-        "lastModified": 1726084002,
-        "narHash": "sha256-TlRFH62ING/KBPdzu0L53KS1mFJlQ+gJMx0HLgNZ4WI=",
+        "lastModified": 1726086712,
+        "narHash": "sha256-T2H3aPjBBSP/gOr2sNGgD5ZBz68BqIGXLcZgQSyB2h4=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "401cbb492a3754996b450d64280d26dd9f2ff9d1",
+        "rev": "3ef0b1308208644aafdaa7ea25efa35a40ef1933",
         "type": "github"
       },
       "original": {
@@ -11375,11 +11375,11 @@
     "spacemacs-src_2": {
       "flake": false,
       "locked": {
-        "lastModified": 1726075638,
-        "narHash": "sha256-A06g+b4OdO6kVb+xMpk1U1ISFa9nkG7cOpBsrDVhd5o=",
+        "lastModified": 1726088202,
+        "narHash": "sha256-8C1gAhW8XM3A+v1YrPiQk8qkqeWVhIw+kdq1BMV/LFQ=",
         "owner": "syl20bnr",
         "repo": "spacemacs",
-        "rev": "88b9a63a21eed94122324d8296ff2373afe95e52",
+        "rev": "9d9640421189b8334032822c829d78d8fe2a6f44",
         "type": "github"
       },
       "original": {
