@@ -138,8 +138,8 @@ in
         mpc-cli
         mupdf
         ncmpcpp
+        networkmanagerapplet
         nixpkgs-fmt
-        nm-connection-editor
         nodejs
         notmuch
         p7zip
