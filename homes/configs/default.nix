@@ -133,11 +133,13 @@ in
         m4
         maven
         mkcert
+        modem-manager-gui
         moneydance
         mpc-cli
         mupdf
         ncmpcpp
         nixpkgs-fmt
+        nm-connection-editor
         nodejs
         notmuch
         p7zip
@@ -176,6 +178,7 @@ in
         vlc
         w3m
         weechatWithMyPlugins
+        wezterm
         wget
         xsv
         zathura
@@ -203,7 +206,6 @@ in
         steamcmd
         totp
         wemod-launcher
-        wezterm
         wineWowPackages.stable
         winetricks
         yubikey-manager-qt
