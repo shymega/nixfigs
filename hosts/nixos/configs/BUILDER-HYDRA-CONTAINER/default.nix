@@ -7,10 +7,6 @@ let
   fqdn = "${config.networking.hostName}.${config.networking.domain}";
 in
 {
-  imports = [
-    ../../../../secrets/system
-  ];
-
   boot = {
     isContainer = true;
     loader = {
