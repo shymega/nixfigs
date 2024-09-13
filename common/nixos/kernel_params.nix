@@ -10,6 +10,7 @@
     "loglevel=3"
     "quiet"
     "rd.udev.log_level=3"
+    "net.ifnames=0"
     "splash"
     "systemd.show_status=auto"
     "systemd.unified_cgroup_hierarchy=1"
