@@ -79,11 +79,9 @@
       nixosModules = import ./modules/nixos;
       homeModules = import ./modules/home-manager;
       darwinModules = import ./modules/darwin;
-      homeModule = homeModules;
       hmModules = homeModules;
-      hmModule = homeModules;
       hosts = import ./hosts { inherit inputs self; };
-      nixosConfigurations = import ./hosts/nixos { inherit inputs self; };
+      nixosConfigurations = import ./hosts/nixos { inherit inputs self; } // inputs.nixfigs-work.nixosConfigurations;
       darwinConfigurations = import ./hosts/darwin { inherit inputs; };
       homeConfigurations = import ./homes { inherit inputs; };
       overlays = import ./overlays { inherit inputs; inherit (inputs.nixpkgs) lib; };
