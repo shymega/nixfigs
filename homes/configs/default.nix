@@ -38,19 +38,20 @@ in
     if osConfig == null then {
       settings = rec {
         substituters = [
-          "https://attic.mildlyfunctional.gay/nixbsd"
-          "https://cache.dataaturservice.se/spectrum/"
-          "https://cache.nixos.org/"
-          "https://deckcheatz-nightlies.cachix.org"
-          "https://cache.saumon.network/proxmox-nixos"
-          "https://deploy-rs.cachix.org/"
-          "https://devenv.cachix.org"
-          "https://nix-community.cachix.org"
-          "https://nix-gaming.cachix.org"
-          "https://nix-on-droid.cachix.org"
-          "https://numtide.cachix.org"
-          "https://pre-commit-hooks.cachix.org"
-          "ssh://eu.nixbuild.net"
+          "https://attic.mildlyfunctional.gay/nixbsd?priority=50"
+          "https://beam.attic.rs/riscv?priority=50"
+          "https://cache.dataaturservice.se/spectrum/?priority=50"
+          "https://cache.nixos.org/?priority=10"
+          "https://cache.saumon.network/proxmox-nixos/?priority=50"
+          "https://deckcheatz-nightlies.cachix.org/?priority=10"
+          "https://deploy-rs.cachix.org/?priority=10"
+          "https://devenv.cachix.org/?priority=5"
+          "https://nix-community.cachix.org/?priority=5"
+          "https://nix-gaming.cachix.org/?priority=5"
+          "https://nix-on-droid.cachix.org/?priority=5"
+          "https://numtide.cachix.org/?priority=5"
+          "https://pre-commit-hooks.cachix.org/?priority=5"
+          "ssh://eu.nixbuild.net?priority=50"
         ];
         trusted-public-keys = [
           "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
@@ -69,6 +70,8 @@ in
         ];
         binary-caches = substituters;
         builders-use-substitutes = true;
+        http-connections = 128;
+        max-substitution-jobs = 128;
       };
       extraOptions = ''
         builders = @/etc/nix/machines
@@ -76,7 +79,7 @@ in
       '';
     } else {
       settings = {
-        inherit (osConfig.nix.settings) substituters trusted-public-keys builders-use-substitutes;
+        inherit (osConfig.nix.settings) substituters trusted-public-keys builders-use-substitutes http-connections max-substitution-jobs;
       };
       extraOptions = ''
         builders = @/etc/nix/machines
