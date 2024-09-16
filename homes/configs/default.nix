@@ -89,6 +89,10 @@ in
 
   home = {
     inherit username homeDirectory;
+    sessionVariables = {
+      VDPAU_DRIVER = "radeonsi";
+      LIBVA_DRIVER_NAME = "radeonsi";
+    };
     enableNixpkgsReleaseCheck = true;
     stateVersion = "24.05";
     packages =
@@ -497,6 +501,8 @@ in
         QT_QPA_PLATFORM = "wayland;xcb";
         MOZ_ENABLE_WAYLAND = "1";
         _JAVA_AWT_WM_NONREPARENTING = "1";
+        VDPAU_DRIVER = "radeonsi";
+        LIBVA_DRIVER_NAME = "radeonsi";
       };
       tmpfiles.rules = [ "L %t/discord-ipc-0 - - - - app/com.discordapp.Discord/discord-ipc-0" ];
       sockets.atuin-daemon = {
