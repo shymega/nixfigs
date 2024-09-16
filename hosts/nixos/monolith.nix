@@ -155,7 +155,7 @@
     };
     _1password-gui = {
       enable = true;
-      package = pkgs.unstable._1password-gui;
+      package = pkgs.unstable._1password-gui-beta;
       polkitPolicyOwners = [ "dzrodriguez" ];
     };
   };
