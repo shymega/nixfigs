@@ -14,10 +14,10 @@
 }:
 let
   inherit (libx) isNixOS;
-  inherit (pkgs.lib) optionals hasSuffix;
+  inherit (pkgs.lib) optionals hasSuffix optionalAttrs;
 in
 {
-  networking.networkmanager = {
+  networking.networkmanager = optionalAttrs (isNixOS && (config.networking.hostName != "delta-zero" || config.networking.hostName != "dial-in")) {
     dns = "systemd-resolved";
     unmanaged = [
       "iphone0"
