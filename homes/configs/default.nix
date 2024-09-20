@@ -94,7 +94,6 @@ in
     packages =
       with pkgs.unstable;
       [
-        (isync-patched.override { withCyrusSaslXoauth2 = true; })
         alpaca
         android-studio-for-platform
         android-tools
@@ -198,6 +197,7 @@ in
         azure-cli
         bestool
         gitkraken
+        dosbox
         google-chrome
         google-cloud-sdk
         leafnode
@@ -214,6 +214,7 @@ in
         winetricks
         yubikey-manager-qt
         yubioath-flutter
+        (isync-exchange-patched.override { withCyrusSaslXoauth2 = true; })
       ])
       ++ (
         with pkgs;
