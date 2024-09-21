@@ -94,6 +94,7 @@ in
     packages =
       with pkgs.unstable;
       [
+        (isync.override { withCyrusSaslXoauth2 = true; })
         alpaca
         android-studio-for-platform
         android-tools
@@ -214,7 +215,6 @@ in
         winetricks
         yubikey-manager-qt
         yubioath-flutter
-        (isync-exchange-patched.override { withCyrusSaslXoauth2 = true; })
       ])
       ++ (
         with pkgs;
