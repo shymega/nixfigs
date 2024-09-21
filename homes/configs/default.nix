@@ -197,8 +197,8 @@ in
         aws-sam-cli
         azure-cli
         bestool
-        gitkraken
         dosbox
+        gitkraken
         google-chrome
         google-cloud-sdk
         leafnode
