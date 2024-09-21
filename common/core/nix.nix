@@ -108,7 +108,6 @@ in
         experimental-features = [
           "nix-command"
           "flakes"
-          "repl-flake"
         ];
         connect-timeout = lib.mkForce 90;
         http-connections = 128;
@@ -129,7 +128,7 @@ in
         max-free = ${toString (1024 * 1024 * 1024)}
         !include ${config.age.secrets.nix_conf_access_tokens.path}
       '';
-      package = pkgs.nixFlakes;
+      package = pkgs.nixVersions.latest;
       registry.nixpkgs.flake = inputs.nixpkgs;
       optimise = {
         automatic = true;
