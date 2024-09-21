@@ -33,7 +33,6 @@
     };
 
     "/home/dzrodriguez/Games" = {
-      depends = [ "/data/Games" ];
       device = "/data/Games";
       fsType = "none";
       neededForBoot = true;
