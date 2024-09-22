@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 Dom Rodriguez <shymega@shymega.org.uk
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
 [submodule "subflakes/nixfigs-priv"]
 	path = subflakes/nixfigs-priv
 	url = https://github.com/shymega/nixfigs-priv
