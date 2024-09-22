@@ -95,6 +95,11 @@ in
           zfs rollback -r zroot/crypt/nixos/linux/local/root@blank
         '';
       };
+      create-needed-for-boot-dirs = {
+        after = pkgs.lib.mkForce [ "zfs-import-zdata.service" ];
+        wants = pkgs.lib.mkForce [ "zfs-import-zroot.service" ];
+        unitConfig.DefaultDependencies = "no";
+      };
     };
   };
 
