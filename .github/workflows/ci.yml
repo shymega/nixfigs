@@ -9,13 +9,13 @@ on:
   workflow_dispatch:
   push:
   pull_request:
-  schedule:
-    - cron: "0 23 * * *"
-    - cron: "10 23 * * *"
+  workflow_call:
+
 # Ensures that only one deploy task per branch/environment will run at a time.
 concurrency:
   group: gh-ref-${{ github.ref }}
   cancel-in-progress: true
+
 jobs:
   update-flake:
     if: ${{ github.event_name == 'schedule' }}
