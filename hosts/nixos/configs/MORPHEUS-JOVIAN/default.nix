@@ -137,7 +137,7 @@ in
 
   jovian = {
     steam = {
-      enable = false;
+      enable = true;
       autoStart = false;
       user = "dzrodriguez";
     };

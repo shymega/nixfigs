@@ -140,8 +140,8 @@ in
 
   jovian = {
     steam = {
-      enable = false;
-      autoStart = false;
+      enable = true;
+      autoStart = true;
       user = "dzrodriguez";
     };
     decky-loader = {
