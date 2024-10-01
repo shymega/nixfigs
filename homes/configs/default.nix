@@ -123,7 +123,7 @@ in
         fuse
         fzf
         gnumake
-        gpicview
+        gthumb
         httpie
         hub
         hut

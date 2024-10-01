@@ -52,7 +52,6 @@ in
         create-needed-for-boot-dirs = {
           after = pkgs.lib.mkForce [ "zfs-import-tank.service" ];
           wants = pkgs.lib.mkForce [ "zfs-import-tank.service" ];
-          unitConfig.DefaultDependencies = "no";
         };
       };
     };

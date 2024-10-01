@@ -41,7 +41,7 @@
           ./postfix.nix
           inputs.lanzaboote.nixosModules.lanzaboote
           inputs.nix-index-database.nixosModules.nix-index
-          inputs.stylix.nixosModules.stylix
+          #          inputs.stylix.nixosModules.stylix
         ]
       else
         [ ]

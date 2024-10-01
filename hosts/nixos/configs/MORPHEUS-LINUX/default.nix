@@ -98,7 +98,6 @@ in
       create-needed-for-boot-dirs = {
         after = pkgs.lib.mkForce [ "zfs-import-zdata.service" ];
         wants = pkgs.lib.mkForce [ "zfs-import-zroot.service" ];
-        unitConfig.DefaultDependencies = "no";
       };
     };
   };
