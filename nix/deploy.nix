@@ -50,10 +50,12 @@ in
   autoRollback = false;
   magicRollback = true;
   user = "root";
-  nodes = lib.mapAttrs genNixosNode
-    (
+  nodes =
+    lib.mapAttrs genNixosNode
+      (
+        lib.filterAttrs (_: cfg: cfg._module.specialArgs.deployable) self.nixosConfigurations
+      )
+    // lib.mapAttrs genDarwinNode (
       lib.filterAttrs (_: cfg: cfg._module.specialArgs.deployable) self.nixosConfigurations
-    ) // lib.mapAttrs genDarwinNode (
-    lib.filterAttrs (_: cfg: cfg._module.specialArgs.deployable) self.nixosConfigurations
-  );
+    );
 }
