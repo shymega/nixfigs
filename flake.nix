@@ -73,10 +73,9 @@
       formatter = treeFmtEachSystem (pkgs: treeFmtEval.${pkgs.system}.config.build.wrapper);
       # for `nix flake check`
       checks =
-        treeFmtEachSystem
-          (pkgs: {
-            formatting = treeFmtEval.${pkgs}.config.build.wrapper;
-          })
+        treeFmtEachSystem (pkgs: {
+          formatting = treeFmtEval.${pkgs}.config.build.wrapper;
+        })
         // forEachSystem (system: {
           pre-commit-check = import "${inputs.nixfigs-helpers.helpers.checks}" {
             inherit self system;
