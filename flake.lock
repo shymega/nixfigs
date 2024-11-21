@@ -73676,6 +73676,22 @@
         "type": "github"
       }
     },
+    "nix-flatpak_7": {
+      "locked": {
+        "lastModified": 1711997201,
+        "narHash": "sha256-J71xzQlVYsjagA4AsVwRazhBh2rZrPpKvxTgs6UzL7c=",
+        "owner": "gmodena",
+        "repo": "nix-flatpak",
+        "rev": "b76fa31346db7fc958a9898f3c594696ca71c4fd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gmodena",
+        "ref": "v0.4.1",
+        "repo": "nix-flatpak",
+        "type": "github"
+      }
+    },
     "nix-github-actions": {
       "inputs": {
         "nixpkgs": [
@@ -87585,11 +87601,11 @@
         "stylix": "stylix"
       },
       "locked": {
-        "lastModified": 1732230414,
-        "narHash": "sha256-z9VjQcjOxsb/4fK+wcsKONgzMCwVytxmWyW6luEH5Y8=",
+        "lastModified": 1732233412,
+        "narHash": "sha256-g0Zts3SHpA3RmdE4aOh66k43h0ywWu18l0FNhqkW4Y8=",
         "owner": "shymega",
         "repo": "nixfigs-homes",
-        "rev": "e8b143b41e14e674eee5173c985cd832b0064be6",
+        "rev": "2b005ca45bc167e96926fec1f4622b7721953aa0",
         "type": "github"
       },
       "original": {
@@ -87611,7 +87627,7 @@
         "lanzaboote": "lanzaboote_4",
         "lix-module": "lix-module_4",
         "nix-doom-emacs-unstraightened": "nix-doom-emacs-unstraightened_4",
-        "nix-flatpak": "nix-flatpak_3",
+        "nix-flatpak": "nix-flatpak_4",
         "nix-index-database": "nix-index-database_14",
         "nixfigs-common": "nixfigs-common_4",
         "nixfigs-doom-emacs": "nixfigs-doom-emacs_4",
@@ -87629,11 +87645,11 @@
         "stylix": "stylix_2"
       },
       "locked": {
-        "lastModified": 1732230414,
-        "narHash": "sha256-z9VjQcjOxsb/4fK+wcsKONgzMCwVytxmWyW6luEH5Y8=",
+        "lastModified": 1732233412,
+        "narHash": "sha256-g0Zts3SHpA3RmdE4aOh66k43h0ywWu18l0FNhqkW4Y8=",
         "owner": "shymega",
         "repo": "nixfigs-homes",
-        "rev": "e8b143b41e14e674eee5173c985cd832b0064be6",
+        "rev": "2b005ca45bc167e96926fec1f4622b7721953aa0",
         "type": "github"
       },
       "original": {
@@ -87655,7 +87671,7 @@
         "lanzaboote": "lanzaboote_7",
         "lix-module": "lix-module_7",
         "nix-doom-emacs-unstraightened": "nix-doom-emacs-unstraightened_7",
-        "nix-flatpak": "nix-flatpak_6",
+        "nix-flatpak": "nix-flatpak_7",
         "nix-index-database": "nix-index-database_30",
         "nixfigs-common": "nixfigs-common_7",
         "nixfigs-doom-emacs": "nixfigs-doom-emacs_7",
@@ -87673,11 +87689,11 @@
         "stylix": "stylix_5"
       },
       "locked": {
-        "lastModified": 1732230414,
-        "narHash": "sha256-z9VjQcjOxsb/4fK+wcsKONgzMCwVytxmWyW6luEH5Y8=",
+        "lastModified": 1732233412,
+        "narHash": "sha256-g0Zts3SHpA3RmdE4aOh66k43h0ywWu18l0FNhqkW4Y8=",
         "owner": "shymega",
         "repo": "nixfigs-homes",
-        "rev": "e8b143b41e14e674eee5173c985cd832b0064be6",
+        "rev": "2b005ca45bc167e96926fec1f4622b7721953aa0",
         "type": "github"
       },
       "original": {
@@ -88747,6 +88763,7 @@
         "lix-module": "lix-module_3",
         "nix-alien": "nix-alien_9",
         "nix-doom-emacs-unstraightened": "nix-doom-emacs-unstraightened_3",
+        "nix-flatpak": "nix-flatpak_3",
         "nix-index-database": "nix-index-database_10",
         "nix-ld": "nix-ld",
         "nixfigs-common": "nixfigs-common_3",
@@ -88768,11 +88785,11 @@
         "stylix": "stylix_4"
       },
       "locked": {
-        "lastModified": 1732230459,
-        "narHash": "sha256-fQ3bwTkmVqMY+q+YOYwExyChhqe/XYhoagysmw4N9eY=",
+        "lastModified": 1732233446,
+        "narHash": "sha256-9oGVZ36JzrGzcQPXZ4Nk+IchpvEW3gbAap/PkNAAlCg=",
         "owner": "shymega",
         "repo": "nixfigs-private",
-        "rev": "ca190ee37247f5a2e446571ce8b00e38989d96e8",
+        "rev": "619bad3f92b6480f5edd257dfa82fd31d5a8af2a",
         "type": "github"
       },
       "original": {
@@ -88802,7 +88819,7 @@
         "lix-module": "lix-module_6",
         "nix-alien": "nix-alien_23",
         "nix-doom-emacs-unstraightened": "nix-doom-emacs-unstraightened_6",
-        "nix-flatpak": "nix-flatpak_5",
+        "nix-flatpak": "nix-flatpak_6",
         "nix-index-database": "nix-index-database_26",
         "nix-ld": "nix-ld_3",
         "nixfigs-common": "nixfigs-common_6",
@@ -88828,11 +88845,11 @@
         "ucodenix": "ucodenix"
       },
       "locked": {
-        "lastModified": 1732230476,
-        "narHash": "sha256-19g676NwtuIMjBV36MmtJ0aEf97oMPohZ92RnIg1KUI=",
+        "lastModified": 1732233462,
+        "narHash": "sha256-zdcrovEmP26IIXyFfsmle5VSdbCzug1m30L/Uvbjz6E=",
         "owner": "shymega",
         "repo": "nixfigs-public",
-        "rev": "1e55d064e544bea4c611c871a815e35ba84528aa",
+        "rev": "0bb2fb22b414a356a516715a24cbd0868c6649c6",
         "type": "github"
       },
       "original": {
@@ -89114,7 +89131,7 @@
         "lix-module": "lix-module_5",
         "nix-alien": "nix-alien_18",
         "nix-doom-emacs-unstraightened": "nix-doom-emacs-unstraightened_5",
-        "nix-flatpak": "nix-flatpak_4",
+        "nix-flatpak": "nix-flatpak_5",
         "nix-index-database": "nix-index-database_20",
         "nix-ld": "nix-ld_2",
         "nixfigs-common": "nixfigs-common_5",
