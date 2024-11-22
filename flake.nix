@@ -54,7 +54,7 @@
     forEachSystem = inputs.nixpkgs.lib.genAttrs systems;
   in {
     hosts = inputs.nixfigs-public.hosts // inputs.nixfigs-private.hosts;
-    secrets = inputs.nixfigs-secrets.outputs.system // inputs.nixfigs-secrets.outputs.user;
+    secrets = inputs.nixfigs-secrets.system // inputs.nixfigs-secrets.user;
     deploy = import ./nix/deploy.nix {
       inherit self inputs;
       inherit (inputs.nixpkgs) lib;
@@ -151,28 +151,12 @@
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixpkgs-shymega.url = "github:shymega/nixpkgs?ref=shymega/staging";
-    nixfigs-common.url = "github:shymega/nixfigs-common";
-    nixfigs-devenvs.url = "github:shymega/nixfigs-devenvs";
     nixfigs-helpers.url = "github:shymega/nixfigs-helpers";
-    nixfigs-homes.url = "github:shymega/nixfigs-homes";
-    nixfigs-networks.url = "github:shymega/nixfigs-networks";
     nixfigs-pkgs.url = "github:shymega/nixfigs-pkgs";
     nixfigs-private.url = "github:shymega/nixfigs-private";
     nixfigs-public.url = "github:shymega/nixfigs-public";
-    nixfigs-roles.url = "github:shymega/nixfigs-roles";
     nixfigs-secrets.url = "github:shymega/nixfigs-secrets";
-    flake-registry = {
-      url = "github:NixOS/flake-registry";
-      flake = false;
-    };
     hardware.url = "github:NixOS/nixos-hardware";
-    agenix = {
-      url = "github:ryantm/agenix";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        home-manager.follows = "home-manager";
-      };
-    };
     deploy-rs = {
       url = "github:serokell/deploy-rs";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -186,44 +170,8 @@
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.1";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
-    stylix = {
-      url = "github:danth/stylix/release-24.05";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        home-manager.follows = "home-manager";
-        flake-compat.follows = "flake-compat";
-      };
-    };
-    srvos = {
-      url = "github:nix-community/srvos";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nixos-generators = {
-      url = "github:nix-community/nixos-generators";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    base16-schemes.url = "github:SenchoPens/base16.nix";
-    nix-doom-emacs-unstraightened.url = "github:marienz/nix-doom-emacs-unstraightened";
-    _1password-shell-plugins.url = "github:1Password/shell-plugins";
     shypkgs-private.url = "github:shymega/shypkgs-private";
     shypkgs-public.url = "github:shymega/shypkgs-public";
-    android-nixpkgs = {
-      url = "github:tadfisher/android-nixpkgs/stable";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nixfigs-doom-emacs = {
-      url = "github:shymega/nixfigs-doom-emacs";
-      flake = false;
-    };
-    jovian-nixos.url = "github:Jovian-Experiments/Jovian-NixOS";
-    disko.url = "github:nix-community/disko";
-    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
     lix-module = {
       url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.1-1.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
