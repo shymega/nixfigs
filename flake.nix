@@ -138,12 +138,13 @@
     inherit (inputs.nixfigs-helpers) helpers;
     homeConfigurations =
       inputs.nixfigs-homes.homeConfigurations // inputs.nixfigs-private.homeConfigurations;
-    inherit (inputs.nixfigs-homes) homeModules; # FIXME: Add `nixfigs-private.homeModules`.
+    homeModules =
+      inputs.nixfigs-homes.homeModules // inputs.nixfigs-private.homeModules;
     inherit (inputs.nixfigs-networks) networks;
     nixosConfigurations =
       inputs.nixfigs-private.nixosConfigurations // inputs.nixfigs-public.nixosConfigurations;
     nixosModules = inputs.nixfigs-private.nixosModules // inputs.nixfigs-public.nixosModules;
-    inherit (inputs.nixfigs-roles) roles;
+    inherit (inputs.nixfigs-roles) roles checkRole checkRoles;
     inherit (inputs.nixfigs-devenvs) templates; # FIXME: Add `legacyShells` output.
   };
   inputs = {
@@ -155,7 +156,10 @@
     nixfigs-pkgs.url = "github:shymega/nixfigs-pkgs";
     nixfigs-private.url = "github:shymega/nixfigs-private";
     nixfigs-public.url = "github:shymega/nixfigs-public";
+    nixfigs-homes.url = "github:shymega/nixfigs-homes";
     nixfigs-secrets.url = "github:shymega/nixfigs-secrets";
+    nixfigs-roles.url = "github:shymega/nixfigs-roles";
+    nixfigs-devenvs.url = "github:shymega/nixfigs-devenvs";
     hardware.url = "github:NixOS/nixos-hardware";
     deploy-rs = {
       url = "github:serokell/deploy-rs";
