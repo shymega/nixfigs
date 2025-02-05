@@ -1,0 +1,14 @@
+# SPDX-FileCopyrightText: 2024 Dom Rodriguez <shymega@shymega.org.uk
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
+#
+
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore(ci)"
