@@ -1,0 +1,49 @@
+# SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
+name: Pushes CI Workflow
+
+on:
+  push:
+    branches: [main, refactor/snowfall]
+  workflow_dispatch:
+
+concurrency:
+  group: gh-ref-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check_last_commit:
+    runs-on: ubuntu-latest
+    name: Check latest commit
+    outputs:
+      should_run: ${{ steps.should_run.outputs.should_run }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - id: should_run
+        continue-on-error: true
+        name: Check latest commit is less than a day
+        run: test -z $(git rev-list --after="24 hours" ${{ github.sha }}) && echo "should_run=false" >> "$GITHUB_OUTPUT"
+
+  format-flake:
+    needs: [check_last_commit]
+    if: ${{ needs.check_last_commit.outputs.should_run != 'false' }}
+    uses: ./.github/workflows/flake-formatting.yml
+    secrets: inherit
+
+  flake-tests:
+    needs: [check_last_commit, format-flake]
+    if: ${{ needs.check_last_commit.outputs.should_run != 'false' && needs.format-flake.result == 'success' }}
+    uses: ./.github/workflows/flake-tests.yml
+    secrets: inherit
+
+  build-and-push:
+    needs: [check_last_commit, flake-tests]
+    if: ${{ needs.check_last_commit.outputs.should_run != 'false' && needs.flake-tests.result == 'success' }}
+    uses: ./.github/workflows/flake-builds.yml
+    secrets: inherit
+
