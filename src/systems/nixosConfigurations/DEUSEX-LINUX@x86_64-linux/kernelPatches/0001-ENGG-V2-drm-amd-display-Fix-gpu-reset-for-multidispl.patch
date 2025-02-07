@@ -1,0 +1,56 @@
+From 73cb102512b07b30bd0c3e806cefd2a99e3d1cd3 Mon Sep 17 00:00:00 2001
+From: Roman Li <Roman.Li@amd.com>
+Date: Tue, 1 Apr 2025 17:05:10 -0400
+Subject: [PATCH] ENGG-V2 - drm/amd/display: Fix gpu reset for multidisplay
+ config
+
+[Why]
+The indexing of stream_status in dm_gpureset_commit_state() is incorrect.
+That leads to asserts in multi-display configuration after gpu reset.
+Also while system undergoing gpu reset always do full update
+to sync the dc state before and after reset.
+
+[How]
+1. Adjust the indexing logic to ensure correct alignment.
+2. Force full update in gpu reset
+---
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 8665bd3cb75a..f0af29bc5c72 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -3408,16 +3408,16 @@ static void dm_gpureset_commit_state(struct dc_state *dc_state,
+ 	for (k = 0; k < dc_state->stream_count; k++) {
+ 		bundle->stream_update.stream = dc_state->streams[k];
+ 
+-		for (m = 0; m < dc_state->stream_status->plane_count; m++) {
++		for (m = 0; m < dc_state->stream_status[k].plane_count; m++) {
+ 			bundle->surface_updates[m].surface =
+-				dc_state->stream_status->plane_states[m];
++				dc_state->stream_status[k].plane_states[m];
+ 			bundle->surface_updates[m].surface->force_full_update =
+ 				true;
+ 		}
+ 
+ 		update_planes_and_stream_adapter(dm->dc,
+ 					 UPDATE_TYPE_FULL,
+-					 dc_state->stream_status->plane_count,
++					 dc_state->stream_status[k].plane_count,
+ 					 dc_state->streams[k],
+ 					 &bundle->stream_update,
+ 					 bundle->surface_updates);
+@@ -11108,6 +11108,9 @@ static bool should_reset_plane(struct drm_atomic_state *state,
+ 	    state->allow_modeset)
+ 		return true;
+ 
++	if (amdgpu_in_reset(adev) && state->allow_modeset)
++		return true;
++
+ 	/* Exit early if we know that we're adding or removing the plane. */
+ 	if (old_plane_state->crtc != new_plane_state->crtc)
+ 		return true;
+-- 
+2.34.1
+
