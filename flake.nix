@@ -1,151 +1,148 @@
-# SPDX-FileCopyrightText: 2024 Dom Rodriguez <shymega@shymega.org.uk
+# SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
 #
 # SPDX-License-Identifier: GPL-3.0-only
 {
-  description = "Main entrypoint to my NixOS flakes";
-
-  nixConfig = {
-    extra-trusted-substituters = [
-      "https://attic.mildlyfunctional.gay/nixbsd"
-      "https://cache.dataaturservice.se/spectrum/"
-      "https://cache.nixos.org/"
-      "https://deploy-rs.cachix.org/"
-      "https://devenv.cachix.org"
-      "https://nix-community.cachix.org"
-      "https://nix-gaming.cachix.org"
-      "https://nix-on-droid.cachix.org"
-      "https://numtide.cachix.org"
-      "https://pre-commit-hooks.cachix.org"
-    ];
-    extra-trusted-public-keys = [
-      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-      "deploy-rs.cachix.org-1:xfNobmiwF/vzvK1gpfediPwpdIP0rpDV2rYqx40zdSI="
-      "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
-      "nix-on-droid.cachix.org-1:56snoMJTXmDRC1Ei24CmKoUqvHJ9XCp+nidK7qkMQrU="
-      "nixbsd:gwcQlsUONBLrrGCOdEboIAeFq9eLaDqfhfXmHZs1mgc="
-      "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE="
-      "pre-commit-hooks.cachix.org-1:Pkk3Panw5AW24TOv6kz3PvLhlH8puAsJTBbOPmBo7Rc="
-      "spectrum-os.org-2:foQk3r7t2VpRx92CaXb5ROyy/NBdRJQG2uX2XJMYZfU="
-    ];
-  };
+  description = "Dom's Nixified Flake";
 
   outputs = inputs: let
     inherit (inputs) self;
-    genPkgs = system:
-      import inputs.nixpkgs {
-        inherit system;
-        overlays = builtins.attrValues self.overlays;
-        config = self.nixpkgs-config;
-      };
-
-    systems = [
-      "x86_64-linux"
-      "aarch64-linux"
-    ];
-
-    treeFmtEachSystem = f: inputs.nixpkgs.lib.genAttrs systems (system: f inputs.nixpkgs.legacyPackages.${system});
+    rolesModule = import ./nix-support/roles.nix;
+    treeFmtEachSystem = f: inputs.nixpkgs.lib.genAttrs (import inputs.systems) (system: f inputs.nixpkgs.legacyPackages.${system});
     treeFmtEval = treeFmtEachSystem (
       pkgs:
-        inputs.nixfigs-helpers.inputs.treefmt-nix.lib.evalModule pkgs inputs.nixfigs-helpers.helpers.formatter
+        inputs.treefmt-nix.lib.evalModule pkgs ./nix-support/formatter.nix
     );
-
-    forEachSystem = inputs.nixpkgs.lib.genAttrs systems;
   in {
-    hosts = inputs.nixfigs-public.hosts // inputs.nixfigs-private.hosts;
-    secrets = inputs.nixfigs-secrets.system // inputs.nixfigs-secrets.user;
-    deploy = import ./nix/deploy.nix {
-      inherit self inputs;
+    inherit (rolesModule) roles;
+    inherit (rolesModule) utils;
+    nixpkgs-config = {
+      allowUnfree = true;
+      allowUnsupportedSystem = true;
+      allowBroken = false;
+      allowInsecurePredicate = _: true;
+    };
+    overlays = import ./overlays {
+      inherit inputs;
       inherit (inputs.nixpkgs) lib;
     };
-    inherit (inputs.nixfigs-pkgs) overlays packages nixpkgs-config;
-    # for `nix fmt`
+    deploy = import ./nix-support/deploy.nix {inherit self inputs;};
+    homeConfigurations = import ./hosts/homes {inherit inputs;};
+    nixosConfigurations = import ./hosts/nixos {inherit self inputs;};
+    darwinConfigurations = import ./hosts/darwin {inherit self inputs;};
+    hosts = with builtins; let
+      lak = list:
+        listToAttrs (map (v: {
+            name = v.hostname or "home-manager-cfg";
+            value = v;
+          })
+          list);
+      raw = import ./hosts {inherit self inputs;};
+    in
+      lak (map (v:
+        import v {
+          inherit self inputs;
+          inherit (raw) genPkgs mkHost;
+        })
+      raw.enabled);
+    packages = let
+      inherit (inputs.shypkgs-public) forAllSystems;
+      inherit (inputs.nixpkgs.lib) filterAttrs hasAttrByPath mapAttrs' nameValuePair optionalAttrs recursiveUpdate;
+      cfgs = self.nixosConfigurations;
+    in
+      recursiveUpdate (forAllSystems (system: inputs.shypkgs-public.packages.${system}))
+      (mapAttrs' (_: v:
+        nameValuePair "${v.pkgs.system}" (recursiveUpdate {
+            "build-${v.config.networking.hostName}" = v.config.system.build.toplevel;
+          } (optionalAttrs (hasAttrByPath ["config" "system" "build" "vm"] v) {
+            "build-${v.config.networking.hostName}-vm" = v.config.system.build.vm;
+          })))
+      cfgs);
+
+    apps = let
+      inherit (inputs.nixpkgs.lib) filterAttrs hasAttrByPath mapAttrs' nameValuePair optionalAttrs recursiveUpdate;
+      cfgs = self.nixosConfigurations;
+    in
+      mapAttrs' (_: v:
+        nameValuePair "${v.pkgs.system}" {
+          "deploy-host-${v.config.networking.hostName}" = let
+            pkgs = inputs.nixpkgs.legacyPackages.${v.pkgs.system};
+          in {
+            type = "app";
+            program = pkgs.writeScript "deploy-${v.config.networking.hostName}" ''
+              #!/bin/sh
+              nix build .#${v.pkgs.system}.build-${v.config.networking.hostName}
+              sudo ./result/bin/switch-to-configuration switch
+            '';
+          };
+        })
+      cfgs;
+
+    hydraJobs = let
+      inherit (inputs.nixpkgs.lib) isDerivation filterAttrs mapAttrs elem;
+      filterValidPkgs = let
+        hasPlatform = sys: pkg: elem sys (pkg.meta.platforms or [sys]);
+        isDistributable = pkg: (pkg.meta.license or {redistributable = true;}).redistributable;
+        notBroken = pkg: !(pkg.meta.broken or false);
+        isNotNixosSystem = pkg: builtins.hasAttr "kernelParams" pkg;
+        isNotNixosVm = pkg: pkg.name != "nixos-vm";
+      in
+        sys: pkgs:
+          filterAttrs (_: pkg:
+            isDerivation pkg
+            && hasPlatform sys pkg
+            && notBroken pkg
+            && isDistributable pkg
+            && !isNotNixosSystem pkg
+            && isNotNixosVm pkg)
+          pkgs;
+      getConfigTopLevel = _: cfg: cfg.config.system.build.toplevel;
+      getActivationPackage = _: cfg: cfg.config.home.activationPackage;
+    in {
+      pkgs = mapAttrs filterValidPkgs self.packages;
+      hosts = mapAttrs getConfigTopLevel self.nixosConfigurations;
+      users = mapAttrs getActivationPackage self.homeConfigurations;
+      inherit (self.builds) sdImages isoImages;
+    };
+
     formatter = treeFmtEachSystem (pkgs: treeFmtEval.${pkgs.system}.config.build.wrapper);
-    # for `nix flake check`
-    checks =
-      treeFmtEachSystem (pkgs: {
-        formatting = treeFmtEval.${pkgs}.config.build.wrapper;
-      })
-      // forEachSystem (system: {
-        pre-commit-check = import "${inputs.nixfigs-helpers.helpers.checks}" {
-          inherit self system;
-          inherit (inputs.nixfigs-helpers) inputs;
-          inherit (inputs.nixpkgs) lib;
+
+    devShells = let
+      allSystems = [
+        "x86_64-linux"
+        "x86_64-darwin"
+        "aarch64-linux"
+        "aarch64-darwin"
+      ];
+      forEachSystem = f: inputs.nixpkgs.lib.genAttrs allSystems f;
+    in
+      forEachSystem (system: {
+        default = import ./nix-support/devshell.nix {
+          inherit inputs self system;
         };
       });
-    devShells = forEachSystem (
-      system: let
-        pkgs = genPkgs system;
-      in
-        import inputs.nixfigs-helpers.helpers.devShells {inherit pkgs self system;}
-    );
-    builds = let
-      forSystem = inputs.nixpkgs.lib.genAttrs [
-        "x86_64-linux"
-        "aarch64-linux"
-        "x86_64-darwin"
-        "aaarch64-darwin"
-      ];
-    in
-      forSystem (
-        system: let
-          pkgs = genPkgs system;
-        in {
-          sdImages = {
-            SMITH-LINUX = self.nixosConfigurations.SMITH-LINUX.config.system.build.sdImage;
-            GRDN-BED-UNIT = self.nixosConfigurations.GRDN-BED-UNIT.config.system.build.sdImage;
-            DZR-OFFICE-BUSY-LIGHT-UNIT =
-              self.nixosConfigurations.DZR-OFFICE-BUSY-LIGHT-UNIT.config.system.build.sdImage;
-            DZR-PETS-CAM-UNIT = self.nixosConfigurations.DZR-PETS-CAM-UNIT.config.system.build.sdImage;
-            CLOCKWORK-DT-CM4 = self.nixosConfigurations.CLOCKWORK-DT-CM4.config.system.build.sdImage;
-            CLOCKWORK-UC-CM4 = self.nixosConfigurations.CLOCKWORK-UC-CM4.config.system.build.sdImage;
-          };
-          sdImages-collections = let
-            images = self.builds.${system}.sdImages;
-          in
-            with images; {
-              all = with builtins;
-                map (k: getAttr k self.builds.${system}.sdImages) (attrNames self.builds.${system}.sdImages);
-              clockworkpi = CLOCKWORK-UC-CM4 // CLOCKWORK-DT-CM4;
-              pi-automation = DZR-OFFICE-BUSY-LIGHT-UNIT // DZR-PETS-CAM-UNIT // GRDN-BED-UNIT;
-              pi-desktops = SMITH-LINUX;
-            };
-          isos = {
-            all = {};
-          };
-          isos-collections = let
-            inherit (self.builds.${system}) isos;
-          in
-            with isos; {
-              all = with builtins;
-                map (k: getAttr k self.builds.${system}.isos) (attrNames self.builds.${system}.isos);
-            };
 
-          all = pkgs.symlinkJoin {
-            name = "all";
-            paths = let
-              generatorsAll = inputs.nixfigs-private.generators // inputs.nixfigs-public.generators;
-            in
-              with builtins;
-                (map (k: getAttr k self.builds.${system}.sdImages) (attrNames self.builds.${system}.sdImages))
-                ++ (map (k: getAttr k generatorsAll) (attrNames generatorsAll))
-                ++ (map (k: getAttr k self.builds.${system}.isos.all) (attrNames self.builds.${system}.isos.all));
+    checks = let
+      allSystems = [
+        "x86_64-linux"
+        "x86_64-darwin"
+        "aarch64-linux"
+        "aarch64-darwin"
+      ];
+      forEachSystem = f: inputs.nixpkgs.lib.genAttrs allSystems f;
+    in
+      builtins.mapAttrs (_system: deployLib: deployLib.deployChecks self.deploy)
+      inputs.deploy-rs.lib
+      // treeFmtEachSystem (pkgs: {
+        formatting = treeFmtEval.${pkgs}.config.build.wrapper;
+      })
+      // forEachSystem (
+        system: {
+          pre-commit-check = import ./nix-support/checks.nix {
+            inherit inputs system self;
           };
         }
       );
-    common = inputs.nixfigs-common.common // inputs.nixfigs-private.common;
-    inherit (inputs.nixfigs-helpers) helpers;
-    homeConfigurations =
-      inputs.nixfigs-homes.homeConfigurations // inputs.nixfigs-private.homeConfigurations;
-    homeModules =
-      inputs.nixfigs-homes.homeModules // inputs.nixfigs-private.homeModules;
-    inherit (inputs.nixfigs-networks) networks;
-    nixosConfigurations =
-      inputs.nixfigs-private.nixosConfigurations // inputs.nixfigs-public.nixosConfigurations;
-    nixosModules = inputs.nixfigs-private.nixosModules // inputs.nixfigs-public.nixosModules;
-    inherit (inputs.nixfigs-roles) roles checkRole checkRoles;
-    inherit (inputs.nixfigs-devenvs) templates; # FIXME: Add `legacyShells` output.
+
     githubActions.matrix = with builtins; let
       systemToPlatform = system: let
         inherit (inputs.nixpkgs.lib.strings) hasSuffix;
@@ -159,56 +156,165 @@
         else throw "Unsupported system (platform): ${system}";
       nixosConfigs = let
         inherit (inputs.nixpkgs.lib.attrsets) filterAttrs mapAttrsToList;
-        isWorkHostname = n: let
-          inherit (inputs.nixpkgs.lib.strings) hasInfix;
-        in hasInfix "ct-" n;
-        pred = n: v: let
-          inherit (v.pkgs) system;
-          inherit (v.config.networking) hostName;
+      in {
+        include = let
+          pred = n: v: let
+            isWorkMachine = v: let
+              inherit (builtins) elem hasAttr;
+            in
+              if hasAttr "nixfigs.meta" v.config
+              then elem "work" v.config.nixfigs.meta.rolesEnabled
+              else false;
+          in
+            !isWorkMachine v && n != "DZR-BUSY-LIGHT";
         in
-          (system == "aarch64-linux" || system == "x86_64-linux") && !isWorkHostname hostName;
-      in
-        {
-          include = mapAttrsToList (n: v: {
+          mapAttrsToList (n: v: {
             hostName = n;
             platform = systemToPlatform v.pkgs.system;
+            inherit (v.pkgs) system;
           }) (filterAttrs pred self.nixosConfigurations);
-        };
+      };
     in
       nixosConfigs;
+
+    builds = let
+      inherit (inputs.nixpkgs.lib) hasAttrByPath filterAttrs;
+    in {
+      sdImages = with builtins;
+        mapAttrs (_: v: v.config.system.build.sdImage)
+        (filterAttrs (_: v:
+          hasAttrByPath ["config" "system" "build" "sdImage"] v)
+        self.nixosConfigurations);
+      isoImages = with builtins;
+        mapAttrs (_: v: v.config.system.build.isoImage)
+        (filterAttrs (_: v:
+          hasAttrByPath ["config" "system" "build" "isoImage"] v)
+        self.nixosConfigurations);
+    };
   };
+
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
-    nixpkgs-shymega.url = "github:shymega/nixpkgs?ref=shymega/staging";
-    nixfigs-helpers.url = "github:shymega/nixfigs-helpers";
-    nixfigs-pkgs.url = "github:shymega/nixfigs-pkgs";
-    nixfigs-private.url = "github:shymega/nixfigs-private";
-    nixfigs-public.url = "github:shymega/nixfigs-public";
-    nixfigs-homes.url = "github:shymega/nixfigs-homes";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-24.11";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable";
+    nixfigs-virtual-private.url = "github:shymega/nixfigs-virtual-private-dummy";
+    nixfigs-virtual.url = "github:shymega/nixfigs-virtual";
+    nixfigs-work.url = "github:shymega/nixfigs-work-dummy";
+    nixfigs-private.url = "github:shymega/nixfigs-private-dummy";
     nixfigs-secrets.url = "github:shymega/nixfigs-secrets";
-    nixfigs-roles.url = "github:shymega/nixfigs-roles";
-    nixfigs-devenvs.url = "github:shymega/nixfigs-devenvs";
+    nixfigs-networks.url = "github:shymega/nixfigs-networks";
+    devenv.url = "github:cachix/devenv/latest";
     hardware.url = "github:NixOS/nixos-hardware";
+    hardware-shymega.url = "github:shymega/nixos-hardware?ref=shymega";
+    impermanence.url = "github:nix-community/impermanence";
+    nix-ld = {
+      url = "github:Mic92/nix-ld";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-alien = {
+      url = "github:thiagokokada/nix-alien";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        nix-index-database.follows = "nix-index-database";
+      };
+    };
+    nix-index-database = {
+      url = "github:Mic92/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixos-wsl = {
+      url = "github:nix-community/nixos-wsl";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     deploy-rs = {
       url = "github:serokell/deploy-rs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
+    nixpkgs-shymega.url = "github:shymega/nixpkgs?ref=shymega/staging";
+    nixos-flake-registry = {
+      url = "github:NixOS/flake-registry";
       flake = false;
     };
-    flake-utils.url = "github:numtide/flake-utils";
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager?ref=release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    shypkgs-private.url = "github:shymega/shypkgs-private";
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote?ref=v0.4.2";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    stylix = {
+      url = "github:danth/stylix?ref=release-24.11";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
+    srvos = {
+      url = "github:nix-community/srvos";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    shymega-flake-registry = {
+      url = "github:shymega/shymega-flake-registry";
+      flake = false;
+    };
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    base16-schemes.url = "github:SenchoPens/base16.nix";
+    nix-doom-emacs-unstraightened.url = "github:marienz/nix-doom-emacs-unstraightened";
+    nixfigs-doom-emacs-personal = {
+      url = "github:shymega/nixfigs-doom-emacs";
+      flake = false;
+    };
+    _1password-shell-plugins.url = "github:1Password/shell-plugins";
+    flake-utils.url = "github:numtide/flake-utils";
+    shypkgs-private.url = "github:shymega/shypkgs-private-dummy";
     shypkgs-public.url = "github:shymega/shypkgs-public";
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     lix-module = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.1-1.tar.gz";
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.92.0.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    jovian-nixos.url = "github:Jovian-Experiments/Jovian-NixOS";
+    nur-xddxdd = {
+      url = "github:xddxdd/nur-packages";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    ucodenix.url = "github:e-tho/ucodenix";
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+    hyprland.url = "github:hyprwm/Hyprland";
+    shyemacs-cfg = {
+      url = "github:shymega/emacs-cfg";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
+    systems.url = "github:nix-systems/default";
+    nur.url = "github:nix-community/NUR";
+    android-nixpkgs = {
+      url = "github:tadfisher/android-nixpkgs/stable";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    bestool.url = "github:shymega/bestool?ref=shymega-all-fixes";
+    deckcheatz.url = "github:deckcheatz/deckcheatz";
+    dzr-taskwarrior-recur.url = "github:shymega/dzr-taskwarrior-recur";
+    esp32-dev.url = "github:shymega/esp32-dev.nix";
+    wemod-launcher.url = "github:DeckCheatz/wemod-launcher?ref=refactor-shymega";
+    xrlinuxdriver.url = "github:shymega/XRLinuxDriver?ref=shymega/nix-flake-support";
   };
 }
