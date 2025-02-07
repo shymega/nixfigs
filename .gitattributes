@@ -2,6 +2,5 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-/result
-/.pre-commit-config.yaml
-/.direnv
+nix.secrets/** filter=git-crypt diff=git-crypt
+nix/systems/x86_64/ct-*/** filter=git-crypt diff=git-crypt
