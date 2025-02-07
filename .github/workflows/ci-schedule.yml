@@ -1,0 +1,36 @@
+# SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
+name: Schedule CI Workflow
+on:
+  schedule:
+    - cron: "0 0 * * 6"
+  workflow_dispatch:
+concurrency:
+  group: gh-ref-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  check_last_commit:
+    runs-on: ubuntu-latest
+    name: Check latest commit
+    outputs:
+      count: ${{ steps.new_commits.outputs.count }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: new_commits
+        continue-on-error: true
+        name: Check latest commit is less than a day
+        run: echo "count=$(git log --oneline --since '24 hours ago' | wc -l)" >> "$GITHUB_OUTPUT"
+  flake-inputs-update:
+    needs: [check_last_commit]
+    if: ${{ needs.check_last_commit.outputs.count > 0 }}
+    uses: ./.github/workflows/flake-inputs-update.yml
+    secrets: inherit
+  build-and-push:
+    needs: [check_last_commit, flake-inputs-update]
+    if: ${{ needs.check_last_commit.outputs.count > 0 && needs.flake-inputs-update.result == 'success' }}
+    uses: ./.github/workflows/flake-builds.yml
+    secrets: inherit
