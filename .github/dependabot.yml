@@ -1,8 +1,6 @@
-# SPDX-FileCopyrightText: 2024 Dom Rodriguez <shymega@shymega.org.uk
+# SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
 #
 # SPDX-License-Identifier: GPL-3.0-only
-
-#
 
 version: 2
 updates:
@@ -10,5 +8,14 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "friday"
+      time: "00:00"
+      timezone: "Europe/London"
     commit-message:
-      prefix: "chore(ci)"
+      prefix: "chore(ci-deps)"
+    reviewers:
+      - "shymega"
+    groups:
+      gh-actions-deps:
+        patterns:
+          - "*"
