@@ -161,19 +161,19 @@
         inherit (inputs.nixpkgs.lib.attrsets) filterAttrs mapAttrsToList;
         isWorkHostname = n: let
           inherit (inputs.nixpkgs.lib.strings) hasInfix;
-        in hasInfix "ct-" n;
-        pred = n: v: let
+        in
+          hasInfix "ct-" n;
+        pred = _n: v: let
           inherit (v.pkgs) system;
           inherit (v.config.networking) hostName;
         in
           (system == "aarch64-linux" || system == "x86_64-linux") && !isWorkHostname hostName;
-      in
-        {
-          include = mapAttrsToList (n: v: {
-            hostName = n;
-            platform = systemToPlatform v.pkgs.system;
-          }) (filterAttrs pred self.nixosConfigurations);
-        };
+      in {
+        include = mapAttrsToList (n: v: {
+          hostName = n;
+          platform = systemToPlatform v.pkgs.system;
+        }) (filterAttrs pred self.nixosConfigurations);
+      };
     in
       nixosConfigs;
   };
