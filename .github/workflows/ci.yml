@@ -6,6 +6,8 @@ name: "Flake workflow"
 
 on:
   workflow_dispatch:
+  push:
+  pull_request:
   schedule:
     - cron: "0 0 * * 6"
 
@@ -16,6 +18,7 @@ concurrency:
 
 jobs:
   update-flake:
+    if: ${{ github.event_name == 'schedule' }}
     permissions:
       contents: write
     runs-on: ubuntu-latest
@@ -34,8 +37,7 @@ jobs:
           commit_message: "chore(lockfile): Update Flake lockfile"
 
   format-flake:
-    needs: [update-flake]
-    if: ${{ needs.update-flake.result == 'success' }}
+    if: ${{ github.event_name == 'push' }}
     permissions:
       contents: write
     runs-on: ubuntu-latest
@@ -54,8 +56,7 @@ jobs:
           commit_message: "chore(lint): Format Nix files"
 
   check-flake:
-    needs: [format-flake]
-    if: ${{ needs.format-flake.result == 'success' }}
+    if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
