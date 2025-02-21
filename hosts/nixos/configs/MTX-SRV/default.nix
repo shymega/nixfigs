@@ -69,6 +69,7 @@
     unbound = {
       enable = true;
       settings = {
+        remote-control.control-enable = true;
         server = {
           # When only using Unbound as DNS, make sure to replace 127.0.0.1 with your ip address
           # When using Unbound in combination with pi-hole or Adguard, leave 127.0.0.1, and point Adguard to 127.0.0.1:PORT
