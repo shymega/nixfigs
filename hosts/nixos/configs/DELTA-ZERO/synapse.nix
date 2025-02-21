@@ -11,7 +11,6 @@ in
     ../../../../modules/nixos/nixos-matrix/sliding-sync
     ./security.nix
     ./synapse-main.nix
-    ./nginx.nix
     ./postgres.nix
   ];
   nixpkgs.overlays = [
