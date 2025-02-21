@@ -28,7 +28,7 @@
       fsType = "ext4";
     };
     "/boot" = {
-      device = "/dev/disk/by-label/ESP";
+      device = "/dev/disk/by-label/BOOT";
       fsType = "vfat";
     };
   };
