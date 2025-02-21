@@ -9,8 +9,6 @@
     enable = true;
     withJemalloc = true;
 
-    nginxVirtualHostName = "matrix.rodriguez.org.uk";
-
     extraConfigFiles = [
       config.age.secrets.synapse_secret.path
       ./synapse/tweaks.yaml
