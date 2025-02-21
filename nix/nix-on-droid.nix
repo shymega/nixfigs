@@ -40,7 +40,7 @@ let
     { usePkgs ? true
     , extraModules ? [
       ]
-    , specialArgs ? [ ({ inherit self inputs; }) ]
+    , specialArgs ? [{ inherit self inputs; }]
     }:
     inputs.home-manager.nixosModules.home-manager {
       home-manager = {
