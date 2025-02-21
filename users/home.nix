@@ -239,6 +239,11 @@ in
     git = {
       enable = true;
       lfs.enable = true;
+      extraConfig = {
+#        gpg.format = "ssh";
+#        "gpg \"ssh\"".program = "${lib.getExe' pkgs._1password-gui "op-ssh-sign"}";
+#        commit.gpgsign = true;
+      };
       aliases = {
         aa = "add --all";
         amend = "commit --amend";
