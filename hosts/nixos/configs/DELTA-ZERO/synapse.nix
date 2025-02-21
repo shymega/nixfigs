@@ -53,7 +53,7 @@ in
           double_puppet_server_map = { };
           login_shared_secret_map = { };
           permissions = {
-            "@shymega:rodriguez.org.uk" = "admin";
+            "@dom:rodriguez.org.uk" = "admin";
           };
           relay = {
             enabled = true;
@@ -109,7 +109,7 @@ in
 
         bridge = {
           permissions = {
-            "@shymega:rodriguez.org.uk" = "admin";
+            "@dom:rodriguez.org.uk" = "admin";
           };
 
         };
@@ -148,7 +148,7 @@ in
 
         bridge = {
           permissions = {
-            "@shymega:rodriguez.org.uk" = "admin";
+            "@dom:rodriguez.org.uk" = "admin";
           };
 
         };
@@ -185,7 +185,7 @@ in
 
           bridge = {
             permissions = {
-              "@shymega:rodriguez.org.uk" = "admin";
+              "@dom:rodriguez.org.uk" = "admin";
             };
           };
         };
@@ -220,7 +220,7 @@ in
 
           bridge = {
             permissions = {
-              "@shymega:rodriguez.org.uk" = "admin";
+              "@dom:rodriguez.org.uk" = "admin";
             };
           };
         };
@@ -263,7 +263,7 @@ in
 
           bridge = {
             permissions = {
-              "@shymega:rodriguez.org.uk" = "admin";
+              "@dom:rodriguez.org.uk" = "admin";
             };
 
           };
