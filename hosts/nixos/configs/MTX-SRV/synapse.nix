@@ -90,7 +90,7 @@ in
 
           hostname = "127.0.0.1";
           port = 29319;
-          address = "http://localhost:8008";
+          address = "http://mtx.shymega.org.uk";
         };
 
         bridge = {
@@ -144,7 +144,7 @@ in
         appservice = {
           hostname = "127.0.0.1";
           port = 29319;
-          address = "http://localhost:8008";
+          address = "http://mtx.shymega.org.uk";
         };
 
         # Require encryption by default to make the bridge more secure
@@ -217,7 +217,7 @@ in
 
           hostname = "127.0.0.1";
           port = 29319;
-          address = "http://localhost:8008";
+          address = "http://mtx.shymega.org.uk";
         };
 
         encryption = {
@@ -252,13 +252,8 @@ in
 
           appservice = {
             hostname = "127.0.0.1";
-            port = 29316;
-            address = "https://mtx.shymega.org.uk";
-          };
-          encryption = {
-            allow = false;
-            default = false;
-            require = false;
+            port = 29319;
+            address = "http://mtx.shymega.org.uk";
           };
           encryption = {
             allow = false;
@@ -291,12 +286,7 @@ in
           appservice = {
             hostname = "127.0.0.1";
             port = 29314;
-            address = "https://mtx.shymega.org.uk";
-          };
-          encryption = {
-            allow = false;
-            default = false;
-            require = false;
+            address = "http://mtx.shymega.org.uk";
           };
           encryption = {
             allow = false;
@@ -352,7 +342,7 @@ in
               displayname = "Messenger bridge bot";
               avatar = "mxc://maunium.net/ygtkteZsXnGJLJHRchUwYWak";
             };
-            address = "https://mtx.shymega.org.uk";
+            address = "http://mtx.shymega.org.uk";
           };
         };
       };
