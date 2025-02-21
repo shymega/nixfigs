@@ -134,13 +134,6 @@ in
 
           disable_existing_loggers: True
         '';
-        app_service_config_files = [
-          /var/lib/mautrix-meta-facebook/meta-registration.yaml
-          /var/lib/mautrix-meta-instagram/meta-registration.yaml
-          /var/lib/mautrix-meta-messenger/meta-registration.yaml
-          /var/lib/mautrix-slack/slack-registration.yaml
-          /var/lib/mautrix-whatsapp/whatsapp-registration.yaml
-        ];
       };
       extraConfigFiles = [
         config.age.secrets.synapse_secret.path
@@ -162,7 +155,7 @@ in
 
     mautrix-whatsapp = {
       enable = true;
-      registerToSynapse = false;
+      registerToSynapse = true;
 
       settings = {
         appservice = rec  {
@@ -213,7 +206,7 @@ in
 
     mautrix-slack = {
       enable = true;
-      registerToSynapse = false;
+      registerToSynapse = true;
 
       settings = {
         homeserver = {
@@ -290,7 +283,7 @@ in
     mautrix-meta.instances = {
       "facebook" = {
         enable = true;
-        registerToSynapse = false;
+        registerToSynapse = true;
 
         settings = {
           homeserver = {
@@ -325,7 +318,7 @@ in
 
       "instagram" = {
         enable = true;
-        registerToSynapse = false;
+        registerToSynapse = true;
 
         settings = {
           homeserver = {
@@ -360,7 +353,7 @@ in
 
       "messenger" = {
         enable = true;
-        registerToSynapse = false;
+        registerToSynapse = true;
 
         settings = {
           homeserver = {
