@@ -116,6 +116,8 @@ in
       gitkraken
       google-cloud-sdk
       isync-patched
+      shycode
+      shymacs
       weechatWithMyPlugins
       yubikey-manager-qt
       yubioath-flutter
