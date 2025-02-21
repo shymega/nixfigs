@@ -214,4 +214,5 @@
       };
     };
   };
+  environment.systemPackages = [ pkgs.matrix-synapse ];
 }
