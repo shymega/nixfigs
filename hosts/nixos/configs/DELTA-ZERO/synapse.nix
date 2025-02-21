@@ -10,6 +10,7 @@ in
     ../../../../modules/nixos/mautrix-slack.nix
     ../../../../modules/nixos/mautrix-whatsapp.nix
     ./postgres.nix
+    ./nginx.nix
     ./security.nix
     ./sliding-sync.nix
     ./synapse-main.nix
@@ -20,8 +21,8 @@ in
 
   services = {
     mautrix-whatsapp = {
-      enable = false;
-      registerToSynapse = false;
+      enable = true;
+      registerToSynapse = true;
 
       settings = {
         appservice = rec  {
@@ -70,8 +71,8 @@ in
     };
 
     mautrix-slack = {
-      enable = false;
-      registerToSynapse = false;
+      enable = true;
+      registerToSynapse = true;
 
       settings = {
         homeserver = {
@@ -147,8 +148,8 @@ in
 
     mautrix-meta.instances = {
       "facebook" = {
-        enable = false;
-        registerToSynapse = false;
+        enable = true;
+        registerToSynapse = true;
 
         settings = {
           homeserver = {
@@ -182,8 +183,8 @@ in
       };
 
       "instagram" = {
-        enable = false;
-        registerToSynapse = false;
+        enable = true;
+        registerToSynapse = true;
 
         settings = {
           homeserver = {
@@ -217,8 +218,8 @@ in
       };
 
       "messenger" = {
-        enable = false;
-        registerToSynapse = false;
+        enable = true;
+        registerToSynapse = true;
 
         settings = {
           homeserver = {

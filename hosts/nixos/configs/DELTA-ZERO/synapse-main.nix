@@ -35,7 +35,8 @@
     ];
 
     # https://matrix-org.github.io/synapse/latest/usage/configuration/config_documentation.html
-    settings = rec {
+    settings = {
+      server_name = "rodriguez.org.uk";
       report_stats = true;
       enable_metrics = true;
       enable_registration = true;
@@ -60,6 +61,7 @@
       redaction_retention_period = null;
       user_ips_max_age = null;
       allow_device_name_lookup_over_federation = true;
+
       experimental_features = {
         msc2815_enabled = true; # Redacted event content
         msc3026_enabled = true; # Busy presence
@@ -75,10 +77,7 @@
         # Remotely silence local notifications
         msc3890_enabled = true;
       };
-      server_name = "rodriguez.org.uk";
-      dynamic_thumbnails = true;
       suppress_key_server_warning = true;
-      public_baseurl = "https://${server_name}";
 
       listeners = [
         {
@@ -110,6 +109,7 @@
           ];
         }
       ];
+      dynamic_thumbnails = true;
       database = import ./db.nix {
         workerName = "main";
         dbGroup = "medium";
@@ -118,6 +118,12 @@
 
       ui_auth = {
         session_timeout = "1m";
+      };
+
+      login_via_existing_session = {
+        enabled = true;
+        require_ui_auth = true;
+        token_timeout = "1y";
       };
 
       user_directory = {
@@ -137,7 +143,7 @@
           path = "/run/matrix-synapse/main.sock";
         };
       };
-    } // import ./caches.nix // import ./ratelimits.nix;
+    } // import ./caches.nix;
   };
 
   services.redis = {
