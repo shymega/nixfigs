@@ -12,8 +12,10 @@ in
     inputs.jovian-nixos.nixosModules.default
   ];
 
-  networking.hostName = "TRINITY-LINUX";
-  networking.hostId = "e8a03c89";
+  networking = {
+    hostName = "TRINITY-JOVIAN";
+    hostId = "a200804d";
+  };
   boot = {
     supportedFilesystems = [
       "ntfs"
