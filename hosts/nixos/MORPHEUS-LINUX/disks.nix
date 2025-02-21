@@ -3,74 +3,88 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 {
-  boot.resumeDevice = "/dev/disk/by-label/NIXOS_SWAP";
+  boot.zfs.requestEncryptionCredentials = true;
 
   fileSystems = {
-    "/" =
-      {
-        device = "tank/local/root";
-        fsType = "zfs";
-      };
-    "/nix" =
-      {
-        device = "tank/local/nixos-store";
-        neededForBoot = true;
-        fsType = "zfs";
-      };
-    "/persist" =
-      {
-        device = "tank/safe/persist";
-        neededForBoot = true;
-        fsType = "zfs";
-      };
-    "/var" =
-      {
-        device = "tank/safe/var-store";
-        neededForBoot = true;
-        fsType = "zfs";
-      };
-    "/etc/nixos" =
-      {
-        device = "tank/safe/nixos-config";
-        neededForBoot = true;
-        fsType = "zfs";
-      };
-    "/boot/efi/NIXOS" = {
-      device = "/dev/disk/by-label/ESP_NIXOS"; # Use Refind on /dev/disk/by-label/ESP_PRIMARY
+  "/" =
+    { device = "zosroot/crypt/nixos/local/root";
+      fsType = "zfs";
+    };
+
+  "/data/Games" =
+    { device = "zdata/shared/games";
+      fsType = "zfs";
       neededForBoot = true;
-      fsType = "vfat";
     };
-    "/boot/efi/PRIMARY" = {
-      device = "/dev/disk/by-label/ESP_PRIMARY";
+
+  "/data/AI" =
+    { device = "zdata/shared/ai";
+      fsType = "zfs";
       neededForBoot = true;
-      options = [ "ro" "nofail" ];
+    };
+
+  "/data/VMs" =
+    { device = "zdata/shared/virtual";
+      fsType = "zfs";
+      neededForBoot = true;
+    };
+
+  "/home" =
+    { device = "zdata/shared/home-nixos";
+      fsType = "zfs";
+      neededForBoot = true;
+    };
+
+  "/etc/nixos" =
+    { device = "zosroot/crypt/nixos/safe/nixos-config";
+      fsType = "zfs";
+      neededForBoot = true;
+    };
+
+  "/nix" =
+    { device = "zosroot/crypt/nixos/local/nixos-store";
+      fsType = "zfs";
+      neededForBoot = true;
+    };
+
+  "/persist" =
+    { device = "zosroot/crypt/nixos/safe/persist";
+      fsType = "zfs";
+      neededForBoot = true;
+    };
+
+  "/var" =
+    { device = "zosroot/crypt/nixos/safe/var-store";
+      fsType = "zfs";
+      neededForBoot = true;
+    };
+
+  "/boot/efi/BAZZITE" =
+    { device = "/dev/disk/by-uuid/DF1C-99B2";
       fsType = "vfat";
+      neededForBoot = true;
+      options = [ "fmask=0022" "dmask=0022" "nofail" "ro" ];
     };
-    "/boot/efi/WINNT" = {
-      device = "/dev/disk/by-label/ESP_WINNT";
-      options = [ "ro" "nofail" ];
+
+  "/boot/efi/WINNT" =
+    { device = "/dev/disk/by-uuid/BE1F-022B";
       fsType = "vfat";
+      neededForBoot = false;
+      options = [ "fmask=0022" "dmask=0022" "nofail" "o" ];
     };
-    "/boot/efi/BAZZITE" = {
-      device = "/dev/disk/by-label/ESP_BAZZITE";
-      options = [ "ro" "nofail" ];
+
+  "/boot/efi/NIXOS" =
+    { device = "/dev/disk/by-uuid/BB8E-C98E";
       fsType = "vfat";
+      neededForBoot = true;
+      options = [ "fmask=0022" "dmask=0022" ];
     };
-    "/home" = {
-      device = "/dev/disk/by-label/HOME";
-      fsType = "xfs";
-      options = [ "defaults" "noatime" "ssd" ];
-    };
-    "/data/Games" = {
-      device = "/dev/disk/by-label/GAMES";
-      fsType = "btrfs";
-      options = [ "defaults" "noatime" "ssd" ];
-    };
-    "/data/VMs" = {
-      device = "/dev/disk/by-label/VIRSTOR";
-      fsType = "btrfs";
-      options = [ "defaults" "noatime" "ssd" ];
+
+  "/boot/efi/PRIMARY" =
+    { device = "/dev/disk/by-uuid/BBFD-77B8";
+      fsType = "vfat";
+      neededForBoot = false;
+      options = [ "fmask=0022" "dmask=0022" "nofail" ];
     };
   };
-  swapDevices = [{ device = "/dev/disk/by-label/NIXOS_SWAP"; }];
 }
