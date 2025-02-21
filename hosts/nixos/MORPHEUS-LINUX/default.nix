@@ -197,7 +197,6 @@ in
         LidSwitchIgnoreInhibited=no
       '';
     };
-
   };
 
   programs.steam = {
