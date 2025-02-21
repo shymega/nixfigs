@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 Various Authors <generic@example.com>
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
 {
   gc_min_interval = [
     "15m"
