@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ inputs, pkgs, config, ... }:
+{ inputs, pkgs, config, hostname, ... }:
 let
   inherit (pkgs.stdenvNoCC) isDarwin;
   homePrefix =
@@ -105,7 +105,10 @@ in
       zip
       zoxide
     ] ++ [
-      inputs.devenv.packages."${pkgs.system}".devenv
+      inputs.devenv.packages.${pkgs.system}.devenv
+    ] ++ (lib.optionals (hostname == "NEO-LINUX") (with pkgs.asfp; [
+      android-studio-for-platform
+    ])) ++ [
     ] ++ (with pkgs.unstable; [
       (vivaldi.override {
         proprietaryCodecs = true;
