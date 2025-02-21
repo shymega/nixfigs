@@ -56,6 +56,11 @@ in
             efi /EFI/SHELL/SHELLX64.EFI
             options -nointerrupt -nomap -noversion HD0f:EFI\BOOT\BOOTX64.EFI
           '';
+          "shell.conf" = ''
+            title
+            Shell.efi
+            efi /EFI/SHELL/SHELLX64.EFI
+          '';
         };
       };
       efi = {
@@ -91,7 +96,8 @@ in
       unitConfig.DefaultDependencies = "no";
       serviceConfig.Type = "oneshot";
       script = ''
-        zfs rollback -r zosroot/crypt/nixos/local/root@blank
+        zfs
+        rollback - r zosroot/crypt/nixos/local/root@blank
       '';
     };
   };
@@ -197,3 +203,5 @@ in
     ];
   };
 }
+
+
