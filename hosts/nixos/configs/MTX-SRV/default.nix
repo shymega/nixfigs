@@ -37,7 +37,7 @@
       tunnels = {
         "5da5dbaf-7519-466b-bc94-49ad85cbf05d" = {
           ingress = {
-            "ssh.mtx.shymega.org.uk" = "ssh://localhost:22";
+            "ssh.mtx.shymega.org.uk".service = "ssh://localhost:22";
           };
           credentialsFile = "/var/lib/cloudflared/5da5dbaf-7519-466b-bc94-49ad85cbf05d.json";
           default = "http_status:404";
@@ -146,7 +146,6 @@
     mutableUsers = false;
     users = {
       "root".password = "!"; # Lock account.
-      "matrix-synapse".extraGroups = [ "users" ];
       "dzrodriguez" = {
         isNormalUser = true;
         shell = pkgs.zsh;
