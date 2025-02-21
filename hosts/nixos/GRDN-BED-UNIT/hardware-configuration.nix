@@ -36,7 +36,7 @@
     "/" =
       {
         device = "/dev/disk/by-label/NIXOS_SD";
-        fsType = "xfs";
+        fsType = "ext4";
         options = [ "noatime" ];
       };
 
