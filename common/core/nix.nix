@@ -74,20 +74,20 @@ in
         ];
         sandbox = isForeignNix || isNixOS;
         substituters = [
-          "https://attic.mildlyfunctional.gay/nixbsd"
-          "https://beam.attic.rs/riscv"
-          "https://cache.dataaturservice.se/spectrum/"
-          "https://cache.nixos.org/"
-          "https://cache.saumon.network/proxmox-nixos"
-          "https://deckcheatz-nightlies.cachix.org"
-          "https://deploy-rs.cachix.org/"
-          "https://devenv.cachix.org"
-          "https://nix-community.cachix.org"
-          "https://nix-gaming.cachix.org"
-          "https://nix-on-droid.cachix.org"
-          "https://numtide.cachix.org"
-          "https://pre-commit-hooks.cachix.org"
-          "ssh://eu.nixbuild.net"
+          "https://attic.mildlyfunctional.gay/nixbsd?priority=50"
+          "https://beam.attic.rs/riscv?priority=50"
+          "https://cache.dataaturservice.se/spectrum/?priority=50"
+          "https://cache.nixos.org/?priority=10"
+          "https://cache.saumon.network/proxmox-nixos/?priority=50"
+          "https://deckcheatz-nightlies.cachix.org/?priority=10"
+          "https://deploy-rs.cachix.org/?priority=10"
+          "https://devenv.cachix.org/?priority=5"
+          "https://nix-community.cachix.org/?priority=5"
+          "https://nix-gaming.cachix.org/?priority=5"
+          "https://nix-on-droid.cachix.org/?priority=5"
+          "https://numtide.cachix.org/?priority=5"
+          "https://pre-commit-hooks.cachix.org/?priority=5"
+          "ssh://eu.nixbuild.net?priority=50"
         ];
         trusted-public-keys = [
           "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
@@ -111,7 +111,8 @@ in
           "repl-flake"
         ];
         connect-timeout = lib.mkForce 90;
-        http-connections = 0;
+        http-connections = 128;
+        max-substitution-jobs = 128;
         warn-dirty = false;
         cores = 0;
         max-jobs = "auto";
