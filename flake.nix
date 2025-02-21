@@ -81,7 +81,7 @@
       darwinModules = import ./modules/darwin;
       hmModules = homeModules;
       hosts = import ./hosts { inherit inputs self; };
-      nixosConfigurations = import ./hosts/nixos { inherit inputs self; } // inputs.nixfigs-work.nixosConfigurations;
+      nixosConfigurations = import ./hosts/nixos { inherit inputs self; }; # // inputs.nixfigs-work.nixosConfigurations;
       darwinConfigurations = import ./hosts/darwin { inherit inputs; };
       homeConfigurations = import ./homes { inherit inputs; };
       overlays = import ./overlays { inherit inputs; inherit (inputs.nixpkgs) lib; };
@@ -138,57 +138,57 @@
     nixpkgs-shymega.url = "github:shymega/nixpkgs/shymega/staging";
     nixfigs-secrets.url = "github:shymega/nixfigs-secrets";
     nixfigs-networks.url = "github:shymega/nixfigs-networks";
-    nixfigs-priv = {
-      url = "github:shymega/nixfigs-priv";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        nixpkgs-unstable.follows = "nixpkgs-unstable";
-        nixpkgs-master.follows = "nixpkgs-master";
-        nixpkgs-shymega.follows = "nixpkgs-shymega";
-        nixfigs-secrets.follows = "nixfigs-secrets";
-        nixfigs-networks.follows = "nixfigs-networks";
-        flake-registry.follows = "flake-registry";
-        auto-cpufreq.follows = "auto-cpufreq";
-        hardware.follows = "hardware";
-        nix-ld.follows = "nix-ld";
-        nix-alien.follows = "nix-alien";
-        nix-index-database.follows = "nix-index-database";
-        flake-compat.follows = "flake-compat";
-        flake-utils.follows = "flake-utils";
-        home-manager.follows = "home-manager";
-        lanzaboote.follows = "lanzaboote";
-        git-hooks.follows = "git-hooks";
-        treefmt-nix.follows = "treefmt-nix";
-        shypkgs-private.follows = "shypkgs-private";
-        shypkgs-public.follows = "shypkgs-public";
-      };
-    };
-
-    nixfigs-work = {
-      url = "github:shymega/nixfigs-work";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        nixpkgs-unstable.follows = "nixpkgs-unstable";
-        nixpkgs-master.follows = "nixpkgs-master";
-        nixpkgs-shymega.follows = "nixpkgs-shymega";
-        nixfigs-secrets.follows = "nixfigs-secrets";
-        nixfigs-networks.follows = "nixfigs-networks";
-        flake-registry.follows = "flake-registry";
-        auto-cpufreq.follows = "auto-cpufreq";
-        hardware.follows = "hardware";
-        nix-ld.follows = "nix-ld";
-        nix-alien.follows = "nix-alien";
-        nix-index-database.follows = "nix-index-database";
-        flake-compat.follows = "flake-compat";
-        flake-utils.follows = "flake-utils";
-        home-manager.follows = "home-manager";
-        lanzaboote.follows = "lanzaboote";
-        git-hooks.follows = "git-hooks";
-        treefmt-nix.follows = "treefmt-nix";
-        shypkgs-private.follows = "shypkgs-private";
-        shypkgs-public.follows = "shypkgs-public";
-      };
-    };
+#    nixfigs-priv = {
+#      url = "github:shymega/nixfigs-priv";
+#      inputs = {
+#        nixpkgs.follows = "nixpkgs";
+#        nixpkgs-unstable.follows = "nixpkgs-unstable";
+#        nixpkgs-master.follows = "nixpkgs-master";
+#        nixpkgs-shymega.follows = "nixpkgs-shymega";
+#        nixfigs-secrets.follows = "nixfigs-secrets";
+#        nixfigs-networks.follows = "nixfigs-networks";
+#        flake-registry.follows = "flake-registry";
+#        auto-cpufreq.follows = "auto-cpufreq";
+#        hardware.follows = "hardware";
+#        nix-ld.follows = "nix-ld";
+#        nix-alien.follows = "nix-alien";
+#        nix-index-database.follows = "nix-index-database";
+#        flake-compat.follows = "flake-compat";
+#        flake-utils.follows = "flake-utils";
+#        home-manager.follows = "home-manager";
+#        lanzaboote.follows = "lanzaboote";
+#        git-hooks.follows = "git-hooks";
+#        treefmt-nix.follows = "treefmt-nix";
+#        shypkgs-private.follows = "shypkgs-private";
+#        shypkgs-public.follows = "shypkgs-public";
+#      };
+#    };
+#
+#    nixfigs-work = {
+#      url = "github:shymega/nixfigs-work";
+#      inputs = {
+#        nixpkgs.follows = "nixpkgs";
+#        nixpkgs-unstable.follows = "nixpkgs-unstable";
+#        nixpkgs-master.follows = "nixpkgs-master";
+#        nixpkgs-shymega.follows = "nixpkgs-shymega";
+#        nixfigs-secrets.follows = "nixfigs-secrets";
+#        nixfigs-networks.follows = "nixfigs-networks";
+#        flake-registry.follows = "flake-registry";
+#        auto-cpufreq.follows = "auto-cpufreq";
+#        hardware.follows = "hardware";
+#        nix-ld.follows = "nix-ld";
+#        nix-alien.follows = "nix-alien";
+#        nix-index-database.follows = "nix-index-database";
+#        flake-compat.follows = "flake-compat";
+#        flake-utils.follows = "flake-utils";
+#        home-manager.follows = "home-manager";
+#        lanzaboote.follows = "lanzaboote";
+#        git-hooks.follows = "git-hooks";
+#        treefmt-nix.follows = "treefmt-nix";
+#        shypkgs-private.follows = "shypkgs-private";
+#        shypkgs-public.follows = "shypkgs-public";
+#      };
+#    };
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     flake-registry = {
       url = "github:NixOS/flake-registry";
