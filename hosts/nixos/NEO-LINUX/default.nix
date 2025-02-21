@@ -151,7 +151,7 @@ in
         ];
     };
     remotePlay.openFirewall = true;
-    dedicatedServer.openFirewall = false;
+    dedicatedServer.openFirewall = true;
     localNetworkGameTransfers.openFirewall = true;
   };
 }
