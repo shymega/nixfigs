@@ -56,6 +56,7 @@ in
       enable = true;
       enable32Bit = true;
       extraPackages = with pkgs; [
+        amdvlk
         # VA-API and VDPAU
         vaapiVdpau
 
@@ -63,6 +64,7 @@ in
         rocmPackages.clr
         rocmPackages.clr.icd
       ];
+      extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
     };
     amdgpu = {
       amdvlk = {
