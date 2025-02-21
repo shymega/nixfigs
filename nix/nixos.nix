@@ -79,11 +79,10 @@ in
 
   ## End Raspberry Pi - desk ##
 
-  ### End Desktops ###
-
-  ### Portable Machines ###
+  ### UMPC devices ###
 
   ## UMPC (GPD Pocket 3 (i7)) ##
+
   TRINITY-LINUX = mkNixosConfig {
     hostname = "TRINITY-LINUX";
     system = "x86_64-linux";
@@ -100,6 +99,12 @@ in
   };
 
   ## End UMPC (GPD P3) ##
+
+  ## Gaming Handheld (GPD Win Max 2 (2023)) ##
+  ## TO BE ADDED. ##
+  ## End Gaming Handheld (GPD Win Max 2 (2023) ##
+
+  ### End UMPC devices ###
 
   # Laptop (ThinkPad X270) ##
 
@@ -120,13 +125,7 @@ in
 
   # End Laptop (ThinkPad X270) ##
 
-  ### End Portable Machines ###
-
   ### Handhelds ###
-
-  ## Gaming Handheld (GPD Win Max 2 (2024)) ##
-  ## TO BE ADDED. ##
-  ## End Gaming Handheld (GPD Win Max 2 (2024) ##
 
   ## Gaming Handheld (Steam Deck (OLED/1TB)) ##
   ## TO BE ADDED. ##
