@@ -35,12 +35,12 @@ in
       bc
       brightnessctl
       cachix
-      cachix
+      cloudflared
       cocogitto
-      comma
       curl
       darkman
       dateutils
+      devenv
       dex
       diesel-cli
       difftastic
@@ -106,8 +106,6 @@ in
       zellij
       zip
       zoxide
-    ] ++ [
-      inputs.devenv.packages.${pkgs.system}.devenv
     ] ++ (lib.optionals (hostname == "NEO-LINUX") [
       pkgs.asfp.android-studio-for-platform
       pkgs.android-studio
@@ -188,6 +186,8 @@ in
   };
 
   programs = {
+    nix-index-database.comma.enable = true;
+    nix-index.enable = true;
     rbw.enable = true;
     neovim = {
       enable = true;
