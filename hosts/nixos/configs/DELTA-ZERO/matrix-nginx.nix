@@ -45,7 +45,7 @@
       proxy_http_version 1.1;
       proxy_set_header Access-Control-Allow-Origin *;
     '';
-    priority = 9000;
+    priority = 1;
   };
 
 }
