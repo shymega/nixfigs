@@ -6,18 +6,18 @@
 {
   security.pam = {
     services = {
-      login.u2fAuth = true;
+      login.u2fAuth = false;
       sudo.u2fAuth = lib.mkForce false;
     };
 
     u2f = {
-      enable = true;
-      cue = true;
+      enable = false;
+      cue = false;
       control = "sufficient";
     };
   };
 
-  services.pcscd.enable = true;
+  services.pcscd.enable = false;
 
   services.udev = {
     packages = with pkgs; [ yubikey-personalization solo2-cli ];
