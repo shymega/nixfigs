@@ -353,22 +353,20 @@ in
         };
       };
       services = {
-        polkit-auth-agent = {
-          Unit = {
-            Description = "Sway Polkit authentication agent";
-            Documentation = "https://gitlab.freedesktop.org/polkit/polkit/";
-            After = [ "graphical-session-pre.target" ];
-            PartOf = [ "graphical-session.target" ];
-          };
-
-          Service = {
+        polkit-gnome-authentication-agent-1 = {
+          description = "polkit-gnome-authentication-agent-1";
+          wantedBy = [ "graphical-session.target" ];
+          wants = [ "graphical-session.target" ];
+          after = [ "graphical-session.target" ];
+          serviceConfig = {
+            Type = "simple";
             ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-            Restart = "always";
-            BusName = "org.freedesktop.PolicyKit1.Authority";
+            Restart = "on-failure";
+            RestartSec = 1;
+            TimeoutStopSec = 10;
           };
-
-          Install.WantedBy = [ "graphical-session.target" ];
         };
+
         atuin-daemon = {
           Unit = atuinDaemonConfig // { Requires = [ "atuin-daemon.socket" ]; };
           Service = {
