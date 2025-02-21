@@ -461,23 +461,30 @@ in
 
   systemd.user =
     let
-      atuinDataDir = "${homeDirectory}/.local/share/atuin";
+      atuinDataDir = "${config.xdg.dataHome}/atuin";
       atuinSocket = "${atuinDataDir}/atuin.sock";
-      atuinDaemonConfig = {
-        Description = "Atuin - Magical Shell History Daemon";
+      atuinCommonConfig = {
         ConditionPathIsDirectory = atuinDataDir;
-        ConditionPathExists = "${homeDirectory}/.config/atuin/config.toml";
+        ConditionPathExists = "${config.xdg.configHome}/atuin/config.toml";
+      };
+      taskwCommonConfig = {
+        ConditionPathExists = "${config.xdg.configHome}/task/taskrc";
+        ConditionPathIsDirectory = "${config.xdg.dataHome}/task";
       };
     in
     {
       timers = {
         atuin-sync = {
-          Unit.Description = "Atuin auto sync";
+          Unit = atuinCommonConfig // {
+            Description = "Atuin - Sync Service Timer";
+          };
           Timer.OnCalendar = "*:0/30";
           Install.WantedBy = [ "timers.target" ];
         };
         task-sync = {
-          Unit.Description = "Taskwarrior auto sync";
+          Unit = taskwCommonConfig // {
+            Description = "Taskwarrior auto sync timer";
+          };
           Timer.OnCalendar = "*:0/30";
           Install.WantedBy = [ "timers.target" ];
         };
@@ -491,7 +498,9 @@ in
       };
       tmpfiles.rules = [ "L %t/discord-ipc-0 - - - - app/com.discordapp.Discord/discord-ipc-0" ];
       sockets.atuin-daemon = {
-        Unit = atuinDaemonConfig;
+        Unit = atuinCommonConfig // {
+          Description = "Atuin - Magical Shell History Daemon Socket";
+        };
         Install.WantedBy = [ "default.target" ];
         Socket = {
           ListenStream = atuinSocket;
@@ -515,14 +524,18 @@ in
           };
         };
         atuin-sync = {
-          Unit.Description = "Atuin auto sync";
+          Unit = atuinCommonConfig // {
+            Description = "Atuin - Sync Service";
+          };
           Service = {
             Type = "oneshot";
             ExecStart = "${pkgs.unstable.atuin}/bin/atuin sync";
           };
         };
         task-sync = {
-          Unit.Description = "Taskwarrior auto sync";
+          Unit = taskwCommonConfig // {
+            Description = "Taskwarrior auto sync service";
+          };
           Service = {
             Type = "oneshot";
             ExecStartPre = "${pkgs.taskwarrior}/bin/task";
@@ -531,8 +544,10 @@ in
           };
         };
         atuin-daemon = {
-          Unit = atuinDaemonConfig // {
+          Unit = atuinCommonConfig // {
             Requires = [ "atuin-daemon.socket" ];
+            Description = "Atuin - Magical Shell History Daemon";
+
           };
           Service = {
             ExecStart = "${pkgs.unstable.atuin}/bin/atuin daemon";
