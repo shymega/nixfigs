@@ -32,6 +32,7 @@ in
           locations = {
             "/_matrix".proxyPass = "http://127.0.0.1:8008";
             "/_synapse".proxyPass = "http://127.0.0.1:8008";
+            "~ ^/(client/|_matrix/client/unstable/org.matrix.msc3575/sync)".proxyPass = "http://127.0.0.1:8009";
             "/".extraConfig = ''
               return 404;
             '';
@@ -108,6 +109,11 @@ in
         ./tweaks.yaml
       ];
     };
+
+  matrix-sliding-sync.enable = true;
+  matrix-sliding-sync.settings.SYNCV3_SERVER = "https://mtx.shymega.org.uk";
+  matrix-sliding-sync.settings.SYNCV3_DB = "postgresql:///matrix@matrix-synapse-syncv3?host=/run/postgresql";
+  matrix-sliding-sync.environmentFile = config.age.secrets."matrix-sliding-sync-env".path;
 
     mautrix-whatsapp = {
       enable = true;
@@ -316,7 +322,15 @@ in
             port = 29316;
             address = "http://localhost:${toString port}";
             hostname = "[::]";
+
+            id = "messenger";
+            bot = {
+              username = "messengerbot";
+              displayname = "Messenger bridge bot";
+              avatar = "mxc://maunium.net/ygtkteZsXnGJLJHRchUwYWak";
+            };
           };
+
           # Require encryption by default to make the bridge more secure
           encryption = {
             allow = true;
@@ -333,14 +347,6 @@ in
 
           meta.mode = "messenger";
           homeserver.domain = "mtx.shymega.org.uk";
-          appservice = {
-            id = "messenger";
-            bot = {
-              username = "messengerbot";
-              displayname = "Messenger bridge bot";
-              avatar = "mxc://maunium.net/ygtkteZsXnGJLJHRchUwYWak";
-            };
-          };
         };
       };
     };
