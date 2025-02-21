@@ -30,7 +30,7 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
     nixpkgs-shymega.url = "github:shymega/nixpkgs/master";
-    nixfigs-priv.url = "github:shymega/nixfigs-priv";
+    nixfigs-priv.url = "github:shymega/nixfigs-priv/main";
     nur.url = "github:nix-community/NUR";
     devenv.url = "github:cachix/devenv/latest";
     base16-schemes = {
