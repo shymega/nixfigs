@@ -110,10 +110,10 @@ in
       ];
     };
 
-  matrix-sliding-sync.enable = true;
-  matrix-sliding-sync.settings.SYNCV3_SERVER = "https://mtx.shymega.org.uk";
-  matrix-sliding-sync.settings.SYNCV3_DB = "postgresql:///matrix@matrix-synapse-syncv3?host=/run/postgresql";
-  matrix-sliding-sync.environmentFile = config.age.secrets."matrix-sliding-sync-env".path;
+    matrix-sliding-sync.enable = true;
+    matrix-sliding-sync.settings.SYNCV3_SERVER = "https://mtx.shymega.org.uk";
+    matrix-sliding-sync.settings.SYNCV3_DB = "postgresql:///matrix@matrix-synapse-syncv3?host=/run/postgresql";
+    matrix-sliding-sync.environmentFile = config.age.secrets."matrix-sliding-sync-env".path;
 
     mautrix-whatsapp = {
       enable = true;
