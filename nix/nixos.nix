@@ -123,7 +123,7 @@ in
 
   GRDN-BED-UNIT = mkNixosConfig {
     hostname = "GRDN-BED-UNIT";
-    system = "aaarch64-linux";
+    system = "aarch64-linux";
     extraModules = [
       ../hosts/nixos/configuration.nix
     ];
