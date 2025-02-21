@@ -10,10 +10,9 @@ let
     , nixpkgs ? inputs.nixpkgs
     , baseModules ? [
         ../common/android/mobile-nixos
-        ../common/core
       ]
     , mobileNixosModules ? [ ]
-    , homeModules ? [ ]
+    , homeModules ? [ mkHomeManagerConfig {} ]
     , extraModules ? [ ]
     }: inputs.nixpkgs.lib.nixosSystem {
       pkgs = import nixpkgs {
@@ -39,6 +38,23 @@ let
         (../hosts/android/mobile-nixos + "/${hostname}")
       ] ++ baseModules ++ homeModules ++ extraModules;
       extraSpecialArgs = { inherit self inputs nixpkgs; };
+    };
+
+  mkHomeManagerConfig =
+    { usePkgs ? true
+    , extraModules ? [
+      ]
+    , specialArgs ? [ ({ inherit self inputs; }) ]
+    }:
+    inputs.home-manager.nixosModules.home-manager {
+      home-manager = {
+        useGlobalPkgs = usePkgs;
+        useUserPackages = usePkgs;
+        sharedModules = [
+          inputs.agenix.homeManagerModules.default
+        ] ++ extraModules;
+        extraSpecialArgs = specialArgs;
+      };
     };
 in
 { }
