@@ -1,32 +1,32 @@
-{ inputs, pkgs, config, ... }: {
+{ pkgs, config, ... }: {
   imports = [ ./network-targets.nix ./programs/rofi.nix ];
 
   nixpkgs.config.allowUnfreePredicate = _: true;
+  nixpkgs.config.allowBrokenPredicate = _: true;
+  nixpkgs.config.allowInsecurePredicate = _: true;
 
   home = {
     username = "dzrodriguez";
-    homeDirectory = "/home/${config.home.username}";
+    homeDirectory =
+      if pkgs.stdenv.isDarwin then
+        "/Users/${config.home.username}"
+      else
+        "/home/${config.home.username}";
     enableNixpkgsReleaseCheck = true;
     stateVersion = "23.05";
     packages = with pkgs.unstable; [
-      ack
-      aerc
-      alot
       android-tools
       asciinema
       aspell
       aspellDicts.en
       aspellDicts.en-computers
-      aspellDicts.en-science
       atuin
-#      aws-sam-cli
-#      awscli2
       bat
       bc
       brightnessctl
       cocogitto
       comma
-      coreutils
+      coreutils-full
       curl
       darkman
       dateutils
@@ -39,16 +39,12 @@
       exercism
       expect
       eza
-      file
-      freerdp
+      firefox
       fuse
       fzf
-      genact
       gh
       gnumake
-      goimapnotify
       google-chrome
-#      google-cloud-sdk
       gpicview
       hercules
       httpie
@@ -84,9 +80,12 @@
       podman-compose
       poppler_utils
       pre-commit
+      protontricks
+      protonup-ng
       python3Full
-      python3Packages.virtualenv
       python3Packages.bugwarrior
+      python3Packages.pip
+      python3Packages.virtualenv
       q
       ranger
       rclone
@@ -95,19 +94,18 @@
       rustup
       sbcl
       scrcpy
-      silver-searcher
       speedtest-go
       starship
       statix
       step-cli
       stow
       texlive.combined.scheme-full
-      thunderbird
       timewarrior
       tmuxp
       unrar
       unzip
       vagrant
+      virt-manager
       w3m
       weechatWithMyPlugins
       wget
@@ -129,8 +127,11 @@
       jetbrains.rust-rover
       jetbrains.webstorm
       steam-run
-    ])) ++ (with pkgs.master; [
-      virt-manager
+    ])) ++ (with pkgs; [
+     aws-sam-cli
+     awscli2
+     azure-cli
+     google-cloud-sdk
     ]);
   };
 
