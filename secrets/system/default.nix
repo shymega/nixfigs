@@ -43,7 +43,8 @@
       };
       synapse_secret = {
         file = ./synapse_secret.age;
-        group = "matrix-synapse";
+        owner = "224";
+        group = "224";
         mode = "0640";
       };
       cloudflare_dns_token = {
