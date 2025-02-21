@@ -1,16 +1,22 @@
-{ config, ... }:
+{ pkgs, inputs, config, ... }:
 let
   fqdn = "${config.networking.hostName}.${config.networking.domain}";
   baseUrl = "https://${fqdn}";
 in
 {
-  disabledModules = [ "services/matrix/mautrix-whatsapp.nix" ];
+  disabledModules = [ "services/matrix/synapse.nix" "services/matrix/mautrix-whatsapp.nix" ];
   imports = [
     ../../../../modules/nixos/mautrix-slack.nix
     ../../../../modules/nixos/mautrix-whatsapp.nix
     ./nginx.nix
     ./security.nix
     ./postgres.nix
+    "${inputs.nixpkgs-master}/nixos/modules/services/matrix/synapse.nix"
+  ];
+  nixpkgs.overlays = [
+    (_final: _prev: {
+      inherit (inputs.nixpkgs-master.legacyPackages.${pkgs.stdenv.hostPlatform.system}) matrix-synapse-unwrapped;
+    })
   ];
 
   users.users."matrix-synapse".extraGroups = [ "users" ];
@@ -18,16 +24,46 @@ in
     matrix-synapse = {
       enable = true;
       settings = {
-        report_stats = false;
-        enable_metrics = false;
-        enable_registration = false;
+        report_stats = true;
+        enable_metrics = true;
+        enable_registration = true;
         url_preview_enabled = true;
         registration_requires_token = true;
         enable_search = true;
         allow_public_rooms_over_federation = true;
-        redaction_retention_period = 1;
-        max_upload_size = "200M";
+        max_upload_size = "20M";
+        database.name = "psycopg2";
+        allow_public_rooms_without_auth = true;
+        federation = {
+          client_timeout = "60s";
+          max_short_retries = 12;
+          max_short_retry_delay = "5s";
+          max_long_retries = 5;
+          max_long_retry_delay = "30s";
+        };
+        presence = {
+          enable = true;
+          update_interval = 60;
+        };
+        require_membership_for_aliases = false;
+        redaction_retention_period = null;
+        user_ips_max_age = null;
+        allow_device_name_lookup_over_federation = true;
+
+        database.args = {
+          user = "matrix";
+          password = "matrix4me";
+          port = 5432;
+          database = "matrix_synapse";
+          sslmode = "disable";
+          host = "localhost";
+          cp_min = 5;
+          cp_max = 10;
+        };
         experimental_features = {
+          msc2815_enabled = true; # Redacted event content
+          msc3026_enabled = true; # Busy presence
+          msc3916_authenticated_media_enabled = true; # Authenticated media
           # Room summary api
           msc3266_enabled = true;
           # Removing account data
@@ -38,18 +74,6 @@ in
           msc3881_enabled = true;
           # Remotely silence local notifications
           msc3890_enabled = true;
-        };
-        database.name = "psycopg2";
-        allow_public_rooms_without_auth = false;
-        database.args = {
-          user = "matrix";
-          password = "matrix4me";
-          port = 5432;
-          database = "matrix_synapse";
-          sslmode = "disable";
-          host = "localhost";
-          cp_min = 5;
-          cp_max = 10;
         };
         server_name = fqdn;
         dynamic_thumbnails = true;
@@ -64,7 +88,7 @@ in
             x_forwarded = true;
             resources = [
               {
-                compress = true;
+                compress = false;
                 names = [ "client" "federation" ];
               }
             ];
@@ -73,31 +97,75 @@ in
             port = 9001;
             type = "metrics";
             tls = false;
+            x_forwarded = true;
             bind_addresses = [ "127.0.0.1" ];
             resources = [
               {
+                compress = false;
                 names = [ "metrics" ];
               }
             ];
           }
         ];
+        logConfig = ''
+          version: 1
+
+          # In systemd's journal, loglevel is implicitly stored, so let's omit it
+          # from the message text.
+          formatters:
+              journal_fmt:
+                  format: '%(name)s: [%(request)s] %(message)s'
+
+          filters:
+              context:
+                  (): synapse.util.logcontext.LoggingContextFilter
+                  request: ""
+
+          handlers:
+              journal:
+                  class: systemd.journal.JournalHandler
+                  formatter: journal_fmt
+                  filters: [context]
+                  SYSLOG_IDENTIFIER: synapse
+
+          root:
+              level: DEBUG
+              handlers: [journal]
+
+          disable_existing_loggers: True
+        '';
+        app_service_config_files = [
+          /var/lib/mautrix-meta-facebook/meta-registration.yaml
+          /var/lib/mautrix-meta-instagram/meta-registration.yaml
+          /var/lib/mautrix-meta-messenger/meta-registration.yaml
+          /var/lib/mautrix-slack/slack-registration.yaml
+          /var/lib/mautrix-whatsapp/whatsapp-registration.yaml
+        ];
       };
       extraConfigFiles = [
         config.age.secrets.synapse_secret.path
-        ./tweaks.yaml
+        ./synapse/tweaks.yaml
+        ./synapse/logging.yaml
       ];
     };
 
-    matrix-sliding-sync.enable = true;
-    matrix-sliding-sync.settings.SYNCV3_SERVER = "http://localhost:8008";
-    matrix-sliding-sync.createDatabase = false;
-    matrix-sliding-sync.settings.SYNCV3_DB = "host=localhost port=5432 dbname=matrix_synapse_syncv3 user=matrix password=matrix4me sslmode=disable connect_timeout=10";
-    matrix-sliding-sync.settings.SYNCV3_BINDADDR = "127.0.0.1:8009";
-    matrix-sliding-sync.environmentFile = config.age.secrets."matrix-sliding-sync-env".path;
+    matrix-sliding-sync = {
+      enable = true;
+      package = pkgs.unstable.matrix-sliding-sync;
+      createDatabase = true;
+      environmentFile = config.age.secrets.matrix-sliding-sync-env.path;
+      settings = {
+        SYNCV3_SERVER = "http://localhost:8008";
+        SYNCV3_DB = "host=localhost port=5432 dbname=matrix_syncv3 user=matrix password=matrix4me sslmode=disable connect_timeout=10";
+        SYNCV3_LOG_LEVEL = "trace";
+        SYNCV3_BINDADDR = "127.0.0.1:8009";
+      };
+    };
 
     mautrix-whatsapp = {
       enable = true;
-      registerToSynapse = true;
+      registerToSynapse = false;
+
       settings = {
         appservice = rec  {
           as_token = "";
@@ -106,11 +174,11 @@ in
             username = "whatsappbot";
           };
           database = {
-            type = "sqlite3";
-            uri = "/var/lib/mautrix-whatsapp/mautrix-whatsapp.db";
+            type = "postgres";
+            uri = "postgres://matrix:matrix4me@localhost/mautrix_whatsapp?sslmode=disable";
           };
           address = "http://localhost:${toString port}";
-          hostname = "[::]";
+          hostname = "127.0.0.1";
           hs_token = "";
           id = "whatsapp";
           port = 29318;
@@ -133,7 +201,7 @@ in
           domain = "${fqdn}";
         };
         logging = {
-          min_level = "info";
+          min_level = "debug";
           writers = [
             {
               format = "pretty-colored";
@@ -147,7 +215,8 @@ in
 
     mautrix-slack = {
       enable = true;
-      registerToSynapse = true;
+      registerToSynapse = false;
+
       settings = {
         homeserver = {
           software = "standard";
@@ -155,21 +224,21 @@ in
           address = "https://mtx.shymega.org.uk";
         };
         database = {
-          type = "sqlite3-fk-wal";
-          uri = "file:/var/lib/mautrix-slack/data.db?_txlock=immediate";
+          type = "postgres";
+          uri = "postgres://matrix:matrix4me@localhost/mautrix_slack?sslmode=disable";
         };
 
         appservice = rec {
           port = 29312;
           address = "http://localhost:${toString port}";
-          hostname = "[::]";
+          hostname = "127.0.0.1";
         };
 
         # Require encryption by default to make the bridge more secure
         encryption = {
           allow = true;
-          default = false;
-          require = false;
+          default = true;
+          require = true;
         };
 
         bridge = {
@@ -184,6 +253,7 @@ in
 
     mautrix-telegram = {
       enable = false;
+
       settings = {
         homeserver = {
           software = "standard";
@@ -191,21 +261,22 @@ in
           address = "https://mtx.shymega.org.uk";
         };
         database = {
-          type = "sqlite3-fk-wal";
-          uri = "file:/var/lib/mautrix-telegram/data.db?_txlock=immediate";
+          type = "postgres";
+          uri = "postgres://matrix:matrix4me@localhost/mautrix_telegram?sslmode=disable";
+
         };
 
 
         appservice = rec {
           port = 29313;
           address = "http://localhost:${toString port}";
-          hostname = "[::]";
+          hostname = "127.0.0.1";
         };
 
         encryption = {
           allow = true;
-          default = false;
-          require = false;
+          default = true;
+          require = true;
 
         };
 
@@ -220,7 +291,9 @@ in
 
     mautrix-meta.instances = {
       "facebook" = {
-        enable = false;
+        enable = true;
+        registerToSynapse = false;
+
         settings = {
           homeserver = {
             software = "standard";
@@ -228,20 +301,20 @@ in
             address = "https://mtx.shymega.org.uk";
           };
           database = {
-            type = "sqlite3-fk-wal";
-            uri = "file:/var/lib/mautrix-facebook/data.db?_txlock=immediate";
+            type = "postgres";
+            uri = "postgres://matrix:matrix4me@localhost/mautrix_meta_facebook?sslmode=disable";
           };
 
           appservice = rec {
             port = 29314;
             address = "http://localhost:${toString port}";
-            hostname = "[::]";
+            hostname = "127.0.0.1";
 
           };
           encryption = {
             allow = true;
-            default = false;
-            require = false;
+            default = true;
+            require = true;
           };
 
           bridge = {
@@ -253,7 +326,8 @@ in
       };
 
       "instagram" = {
-        enable = false;
+        enable = true;
+        registerToSynapse = false;
 
         settings = {
           homeserver = {
@@ -262,19 +336,20 @@ in
             domain = "${fqdn}";
           };
           database = {
-            type = "sqlite3-fk-wal";
-            uri = "file:/var/lib/mautrix-instagram/data.db?_txlock=immediate";
+            type = "postgres";
+            uri = "postgres://matrix:matrix4me@localhost/mautrix_meta_instagram?sslmode=disable";
+
           };
 
           appservice = rec {
             port = 29314;
             address = "http://localhost:${toString port}";
-            hostname = "[::]";
+            hostname = "127.0.0.1";
           };
           encryption = {
             allow = true;
-            default = false;
-            require = false;
+            default = true;
+            require = true;
           };
 
           bridge = {
@@ -286,7 +361,8 @@ in
       };
 
       "messenger" = {
-        enable = false;
+        enable = true;
+        registerToSynapse = false;
 
         settings = {
           homeserver = {
@@ -294,14 +370,14 @@ in
             address = "https://mtx.shymega.org.uk";
           };
           database = {
-            type = "sqlite3-fk-wal";
-            uri = "file:/var/lib/mautrix-messenger/data.db?_txlock=immediate";
+            type = "postgres";
+            uri = "postgres://matrix:matrix4me@localhost/mautrix_meta_messenger?sslmode=disable";
           };
 
           appservice = rec {
             port = 29316;
             address = "http://localhost:${toString port}";
-            hostname = "[::]";
+            hostname = "127.0.0.1";
 
             id = "messenger";
             bot = {
@@ -314,8 +390,8 @@ in
           # Require encryption by default to make the bridge more secure
           encryption = {
             allow = true;
-            default = false;
-            require = false;
+            default = true;
+            require = true;
           };
 
           bridge = {
