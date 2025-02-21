@@ -86,7 +86,9 @@ in
       pre-commit
       public-inbox
       python3Full
+      python3Packages.pip
       python3Packages.pipx
+      python3Packages.tkinter
       python3Packages.virtualenv
       q
       qemu_full
@@ -117,9 +119,9 @@ in
       zellij
       zip
       zoxide
-    ] ++ (pkgs.lib.optionals (hostname == "NEO-LINUX") [
-      pkgs.unstable.android-studio-for-platform
+    ] ++ (with pkgs.lib; optionals (hostname == "NEO-LINUX") [
       pkgs.android-studio
+      pkgs.unstable.android-studio-for-platform
     ]) ++ (with pkgs; [
       aws-sam-cli
       awscli2
@@ -130,7 +132,7 @@ in
       weechatWithMyPlugins
       yubikey-manager-qt
       yubioath-flutter
-    ]) ++ (pkgs.lib.optionals pkgs.stdenv.isx86_64 (with pkgs.unstable.jetbrains; [
+    ]) ++ (with pkgs; lib.optionals stdenv.isx86_64 (with pkgs.unstable.jetbrains; [
       clion
       datagrip
       gateway
@@ -149,7 +151,7 @@ in
     keybase.enable = true;
     gpg-agent = {
       enable = true;
-      pinentryPackage = pkgs.lib.mkForce pkgs.pinentry-gtk2;
+      pinentryPackage = with pkgs; lib.mkForce pinentry-gtk2;
       enableScDaemon = true;
       enableSshSupport = false;
       enableExtraSocket = true;
