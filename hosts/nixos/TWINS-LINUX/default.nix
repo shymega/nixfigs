@@ -11,7 +11,9 @@
   networking.hostId = "b0798d56";
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_xanmod_latest;
+    supportedFilesystems = [ "ntfs" "zfs" ];
+
+    kernelPackages = pkgs.linuxPackages_xanmod_stable;
     extraModulePackages = with config.boot.kernelPackages; [ zfs ];
 
     zfs.devNodes = "/dev/TWINS-LINUX/ROOT";
