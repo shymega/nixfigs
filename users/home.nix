@@ -223,15 +223,15 @@ in
         # Enable a plugin (here grc for colorized command output) from nixpkgs
         {
           name = "grc";
-          src = pkgs.fishPlugins.grc.src;
+          inherit (pkgs.fishPlugins.grc) src;
         }
         {
           name = "done";
-          src = pkgs.fishPlugins.done.src;
+          inherit (pkgs.fishPlugins.done) src;
         }
         {
           name = "sponge";
-          src = pkgs.fishPlugins.sponge.src;
+          inherit (pkgs.fishPlugins.sponge) src;
         }
       ];
     };
