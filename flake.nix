@@ -175,6 +175,7 @@
             allowUnsupportedSystem = false;
           };
         });
+    nixpkgs = pkgs;
     in
     {
       overlays = import ./nix/overlay.nix { inherit self inputs lib; };
@@ -198,5 +199,8 @@
       nixOnDroidConfigurations = import ./nix/nix-on-droid.nix { inherit self inputs pkgs; };
       darwinConfigurations = import ./nix/darwin.nix { inherit self inputs pkgs; };
       secrets = import ./secrets;
+      common-core = import ./common/core { inherit self inputs nixpkgs; };
+      common-nixos = import ./common/nixos { inherit self inputs nixpkgs; };
+
     };
 }
