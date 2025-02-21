@@ -109,6 +109,7 @@ in
   services.ollama = {
     enable = true;
     acceleration = "rocm";
+    sandbox = false;
     models = "/data/AI/LLMs/Ollama/Models/";
     writablePaths = [ "/data/AI/LLMs/Ollama/Models/" ];
     environmentVariables = {
