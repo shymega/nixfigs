@@ -12,7 +12,7 @@ inputs.git-hooks.lib.${system}.run {
   hooks = {
     deadnix.enable = true;
     statix.enable = true;
-    statix.settings.ignore = [ "flake.nix" "*-compose.nix" ];
+    statix.settings.ignore = [ "flake.nix" "*-compose.nix" "mautrix-whatsapp.nix" "mautrix-slack.nix" ];
     nixpkgs-fmt.enable = true;
     prettier.enable = true;
     yamlfmt.enable = true;
