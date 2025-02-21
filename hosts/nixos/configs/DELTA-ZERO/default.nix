@@ -31,11 +31,11 @@
       enable = true;
       package = pkgs.unstable.cloudflared;
       tunnels = {
-        "bb7792f6-622f-41ca-9f07-fa0fb48beb19" = {
+        "944fbebc-5b7e-4702-b6e9-d759a8a7709a" = {
           ingress = {
             "ssh.delta-zero.rodriguez.org.uk" = "ssh://localhost:22";
           };
-          credentialsFile = "/var/lib/cloudflared/bb7792f6-622f-41ca-9f07-fa0fb48beb19.json";
+          credentialsFile = "/var/lib/cloudflared/944fbebc-5b7e-4702-b6e9-d759a8a7709a.json";
           default = "http_status:404";
         };
       };
@@ -157,9 +157,9 @@
     enable = true;
     user = "dzrodriguez";
     group = "users";
-    mailLocation = "maildir:${config.users.users."dzrodriguez".home}/.mail/%d/%u/:LAYOUT=fs:INBOX=${
-      config.users.users."dzrodriguez".home
-    }/.mail/%d/%u/INBOX";
+    mailLocation = "maildir:${config.users.users."dzrodriguez".home}/.mail/%d/%u/:LAYOUT = fs:INBOX=$ {
+          config.users.users." dzrodriguez ".home
+            }/.mail/%d/%u/INBOX";
     enablePAM = false;
     enableImap = true;
     enablePop3 = false;
@@ -205,8 +205,8 @@
 
         plugin {
       	  sieve = file:${config.users.users."dzrodriguez".home}/.mail/%d/%u/.sieve;active=${
-           config.users.users."dzrodriguez".home
-         }/.mail/%d/%u/.dovecot.sieve
+            config.users.users."dzrodriguez".home
+            }/.mail/%d/%u/.dovecot.sieve
         }
     '';
   };
@@ -259,3 +259,4 @@
   };
 
 }
+
