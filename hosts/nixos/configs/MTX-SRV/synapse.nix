@@ -87,6 +87,10 @@ in
             type = "sqlite3-fk-wal";
             uri = "file:/var/lib/mautrix-whatsapp/data.db?_txlock=immediate";
           };
+
+          hostname = "127.0.0.1";
+          port = 29319;
+          address = "http://localhost:8008";
         };
 
         bridge = {
@@ -96,7 +100,7 @@ in
 
           # Require encryption by default to make the bridge more secure
           encryption = {
-            allow = true;
+            allow = false;
             default = false;
             require = false;
 
@@ -139,13 +143,13 @@ in
 
         appservice = {
           hostname = "127.0.0.1";
-          port = 29314;
-          address = "https://mtx.shymega.org.uk";
+          port = 29319;
+          address = "http://localhost:8008";
         };
 
         # Require encryption by default to make the bridge more secure
         encryption = {
-          allow = true;
+          allow = false;
           default = false;
           require = false;
         };
@@ -160,7 +164,7 @@ in
     };
 
     mautrix-telegram = {
-      enable = false;
+      enable = true;
       settings = {
         homeserver = {
           software = "standard";
@@ -174,9 +178,10 @@ in
 
 
         appservice = {
+
           hostname = "127.0.0.1";
           port = 29319;
-          address = "https://mtx.shymega.org.uk";
+          address = "http://localhost:8008";
         };
 
         encryption = {
@@ -197,7 +202,7 @@ in
 
     mautrix-meta.instances = {
       "facebook" = {
-        enable = false;
+        enable = true;
         settings = {
           homeserver = {
             software = "standard";
@@ -219,6 +224,11 @@ in
             default = false;
             require = false;
           };
+          encryption = {
+            allow = false;
+            default = false;
+            require = false;
+          };
 
           bridge = {
             permissions = {
@@ -229,7 +239,7 @@ in
       };
 
       "instagram" = {
-        enable = false;
+        enable = true;
 
         settings = {
           homeserver = {
@@ -252,6 +262,11 @@ in
             default = false;
             require = false;
           };
+          encryption = {
+            allow = false;
+            default = false;
+            require = false;
+          };
 
           bridge = {
             permissions = {
@@ -262,7 +277,7 @@ in
       };
 
       "messenger" = {
-        enable = false;
+        enable = true;
 
         settings = {
           homeserver = {
@@ -276,7 +291,7 @@ in
 
           appservice = {
             hostname = "127.0.0.1";
-            port = 29313;
+            port = 29316;
           };
           # Require encryption by default to make the bridge more secure
           encryption = {
