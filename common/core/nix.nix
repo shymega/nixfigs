@@ -126,7 +126,8 @@ in
         automatic = true;
         dates = [ "06:00" ];
       };
-      nixPath = options.nix.nixPath.default ++ [ "nixpkgs-overlays=/etc/nix/overlays-compat/" ];
+      nixPath = options.nix.nixPath.default;
+      # ++ [ "nixpkgs-overlays=/etc/nix/overlays-compat/" ];
       gc = {
         automatic = true;
         options = "--delete-older-than 14d";
