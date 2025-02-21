@@ -8,6 +8,7 @@ let
         ../common/android
         ../common/core
       ]
+    , homeModules ? [ ]
     , extraModules ? [ ]
     }: inputs.nix-on-droid.lib.nixOnDroidConfiguration {
       pkgs = import nixpkgs {
@@ -21,8 +22,28 @@ let
         };
       };
       home-manager-path = inputs.home-manager.outPath;
-      modules = [ ../secrets (../hosts/android + "/${hostname}") ] ++ baseModules ++ extraModules;
+      modules = [ ../secrets (../hosts/android + "/${hostname}") ] ++ baseModules ++ homeModules ++ extraModules;
       extraSpecialArgs = { inherit self inputs nixpkgs; };
     };
 in
-{ }
+{
+  astro-slide = mkNixOnDroidConfig {
+    hostname = "DZR-ASTRO-SLIDE";
+    homeModules = [
+      inputs.home-manager
+      {
+        backupFileExtension = "hm-bak";
+        useGlobalPkgs = true;
+
+        config =
+          { config, lib, pkgs, ... }:
+          {
+            # Read the changelog before changing this value
+            home.stateVersion = "23.05";
+
+            # insert home-manager config
+          };
+      }
+    ];
+  };
+}
