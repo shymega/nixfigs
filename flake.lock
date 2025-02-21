@@ -47049,7 +47049,7 @@
     "dwl-source": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-w4ShRnziYCM/10GgLl3R9K7X5JtM1vS+148IuZdiV18=",
+        "narHash": "sha256-JKaLF3BsZDk+eMSlKU2E73tsCBN7u5FnI29uA1PAs58=",
         "type": "file",
         "url": "https://codeberg.org/dwl/dwl"
       },
@@ -153737,11 +153737,11 @@
     },
     "nixpkgs-master_92": {
       "locked": {
-        "lastModified": 1721231126,
-        "narHash": "sha256-PizB3QlAFR7pdSeXwyiacdYde4JHJEgrWjwtDUwaazM=",
+        "lastModified": 1721232794,
+        "narHash": "sha256-p9h93yLtfEbFPGQPm/k1IBQBOl2WAQsqd3Bbtsu/hh0=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "07b84e7b5d0daa9254f822838dc82e34084cf657",
+        "rev": "2f53ab981a3cee896fd2a6257bece3691ca5b683",
         "type": "github"
       },
       "original": {
@@ -157801,11 +157801,11 @@
     },
     "nixpkgs-shymega_92": {
       "locked": {
-        "lastModified": 1716591094,
-        "narHash": "sha256-c9JAM3QxUWLU7gRTDaOh37fo6xmAQJ8pCTUEv3dKuhY=",
+        "lastModified": 1721232794,
+        "narHash": "sha256-p9h93yLtfEbFPGQPm/k1IBQBOl2WAQsqd3Bbtsu/hh0=",
         "owner": "shymega",
         "repo": "nixpkgs",
-        "rev": "93a707cfe2ae99647059a17ff6daace3c2e5d5a4",
+        "rev": "2f53ab981a3cee896fd2a6257bece3691ca5b683",
         "type": "github"
       },
       "original": {
@@ -166747,16 +166747,16 @@
     },
     "nixpkgs_355": {
       "locked": {
-        "lastModified": 1721116560,
-        "narHash": "sha256-++TYlGMAJM1Q+0nMVaWBSEvEUjRs7ZGiNQOpqbQApCU=",
-        "owner": "nixos",
+        "lastModified": 1721233551,
+        "narHash": "sha256-CjT3er2YjEjGSvhBbW8edbB5hRFw2eAVR7RlVL5liHU=",
+        "owner": "shymega",
         "repo": "nixpkgs",
-        "rev": "9355fa86e6f27422963132c2c9aeedb0fb963d93",
+        "rev": "319cd2f5daf1e3b1de0a316e64352b6c5e4c56d0",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
-        "ref": "nixpkgs-unstable",
+        "owner": "shymega",
+        "ref": "opengl-24.05",
         "repo": "nixpkgs",
         "type": "github"
       }
