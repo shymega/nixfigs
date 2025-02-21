@@ -27,6 +27,19 @@
   };
 
   services = {
+    cloudflared = {
+      enable = true;
+      package = pkgs.unstable.cloudflared;
+      tunnels = {
+        "bb7792f6-622f-41ca-9f07-fa0fb48beb19" = {
+          ingress = {
+            "ssh.delta-zero.rodriguez.org.uk" = "ssh://localhost:22";
+          };
+          credentialsFile = "/var/lib/cloudflared/bb7792f6-622f-41ca-9f07-fa0fb48beb19.json";
+          default = "http_status:404";
+        };
+      };
+    };
     dbus.enable = true;
     taskserver = {
       enable = true;

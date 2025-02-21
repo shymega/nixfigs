@@ -28,6 +28,19 @@ in
   };
 
   services = {
+    cloudflared = {
+      enable = true;
+      package = pkgs.unstable.cloudflared;
+      tunnels = {
+        "926d47c1-cd90-44ba-95a5-b38c05d99a6e" = {
+          ingress = {
+            "ssh.dial-in.rnet.rodriguez.org.uk" = "ssh://localhost:22";
+          };
+          credentialsFile = "/var/lib/cloudflared/926d47c1-cd90-44ba-95a5-b38c05d99a6e.json";
+          default = "http_status:404";
+        };
+      };
+    };
     zerotierone.enable = true;
     tailscale.enable = true;
     cloud-init.enable = lib.mkForce false;
