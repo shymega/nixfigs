@@ -136,10 +136,8 @@ in
         mkcert
         moneydance
         mpc-cli
-        mpv
         mupdf
         ncmpcpp
-        neomutt
         nixpkgs-fmt
         nodejs
         notmuch
@@ -176,6 +174,7 @@ in
         vdirsyncer
         virt-manager
         virtiofsd
+        vlc
         w3m
         weechatWithMyPlugins
         wget
@@ -195,10 +194,12 @@ in
         bestool
         emacsconf2nix
         gitkraken
-        google-cloud-sdk
         google-chrome
+        google-cloud-sdk
         leafnode
         lutris
+        mpv
+        neomutt
         protontricks
         protonup-qt
         qemu_full
