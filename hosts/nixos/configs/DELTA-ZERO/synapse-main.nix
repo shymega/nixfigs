@@ -9,18 +9,18 @@
     enable = true;
     withJemalloc = true;
 
-    nginxVirtualHostName = "mtx.shymega.org.uk";
+    nginxVirtualHostName = "matrix.rodriguez.org.uk";
     enableWorkers = true;
 
     federationSenders = 4;
-    pushers = 2;
+    pushers = 4;
     mediaRepoWorkers = 4;
     clientReaders = 4;
     syncWorkers = 4;
-    authWorkers = 1;
+    authWorkers = 4;
 
-    federationReaders = 8;
-    federationInboundWorkers = 8;
+    federationReaders = 4;
+    federationInboundWorkers = 4;
 
     enableAppserviceWorker = true;
     enableBackgroundWorker = true;
@@ -28,22 +28,23 @@
 
     extraConfigFiles = [
       config.age.secrets.synapse_secret.path
+      ./synapse/tweaks.yaml
+      ./synapse/logging.yaml
     ];
 
-    eventStreamWriters = 8;
+    eventStreamWriters = 4;
 
     # https://matrix-org.github.io/synapse/latest/usage/configuration/config_documentation.html
-    settings = {
-      server_name = "mtx.shymega.org.uk";
-
+    settings = rec {
+      report_stats = true;
+      enable_metrics = true;
       enable_registration = true;
+      url_preview_enabled = true;
       registration_requires_token = true;
-
-      require_membership_for_aliases = false;
-      redaction_retention_period = null;
-      user_ips_max_age = null;
-      allow_device_name_lookup_over_federation = true;
-
+      enable_search = true;
+      allow_public_rooms_over_federation = true;
+      max_upload_size = "20M";
+      allow_public_rooms_without_auth = true;
       federation = {
         client_timeout = "60s";
         max_short_retries = 12;
@@ -51,6 +52,33 @@
         max_long_retries = 5;
         max_long_retry_delay = "30s";
       };
+      presence = {
+        enable = true;
+        update_interval = 60;
+      };
+      require_membership_for_aliases = false;
+      redaction_retention_period = null;
+      user_ips_max_age = null;
+      allow_device_name_lookup_over_federation = true;
+      experimental_features = {
+        msc2815_enabled = true; # Redacted event content
+        msc3026_enabled = true; # Busy presence
+        msc3916_authenticated_media_enabled = true; # Authenticated media
+        # Room summary api
+        msc3266_enabled = true;
+        # Removing account data
+        msc3391_enabled = true;
+        # Thread notifications
+        msc3773_enabled = true;
+        # Remotely toggle push notifications for another client
+        msc3881_enabled = true;
+        # Remotely silence local notifications
+        msc3890_enabled = true;
+      };
+      server_name = "rodriguez.org.uk";
+      dynamic_thumbnails = true;
+      suppress_key_server_warning = true;
+      public_baseurl = "https://${server_name}";
 
       listeners = [
         {
@@ -82,47 +110,20 @@
           ];
         }
       ];
-      dynamic_thumbnails = true;
-      presence = {
-        enable = true;
-        update_interval = 60;
-      };
-      url_preview_enabled = true;
       database = import ./db.nix {
         workerName = "main";
         dbGroup = "medium";
       };
-      app_service_config_files = [
-        #"/etc/matrix-synapse/appservice-registration.yaml"
-        "/var/lib/matrix-synapse/modas-registration.yaml"
-      ];
-
       max_image_pixels = "250M";
 
       ui_auth = {
         session_timeout = "1m";
       };
 
-      login_via_existing_session = {
-        enabled = true;
-        require_ui_auth = true;
-        token_timeout = "1y";
-      };
-
-      report_stats = false;
-
       user_directory = {
         enabled = true;
         search_all_users = true;
         prefer_local_users = true;
-      };
-
-      # https://github.com/element-hq/synapse/blob/master/synapse/config/experimental.py
-      experimental_features = {
-        "msc2815_enabled" = true; # Redacted event content
-        "msc3026_enabled" = true; # Busy presence
-        "msc3266_enabled" = true; # Room summary API
-        "msc3916_authenticated_media_enabled" = true; # Authenticated media
       };
 
       redis = {
@@ -136,15 +137,16 @@
           path = "/run/matrix-synapse/main.sock";
         };
       };
-    } // import ./ratelimits.nix // import ./caches.nix;
+    } // import ./caches.nix // import ./ratelimits.nix;
   };
 
   services.redis = {
-    package = pkgs.unstable.keydb;
+    package = pkgs.unstable.redis;
     servers.matrix-synapse = {
       enable = true;
       user = "matrix-synapse";
     };
+    servers."".enable = true;
   };
 
   systemd.tmpfiles.rules = [ "D /run/redis-matrix-synapse 0755 matrix-synapse matrix-synapse" ];
