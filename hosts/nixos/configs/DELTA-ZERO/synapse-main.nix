@@ -12,27 +12,27 @@
     nginxVirtualHostName = "matrix.rodriguez.org.uk";
     enableWorkers = true;
 
-    federationSenders = 4;
-    pushers = 4;
+    federationSenders = 16;
+    pushers = 1;
     mediaRepoWorkers = 4;
     clientReaders = 4;
     syncWorkers = 4;
-    authWorkers = 4;
+    authWorkers = 1;
 
-    federationReaders = 4;
-    federationInboundWorkers = 4;
+    federationReaders = 8;
+    federationInboundWorkers = 8;
 
     enableAppserviceWorker = true;
     enableBackgroundWorker = true;
     enableUserDirWorker = true;
+
+    eventStreamWriters = 8;
 
     extraConfigFiles = [
       config.age.secrets.synapse_secret.path
       ./synapse/tweaks.yaml
       ./synapse/logging.yaml
     ];
-
-    eventStreamWriters = 4;
 
     # https://matrix-org.github.io/synapse/latest/usage/configuration/config_documentation.html
     settings = rec {
