@@ -67,6 +67,11 @@
         group = "nogroup";
         mode = "0640";
       };
+      nix_conf_access_tokens = {
+	file = ./nix_conf_access_tokens.age;
+        group = "users";
+        mode = "0640";
+      };
     };
   };
 }
