@@ -30,7 +30,6 @@ in
     packages = with pkgs.unstable; [
       android-tools
       asciinema
-      #      atuin
       bat
       bc
       brightnessctl
@@ -113,6 +112,7 @@ in
         enableWidevine = true;
       })
     ]) ++ (with pkgs; [
+      atuin
       aws-sam-cli
       awscli2
       azure-cli
