@@ -10,24 +10,48 @@
 
   fileSystems = {
     "/" = {
-      device = "zroot/crypt/root/nixos/linux/local/root";
+      device = "zroot/crypt/nixos/linux/local/root";
       fsType = "zfs";
+    };
+
+#    "/data/Games" = {
+#      device = "zdata/crypt/shared/games";
+#      fsType = "zfs";
+#      neededForBoot = false;
+#    };
+
+    "/data/VMs" = {
+      device = "zdata/crypt/shared/virtual";
+      fsType = "zfs";
+      neededForBoot = false;
+    };
+
+    "/data/AI" = {
+      device = "zdata/crypt/shared/ai";
+      fsType = "zfs";
+      neededForBoot = false;
+    };
+
+    "/data/Development" = {
+      device = "zdata/crypt/shared/dev";
+      fsType = "zfs";
+      neededForBoot = false;
     };
 
     "/home/dzrodriguez/Games" = {
       depends = [ "/data/Games" ];
       device = "/data/Games";
       fsType = "none";
-      neededForBoot = true;
-      options = [ "bind" "uid=1000" "gid=100" ];
+      neededForBoot = false;
+      options = [ "bind" ];
     };
 
     "/home/dzrodriguez/dev" = {
       depends = [ "/data/Development" ];
       device = "/data/Development";
       fsType = "none";
-      neededForBoot = true;
-      options = [ "bind" "uid=1000" "gid=100" ];
+      neededForBoot = false;
+      options = [ "bind" ];
     };
 
     "/home" = {
@@ -37,44 +61,65 @@
     };
 
     "/etc/nixos" = {
-      device = "zroot/crypt/root/nixos/linux/safe/nixos-config";
+      device = "zroot/crypt/nixos/linux/safe/nixos-config";
       fsType = "zfs";
       neededForBoot = true;
     };
 
     "/nix" = {
-      device = "zroot/crypt/root/nixos/linux/local/nix-store";
+      device = "zroot/crypt/nixos/linux/local/nix-store";
       fsType = "zfs";
       neededForBoot = true;
     };
 
-    "/guix" = {
-      device = "zroot/crypt/root/nixos/linux/local/guix-store";
+    "/gnu" = {
+      device = "zroot/crypt/nixos/linux/local/guix-store";
       fsType = "zfs";
-      neededForBoot = false;
+      neededForBoot = true;
     };
 
     "/persist" = {
-      device = "zroot/crypt/root/nixos/linux/safe/persist";
+      device = "zroot/crypt/nixos/linux/safe/persist";
       fsType = "zfs";
       neededForBoot = true;
     };
 
     "/var" = {
-      device = "zroot/crypt/root/nixos/linux/safe/var-store";
+      device = "zroot/crypt/nixos/linux/safe/var-store";
       fsType = "zfs";
       neededForBoot = true;
     };
 
     "/home/dzrodriguez/.local/share/atuin" = {
-      device = "/dev/zvol/zroot/crypt/shared/homes/atuin/nixos";
+      device = "/dev/zvol/zdata/crypt/shared/homes/atuin/nixos";
       fsType = "ext4";
+      neededForBoot = false;
     };
 
     "/boot/efi" = {
       device = "/dev/disk/by-label/ESP";
       fsType = "vfat";
-      neededForBoot = false;
+      neededForBoot = true;
+      options = [
+        "fmask=0022"
+        "dmask=0022"
+      ];
+    };
+
+    "/boot/efi_alt" = {
+      device = "/dev/disk/by-label/ESP_ALT";
+      fsType = "vfat";
+      neededForBoot = true;
+      options = [
+        "fmask=0022"
+        "dmask=0022"
+      ];
+    };
+
+    "/boot/efi_bsd" = {
+      device = "/dev/disk/by-label/ESP_BSD";
+      fsType = "vfat";
+      neededForBoot = true;
       options = [
         "fmask=0022"
         "dmask=0022"
