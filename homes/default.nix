@@ -37,7 +37,6 @@ let
         ../secrets/user
         ({ config, ... }: {
           nixpkgs.config = self.nixpkgs-config;
-          programs.home-manager.backupFileExtension = "hmBak";
         })
       ];
       extraSpecialArgs = {
