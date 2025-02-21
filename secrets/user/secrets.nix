@@ -16,7 +16,7 @@ let
   DELTA-ZERO = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKOBP4prVx3gdi5YMW4dzy06s46aobpyY8IlFBDVgjDU";
   DIAL-IN = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILd2G/XmmLSK4V+tBgkS62/qE4fsY8c0dYKyjkiYtqpX";
 
-  personal-machines = [ NEO-LINUX TWINS-LINUX MORPHEUS-LINUX MORPHEUS-WSL ]; 
+  personal-machines = [ NEO-LINUX TWINS-LINUX MORPHEUS-LINUX MORPHEUS-WSL ];
   personal = personal-users ++ personal-machines;
 
   work-machines = [ ];
