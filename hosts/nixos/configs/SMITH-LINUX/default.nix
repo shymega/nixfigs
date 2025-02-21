@@ -13,6 +13,8 @@
     hostName = "SMITH-LINUX";
   };
 
+  boot.supportedFilesystems.zfs = lib.mkForce false;
+
   users = {
     mutableUsers = false;
     users."root".password = "!"; # Lock account.
