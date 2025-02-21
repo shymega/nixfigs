@@ -242,6 +242,7 @@ in
     address = "delta-zero.rodriguez.org.uk";
     hostname = "DELTA-ZERO";
     username = "dzrodriguez";
+    whopper = false;
     hostPlatform = "aarch64-linux";
     extraModules = [
       inputs.srvos.nixosModules.server
@@ -260,6 +261,7 @@ in
     address = "dial-in.rnet.rodriguez.org.uk";
     hostname = "DIAL-IN-RNET";
     username = "dzrodriguez";
+    whopper = false;
     hostPlatform = "aarch64-linux";
     extraModules = [
       inputs.srvos.nixosModules.server
@@ -278,6 +280,7 @@ in
     address = "mtx.shymega.org.uk";
     hostname = "MTX-SRV";
     username = "dzrodriguez";
+    whopper = false;
     hostPlatform = "aarch64-linux";
     extraModules = [
       inputs.srvos.nixosModules.server
