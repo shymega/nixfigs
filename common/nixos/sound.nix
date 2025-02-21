@@ -2,8 +2,8 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ config, ... }: {
-  hardware.pulseaudio.enable = false;
+{ lib, ... }: {
+  hardware.pulseaudio.enable = lib.mkForce false;
 
   sound = {
     enable = true;

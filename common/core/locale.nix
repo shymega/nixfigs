@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ config, lib, inputs, outputs, ... }: {
+{ ... }: {
   i18n = {
     defaultLocale = "en_GB.UTF-8";
     extraLocaleSettings = {
