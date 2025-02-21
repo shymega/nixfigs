@@ -11,7 +11,7 @@ in
     services = {
       desktop-power-maximum-tdp = lib.mkIf (hostName == "NEO-LINUX" || hostName == "MORPHEUS-LINUX") {
         description = "Change TDP to maximum TDP when on AC power";
-        wantedBy = [ "multi-user.target" ];
+        wantedBy = [ "multi-user.target" "ac.target" ];
         unitConfig = { RefuseManualStart = true; Requires = "ac.target"; };
         path = with pkgs; [
           ryzenadj
