@@ -29,6 +29,9 @@ jobs:
       - uses: cachix/install-nix-action@V27
         with:
           github_access_token: ${{ secrets.NIX_GH_ACTIONS_TOKEN }}
+      - uses: nixbuild/nixbuild-action@v19
+        with:
+          nixbuild_token: ${{ secrets.NIXBUILD_TOKEN }}
       - name: Update Flake lockfile
         run: nix flake update --accept-flake-config
       - name: Commit changes to lockfile
@@ -46,6 +49,9 @@ jobs:
       - uses: cachix/install-nix-action@V27
         with:
           github_access_token: ${{ secrets.NIX_GH_ACTIONS_TOKEN }}
+      - uses: nixbuild/nixbuild-action@v19
+        with:
+          nixbuild_token: ${{ secrets.NIXBUILD_TOKEN }}
       - name: Format Nix files
         run: nix fmt
       - name: Commit changes to codebase
@@ -62,5 +68,8 @@ jobs:
         uses: cachix/install-nix-action@V27
         with:
           github_access_token: ${{ secrets.NIX_GH_ACTIONS_TOKEN }}
+      - uses: nixbuild/nixbuild-action@v19
+        with:
+          nixbuild_token: ${{ secrets.NIXBUILD_TOKEN }}
       - name: Check Flake with Nix
         run: nix flake check --all-systems --accept-flake-config
