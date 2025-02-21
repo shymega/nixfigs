@@ -2071,6 +2071,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-generators": {
+      "locked": {
+        "lastModified": 1724620593,
+        "narHash": "sha256-OelQQkhOzEnOt6U/B3Tx3hc3ogYgaie24SBFuEKswhc=",
+        "owner": "shymega",
+        "repo": "nixpkgs",
+        "rev": "73415e944d5d7af0c0c6272c368d02b04c210b27",
+        "type": "github"
+      },
+      "original": {
+        "owner": "shymega",
+        "ref": "nixos-generator-fixes",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1722555339,
@@ -2789,6 +2805,7 @@
         "nix-ld": "nix-ld",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_13",
+        "nixpkgs-generators": "nixpkgs-generators",
         "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-shymega": "nixpkgs-shymega",
         "nixpkgs-unstable": "nixpkgs-unstable",
