@@ -37,7 +37,6 @@
           };
           credentialsFile = "/var/lib/cloudflared/944fbebc-5b7e-4702-b6e9-d759a8a7709a.json";
           default = "http_status:404";
-          credentialsFile = "/var/lib/cloudflared/944fbebc-5b7e-4702-b6e9-d759a8a7709a.json";
         };
       };
     };
