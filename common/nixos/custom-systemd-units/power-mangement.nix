@@ -69,7 +69,7 @@ in
         serviceConfig = {
           Type = "oneshot";
           ExecStart =
-            "${pkgs.systemd}/bin/systemd-inhibit --what=sleep --why=PreventSuspension --who=system /usr/bin/sleep %ih";
+            "${pkgs.systemd}/bin/systemd-inhibit --what=sleep --why=PreventSuspension --who=system ${pkgs.toybox}/bin/sleep %ih";
         };
       };
     };
