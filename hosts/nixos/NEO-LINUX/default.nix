@@ -14,8 +14,8 @@
   boot = {
     supportedFilesystems = [ "ntfs" "zfs" ];
 
-    kernelPackages = pkgs.linuxPackages_xanmod_latest;
-    #    kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+    # kernelPackages = pkgs.linuxPackages_xanmod_latest;
+    kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
     extraModulePackages = with config.boot.kernelPackages; [ zfs ];
 
     extraModprobeConfig = ''
@@ -96,7 +96,7 @@
       driSupport32Bit = false;
       extraPackages = pkgs.lib.mkForce (with pkgs; [
         amdvlk
-        unstable.rocmPackages.clr
+        #        unstable.rocmPackages.clr
       ]);
       extraPackages32 = with pkgs; [
         driversi686Linux.amdvlk
@@ -104,11 +104,11 @@
     };
   };
 
-  environment.systemPackages = with pkgs.unstable; [
-    (ollama.override {
-      acceleration = "rocm";
-    })
-  ];
+  #  environment.systemPackages = with pkgs.unstable; [
+  #    (ollama.override {
+  #      acceleration = "rocm";
+  #    })
+  #  ];
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
