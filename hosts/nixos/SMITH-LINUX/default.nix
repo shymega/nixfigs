@@ -2,10 +2,9 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ inputs, outputs, config, pkgs, lib, ... }:
+{ inputs, pkgs, lib, ... }:
 {
   imports = [
-    inputs.hardware.nixosModules.raspberry-pi-4
     ./hardware-configuration.nix
   ];
 
@@ -32,7 +31,4 @@
     };
   };
   system.stateVersion = "23.11";
-
-  networking.hostId = "3b66435d";
-  services.zfs.autoScrub.enable = true;
 }
