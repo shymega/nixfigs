@@ -116,7 +116,6 @@ in
     environmentVariables = {
       HSA_OVERRIDE_GFX_VERSION = "10.3.0"; # 680M.
     };
-    rocmOverrideGfx = "10.3.0"; # 680M.
   };
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" "armv6l-linux" "armv7l-linux" ];
