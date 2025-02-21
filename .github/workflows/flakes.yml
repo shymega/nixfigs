@@ -1,0 +1,72 @@
+name: "Flake workflow"
+
+on:
+  push:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+
+# Ensures that only one deploy task per branch/environment will run at a time.
+concurrency:
+  group: gh-ref-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  update-flake:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v23
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Update Flake lockfile
+        run: nix flake update
+      - name: Commit changes to lockfile
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore(lockfile): Update Flake lockfile"
+
+  format-flake:
+    needs: [update-flake]
+    if: ${{ always() && !cancelled() && needs.update-flake.result == 'success' }}
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 'main'
+      - uses: cachix/install-nix-action@v23
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install `nixpkgs-fmt`
+        run: nix-env -f https://github.com/nix-community/nixpkgs-fmt/archive/master.tar.gz -iA nixpkgs-fmt
+      - name: Format Nix files
+        run: nixpkgs-fmt ./*
+      - name: Commit changes to codebase
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore(lint): Format Nix files"
+
+  check-flake:
+    needs: [format-flake]
+    if: ${{ always() && !cancelled() && needs.format-flake.result == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 'main'
+      - name: Install Nix
+        uses: cachix/install-nix-action@v23
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install `nixpkgs-fmt`
+        run: nix-env -f https://github.com/nix-community/nixpkgs-fmt/archive/master.tar.gz -iA nixpkgs-fmt
+      - name: Check Flake formatting
+        run: nixpkgs-fmt --check ./
+      - name: Check Flake with Nix
+        run: nix flake check
+      - name: Check Flake with Statix
+        run: nix run nixpkgs#statix -- check ./
