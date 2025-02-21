@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ inputs, outputs, config, pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
 {
   networking.hostName = "TRINITY-LINUX";
   networking.hostId = "65ad6c0b";
