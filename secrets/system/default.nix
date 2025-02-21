@@ -61,6 +61,11 @@
         group = "users";
         mode = "0640";
       };
+      matrix-sliding-sync-env = {
+        file = ./matrix-sliding-sync-env.age;
+        group = "users";
+        mode = "0640";
+      };
     };
-  };
+ };
 }
