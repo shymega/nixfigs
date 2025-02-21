@@ -66,7 +66,6 @@
       minishift
       mkcert
       mpc-cli
-      mpv-unwrapped
       mupdf
       ncmpcpp
       neomutt
@@ -107,7 +106,6 @@
       vagrant
       virt-manager
       w3m
-      weechatWithMyPlugins
       wget
       xsv
       yt-dlp
@@ -127,7 +125,10 @@
       jetbrains.rust-rover
       jetbrains.webstorm
       steam-run
-    ]));
+    ])) ++ (with pkgs; [
+      weechatWithMyPlugins
+      mpv-unwrapped
+    ]);
   };
 
   services = {
