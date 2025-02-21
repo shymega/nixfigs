@@ -105,11 +105,12 @@
         neededForBoot = false;
         options = [ "fmask=0022" "dmask=0022" ];
       };
-
-    "/etc/ssh".depends = [ "/persist" ];
-    "/etc/ssh".device = "/persist/etc/ssh";
-    "/etc/ssh".fsType = "none";
-    "/etc/ssh".neededForBoot = true;
-    "/etc/ssh".options = [ "bind" ];
+    "/etc/ssh" = {
+      depends = [ "/persist" ];
+      device = "/persist/etc/ssh";
+      fsType = "none";
+      neededForBoot = true;
+      options = [ "bind" ];
+    };
   };
 }
