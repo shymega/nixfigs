@@ -1,169 +1,27 @@
-{ pkgs, inputs, config, ... }:
+{ pkgs, ... }:
 let
   fqdn = "mtx.shymega.org.uk";
-  baseUrl = "https://${fqdn}";
 in
 {
-  disabledModules = [ "services/matrix/synapse.nix" "services/matrix/mautrix-whatsapp.nix" ];
+  disabledModules = [
+    "services/matrix/mautrix-whatsapp.nix"
+  ];
   imports = [
     ../../../../modules/nixos/mautrix-slack.nix
     ../../../../modules/nixos/mautrix-whatsapp.nix
-    ./nginx.nix
-    ./security.nix
     ./postgres.nix
-    "${inputs.nixpkgs-master}/nixos/modules/services/matrix/synapse.nix"
-  ];
-  nixpkgs.overlays = [
-    (_final: _prev: {
-      inherit (inputs.nixpkgs-master.legacyPackages.${pkgs.stdenv.hostPlatform.system}) matrix-synapse-unwrapped;
-    })
+    ./security.nix
+    ./sliding-sync.nix
+    ./synapse-main.nix
   ];
 
-  users.users."matrix-synapse".extraGroups = [ "users" ];
+  environment.systemPackages = [ pkgs.synapse ];
+
   services = {
-    matrix-synapse = {
-      enable = true;
-      settings = {
-        report_stats = true;
-        enable_metrics = true;
-        enable_registration = true;
-        url_preview_enabled = true;
-        registration_requires_token = true;
-        enable_search = true;
-        allow_public_rooms_over_federation = true;
-        max_upload_size = "20M";
-        database.name = "psycopg2";
-        allow_public_rooms_without_auth = true;
-        federation = {
-          client_timeout = "60s";
-          max_short_retries = 12;
-          max_short_retry_delay = "5s";
-          max_long_retries = 5;
-          max_long_retry_delay = "30s";
-        };
-        presence = {
-          enable = true;
-          update_interval = 60;
-        };
-        require_membership_for_aliases = false;
-        redaction_retention_period = null;
-        user_ips_max_age = null;
-        allow_device_name_lookup_over_federation = true;
-
-        database.args = {
-          user = "matrix";
-          password = "matrix4me";
-          port = 5432;
-          database = "matrix_synapse";
-          sslmode = "disable";
-          host = "127.0.0.1";
-          cp_min = 5;
-          cp_max = 10;
-        };
-        experimental_features = {
-          msc2815_enabled = true; # Redacted event content
-          msc3026_enabled = true; # Busy presence
-          msc3916_authenticated_media_enabled = true; # Authenticated media
-          # Room summary api
-          msc3266_enabled = true;
-          # Removing account data
-          msc3391_enabled = true;
-          # Thread notifications
-          msc3773_enabled = true;
-          # Remotely toggle push notifications for another client
-          msc3881_enabled = true;
-          # Remotely silence local notifications
-          msc3890_enabled = true;
-        };
-        server_name = fqdn;
-        dynamic_thumbnails = true;
-        suppress_key_server_warning = true;
-        public_baseurl = baseUrl;
-        listeners = [
-          {
-            port = 8008;
-            bind_addresses = [ "127.0.0.1" ];
-            type = "http";
-            tls = false;
-            x_forwarded = true;
-            resources = [
-              {
-                compress = true;
-                names = [ "client" "federation" ];
-              }
-            ];
-          }
-          {
-            port = 9001;
-            type = "metrics";
-            tls = false;
-            x_forwarded = true;
-            bind_addresses = [ "127.0.0.1" ];
-            resources = [
-              {
-                compress = true;
-                names = [ "metrics" ];
-              }
-            ];
-          }
-        ];
-        logConfig = ''
-          version: 1
-
-          # In systemd's journal, loglevel is implicitly stored, so let's omit it
-          # from the message text.
-          formatters:
-              journal_fmt:
-                  format: '%(name)s: [%(request)s] %(message)s'
-
-          filters:
-              context:
-                  (): synapse.util.logcontext.LoggingContextFilter
-                  request: ""
-
-          handlers:
-              journal:
-                  class: systemd.journal.JournalHandler
-                  formatter: journal_fmt
-                  filters: [context]
-                  SYSLOG_IDENTIFIER: synapse
-
-          root:
-              level: DEBUG
-              handlers: [journal]
-
-          disable_existing_loggers: True
-        '';
-        #        app_service_config_files = [
-        #          /var/lib/mautrix-meta-facebook/meta-registration.yaml
-        #          /var/lib/mautrix-meta-instagram/meta-registration.yaml
-        #          /var/lib/mautrix-meta-messenger/meta-registration.yaml
-        #          /var/lib/mautrix-slack/slack-registration.yaml
-        #          /var/lib/mautrix-whatsapp/whatsapp-registration.yaml
-        #        ];
-      };
-      extraConfigFiles = [
-        config.age.secrets.synapse_secret.path
-        ./synapse/tweaks.yaml
-        ./synapse/logging.yaml
-      ];
-    };
-
-    matrix-sliding-sync = {
-      enable = true;
-      package = pkgs.unstable.matrix-sliding-sync;
-      createDatabase = false;
-      environmentFile = config.age.secrets.matrix-sliding-sync-env.path;
-      settings = {
-        SYNCV3_SERVER = "http://127.0.0.1:8008";
-        SYNCV3_DB = "host=127.0.0.1 port=5432 dbname=matrix_sliding_syncv3 user=matrix password=matrix4me sslmode=disable connect_timeout=10";
-        SYNCV3_LOG_LEVEL = "trace";
-        SYNCV3_BINDADDR = "127.0.0.1:8009";
-      };
-    };
+    redis.servers."".enable = true;
 
     mautrix-whatsapp = {
-      enable = true;
+      enable = false;
       registerToSynapse = false;
 
       settings = {
@@ -214,7 +72,7 @@ in
     };
 
     mautrix-slack = {
-      enable = true;
+      enable = false;
       registerToSynapse = false;
 
       settings = {
@@ -291,7 +149,7 @@ in
 
     mautrix-meta.instances = {
       "facebook" = {
-        enable = true;
+        enable = false;
         registerToSynapse = false;
 
         settings = {
@@ -326,7 +184,7 @@ in
       };
 
       "instagram" = {
-        enable = true;
+        enable = false;
         registerToSynapse = false;
 
         settings = {
@@ -361,7 +219,7 @@ in
       };
 
       "messenger" = {
-        enable = true;
+        enable = false;
         registerToSynapse = false;
 
         settings = {
