@@ -60,6 +60,7 @@ in
         environment.systemPackages = [
           inputs.agenix.packages.${system}.default
           inputs.nix-alien.packages.${system}.nix-alien
+          inputs.nixpkgs.legacyPackages.${system}.sbctl
         ];
       }
       ../hosts/nixos/configuration.nix
