@@ -200,4 +200,50 @@
   };
 
   services.cron.enable = true;
+
+  users = {
+    mutableUsers = false;
+    users."root".password = "!"; # Lock account.
+    users."dzrodriguez" = {
+      isNormalUser = true;
+      shell = pkgs.zsh;
+      description = "Dom RODRIGUEZ";
+      hashedPasswordFile = config.age.secrets.dzrodriguez.path;
+      linger = true;
+      subUidRanges = [
+        {
+          startUid = 100000;
+          count = 65536;
+        }
+      ];
+      subGidRanges = [
+        {
+          startGid = 100000;
+          count = 65536;
+        }
+      ];
+      extraGroups = [
+        "i2c"
+        "adbusers"
+        "dialout"
+        "disk"
+        "docker"
+        "input"
+        "kvm"
+        "libvirt"
+        "libvirtd"
+        "lp"
+        "lpadmin"
+        "networkmanager"
+        "plugdev"
+        "qemu-libvirtd"
+        "scanner"
+        "systemd-journal"
+        "uucp"
+        "video"
+        "wheel"
+      ];
+    };
+  };
+
 }
