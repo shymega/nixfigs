@@ -65,6 +65,7 @@
         DNS=1.1.1.1#1dot1dot1dot1.cloudflare-dns.com 1.0.0.1#1dot1dot1dot1.cloudflare-dns.com 2606:4700:4700::1111#1dot1dot1dot1.cloudflare-dns.com 2606:4700:4700::1001#1dot1dot1dot1.cloudflare-dns.com
       '';
     };
+    proxmox-ve.enable = true;
   };
 
   networking = {
@@ -119,8 +120,6 @@
       };
     };
   };
-
-  services.proxmox-vm.enable = true;
 
   programs = {
     zsh.enable = true;
