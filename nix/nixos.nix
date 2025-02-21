@@ -13,7 +13,7 @@ let
         ../common/core
       ]
     , hardwareModules ? [ ]
-    , homeModules ? [ mkHomeManagerConfig { } ]
+    , homeModules ? [ ]
     , extraModules ? [ ]
     }:
     inputs.nixpkgs.lib.nixosSystem {
@@ -78,21 +78,6 @@ in
       inputs.hardware.nixosModules.common-pc
       ../hosts/nixos/NEO-LINUX/hardware-configuration.nix
     ];
-    homeModules = [
-      inputs.home-manager.nixosModules.home-manager
-      {
-        home-manager = {
-          useGlobalPkgs = true;
-          useUserPackages = true;
-          users.dzrodriguez = import ../users/home.nix;
-          sharedModules = [
-            inputs.nix-index-database.hmModules.nix-index
-            inputs.agenix.homeManagerModules.default
-          ];
-          extraSpecialArgs = { inherit self inputs; };
-        };
-      }
-    ];
     extraModules = [
       ../hosts/nixos/configuration.nix
     ];
@@ -119,22 +104,6 @@ in
       inputs.hardware.nixosModules.common-pc
       ../hosts/nixos/TRINITY-LINUX/hardware-configuration.nix
     ];
-    homeModules = [
-      inputs.home-manager.nixosModules.home-manager
-      {
-        home-manager = {
-
-          useGlobalPkgs = true;
-          useUserPackages = true;
-          users.dzrodriguez = import ../users/home.nix;
-          sharedModules = [
-            inputs.nix-index-database.hmModules.nix-index
-            inputs.agenix.homeManagerModules.default
-          ];
-          extraSpecialArgs = { inherit self inputs; };
-        };
-      }
-    ];
     extraModules = [
       ../hosts/nixos/configuration.nix
     ];
@@ -154,21 +123,6 @@ in
       inputs.hardware.nixosModules.common-pc-ssd
       inputs.hardware.nixosModules.common-pc
       ../hosts/nixos/TWINS-LINUX/hardware-configuration.nix
-    ];
-    homeModules = [
-      inputs.home-manager.nixosModules.home-manager
-      {
-        home-manager = {
-          useGlobalPkgs = true;
-          useUserPackages = true;
-          users.dzrodriguez = import ../users/home.nix;
-          sharedModules = [
-            inputs.nix-index-database.hmModules.nix-index
-            inputs.agenix.homeManagerModules.default
-          ];
-          extraSpecialArgs = { inherit self inputs; };
-        };
-      }
     ];
     extraModules = [
       ../hosts/nixos/configuration.nix
