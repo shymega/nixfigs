@@ -20975,17 +20975,17 @@
       "inputs": {
         "devenv": "devenv_2",
         "flake-compat": [
-          "deckcheatz-tools",
+          "deckcheatz",
           "devenv",
           "flake-compat"
         ],
         "nixpkgs": [
-          "deckcheatz-tools",
+          "deckcheatz",
           "devenv",
           "nixpkgs"
         ],
         "pre-commit-hooks": [
-          "deckcheatz-tools",
+          "deckcheatz",
           "devenv",
           "pre-commit-hooks"
         ]
@@ -31159,7 +31159,7 @@
         "type": "github"
       }
     },
-    "deckcheatz-tools": {
+    "deckcheatz": {
       "inputs": {
         "devenv": "devenv",
         "flake-compat": "flake-compat_3",
@@ -31167,11 +31167,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1720880508,
-        "narHash": "sha256-mDSJmjHef+O3a0MjbPx347IXoTaB2rm67nNGRndsySI=",
+        "lastModified": 1720884073,
+        "narHash": "sha256-yK5q3KOUIZRKhXeYItvAnrqZF6zHN4fXwweOU8jHJIc=",
         "owner": "deckcheatz",
         "repo": "deckcheatz",
-        "rev": "cdbe4a271c0c2ff860d396bfe5a3f2c8626f2093",
+        "rev": "58785f948b24251a04341823eba8371377786d68",
         "type": "github"
       },
       "original": {
@@ -38578,7 +38578,7 @@
     "devenv_2": {
       "inputs": {
         "flake-compat": [
-          "deckcheatz-tools",
+          "deckcheatz",
           "devenv",
           "cachix",
           "flake-compat"
@@ -38587,7 +38587,7 @@
         "nixpkgs": "nixpkgs",
         "poetry2nix": "poetry2nix",
         "pre-commit-hooks": [
-          "deckcheatz-tools",
+          "deckcheatz",
           "devenv",
           "cachix",
           "pre-commit-hooks"
@@ -66010,7 +66010,7 @@
     "gitignore": {
       "inputs": {
         "nixpkgs": [
-          "deckcheatz-tools",
+          "deckcheatz",
           "devenv",
           "pre-commit-hooks",
           "nixpkgs"
@@ -98643,7 +98643,7 @@
       "inputs": {
         "flake-compat": "flake-compat",
         "nixpkgs": [
-          "deckcheatz-tools",
+          "deckcheatz",
           "devenv",
           "cachix",
           "devenv",
@@ -113823,7 +113823,7 @@
     "nix-github-actions": {
       "inputs": {
         "nixpkgs": [
-          "deckcheatz-tools",
+          "deckcheatz",
           "devenv",
           "cachix",
           "devenv",
@@ -129709,12 +129709,12 @@
     "nix_2": {
       "inputs": {
         "flake-compat": [
-          "deckcheatz-tools",
+          "deckcheatz",
           "devenv",
           "flake-compat"
         ],
         "nixpkgs": [
-          "deckcheatz-tools",
+          "deckcheatz",
           "devenv",
           "nixpkgs"
         ],
@@ -147383,11 +147383,11 @@
     },
     "nixpkgs-master_90": {
       "locked": {
-        "lastModified": 1720880084,
-        "narHash": "sha256-Au6g23Krz/PD+VCLcy6DZFkjw7LqCcsuVsU59CDkcgc=",
+        "lastModified": 1720883907,
+        "narHash": "sha256-Ztcew9lXuvIMLJgpn9KTjmx54NRWhjM6B+LpsICj02A=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "e69524a79991048021fe710427c2dd2c5c01281a",
+        "rev": "cf7d1da0f0cae90d3e18b26cb7a25494fc816c4d",
         "type": "github"
       },
       "original": {
@@ -164764,7 +164764,7 @@
         "flake-utils": "flake-utils_3",
         "nix-github-actions": "nix-github-actions",
         "nixpkgs": [
-          "deckcheatz-tools",
+          "deckcheatz",
           "devenv",
           "cachix",
           "devenv",
@@ -167389,14 +167389,14 @@
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": [
-          "deckcheatz-tools",
+          "deckcheatz",
           "devenv",
           "flake-compat"
         ],
         "flake-utils": "flake-utils_4",
         "gitignore": "gitignore",
         "nixpkgs": [
-          "deckcheatz-tools",
+          "deckcheatz",
           "devenv",
           "nixpkgs"
         ],
@@ -186809,7 +186809,7 @@
       "inputs": {
         "agenix": "agenix",
         "android-nixpkgs": "android-nixpkgs",
-        "deckcheatz-tools": "deckcheatz-tools",
+        "deckcheatz": "deckcheatz",
         "deploy-rs": "deploy-rs",
         "devenv": "devenv_3",
         "flake-compat": "flake-compat_7",
@@ -215635,11 +215635,11 @@
         "poetry2nix": "poetry2nix_54"
       },
       "locked": {
-        "lastModified": 1720878733,
-        "narHash": "sha256-8oWgHLfAW7RUKrX0IYZdsdh+zhukNRFFDa/2kq6dW1E=",
+        "lastModified": 1720883301,
+        "narHash": "sha256-6B1MtXw9+8NPUEYLOxqraSD2XzZRgVN+6rgFxMKBLbI=",
         "owner": "shymega",
         "repo": "wemod-launcher",
-        "rev": "60073e176265e9878d263c1c5a476a5d856b292d",
+        "rev": "08191c9cf6df048ed06c593e46306061b57e547e",
         "type": "github"
       },
       "original": {
