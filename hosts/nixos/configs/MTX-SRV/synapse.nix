@@ -144,8 +144,6 @@ in
       };
       extraConfigFiles = [
         config.age.secrets.synapse_secret.path
-        ./synapse/tweaks.yaml
-        ./synapse/logging.yaml
       ];
     };
 
