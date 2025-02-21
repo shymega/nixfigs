@@ -2,9 +2,9 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
-  enableXanmod = false;
+  enableXanmod = true;
 in
 {
   imports = [ ./hardware-configuration.nix ../../../../modules/nixos/livestream.nix ];
