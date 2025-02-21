@@ -238,6 +238,7 @@ in
     };
     atuin = {
       enable = true;
+      package = pkgs.unstable.atuin;
       settings = {
         key_path = config.age.secrets.atuin_key.path;
         sync_address = "https://shynet-atuin-server.fly.dev";
