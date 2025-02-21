@@ -5,7 +5,7 @@
 { self, pkgs, ... }:
 let
   inherit (pkgs.stdenvNoCC) isLinux;
-  inherit (pkgs.lib) optionals;
+  inherit (pkgs.lib) optionals mkIf mkOption;
   isNixOS = builtins.pathExists "/etc/nixos" && builtins.pathExists "/nix" && isLinux;
 in
 {
