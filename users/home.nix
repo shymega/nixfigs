@@ -23,7 +23,6 @@
       awscli2
       bat
       bc
-      bitwarden
       brightnessctl
       cocogitto
       coreutils
@@ -56,14 +55,6 @@
       isync
       itd
       jdk17
-      jetbrains.clion
-      jetbrains.datagrip
-      jetbrains.gateway
-      jetbrains.goland
-      jetbrains.idea-ultimate
-      jetbrains.pycharm-professional
-      jetbrains.rider
-      jetbrains.webstorm
       jq
       just
       kodi-wayland
@@ -120,10 +111,21 @@
       zathura
       zip
       zoxide
-    ] ++ (lib.optionals pkgs.stdenv.isx86_64 [
+    ] ++ (lib.optionals pkgs.stdenv.isx86_64 (with pkgs.unstable; [
+      bitwarden
       gitkraken
+      jetbrains.clion
+      jetbrains.datagrip
+      jetbrains.gateway
+      jetbrains.goland
+      jetbrains.idea-ultimate
+      jetbrains.pycharm-professional
+      jetbrains.rider
+      jetbrains.webstorm
       steam-run
-    ]);
+    ])) ++ (lib.optionals pkgs.stdenv.isx86_64 (with pkgs.master; [
+      jetbrains.rust-rover
+    ]));
   };
 
   services = {
