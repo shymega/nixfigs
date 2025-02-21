@@ -13,6 +13,7 @@
       "user_dominic.rodriguez".file = ./user_dominic.rodriguez.age;
       geoclue_url.file = ./geoclue_url.age;
       zerotier_networks.file = ./zerotier_networks.age;
+      home_network_iot_p.file = ./home_network_iot_p.age;
     };
   };
 }

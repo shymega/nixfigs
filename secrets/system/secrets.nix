@@ -36,4 +36,5 @@ in
   "user_dominic.rodriguez.age".publicKeys = personal ++ rnet;
   "geoclue_url.age".publicKeys = personal-machines;
   "zerotier_networks.age".publicKeys = personal-machines;
+  "home_network_iot_p.age".publicKeys = personal-machines ++ rnet-machines;
 }
