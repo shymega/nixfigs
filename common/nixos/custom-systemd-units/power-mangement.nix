@@ -9,7 +9,7 @@ in
 {
   systemd = {
     services = {
-      desktop-power-maximum-tdp = lib.mkIf (hostName == "NEO-LINUX" || hostName == "MORPHEUS-LINUX") {
+      desktop-power-maximum-tdp = lib.mkIf (hostName == "MORPHEUS-LINUX") {
         description = "Change TDP to maximum TDP when on AC power";
         wantedBy = [ "multi-user.target" "ac.target" ];
         unitConfig = { RefuseManualStart = true; Requires = "ac.target"; };
@@ -24,7 +24,7 @@ in
 
       portable-power-saving-tdp = lib.mkIf (hostName == "MORPHEUS-LINUX") {
         description = "Change TDP to power saving TDP when on battery power";
-        wantedBy = [ "battery.target" ];
+        #        wantedBy = [ "battery.target" ];
         unitConfig = { RefuseManualStart = true; };
         path = with pkgs.unstable; [
           ryzenadj
