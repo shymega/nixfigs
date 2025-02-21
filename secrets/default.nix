@@ -14,6 +14,7 @@
       postfix_sender_relay.file = ./postfix_sender_relay.age;
       user_dzrodriguez.file = ./user_dzrodriguez.age;
       atuin_key.file = ./atuin_key.age;
+      geoclue_url.file = ./geoclue_url.age;
     };
   };
 }
