@@ -1,4 +1,4 @@
-{ disks ? [ "/dev/nvme0n1" ], swapsize ? "8GB", ... }:
+{ disks ? [ "/dev/nvme0n1" ], ... }:
 {
   disko.devices = {
     disk = {
