@@ -114,7 +114,6 @@ in
       aws-sam-cli
       awscli2
       azure-cli
-      emacsconf2nix
       gitkraken
       google-cloud-sdk
       isync-patched
