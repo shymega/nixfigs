@@ -7,11 +7,12 @@
 , pkgs
 , hostType
 , hostname
+, config
 , ...
 }:
 {
   imports =
-    [ ./core ]
+    [ (import ./core { inherit inputs lib pkgs hostname config; }) ]
     ++ (
       if hostType == "nixos" then
         [
