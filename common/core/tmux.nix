@@ -1,12 +1,12 @@
-# SPDX-FileCopyrightText: 2023 Dom Rodriguez <shymega@shymega.org.uk>
+# SPDX-FileCopyrightText: 2024 Dom Rodriguez <shymega@shymega.org.uk
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ pkgs, lib, ... }:
+#
+
+{ lib, ... }:
 let
-  inherit (pkgs.stdenvNoCC) isDarwin;
-  isNixOS = builtins.pathExists "/etc/nixos" && builtins.pathExists "/nix" && pkgs.stdenvNoCC.isLinux;
-  inherit (pkgs.stdenvNoCC) isLinux;
+  inherit (lib.my) isDarwin isNixOS isLinux;
 in
 {
   programs.tmux = {
