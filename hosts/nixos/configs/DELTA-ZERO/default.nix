@@ -8,7 +8,7 @@
 , ...
 }:
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [ ./hardware-configuration.nix ./synapse.nix ];
 
   time.timeZone = "Europe/London";
 
@@ -61,16 +61,40 @@
       bantime = "30m";
       bantime-increment.enable = true;
     };
-    resolved = {
+    resolved.enable = lib.mkForce false;
+    unbound = {
       enable = true;
-      dnsovertls = "opportunistic";
-      fallbackDns = [
-        "1.1.1.1"
-        "1.0.0.1"
-      ];
-      extraConfig = ''
-        DNS=1.1.1.1#1dot1dot1dot1.cloudflare-dns.com 1.0.0.1#1dot1dot1dot1.cloudflare-dns.com 2606:4700:4700::1111#1dot1dot1dot1.cloudflare-dns.com 2606:4700:4700::1001#1dot1dot1dot1.cloudflare-dns.com
-      '';
+      settings = {
+        remote-control.control-enable = true;
+        server = {
+          # When only using Unbound as DNS, make sure to replace 127.0.0.1 with your ip address
+          # When using Unbound in combination with pi-hole or Adguard, leave 127.0.0.1, and point Adguard to 127.0.0.1:PORT
+          interface = [ "127.0.0.1" ];
+          port = 53;
+          access-control = [ "127.0.0.1 allow" ];
+          # Based on recommended settings in https://docs.pi-hole.net/guides/dns/unbound/#configure-unbound
+          harden-glue = true;
+          harden-dnssec-stripped = true;
+          use-caps-for-id = false;
+          prefetch = true;
+          edns-buffer-size = 1232;
+
+          # Custom settings
+          hide-identity = true;
+          hide-version = true;
+        };
+        forward-zone = [
+          # Example config with quad9
+          {
+            name = ".";
+            forward-addr = [
+              "8.8.8.8#dns.google"
+              "8.8.4.4#dns.google"
+            ];
+            forward-tls-upstream = true; # Protected DNS
+          }
+        ];
+      };
     };
   };
 
