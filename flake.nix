@@ -219,6 +219,9 @@
     dzr-taskwarrior-recur.url = "github:shymega/dzr-taskwarrior-recur";
     emacsconf2nix.url = "github:shymega/emacsconf2nix";
     nix-doom-emacs-unstraightened.url = "github:marienz/nix-doom-emacs-unstraightened";
+    cosmo-codios-codid.url = "github:cosmo-codios/codid";
+    ei-wlroots-proxy.url = "github:input-leap/ei-wlroots-proxy";
+    input-leap-shymega.url = "github:shymega/input-leap/feature/nix-support";
     nix-gaming.url = "github:fufexan/nix-gaming";
     treefmt-nix.url = "github:numtide/treefmt-nix";
     wemod-launcher.url = "github:shymega/wemod-launcher/refactor-shymega";
