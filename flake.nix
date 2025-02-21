@@ -125,10 +125,6 @@
       url = "github:NixOS/flake-registry";
       flake = false;
     };
-    dwl-source = {
-      url = "https://codeberg.org/dwl/dwl";
-      flake = false;
-    };
     auto-cpufreq = {
       url = "github:AdnanHodzic/auto-cpufreq/a1ac308be7b558f85c91a6a3e86cbc0cebdadbbc";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -220,11 +216,16 @@
     deckcheatz.url = "github:deckcheatz/deckcheatz/develop";
     dzr-taskwarrior-recur.url = "github:shymega/dzr-taskwarrior-recur";
     emacsconf2nix.url = "github:shymega/emacsconf2nix";
-    flake-parts.url = "github:hercules-ci/flake-parts";
     nix-doom-emacs-unstraightened.url = "github:marienz/nix-doom-emacs-unstraightened";
     nix-gaming.url = "github:fufexan/nix-gaming";
     treefmt-nix.url = "github:numtide/treefmt-nix";
     wemod-launcher.url = "github:shymega/wemod-launcher/refactor-shymega";
     proxmox-nixos.url = "github:shymega/proxmox-nixos/shymega";
+    nixfigs-doom-emacs = {
+      url = "github:shymega/nixfigs-doom-emacs";
+      flake = false;
+    };
+    shypkgs-private.url = "github:shymega/shypkgs-private";
+    shypkgs-public.url = "github:shymega/shypkgs-public";
   };
 }
