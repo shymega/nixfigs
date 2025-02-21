@@ -204,7 +204,7 @@
     };
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-generators";
     };
     aimu.url = "github:shymega/aimu/refactor-shymega";
     base16-schemes.url = "github:SenchoPens/base16.nix";
