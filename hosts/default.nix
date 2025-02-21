@@ -331,10 +331,10 @@ in
     deployable = false;
   };
 
-  BUILDHOST-DOCKER = mkHost {
+  BUILDHOST-CONTAINER = mkHost {
     type = "nixos";
     address = "hydra.shymega.org.uk";
-    hostname = "BUILDHOST-DOCKER";
+    hostname = "BUILDCONTAINER-DOCKER";
     username = "dzrodriguez";
     baseModules = [ inputs.agenix.nixosModules.default ];
     monolithConfig = false;
@@ -344,6 +344,21 @@ in
     remoteBuild = true;
     deployable = false;
   };
+
+  BUILDER-CONTAINER = mkHost {
+    type = "nixos";
+    address = "builder.shymega.org.uk";
+    hostname = "BUILDER-CONTAINER";
+    username = "dzrodriguez";
+    baseModules = [ inputs.agenix.nixosModules.default ];
+    monolithConfig = false;
+    hostPlatform = "x86_64-linux";
+    hostRole = "server";
+    pubkey = "";
+    remoteBuild = true;
+    deployable = false;
+  };
+
 
   "dzrodriguez@x86_64-linux" = mkHost {
     type = "home-manager";
