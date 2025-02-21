@@ -37,7 +37,7 @@
     dwl-source.flake = false;
     nur.url = "github:nix-community/NUR";
     devenv.url = "github:cachix/devenv/latest";
-    hardware.url = "github:shymega/nixos-hardware/24.05-compat-add-1";
+    hardware.url = "github:NixOS/nixos-hardware";
     impermanence.url = "github:nix-community/impermanence";
     nixos-wsl = {
       url = "github:nix-community/nixos-wsl";
