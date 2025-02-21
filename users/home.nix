@@ -130,6 +130,8 @@ in
       lutris
       protontricks
       protonup-qt
+      steamcmd
+      steamtinkerlaunch
       weechatWithMyPlugins
       wineWowPackages.stable
       winetricks
