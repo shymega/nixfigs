@@ -40,6 +40,11 @@ in
         {
           description = "Auto-tune Power Management with powertop";
           unitConfig = { RefuseManualStart = true; };
+          wantedBy = [
+            "ac.target"
+            "multi-user.target"
+            "battery.target"
+          ];
           path = with pkgs; [
             powertop
           ];
