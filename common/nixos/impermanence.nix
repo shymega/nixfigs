@@ -17,6 +17,7 @@
       [
         "/etc/NetworkManager/system-connections"
         "/etc/secureboot"
+        "/etc/leafnode"
         "/opt"
         "/root"
         "/usr/local"
@@ -26,6 +27,7 @@
         "/var/lib/bluetooth"
         "/var/lib/cni"
         "/var/lib/containers"
+        "/var/spool/leafnode"
         "/var/lib/docker"
         "/var/lib/flatpak"
         "/var/lib/libvirt"
