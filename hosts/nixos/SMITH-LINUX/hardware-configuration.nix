@@ -36,7 +36,7 @@
   fileSystems = {
     "/" =
       {
-        device = "/dev/disk/by-label/NIXOS";
+        device = "/dev/disk/by-label/NIXOS_SD";
         fsType = "xfs";
         neededForBoot = true;
       };
