@@ -45,7 +45,7 @@ let
           ];
         }
         ../common
-        ../secrets/system
+        inputs.nixfigs-secrets.system
       ]
     , monolithConfig ? true
     , overlays ? [ ]
@@ -376,7 +376,7 @@ in
     address = "hydra.shymega.org.uk";
     hostname = "BUILDER-HYDRA-CONTAINER";
     username = "dzrodriguez";
-    baseModules = [ inputs.agenix.nixosModules.default ];
+    baseModules = [ inputs.agenix.nixosModules.default inputs.nixfigs-secrets.system ];
     monolithConfig = false;
     hostPlatform = "x86_64-linux";
     hostRoles = [ "server" ];
@@ -390,7 +390,7 @@ in
     address = "builder.shymega.org.uk";
     hostname = "BUILDER-CONTAINER";
     username = "dzrodriguez";
-    baseModules = [ inputs.agenix.nixosModules.default ];
+    baseModules = [ inputs.agenix.nixosModules.default inputs.nixfigs-secrets.system ];
     monolithConfig = false;
     hostPlatform = "x86_64-linux";
     hostRoles = [ "server" ];
@@ -415,7 +415,7 @@ in
     type = "nixos";
     address = "dzr-office-busy-light-unit.rnet.rodriguez.org.uk";
     username = "dzrodriguez";
-    baseModules = [ ../common ../secrets/system ];
+    baseModules = [ ../common inputs.nixfigs-secrets.system ];
     hostPlatform = "armv6l-linux";
     remoteBuild = true;
     deployable = false;
@@ -436,7 +436,7 @@ in
     type = "nixos";
     address = "dzr-pets-cam-unit.rnet.rodriguez.org.uk";
     username = "dzrodriguez";
-    baseModules = [ ../common ../secrets/system ];
+    baseModules = [ ../common inputs.nixfigs-secrets.system ];
     hostPlatform = "armv6l-linux";
     remoteBuild = true;
     deployable = false;
@@ -589,6 +589,4 @@ in
       "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
     ];
   }; # TODO: Add Headscale as domain?
-
-
 }
