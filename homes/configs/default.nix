@@ -559,10 +559,6 @@ in
   xdg = {
     enable = true;
     configFile = {
-      "doom" = {
-        source = inputs.nixfigs-doom-emacs;
-        recursive = true;
-      };
       "emacs.src/doom-emacs" = {
         source = inputs.doom-emacs-src;
         recursive = true;
