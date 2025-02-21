@@ -3,7 +3,6 @@ let
   configs = self.nixosConfigurations;
 in
 {
-  x86_64-linux = {
-    MTX-SRV = configs.MTX-SRV.config.formats.proxmox-lxc;
-  };
+  MTX-SRV = configs.MTX-SRV.config.formats.proxmox-lxc;
+  INSTALLER-SERVER-ISO = configs.INSTALLER-SERVER-ISO.config.formats.install-iso;
 }
