@@ -10,6 +10,7 @@
       "/etc/NetworkManager/system-connections"
       "/usr/local"
       "/var/lib/NetworkManager"
+      "/root"
       "/var/lib/bluetooth"
       "/var/lib/cni"
       "/var/lib/containers"
