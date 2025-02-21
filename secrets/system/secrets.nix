@@ -52,4 +52,9 @@ in
   "nixbuild_ssh_pub_key.age".publicKeys = personal-machines ++ rnet-machines;
   "matrix-sliding-sync-env.age".publicKeys = personal-machines ++ rnet-machines;
   "nix_conf_access_tokens.age".publicKeys = personal ++ rnet;
+  "restic/env.age".publicKeys = personal ++ rnet;
+  "restic/repo.age".publicKeys = personal ++ rnet;
+  "restic/pw.age".publicKeys = personal ++ rnet;
+
+
 }
