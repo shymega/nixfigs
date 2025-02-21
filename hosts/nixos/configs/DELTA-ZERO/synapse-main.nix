@@ -3,30 +3,13 @@
 {
   # Worker plumbing examples: https://github.com/element-hq/synapse/blob/master/docker/configure_workers_and_start.py
   # Documentation: https://github.com/element-hq/synapse/blob/develop/docs/workers.md
-  imports = [ ./workers ];
+#  imports = [ ./workers ];
 
   services.matrix-synapse = {
     enable = true;
     withJemalloc = true;
 
     nginxVirtualHostName = "matrix.rodriguez.org.uk";
-    enableWorkers = true;
-
-    federationSenders = 16;
-    pushers = 1;
-    mediaRepoWorkers = 4;
-    clientReaders = 4;
-    syncWorkers = 4;
-    authWorkers = 1;
-
-    federationReaders = 8;
-    federationInboundWorkers = 8;
-
-    enableAppserviceWorker = true;
-    enableBackgroundWorker = true;
-    enableUserDirWorker = true;
-
-    eventStreamWriters = 8;
 
     extraConfigFiles = [
       config.age.secrets.synapse_secret.path
@@ -94,16 +77,6 @@
                 "client"
                 "federation"
               ];
-              compress = false;
-            }
-          ];
-        }
-        {
-          type = "http";
-          path = "/run/matrix-synapse/main.sock";
-          resources = [
-            {
-              names = [ "replication" ];
               compress = false;
             }
           ];
