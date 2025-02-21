@@ -14,7 +14,7 @@
     htop
     ifuse
     iw
-    libimobiledeviec
+    libimobiledevice
     lm_sensors
     nano
     nvme-cli
