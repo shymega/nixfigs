@@ -104,6 +104,7 @@
         CLOCKWORK-UC-CM4 = self.nixosConfigurations.CLOCKWORK-UC-CM4.config.system.build.sdImage;
         all = SMITH-LINUX // GRDN-BED-UNIT // DZR-OFFICE-BUSY-LIGHT-UNIT // DZR-PETS-CAM-UNIT // CLOCKWORK-DT-CM4 // CLOCKWORK-UC-CM4;
       };
+      packages = import ./nix/generators.nix { inherit inputs self; };
     };
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
