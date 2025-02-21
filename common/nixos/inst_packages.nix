@@ -5,7 +5,6 @@
 { pkgs, ... }: {
   environment.systemPackages = with pkgs.unstable; [
     acpi
-    ryzenadj
     curl
     encfs
     fido2luks
@@ -13,16 +12,19 @@
     git
     gnupg
     htop
+    ifuse
     iw
+    libimobiledeviec
     lm_sensors
     nano
     nvme-cli
     pciutils
     powertop
+    ryzenadj
     smartmontools
     solo2-cli
-    tmux
     syncthing
+    tmux
     usbutils
     wget
   ];
