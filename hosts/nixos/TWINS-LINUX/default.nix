@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ pkgs, lib, config, inputs, ... }:
+{ pkgs, lib, config, ... }:
 
 {
   networking.hostName = "TWINS-LINUX";
