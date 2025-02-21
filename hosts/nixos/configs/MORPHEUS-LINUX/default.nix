@@ -117,6 +117,7 @@ in
   hardware = {
     opengl = {
       enable = true;
+      driSupport32Bit = true;
       extraPackages = with pkgs; [
         rocm-opencl-icd
         vaapiVdpau
@@ -128,6 +129,14 @@ in
     i2c.enable = true;
     sensor.iio.enable = true;
     cpu.amd.ryzen-smu.enable = true;
+    graphics = {
+      extraPackages = with pkgs; [
+        amdvlk
+      ];
+      extraPackages32 = with pkgs; [
+        driversi686Linux.amdvlk
+      ];
+    };
   };
 
   boot.binfmt.emulatedSystems = [
