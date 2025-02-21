@@ -60,8 +60,7 @@ in
             options -nointerrupt -nomap -noversion HD0f:EFI\BOOT\BOOTX64.EFI
           '';
           "shell.conf" = ''
-            title
-            Shell.efi
+            title UEFI shell
             efi /EFI/SHELL/SHELLX64.EFI
           '';
         };
