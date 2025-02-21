@@ -16,8 +16,6 @@ inputs.git-hooks.lib.${system}.run {
     nixpkgs-fmt.enable = true;
     prettier.enable = true;
     yamlfmt.enable = true;
-    shellcheck.enable = true;
-    shfmt.enable = true;
     actionlint.enable = true;
   };
 }
