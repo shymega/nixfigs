@@ -17,8 +17,8 @@
 
       desktopManager = {
         plasma5.enable = true;
-        cinnamon.enable = true;
-        gnome.enable = true;
+        cinnamon.enable = false;
+        gnome.enable = false;
       };
       xkb.layout = "us";
     };
