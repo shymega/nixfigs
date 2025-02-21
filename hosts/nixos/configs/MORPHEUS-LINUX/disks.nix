@@ -14,22 +14,20 @@
       fsType = "zfs";
     };
 
-    "/data/AI" = {
-      device = "zdata/crypt/shared/ai";
-      fsType = "zfs";
+    "/home/dzrodriguez/Games" = {
+      depends = [ "/data/Games" ];
+      device = "/data/Games";
+      fsType = "none";
       neededForBoot = true;
+      options = [ "bind" "uid=1000" "gid=100" ];
     };
 
-    "/data/VMs" = {
-      device = "zdata/crypt/shared/virtual";
-      fsType = "zfs";
+    "/home/dzrodriguez/dev" = {
+      depends = [ "/data/Development" ];
+      device = "/data/Development";
+      fsType = "none";
       neededForBoot = true;
-    };
-
-    "/data/Development" = {
-      device = "zdata/crypt/shared/dev";
-      fsType = "zfs";
-      neededForBoot = true;
+      options = [ "bind" "uid=1000" "gid=100" ];
     };
 
     "/home" = {
@@ -53,7 +51,7 @@
     "/guix" = {
       device = "zroot/crypt/root/nixos/linux/local/guix-store";
       fsType = "zfs";
-      neededForBoot = true;
+      neededForBoot = false;
     };
 
     "/persist" = {
@@ -76,7 +74,7 @@
     "/boot/efi" = {
       device = "/dev/disk/by-label/ESP";
       fsType = "vfat";
-      neededForBoot = true;
+      neededForBoot = false;
       options = [
         "fmask=0022"
         "dmask=0022"
