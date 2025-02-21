@@ -31,7 +31,6 @@ in
     packages = with pkgs.unstable; [
       android-tools
       ansible
-      asciinema
       atuin
       b4
       bat
@@ -88,7 +87,6 @@ in
       python3Full
       python3Packages.pip
       python3Packages.pipx
-      python3Packages.tkinter
       python3Packages.virtualenv
       q
       qemu_full
