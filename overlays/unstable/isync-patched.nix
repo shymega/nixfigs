@@ -2,8 +2,8 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-final: prev: {
-  isync-patched = prev.isync.overrideAttrs (oldAttrs: rec {
+_final: prev: {
+  isync-patched = prev.isync.overrideAttrs (_oldAttrs: rec {
     pname = "isync";
     version = "1.5.0";
     src = prev.fetchurl {
