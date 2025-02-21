@@ -11,7 +11,6 @@ let
     , nixpkgs ? inputs.nixpkgs
     , baseModules ? [
         ../common/home-manager
-        ../common/core
       ]
     , extraHomeModules ? [ ]
     }:
