@@ -127,7 +127,7 @@ in
       awscli2
       azure-cli
       google-cloud-sdk
-      isync-xoauth2
+      isync-patched
       weechatWithMyPlugins
     ]) ++ (lib.optionals pkgs.stdenv.isx86_64 (with pkgs.unstable; [
       bitwarden
