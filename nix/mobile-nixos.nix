@@ -12,7 +12,7 @@ let
         ../common/android/mobile-nixos
       ]
     , mobileNixosModules ? [ ]
-    , homeModules ? [ mkHomeManagerConfig {} ]
+    , homeModules ? [ mkHomeManagerConfig { } ]
     , extraModules ? [ ]
     }: inputs.nixpkgs.lib.nixosSystem {
       pkgs = import nixpkgs {

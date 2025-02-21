@@ -12,7 +12,7 @@ let
         ../common/wsl
         ../common/core
       ]
-    , homeModules ? [ mkHomeManagerConfig {} ]
+    , homeModules ? [ mkHomeManagerConfig { } ]
     , extraModules ? [ ]
     }:
     inputs.nixpkgs.lib.nixosSystem {
