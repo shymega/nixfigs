@@ -12,7 +12,6 @@
   environment.systemPackages = with pkgs; [
     tmux
     vim
-    libraspberrypi
     raspberrypi-eeprom
     nixpkgs-fmt
   ];
