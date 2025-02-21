@@ -1,6 +1,8 @@
-# SPDX-FileCopyrightText: 2023 Dom Rodriguez <shymega@shymega.org.uk>
+# SPDX-FileCopyrightText: 2024 Dom Rodriguez <shymega@shymega.org.uk
 #
 # SPDX-License-Identifier: GPL-3.0-only
+
+#
 
 { config, lib, ... }:
 let
@@ -12,10 +14,12 @@ in
       chown-data = lib.mkIf (hostName == "NEO-LINUX") {
         description = "Change permissions on /data";
         wantedBy = [ "multi-user.target" ];
-        unitConfig = { RefuseManualStart = true; };
+        unitConfig = {
+          RefuseManualStart = true;
+        };
         serviceConfig.Type = "oneshot";
         script = ''
-          	  chown -R 1000:100 /data
+          chown -R 1000:100 /data
         '';
       };
     };
