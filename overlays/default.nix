@@ -26,6 +26,7 @@ let
     inputs.deckcheatz.overlays.default
     inputs.dzr-taskwarrior-recur.overlays.default
     inputs.emacs2nixpkg.overlays.default
+    inputs.jovian-nixos.overlays.default
     inputs.nix-alien.overlays.default
     inputs.nur.overlay
     inputs.wemod-launcher.overlays.default
