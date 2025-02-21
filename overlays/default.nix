@@ -29,8 +29,12 @@ let
     inputs.jovian-nixos.overlays.default
     inputs.nix-alien.overlays.default
     inputs.nur.overlay
+    inputs.shypkgs-public.overlays.default
     inputs.wemod-launcher.overlays.default
-  ];
+  ] ++ (if inputs.shypkgs-private != null then
+    [ inputs.shypkgs-private.overlays.default ]
+  else
+    [ ]);
 
   customOverlays = [
     #    (import ./master.nix { inherit inputs lib; })
