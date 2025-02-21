@@ -122,7 +122,6 @@
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixpkgs-shymega.url = "github:shymega/nixpkgs/shymega/staging";
-    nixpkgs-generators.url = "github:shymega/nixpkgs/nixos-generator-fixes";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     flake-registry = {
       url = "github:NixOS/flake-registry";
@@ -211,7 +210,7 @@
     };
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
-      inputs.nixpkgs.follows = "nixpkgs-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     aimu.url = "github:shymega/aimu/refactor-shymega";
     base16-schemes.url = "github:SenchoPens/base16.nix";
