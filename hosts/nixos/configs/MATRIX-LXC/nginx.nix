@@ -46,36 +46,38 @@ in
       forceSSL = true;
       enableACME = true;
       # forward all Matrix API calls to synapse
-      locations."/_matrix" = {
-        proxyPass = "http://127.0.0.1:8008";
-        extraConfig = ''
-          proxy_connect_timeout       300;
-          proxy_send_timeout          300;
-          proxy_read_timeout          300;
-          send_timeout                300;
-        '';
+      locations = {
+        "/_matrix" = {
+          proxyPass = "http://127.0.0.1:8008";
+          extraConfig = ''
+            proxy_connect_timeout       300;
+            proxy_send_timeout          300;
+            proxy_read_timeout          300;
+            send_timeout                300;
+          '';
+        };
+        "/_synapse" = {
+          proxyPass = "http://127.0.0.1:8008";
+          extraConfig = ''
+            proxy_connect_timeout       300;
+            proxy_send_timeout          300;
+            proxy_read_timeout          300;
+            send_timeout                300;
+          '';
+        };
+        "~ ^/(client/|_matrix/client/unstable/org.matrix.msc3575/sync)" = {
+          proxyPass = "http://127.0.0.1:8009";
+          extraConfig = ''
+            proxy_connect_timeout       300;
+            proxy_send_timeout          300;
+            proxy_read_timeout          300;
+            send_timeout                300;
+          '';
+        };
+        "= /.well-known/matrix/server".extraConfig = mkWellKnown serverConfig;
+        "= /.well-known/matrix/client".extraConfig = mkWellKnown clientConfig;
+        "= /".return = "404";
       };
-      locations."/_synapse" = {
-        proxyPass = "http://127.0.0.1:8008";
-        extraConfig = ''
-          proxy_connect_timeout       300;
-          proxy_send_timeout          300;
-          proxy_read_timeout          300;
-          send_timeout                300;
-        '';
-      };
-      locations."~ ^/(client/|_matrix/client/unstable/org.matrix.msc3575/sync)" = {
-        proxyPass = "http://127.0.0.1:8009";
-        extraConfig = ''
-          proxy_connect_timeout       300;
-          proxy_send_timeout          300;
-          proxy_read_timeout          300;
-          send_timeout                300;
-        '';
-      };
-      locations."= /.well-known/matrix/server".extraConfig = mkWellKnown serverConfig;
-      locations."= /.well-known/matrix/client".extraConfig = mkWellKnown clientConfig;
-      locations."= /".return = "404";
     };
   };
 }
