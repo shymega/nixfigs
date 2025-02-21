@@ -31167,11 +31167,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1721043637,
-        "narHash": "sha256-DmFMBPaOucIrbpfmC5jVzFohcKkqIPzA/d9tMSVSr0o=",
+        "lastModified": 1721044071,
+        "narHash": "sha256-bZw4OLswFcYRejItO/Ix1DAraqxkre2MLUtAjsH3Cjg=",
         "owner": "deckcheatz",
         "repo": "deckcheatz",
-        "rev": "94ea899b486ee398ca27405a4c901d36c4370116",
+        "rev": "322f3e61221622064579b4cd8728c2cd88dd2f94",
         "type": "github"
       },
       "original": {
@@ -147419,11 +147419,11 @@
     },
     "nixpkgs-master_90": {
       "locked": {
-        "lastModified": 1721043288,
-        "narHash": "sha256-5qHnNNx0xomWHrkqDCQ/2fo4xnpv/dUAo9ziYhGd91w=",
+        "lastModified": 1721044682,
+        "narHash": "sha256-g8ObXRaJ0a9WC4rvHhkXfOiSthz0GM0sB9WfrFtT2Ao=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "1a4a4cf4d4f392cf12e3eb63bed16ca80b7859f8",
+        "rev": "6e046cd978d6007df654e3626ba3bdf6b743339c",
         "type": "github"
       },
       "original": {
