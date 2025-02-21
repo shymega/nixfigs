@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 { inputs, lib, ... }:
-final: prev:
+_final: prev:
 let
   importShymegaOverlay = overlay:
     lib.composeExtensions

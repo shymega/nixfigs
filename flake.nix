@@ -144,16 +144,6 @@
     let
       inherit (inputs.nixpkgs) lib;
 
-      inherit (inputs.nixpkgs.stdenvNoCC) isDarwin;
-      inherit (inputs.nixpkgs.stdenvNoCC) isLinux;
-      isNixOS = builtins.pathExists "/etc/nixos" && builtins.pathExists "/nix" && isLinux;
-      isForeignNix = !isNixOS && isLinux && builtins.pathExists "/nix";
-      homePrefix =
-        if isDarwin then
-          "/Users"
-        else
-          "/home";
-
       # TODO: Add RISC-V - specific Cache, and Nixpkgs. For Pine64/other RISC-V SoCs.
       forAllUpstreamSystems = inputs.nixpkgs.lib.genAttrs [
         "aarch64-darwin"
