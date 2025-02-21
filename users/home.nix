@@ -53,6 +53,7 @@ in
       distrobox
       dogdns
       encfs
+      exiftool
       expect
       eza
       firefox
@@ -64,6 +65,7 @@ in
       gpicview
       httpie
       hub
+      imagemagick
       inetutils
       itd
       jdk17
@@ -86,6 +88,7 @@ in
       parallel
       pass
       pavucontrol
+      pdftk
       poetry
       poppler_utils
       pre-commit
@@ -132,7 +135,9 @@ in
       aws-sam-cli
       awscli2
       azure-cli
+      bestool
       dwl
+      emacsconf2nix
       gitkraken
       google-cloud-sdk
       isync-patched
@@ -186,7 +191,7 @@ in
       client.enable = true;
       startWithUserSession = true;
       socketActivation.enable = true;
-      package = pkgs.emacs29-pgtk;
+      package = pkgs.unstable.emacs29-pgtk;
     };
     mpd = {
       enable = true;
