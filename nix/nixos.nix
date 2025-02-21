@@ -121,6 +121,14 @@ in
 
   # End Laptop (ThinkPad X270) ##
 
+  GRDN-BED-UNIT = mkNixosConfig {
+    hostname = "GRDN-BED-UNIT";
+    system = "aaarch64-linux";
+    extraModules = [
+      ../hosts/nixos/configuration.nix
+    ];
+  };
+
   ### Handhelds ###
 
   ## Gaming Handheld (Steam Deck (OLED/1TB)) ##
