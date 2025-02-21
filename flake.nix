@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 {
-  description = "shymega's Nix config";
+  description = "@shymega's system Flake";
 
   nixConfig = {
     extra-trusted-substituters = [
