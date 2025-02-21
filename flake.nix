@@ -161,7 +161,7 @@
         inherit (inputs.nixpkgs.lib.attrsets) filterAttrs;
         workHostname = "ct-lt-2671";
         pred = n: v: let
-          system = v.pkgs.system;
+          inherit (v.pkgs) system;
         in
           (system == "aarch64-linux" || system == "x86_64-linux") && n != workHostname;
       in
