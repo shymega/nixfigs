@@ -197,5 +197,6 @@
       homeConfigurations = import ./nix/home-manager.nix { inherit self inputs pkgs; };
       nixOnDroidConfigurations = import ./nix/nix-on-droid.nix { inherit self inputs pkgs; };
       darwinConfigurations = import ./nix/darwin.nix { inherit self inputs pkgs; };
+      secrets = import ./secrets;
     };
 }
