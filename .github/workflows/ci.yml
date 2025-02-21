@@ -30,7 +30,7 @@ jobs:
         with:
           github_access_token: ${{ secrets.NIX_GH_ACTIONS_TOKEN }}
       - name: Update Flake lockfile
-        run: nix flake update --accept-flake-config
+        run: nix flake update --accept-flake-config --impure
       - name: Commit changes to lockfile
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
@@ -71,4 +71,4 @@ jobs:
         with:
           github_access_token: ${{ secrets.NIX_GH_ACTIONS_TOKEN }}
       - name: Check Flake with Nix
-        run: nix flake check --all-systems --accept-flake-config
+        run: nix flake check --all-systems --accept-flake-config --impure
