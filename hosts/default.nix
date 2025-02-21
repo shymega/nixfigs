@@ -37,7 +37,6 @@ let
     , username ? "dzrodriguez"
     , baseModules ? [
         inputs.agenix.nixosModules.default
-        inputs.nix-ld.nixosModules.nix-ld
         inputs.auto-cpufreq.nixosModules.default
         {
           environment.systemPackages = [
