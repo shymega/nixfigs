@@ -36,6 +36,10 @@ jobs:
         with:
           branch: ${{ github.ref_name }}
           commit_message: "chore(lockfile): Update Flake lockfile"
+          commit_user_name: "github-actions[bot]"
+          commit_user_email: "41898282+github-actions[bot]@users.noreply.github.com"
+          commit_author: "41898282+github-actions[bot]@users.noreply.github.com"
+
   format-flake:
     if: ${{ github.event_name == 'push' }}
     permissions:
@@ -53,6 +57,10 @@ jobs:
         with:
           branch: ${{ github.ref_name }}
           commit_message: "chore(lint): Format Nix files"
+          commit_user_name: "github-actions[bot]"
+          commit_user_email: "41898282+github-actions[bot]@users.noreply.github.com"
+          commit_author: "41898282+github-actions[bot]@users.noreply.github.com"
+
   check-flake:
     if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
