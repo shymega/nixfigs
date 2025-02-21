@@ -42,7 +42,7 @@
           };
           credentialsFile = "/var/lib/cloudflared/5da5dbaf-7519-466b-bc94-49ad85cbf05d.json";
           default = "http_status:404";
-          credentialsFile = "/var/lib/cloudflared/cbd977f4-46c2-4b8a-bd4f-ad3a30a16b8d.json";
+          credentialsFile = "/var/lib/cloudflared/5da5dbaf-7519-466b-bc94-49ad85cbf05d.json";
         };
         "8b244c80-6329-4c5f-84c1-4c7e79e737da" = {
           ingress = {
