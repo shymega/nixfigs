@@ -9,7 +9,7 @@ in
 {
   systemd = {
     services = {
-      desktop-power-maximum-tdp = lib.mkIf (hostName == "MORPHEUS-LINUX") {
+      desktop-power-maximum-tdp = lib.mkIf (hostName == "NEO-LINUX" || hostName == "MORPHEUS-LINUX") {
         description = "Change TDP to maximum TDP when on AC power";
         wantedBy = [ "multi-user.target" "ac.target" ];
         unitConfig = { RefuseManualStart = true; Requires = "ac.target"; };
@@ -24,14 +24,14 @@ in
 
       portable-power-saving-tdp = lib.mkIf (hostName == "MORPHEUS-LINUX") {
         description = "Change TDP to power saving TDP when on battery power";
-        #        wantedBy = [ "battery.target" ];
+        wantedBy = [ "battery.target" ];
         unitConfig = { RefuseManualStart = true; };
         path = with pkgs.unstable; [
           ryzenadj
         ];
         serviceConfig.Type = "oneshot";
         script = ''
-          ryzenadj --tctl-temp=97 --stapm-limit=8000 --fast-limit=8000 --stapm-time=500 --slow-limit=8000 --slow-time=30 --vrmmax-current=70000
+          ryzenadj --tctl-temp=97 --stapm-limit=7000 --fast-limit=7000 --stapm-time=500 --slow-limit=7000 --slow-time=30 --vrmmax-current=70000
         '';
       };
 
@@ -53,23 +53,6 @@ in
             powertop --auto-tune
           '';
         };
-
-      gpd-wm2-2024-fixes = lib.mkIf (hostName == "MORPHEUS-LINUX") {
-        description = "Fix hw on GPD WM2 2024";
-        wantedBy = [
-          "ac.target"
-          "multi-user.target"
-          "battery.target"
-        ];
-        path = with pkgs.unstable; [
-          coreutils
-          bash
-        ];
-        serviceConfig.Type = "oneshot";
-        script = ''
-          echo 1 > /sys/bus/usb/devices/usb1/1-4/authorized
-        '';
-      };
 
       "inhibit-suspension@" = {
         description = "Inhibit suspension for one hour";
