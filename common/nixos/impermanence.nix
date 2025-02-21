@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ inputs, ... }: {
+{ inputs, lib, config, ... }: {
   imports = [ inputs.impermanence.nixosModules.impermanence ];
 
   environment.persistence."/persist" = {
@@ -12,6 +12,7 @@
       "/var/lib/NetworkManager"
       "/root"
       "/opt"
+    ] ++ lib.optionals (config.networking.hostName == "NEO-LINUX") [
       "/var/lib/bluetooth"
       "/var/lib/cni"
       "/var/lib/containers"
