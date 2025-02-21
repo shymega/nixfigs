@@ -92,10 +92,23 @@
   hardware = {
     opengl = {
       enable = true;
-      driSupport = true;
-      driSupport32Bit = true;
+      driSupport = false;
+      driSupport32Bit = false;
+      extraPackages = pkgs.lib.mkForce (with pkgs; [
+        amdvlk
+        unstable.rocmPackages.clr
+      ]);
+      extraPackages32 = with pkgs; [
+        driversi686Linux.amdvlk
+      ];
     };
   };
+
+  environment.systemPackages = with pkgs.unstable; [
+    (ollama.override {
+      acceleration = "rocm";
+    })
+  ];
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
