@@ -5,13 +5,14 @@
 #
 
 { lib
+, libx
 , self
 , config
 , pkgs
 , ...
 }:
 let
-  inherit (lib.my) isNixOS;
+  inherit (libx) isNixOS;
   inherit (pkgs.lib) optionals hasSuffix;
 in
 {
