@@ -54,12 +54,12 @@
       nixbuild_ssh_pub_key = {
         file = ./nixbuild_ssh_pub_key.age;
         group = "users";
-        mode = "0640";
+        mode = "0600";
       };
       nixbuild_ssh_priv_key = {
         file = ./nixbuild_ssh_priv_key.age;
         group = "users";
-        mode = "0640";
+        mode = "0600";
       };
       matrix-sliding-sync-env = {
         file = ./matrix-sliding-sync-env.age;
