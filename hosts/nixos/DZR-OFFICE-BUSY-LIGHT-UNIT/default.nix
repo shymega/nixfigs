@@ -2,11 +2,13 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ inputs, config, pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
 {
   imports = [ ./hardware-configuration.nix ];
-  nixpkgs.hostPlatform.system = "armv6l-linux";
-  nixpkgs.buildPlatform.system = "x86_64-linux";
+
+  nixpkgs.system = "armv6l-linux";
+  nixpkgs.crossSystem = lib.systems.elaborate lib.systems.examples.raspberryPi;
+
   # https://github.com/NixOS/nixpkgs/issues/154163#issuecomment-1350599022
   nixpkgs.overlays = [
     (final: super: {
