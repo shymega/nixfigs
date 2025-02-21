@@ -142,6 +142,7 @@ in
     package = pkgs.steam.override {
       extraPkgs = pkgs:
         with pkgs; [
+          deckcheatz
           protontricks
           protonup-qt
           python3Full
