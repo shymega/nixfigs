@@ -1,11 +1,6 @@
 { pkgs, lib, config, inputs, ... }:
 
 {
-  imports = [
-    inputs.hardware.nixosModules.lenovo-thinkpad-x270
-    ./hardware-configuration.nix
-  ];
-
   networking.hostName = "TWINS-LINUX";
   time.timeZone = "Europe/London";
   networking.hostId = "b0798d56";
