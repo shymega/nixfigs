@@ -64,6 +64,8 @@ in
       itd
       jdk17
       jq
+      khal
+      khard
       leafnode
       maven
       mkcert
@@ -80,6 +82,7 @@ in
       parallel
       pass
       pavucontrol
+      poetry
       poppler_utils
       pre-commit
       public-inbox
@@ -102,9 +105,11 @@ in
       stow
       texlive.combined.scheme-full
       timewarrior
+      tmuxp
       unrar
       unzip
       vagrant
+      vdirsyncer
       virt-manager
       virtiofsd
       w3m
