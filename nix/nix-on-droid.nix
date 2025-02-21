@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2023 2023 Dom Rodriguez <shymega@shymega.org.uk>
+#
+# SPDX-License-Identifier: GPL-3.0
+
 { self, inputs, ... }:
 let
   mkNixOnDroidConfig =
@@ -6,7 +10,6 @@ let
     , nixpkgs ? inputs.nixpkgs
     , baseModules ? [
         ../common/android/nix-on-droid
-        ../common/core
       ]
     , homeModules ? [ ]
     , extraModules ? [ ]
@@ -22,16 +25,11 @@ let
         };
       };
       home-manager-path = inputs.home-manager.outPath;
-      modules = [ 
+      modules = [
         inputs.agenix.nixosModules.default
-        inputs.nix-ld.nixosModules.nix-ld
-        inputs.nix-index-database.nixosModules.nix-index
-        {
-          environment.systemPackages = [
-            inputs.agenix.packages.${system}.default
-          ];
-        }
-../secrets (../hosts/android/nix-on-droid + "/${hostname}") ] ++ baseModules ++ homeModules ++ extraModules;
+        ../secrets
+        (../hosts/android/nix-on-droid + "/${hostname}")
+      ] ++ baseModules ++ homeModules ++ extraModules;
       extraSpecialArgs = { inherit self inputs nixpkgs; };
     };
 in
@@ -45,7 +43,6 @@ in
           useGlobalPkgs = true;
           useUserPackages = true;
           sharedModules = [
-            inputs.nix-index-database.hmModules.nix-index
             inputs.agenix.homeManagerModules.default
           ];
           extraSpecialArgs = { inherit self inputs; };
