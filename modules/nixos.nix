@@ -24,8 +24,8 @@ let
         config = {
           allowUnfree = true;
           allowBroken = false;
-          allowInsecure = false;
-          allowUnsupportedSystem = false;
+          allowInsecure = true;
+          allowUnsupportedSystem = true;
         };
       };
 
@@ -171,23 +171,23 @@ in
     ];
   };
 
-  DZR-OFFICE-BUSY-LIGHT-UNIT = mkNixosConfig rec {
+  DZR-OFFICE-BUSY-LIGHT-UNIT = mkNixosConfig {
     hostname = "DZR-OFFICE-BUSY-LIGHT-UNIT";
     system = "armv6l-linux";
     baseModules = [ ];
     extraModules = [
       ./24.05-compat.nix
-      "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image.nix"
+      "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-raspberrypi.nix"
     ];
   };
 
-  DZR-PETS-CAM-UNIT = mkNixosConfig rec {
+  DZR-PETS-CAM-UNIT = mkNixosConfig {
     hostname = "DZR-PETS-CAM-UNIT";
     system = "armv6l-linux";
     baseModules = [ ];
     extraModules = [
       ./24.05-compat.nix
-      "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image.nix"
+      "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-raspberrypi.nix"
     ];
   };
 
