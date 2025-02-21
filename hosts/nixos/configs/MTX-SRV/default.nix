@@ -7,7 +7,10 @@
 , ...
 }:
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [ 
+    ./hardware-configuration.nix 
+    ./synapse-compose.nix
+  ];
 
   boot.tmp.cleanOnBoot = true;
   zramSwap.enable = true;
