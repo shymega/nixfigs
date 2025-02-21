@@ -1,12 +1,12 @@
-_:
+{ config, ... }:
 {
   services.matrix-sliding-sync = {
     enable = true;
+    createDatabase = true;
     settings = {
-      "SYNCV3_SERVER" = "http://matrix.rory.gay";
-      "SYNCV3_DB" = "postgresql://%2Frun%2Fpostgresql/syncv3";
-      "SYNCV3_BINDADDR" = "0.0.0.0:8100";
+      "SYNCV3_SERVER" = "https://matrix.rodriguez.org.uk";
+      "SYNCV3_BINDADDR" = "0.0.0.0:8009";
     };
-    environmentFile = "/etc/sliding-sync.env";
+    environmentFile = config.age.secrets.matrix-sliding-sync-env.path;
   };
 }
