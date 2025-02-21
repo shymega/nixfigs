@@ -161,57 +161,5 @@ in
   ## TO BE ADDED. ##
   ## End ClockworkPi DevTerm (CM4) ##
 
-  ### Experimental Device Ports ###
-
-  ### Servers ###
-
-  ### End Servers ###
-
-  ### Cloud Machines (VMs/Containers) ###
-
-  DELTA-ZERO = mkNixosConfig {
-    hostname = "DELTA-ZERO";
-    system = "aarch64-linux";
-    hardwareModules = [
-      # This machine is a server
-      inputs.srvos.nixosModules.server
-      # Deployed on the AMD Hetzner hardware
-      inputs.srvos.nixosModules.hardware-hetzner-cloud-arm
-      # Configured with extra terminfos
-      inputs.srvos.nixosModules.mixins-terminfo
-      inputs.hardware.nixosModules.common-pc-ssd
-      inputs.hardware.nixosModules.common-pc
-    ];
-  };
-
-  DIAL-IN-RNET = mkNixosConfig {
-    hostname = "DIAL-IN-RNET";
-    system = "aarch64-linux";
-    hardwareModules = [
-      # This machine is a server
-      inputs.srvos.nixosModules.server
-      # Deployed on the AMD Hetzner hardware
-      inputs.srvos.nixosModules.hardware-hetzner-cloud-arm
-      # Configured with extra terminfos
-      inputs.srvos.nixosModules.mixins-terminfo
-      inputs.hardware.nixosModules.common-pc-ssd
-      inputs.hardware.nixosModules.common-pc
-    ];
-  };
-
-  ### End Cloud Machines (VMs/Containers) ###
-
-  ### Local Machines (VMs/Containers) ###
-
-  ### End Local Machines (VMs/Containers) ###
-
-  ## Home Automation Nodes ##
-
-  ## End Home Automation Nodes ##
-
-  ### End Personal Machines ###
-
-  ### Work Machines ###
-
-  ### End Work Machines ###
+  ### End Experimental Device Ports ###
 }
