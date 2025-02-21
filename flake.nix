@@ -143,7 +143,7 @@
         });
     in
     {
-      overlays = import ./nix/overlay.nix { inherit self inputs lib; };
+      overlays = import ./modules/overlays.nix { inherit self inputs lib; };
       devShells = forAllUpstreamSystems (system:
         let
           pkgs = import inputs.nixpkgs {
@@ -157,12 +157,12 @@
             };
           };
         in
-        import ./nix/devshell.nix { inherit inputs pkgs self system; });
+        import ./modules/devshell.nix { inherit inputs pkgs self system; });
 
-      nixosConfigurations = (import ./nix/nixos.nix { inherit self inputs pkgs; }) // (import ./nix/wsl.nix { inherit self inputs pkgs; }) // (import ./nix/mobile-nixos.nix { inherit self inputs pkgs; }) // inputs.nixfigs-priv.outputs.nixosConfigurations;
-      homeConfigurations = import ./nix/home-manager.nix { inherit self inputs pkgs; };
-      nixOnDroidConfigurations = import ./nix/nix-on-droid.nix { inherit self inputs pkgs; };
-      darwinConfigurations = import ./nix/darwin.nix { inherit self inputs pkgs; };
+      nixosConfigurations = (import ./modules/nixos.nix { inherit self inputs pkgs; }) // (import ./modules/wsl.nix { inherit self inputs pkgs; }) // (import ./modules/mobile-nixos.nix { inherit self inputs pkgs; }) // inputs.nixfigs-priv.outputs.nixosConfigurations;
+      homeConfigurations = import ./modules/home-manager.nix { inherit self inputs pkgs; };
+      nixOnDroidConfigurations = import ./modules/nix-on-droid.nix { inherit self inputs pkgs; };
+      darwinConfigurations = import ./modules/darwin.nix { inherit self inputs pkgs; };
       secrets = import ./secrets;
       common-core = import ./common/core { inherit self inputs pkgs; };
       common-nixos = import ./common/nixos { inherit self inputs pkgs; };
