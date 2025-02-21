@@ -44,10 +44,8 @@ jobs:
       - uses: cachix/install-nix-action@v23
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Install `nixpkgs-fmt`
-        run: nix-env -f https://github.com/nix-community/nixpkgs-fmt/archive/master.tar.gz -iA nixpkgs-fmt
       - name: Format Nix files
-        run: nixpkgs-fmt ./*
+        run: nix run nixpkgs#nixpkgs-fmt -- ./*
       - name: Commit changes to codebase
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
@@ -65,10 +63,8 @@ jobs:
         uses: cachix/install-nix-action@v23
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Install `nixpkgs-fmt`
-        run: nix-env -f https://github.com/nix-community/nixpkgs-fmt/archive/master.tar.gz -iA nixpkgs-fmt
       - name: Check Flake formatting
-        run: nixpkgs-fmt --check ./
+        run: nix run nixpkgs#nixpkgs-fmt -- --check ./
       - name: Check Flake with Nix
         run: nix flake check
       - name: Check Flake with Statix
