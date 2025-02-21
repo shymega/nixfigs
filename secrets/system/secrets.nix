@@ -46,4 +46,5 @@ in
   "geoclue_url.age".publicKeys = personal-machines ++ rnet;
   "zerotier_networks.age".publicKeys = personal-machines ++ rnet;
   "wireless.age".publicKeys = personal-machines ++ rnet-machines;
+  "synapse_secret.age".publicKeys = personal-machines ++ rnet-machines;
 }
