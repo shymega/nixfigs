@@ -30,10 +30,13 @@ in
     stateVersion = "23.11";
     packages = with pkgs.unstable; [
       android-tools
+      ansible
       asciinema
       atuin
+      b4
       bat
       bc
+      beeper
       brightnessctl
       cachix
       cloudflared
@@ -45,6 +48,7 @@ in
       dex
       diesel-cli
       difftastic
+      distrobox
       dogdns
       encfs
       expect
@@ -62,6 +66,7 @@ in
       itd
       jdk17
       jq
+      leafnode
       maven
       mkcert
       mpc-cli
@@ -78,6 +83,7 @@ in
       pavucontrol
       poppler_utils
       pre-commit
+      public-inbox
       python3Full
       python3Packages.pipx
       python3Packages.virtualenv
@@ -100,6 +106,7 @@ in
       vagrant
       virt-manager
       w3m
+      wezterm
       wget
       xsv
       yt-dlp
