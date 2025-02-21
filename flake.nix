@@ -146,6 +146,34 @@
     nixosModules = inputs.nixfigs-private.nixosModules // inputs.nixfigs-public.nixosModules;
     inherit (inputs.nixfigs-roles) roles checkRole checkRoles;
     inherit (inputs.nixfigs-devenvs) templates; # FIXME: Add `legacyShells` output.
+    githubActions.matrix = with builtins; let
+      systemToPlatform = system: let
+        inherit (inputs.nixpkgs.lib.strings) hasSuffix;
+        isLinux = system: hasSuffix "-linux" system;
+        isDarwin = system: hasSuffix "-darwin" system;
+      in
+        if isLinux system
+        then "ubuntu-22.04"
+        else if isDarwin system
+        then "macos-14"
+        else throw "Unsupported system (platform): ${system}";
+      nixosConfigs = let
+        inherit (inputs.nixpkgs.lib.attrsets) filterAttrs;
+        workHostname = "ct-lt-2671";
+        pred = n: v: let
+          system = v.pkgs.system;
+        in
+          (system == "aarch64-linux" || system == "x86_64-linux") && n != workHostname;
+      in
+        mapAttrs (n: v: {
+          hostName = n;
+          platform = systemToPlatform v.pkgs.system;
+        })
+        filterAttrs
+        pred
+        self.nixosConfigurations;
+    in
+      nixosConfigs;
   };
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
