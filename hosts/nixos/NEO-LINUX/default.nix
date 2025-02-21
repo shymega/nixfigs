@@ -152,6 +152,7 @@ in
           python3Packages.virtualenv
           steamcmd
           steamtinkerlaunch
+          wemod-launcher
           wineWowPackages.stable
           winetricks
         ];
