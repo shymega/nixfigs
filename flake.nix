@@ -242,5 +242,9 @@
     jovian-nixos.url = "github:Jovian-Experiments/Jovian-NixOS";
     disko.url = "github:nix-community/disko";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
+    lix-module = {
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.1-1.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }
