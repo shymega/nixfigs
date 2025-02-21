@@ -112,7 +112,7 @@ in
   services.ollama = {
     enable = true;
     acceleration = "rocm";
-    package = pkgs.unstable.ollama;
+    package = pkgs.ollama;
     environmentVariables = {
       HSA_OVERRIDE_GFX_VERSION = "10.3.0"; # 680M.
       #          HSA_OVERRIDE_GFX_VERSION = "11.0.0"; # 780M
