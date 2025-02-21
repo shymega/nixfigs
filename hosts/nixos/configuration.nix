@@ -64,9 +64,6 @@
         gutenprintBin
         hplip
         hplipWithPlugin
-        postscript-lexmark
-        samsung-unified-linux-driver
-        splix
       ];
     };
     saned.enable = true;
@@ -155,9 +152,6 @@
       gutenprintBin
       hplip
       hplipWithPlugin
-      postscript-lexmark
-      samsung-unified-linux-driver
-      splix
     ];
   };
 
