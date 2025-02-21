@@ -2053,7 +2053,7 @@
     "nixos-generators": {
       "inputs": {
         "nixlib": "nixlib",
-        "nixpkgs": ["nixpkgs"]
+        "nixpkgs": ["nixpkgs-generators"]
       },
       "locked": {
         "lastModified": 1724288137,
