@@ -56,6 +56,9 @@
       url = "github:cachix/pre-commit-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    deploy-rs.url = "github:serokell/deploy-rs";
+
   };
 
   outputs = inputs@{ self, nixpkgs, ... }:
