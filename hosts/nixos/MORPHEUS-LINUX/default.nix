@@ -126,6 +126,23 @@ in
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" "armv6l-linux" "armv7l-linux" ];
 
+  programs = {
+    auto-cpufreq = {
+      enable = true;
+      settings = {
+        charger = {
+          governor = "performance";
+          turbo = "auto";
+        };
+
+        battery = {
+          governor = "powersave";
+          turbo = "auto";
+        };
+      };
+    };
+  };
+
   services = {
     zfs = {
       trim = {
