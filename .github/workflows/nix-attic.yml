@@ -11,7 +11,12 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.NIX_GH_ACTIONS_TOKEN }}
+          ref: "main"
       - uses: DeterminateSystems/nix-installer-action@main
+        with:
+          github-token: ${{ secrets.NIX_GH_ACTIONS_TOKEN }}
       - id: set-matrix
         name: Generate Nix Matrix
         run: |
@@ -30,10 +35,10 @@ jobs:
         with:
           tool-cache: true
       - uses: actions/checkout@v4
-      - run: "sudo mkdir -p /etc/nix\necho \"machine shynet-nix-attic.shymega.org.uk password ${{ secrets.GH_ATTIC_TOKEN }}\" | sudo tee /etc/nix/netrc > /dev/null\ngit config --global url.\"https://${{ secrets.GH_TOKEN }}@github.com\".insteadOf https://github.com          \n"
+      - run: "sudo mkdir -p /etc/nix\necho \"machine shynet-nix-attic.shymega.org.uk password ${{ secrets.GH_ATTIC_TOKEN }}\" | sudo tee /etc/nix/netrc > /dev/null\ngit config --global url.\"https://${{ secrets.NIX_GH_ACTIONS_TOKEN }}@github.com\".insteadOf https://github.com          \n"
       - uses: DeterminateSystems/nix-installer-action@main
         with:
-          github-token: ${{ secrets.GH_TOKEN }}
+          github-token: ${{ secrets.NIX_GH_ACTIONS_TOKEN }}
           extra-conf: |
             fallback = true
             http-connections = 128
