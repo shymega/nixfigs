@@ -21,7 +21,8 @@ let
     , type
     , extraModules
     , deployable
-    , whopper
+    , monolithConfig
+    , hostRole
     , hardwareModules
     , baseModules
     , ...
@@ -46,7 +47,7 @@ let
           (./configs + "/${hostname}")
           ../../modules/nixos/generators.nix
         ]
-        ++ extraModules ++ hardwareModules ++ (lib.optional whopper (import ./monolith.nix));
+        ++ extraModules ++ hardwareModules ++ (lib.optional monolithConfig (import ./monolith.nix));
       specialArgs = {
         hostAddress = address;
         hostType = type;
@@ -56,6 +57,7 @@ let
           self
           inputs
           lib
+          hostRole
           deployable
           hostname
           hostPlatform
