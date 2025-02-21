@@ -120,7 +120,6 @@ in
         fzf
         gh
         gnumake
-        google-chrome
         gpicview
         httpie
         hub
@@ -132,7 +131,7 @@ in
         jq
         khal
         khard
-        leafnode
+        m4
         maven
         mkcert
         moneydance
@@ -194,10 +193,11 @@ in
         awscli2
         azure-cli
         bestool
-        dwl
         emacsconf2nix
         gitkraken
         google-cloud-sdk
+        google-chrome
+        leafnode
         lutris
         protontricks
         protonup-qt
