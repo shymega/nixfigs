@@ -5,15 +5,6 @@
 #
 
 let
-  dzrodriguez-NEO-LINUX = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP7D0z5Unwjt00URZxRrx6T69PFc6xI3zHETtr0GbkM6";
-  dzrodriguez-TWINS-LINUX = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIOZyVmZ3OdKl2f1kLSEnwwKaO8ecDKEbwLYXDAllIvU ";
-  dzrodriguez-MORPHEUS-LINUX = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIgAqM0gz24k8J1vqe3cp1MI48cSok6mtdMIYnT1d8CR";
-  personal-users = [
-    dzrodriguez-NEO-LINUX
-    dzrodriguez-TWINS-LINUX
-    dzrodriguez-MORPHEUS-LINUX
-  ];
-
   NEO-LINUX = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ8Stawqd09idKurIZ+eSSEbmWdXIlQQJ4eaMo6bmClv";
   TWINS-LINUX = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMAp9kcBykTqbYroj9akZ7s6qY7NsX9uHwZMv64dOKvV";
   MORPHEUS-LINUX = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBqOAfNq3lGPElJ0L6qAqQLDykRWsN9dE4sMZkD6YVKu";
@@ -30,31 +21,28 @@ let
     MORPHEUS-WSL
     MTX-SRV
   ];
-  personal = personal-users ++ personal-machines;
 
   rnet-machines = [
     DELTA-ZERO
     DIAL-IN
   ];
-  rnet-users = [ ];
-  rnet = rnet-machines ++ rnet-users;
 in
 {
-  "postfix_sasl_passwd.age".publicKeys = personal ++ rnet;
-  "postfix_sender_relay.age".publicKeys = personal ++ rnet;
-  "dzrodriguez.age".publicKeys = personal ++ rnet;
-  "geoclue_url.age".publicKeys = personal-machines ++ rnet;
-  "zerotier_networks.age".publicKeys = personal-machines ++ rnet;
+  "postfix_sasl_passwd.age".publicKeys = personal-machines ++ rnet-machines;
+  "postfix_sender_relay.age".publicKeys = personal-machines ++ rnet-machines;
+  "dzrodriguez.age".publicKeys = personal-machines ++ rnet-machines;
+  "geoclue_url.age".publicKeys = personal-machines ++ rnet-machines;
+  "zerotier_networks.age".publicKeys = personal-machines ++ rnet-machines;
   "wireless.age".publicKeys = personal-machines ++ rnet-machines;
   "synapse_secret.age".publicKeys = personal-machines ++ rnet-machines;
   "cloudflare_dns_token.age".publicKeys = personal-machines ++ rnet-machines;
   "nixbuild_ssh_priv_key.age".publicKeys = personal-machines ++ rnet-machines;
   "nixbuild_ssh_pub_key.age".publicKeys = personal-machines ++ rnet-machines;
   "matrix-sliding-sync-env.age".publicKeys = personal-machines ++ rnet-machines;
-  "nix_conf_access_tokens.age".publicKeys = personal ++ rnet;
-  "restic/env.age".publicKeys = personal ++ rnet;
-  "restic/repo.age".publicKeys = personal ++ rnet;
-  "restic/pw.age".publicKeys = personal ++ rnet;
+  "nix_conf_access_tokens.age".publicKeys = personal-machines ++ rnet-machines;
+  "restic/env.age".publicKeys = personal-machines ++ rnet-machines;
+  "restic/repo.age".publicKeys = personal-machines ++ rnet-machines;
+  "restic/pw.age".publicKeys = personal-machines ++ rnet-machines;
 
 
 }
