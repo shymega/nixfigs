@@ -30,7 +30,7 @@ in
     packages = with pkgs.unstable; [
       android-tools
       asciinema
-#      atuin
+      #      atuin
       bat
       bc
       brightnessctl
