@@ -32,7 +32,6 @@ let
         (../hosts/darwin + "/${hostname}")
         inputs.agenix.darwinModules.default
         inputs.nix-ld.nixosModules.nix-ld
-        inputs.nix-index-database.nixosModules.nix-index
         { environment.systemPackages = [ inputs.agenix.defaultPackage.${system} ]; }
       ] ++ baseModules ++ extraModules;
       specialArgs = { inherit self inputs nixpkgs; };
