@@ -10,7 +10,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./synapse-compose.nix
+    ./synapse.nix
   ];
 
   boot.tmp.cleanOnBoot = true;
@@ -119,21 +119,6 @@
     };
   };
 
-  virtualisation = {
-    containers.enable = true;
-    podman = {
-      enable = lib.mkForce true;
-      dockerCompat = true;
-      defaultNetwork.settings.dns_enabled = true;
-    };
-    docker.enable = lib.mkForce false;
-  };
-
-  environment.systemPackages = with pkgs; [
-    podman-compose
-    dzr-taskwarrior-recur
-  ];
-
   programs = {
     zsh.enable = true;
     fish.enable = true;
@@ -149,46 +134,49 @@
 
   users = {
     mutableUsers = false;
-    users."root".password = "!"; # Lock account.
-    users."dzrodriguez" = {
-      isNormalUser = true;
-      shell = pkgs.zsh;
-      description = "Dom RODRIGUEZ";
-      hashedPasswordFile = config.age.secrets.dzrodriguez.path;
-      linger = true;
-      subUidRanges = [
-        {
-          startUid = 100000;
-          count = 65536;
-        }
-      ];
-      subGidRanges = [
-        {
-          startGid = 100000;
-          count = 65536;
-        }
-      ];
-      extraGroups = [
-        "i2c"
-        "adbusers"
-        "dialout"
-        "disk"
-        "docker"
-        "input"
-        "kvm"
-        "libvirt"
-        "libvirtd"
-        "lp"
-        "lpadmin"
-        "networkmanager"
-        "plugdev"
-        "qemu-libvirtd"
-        "scanner"
-        "systemd-journal"
-        "uucp"
-        "video"
-        "wheel"
-      ];
+    users = {
+      "root".password = "!"; # Lock account.
+      "matrix-synapse".extraGroups = [ "users" ];
+      "dzrodriguez" = {
+        isNormalUser = true;
+        shell = pkgs.zsh;
+        description = "Dom RODRIGUEZ";
+        hashedPasswordFile = config.age.secrets.dzrodriguez.path;
+        linger = true;
+        subUidRanges = [
+          {
+            startUid = 100000;
+            count = 65536;
+          }
+        ];
+        subGidRanges = [
+          {
+            startGid = 100000;
+            count = 65536;
+          }
+        ];
+        extraGroups = [
+          "i2c"
+          "adbusers"
+          "dialout"
+          "disk"
+          "docker"
+          "input"
+          "kvm"
+          "libvirt"
+          "libvirtd"
+          "lp"
+          "lpadmin"
+          "networkmanager"
+          "plugdev"
+          "qemu-libvirtd"
+          "scanner"
+          "systemd-journal"
+          "uucp"
+          "video"
+          "wheel"
+        ];
+      };
     };
   };
 }
