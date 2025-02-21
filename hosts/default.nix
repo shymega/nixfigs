@@ -361,7 +361,7 @@ in
     type = "nixos";
     address = "dzr-office-busy-light-unit.rnet.rodriguez.org.uk";
     username = "dzrodriguez";
-    baseModules = [ ../common ];
+    baseModules = [ ../common  ../secrets/system ];
     hostPlatform = "armv6l-linux";
     remoteBuild = true;
     deployable = false;
@@ -382,7 +382,7 @@ in
     type = "nixos";
     address = "dzr-pets-cam-unit.rnet.rodriguez.org.uk";
     username = "dzrodriguez";
-    baseModules = [ ../common ];
+    baseModules = [ ../common  ../secrets/system ];
     hostPlatform = "armv6l-linux";
     remoteBuild = true;
     deployable = false;
