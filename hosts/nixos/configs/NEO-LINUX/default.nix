@@ -96,7 +96,7 @@ in
   hardware = {
     graphics = {
       enable = true;
-      driSupport32Bit = true;
+      enable32Bit = true;
       extraPackages = with pkgs; [
         # VA-API and VDPAU
         vaapiVdpau
