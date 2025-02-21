@@ -11,9 +11,9 @@ in
     ../../../../modules/nixos/mautrix-whatsapp.nix
     ./postgres.nix
     ./security.nix
-    ./nginx.nix
     ./sliding-sync.nix
     ./synapse-main.nix
+    ./nginx.nix
   ];
 
   environment.systemPackages = [ pkgs.synapse ];
