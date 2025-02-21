@@ -7,11 +7,10 @@
 , ...
 }:
 let
-  genPkgs =
-    system:
+  genPkgs = system: overlays:
     import inputs.nixpkgs {
       inherit system;
-      overlays = builtins.attrValues self.overlays;
+      overlays = builtins.attrValues self.overlays ++ overlays;
       config = self.nixpkgs-config;
     };
   genConfiguration =
@@ -22,6 +21,7 @@ let
     , extraModules
     , deployable
     , monolithConfig
+    , overlays
     , hostRole
     , hardwareModules
     , baseModules
@@ -34,13 +34,13 @@ let
             my = import ../../lib {
               inherit self inputs;
               lib = prev;
-              pkgs = genPkgs hostPlatform;
+              pkgs = genPkgs hostPlatform overlays;
             };
           }
         ) // inputs.nixpkgs.lib;
     in
     inputs.nixpkgs.lib.nixosSystem {
-      pkgs = lib.my.genPkgs hostPlatform;
+      pkgs = genPkgs hostPlatform overlays;
       modules =
         baseModules ++ [
           (../../secrets/system)
@@ -51,7 +51,7 @@ let
       specialArgs = {
         hostAddress = address;
         hostType = type;
-        pkgs = genPkgs hostPlatform;
+        pkgs = genPkgs hostPlatform overlays;
         system = hostPlatform;
         inherit
           self
