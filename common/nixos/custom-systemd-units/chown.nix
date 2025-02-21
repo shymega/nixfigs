@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ config, pkgs, lib, ... }:
+{ config, lib, ... }:
 let
   inherit (config.networking) hostName;
 in

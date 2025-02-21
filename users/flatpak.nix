@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ inputs, ... }: {
+{
   services.flatpak = {
     enable = true;
     packages = [

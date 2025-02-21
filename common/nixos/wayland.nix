@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ config, pkgs, lib, ... }:
+{ pkgs, ... }:
 let
   dbus-sway-environment = pkgs.writeTextFile {
     name = "dbus-sway-environment";
