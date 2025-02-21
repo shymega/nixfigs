@@ -5,6 +5,11 @@
 { lib, ... }: {
   hardware.pulseaudio.enable = lib.mkForce false;
 
+  sound = {
+    enable = true;
+    mediaKeys = { enable = true; };
+  };
+
   services = {
     pipewire = {
       enable = true;
