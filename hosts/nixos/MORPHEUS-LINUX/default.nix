@@ -196,23 +196,6 @@ in
 
   programs.steam = {
     enable = true;
-    gamescopeSession.enable = true;
-    package = pkgs.steam.override {
-      extraPkgs = pkgs:
-        with pkgs; [
-          #          deckcheatz
-          protontricks
-          protonup-qt
-          python3Full
-          python3Packages.pip
-          python3Packages.virtualenv
-          steamcmd
-          steamtinkerlaunch
-          wemod-launcher
-          wineWowPackages.stable
-          winetricks
-        ];
-    };
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
     localNetworkGameTransfers.openFirewall = true;
