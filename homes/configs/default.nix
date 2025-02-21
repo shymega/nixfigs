@@ -325,7 +325,7 @@ in
       ];
     };
     dwl = {
-      enable = false;
+      enable = true;
       cmd = {
         terminal = "${pkgs.wezterm}/bin/wezterm";
         editor = "${pkgs.emacs}/bin/emacslient -cq";
