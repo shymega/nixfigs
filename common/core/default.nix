@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ ... }: {
+{
   imports = [
     ./aspell.nix
     ./common_env.nix

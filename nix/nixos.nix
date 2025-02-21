@@ -42,23 +42,6 @@ let
       ] ++ baseModules ++ hardwareModules ++ homeModules ++ extraModules;
       specialArgs = { inherit self inputs nixpkgs hostname system; };
     };
-
-  mkHomeManagerConfig =
-    { usePkgs ? true
-    , extraModules ? [
-      ]
-    , specialArgs ? [{ inherit self inputs; }]
-    }:
-    inputs.home-manager.nixosModules.home-manager {
-      home-manager = {
-        useGlobalPkgs = usePkgs;
-        useUserPackages = usePkgs;
-        sharedModules = [
-          inputs.agenix.homeManagerModules.default
-        ] ++ extraModules;
-        extraSpecialArgs = specialArgs;
-      };
-    };
 in
 {
   ### Personal Devices ####
