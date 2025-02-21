@@ -67,11 +67,6 @@ in
           "efi/shell/shellx64.efi" = "${pkgs.edk2-uefi-shell}/shell.efi";
         };
         extraEntries = {
-          "bazzite.conf" = ''
-            title Bazzite (SteamOS)
-            efi /EFI/SHELL/SHELLX64.EFI
-            options -nointerrupt -nomap -noversion HD0f:EFI\BOOT\BOOTX64.EFI
-          '';
           "shell.conf" = ''
             title UEFI shell
             efi /EFI/SHELL/SHELLX64.EFI
