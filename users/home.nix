@@ -59,8 +59,6 @@ in
       itd
       jdk17
       jq
-      just
-      m4
       maven
       minikube
       minishift
@@ -95,7 +93,7 @@ in
       statix
       step-cli
       stow
-      texlive.combined.scheme-full
+      texlive.combined.scheme-small
       timewarrior
       tmuxp
       unrar
