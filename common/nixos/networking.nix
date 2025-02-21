@@ -19,6 +19,10 @@ in
 {
   networking.networkmanager = {
     dns = "systemd-resolved";
+    unmanaged = [
+      "iphone0"
+      "android0"
+    ];
     ensureProfiles.profiles = inputs.nixfigs-networks.networks.all;
     wifi.macAddress = "stable";
     wifi.powersave = true;
