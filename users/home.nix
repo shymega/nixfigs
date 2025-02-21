@@ -86,6 +86,7 @@
       pre-commit
       python3Full
       python3Packages.virtualenv
+      python3Packages.bugwarrior
       q
       ranger
       rclone
