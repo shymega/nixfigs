@@ -25,6 +25,7 @@ in
     inputs.agenix.homeManagerModules.default
     inputs.nix-doom-emacs-unstraightened.hmModule
     inputs.nix-index-database.hmModules.nix-index
+    inputs._1password-shell-plugins.hmModules.default
     inputs.shypkgs-public.hmModules.${system}.dwl
     ../../secrets/user
     ({ config, ... }: {
@@ -99,7 +100,6 @@ in
         bc
         beeper
         brightnessctl
-        cachix
         cloudflared
         cocogitto
         curl
@@ -118,7 +118,6 @@ in
         firefox
         fuse
         fzf
-        gh
         gnumake
         gpicview
         httpie
@@ -189,7 +188,6 @@ in
       ++ (with pkgs; [
         android-studio
         aws-sam-cli
-        awscli2
         azure-cli
         bestool
         gitkraken
@@ -315,6 +313,11 @@ in
   ];
 
   programs = {
+    _1password-shell-plugins = {
+      enable = true;
+      plugins = with pkgs; [ gh awscli2 cachix ];
+    };
+    bash.enable = true;
     obs-studio = {
       enable = true;
       plugins = with pkgs.obs-studio-plugins; [
