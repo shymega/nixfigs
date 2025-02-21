@@ -79,6 +79,7 @@ in
       mupdf
       ncmpcpp
       neomutt
+      isync-patched
       nixpkgs-fmt
       nodejs
       notmuch
@@ -138,7 +139,6 @@ in
       emacsconf2nix
       gitkraken
       google-cloud-sdk
-      isync-patched
       lutris
       offlineimap-shymega
       protontricks
