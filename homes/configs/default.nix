@@ -5,12 +5,10 @@
 { inputs
 , pkgs
 , config
-, osConfig
 , username
 , system
 , lib
 , libx
-, self
 , ...
 }:
 let
@@ -215,15 +213,15 @@ in
           ]
         )
       ) ++ (with lib; let
-  # This function extracts the basename of a file
-  basename = path: lists.last (strings.splitString "/" (toString path));
-  # Generate a flat list of files recursively
-  files = filesystem.listFilesRecursive ../../pkgs/scripts; # <- Change!
-in
-  # Make files into derivations
-  forEach files (file: pkgs.writeScriptBin
-    (basename file)
-    (builtins.readFile file)));
+        # This function extracts the basename of a file
+        basename = path: lists.last (strings.splitString "/" (toString path));
+        # Generate a flat list of files recursively
+        files = filesystem.listFilesRecursive ../../pkgs/scripts; # <- Change!
+      in
+      # Make files into derivations
+      forEach files (file: pkgs.writeScriptBin
+        (basename file)
+        (builtins.readFile file)));
   };
 
   services = {
