@@ -19,8 +19,8 @@
       aspellDicts.en-computers
       aspellDicts.en-science
       atuin
-      aws-sam-cli
-      awscli2
+#      aws-sam-cli
+#      awscli2
       bat
       bc
       brightnessctl
@@ -48,7 +48,7 @@
       gnumake
       goimapnotify
       google-chrome
-      google-cloud-sdk
+#      google-cloud-sdk
       gpicview
       hercules
       httpie
