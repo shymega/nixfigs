@@ -2,38 +2,46 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ lib, config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
+  cfg = config.nixfigs.fonts;
   inherit (pkgs.stdenvNoCC) isLinux;
-  inherit (lib) mkOption mkIf;
-  inherit (lib.types) bool;
 in
+with lib;
 {
   options = {
     nixfigs.fonts = {
-      managed.enable = mkOption {
-        type = bool;
-        description = "Whenever to enable 'managed fonts'.";
+      enable = mkOption {
+        type = with types; bool;
+        description = "Enables Nix-managed fonts.";
         default = true;
       };
       xdg.enable = mkOption {
-        type = bool;
+        type = with types; bool;
         description = "Enables XDG font symlinking.";
-        default = isLinux;
+        default = isLinux && config.nixfigs.fonts.enable;
       };
     };
   };
 
-  config = mkIf config.nixfigs.fonts.managed.enable
-    {
-      fonts.packages = with pkgs.unstable; [
+  config = mkMerge [
+    (mkIf cfg.enable {
+      fonts.packages = with pkgs; [
         corefonts
+        fira-code
+        fira-code-symbols
         ibm-plex
         jetbrains-mono
+        liberation_ttf
+        noto-fonts
+        noto-fonts-emoji
         source-code-pro
+        terminus_font
+        vistafonts
       ];
-    }
-  // mkIf (config.nixfigs.fonts.xdg.enable && isLinux) {
-    fonts.fontDir.enable = true;
-  };
+      })
+    (mkIf (config.nixfigs.fonts.xdg.enable && isLinux) {
+      fonts.fontDir.enable = true;
+    })
+  ];
 }
