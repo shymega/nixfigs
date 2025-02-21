@@ -3,16 +3,6 @@
   forceSSL = true;
   sslCertificate = "/etc/origin.crt";
   sslCertificateKey = "/etc/origin.key";
-  locations."~ ^/(_matrix|_synapse|_client)" = {
-    proxyPass = "http://localhost:8008";
-    extraConfig = ''
-      proxy_set_header X-Forwarded-For $remote_addr;
-      proxy_set_header X-Forwarded-Proto $scheme;
-      proxy_set_header Host $host;
-      proxy_http_version 1.1;
-      proxy_set_header Access-Control-Allow-Origin *;
-    '';
-  };
   locations."~ ^/(client/|_matrix/client/unstable/org.matrix.msc3575/sync)" = {
     proxyPass = "http://localhost:8009";
     priority = 10;
@@ -46,4 +36,16 @@
       }
     }';
   '';
+  locations."~ ^/(_matrix|_synapse|_client)" = {
+    proxyPass = "http://localhost:8008";
+    extraConfig = ''
+       proxy_set_header X-Forwarded-For $remote_addr;
+      proxy_set_header X-Forwarded-Proto $scheme;
+      proxy_set_header Host $host;
+      proxy_http_version 1.1;
+      proxy_set_header Access-Control-Allow-Origin *;
+    '';
+    priority = 9000;
+  };
+
 }
