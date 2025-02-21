@@ -33,20 +33,4 @@
   };
 
   system.stateVersion = "24.05";
-
-  networking.hostId = "3b66435d";
-
-  services = {
-    zfs = {
-      trim = {
-        enable = true;
-        interval = "Sat *-*-* 04:00:00";
-      };
-      autoScrub = {
-        enable = true;
-        interval = "Sat *-*-* 05:00:00";
-      };
-    };
-  };
-
 }
