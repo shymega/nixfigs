@@ -120,6 +120,10 @@
         flake-compat.follows = "flake-compat";
       };
     };
+    mobile-nixos = {
+      url = "github:NixOS/mobile-nixos";
+      flake = false;
+    };
   };
 
   outputs = { self, ... } @ inputs:
@@ -172,7 +176,7 @@
         in
         import ./nix/devshell.nix { inherit inputs pkgs self system; });
 
-      nixosConfigurations = (import ./nix/nixos.nix { inherit self inputs pkgs; }) // (import ./nix/wsl.nix { inherit self inputs pkgs; });
+      nixosConfigurations = (import ./nix/nixos.nix { inherit self inputs pkgs; }) // (import ./nix/wsl.nix { inherit self inputs pkgs; }) // (import ./nix/mobile-nixos.nix { inherit self inputs pkgs; });
       homeConfigurations = import ./nix/home-manager.nix { inherit self inputs pkgs; };
       nixOnDroidConfigurations = import ./nix/android.nix { inherit self inputs pkgs; };
       darwinConfigurations = import ./nix/darwin.nix { inherit self inputs pkgs; };
