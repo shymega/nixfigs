@@ -10,12 +10,10 @@ on:
   push:
   pull_request:
   workflow_call:
-
 # Ensures that only one deploy task per branch/environment will run at a time.
 concurrency:
   group: gh-ref-${{ github.ref }}
   cancel-in-progress: true
-
 jobs:
   update-flake:
     if: ${{ github.event_name == 'schedule' }}
@@ -40,7 +38,6 @@ jobs:
           commit_user_name: "github-actions[bot]"
           commit_user_email: "41898282+github-actions[bot]@users.noreply.github.com"
           commit_author: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
-
   format-flake:
     if: ${{ github.event_name == 'push' }}
     permissions:
@@ -64,7 +61,6 @@ jobs:
           commit_user_name: "github-actions[bot]"
           commit_user_email: "41898282+github-actions[bot]@users.noreply.github.com"
           commit_author: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
-
   check-flake:
     needs: [format-flake]
     if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
