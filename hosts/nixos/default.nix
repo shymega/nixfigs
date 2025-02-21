@@ -43,7 +43,6 @@ let
       pkgs = genPkgs hostPlatform overlays;
       modules =
         baseModules ++ [
-          (../../secrets/system)
           (./configs + "/${hostname}")
           ../../modules/nixos/generators.nix
         ]
