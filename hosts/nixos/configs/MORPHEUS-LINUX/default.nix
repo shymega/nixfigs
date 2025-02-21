@@ -144,6 +144,11 @@ in
   };
 
   services = {
+    handheld-daemon = {
+      enable = true;
+      package = pkgs.unstable.handheld-daemon;
+      user = "dzrodriguez";
+    };
     zfs = {
       trim = {
         enable = true;
