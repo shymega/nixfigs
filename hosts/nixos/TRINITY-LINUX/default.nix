@@ -12,7 +12,7 @@
   boot = {
     supportedFilesystems = [ "zfs" "ntfs" ];
 
-    kernelPackages = pkgs.unstable.linuxPackages_xanmod_latest;
+    kernelPackages = pkgs.linuxPackages_xanmod_latest;
     extraModulePackages = with config.boot.kernelPackages; [ zfs ];
 
     extraModprobeConfig = ''
@@ -22,15 +22,6 @@
     '';
 
     zfs.devNodes = "/dev/TRINITY-LINUX/ROOT";
-
-    kernelParams = lib.mkAfter [
-      "loglevel=3"
-      "quiet"
-      "rd.udev.log_level=3"
-      "splash"
-      "systemd.show_status=auto"
-      "systemd.unified_cgroup_hierarchy=1"
-    ];
 
     kernel.sysctl = {
       "dev.i915.perf_stream_paranoid" = "0";
@@ -133,6 +124,14 @@
       enable = true;
       driSupport = true;
       driSupport32Bit = true;
+      extraPackages32 = (lib.optionals pkgs.stdenv.isi686 (with pkgs.pkgsi686Linux; [ vaapiIntel ]));
+      extraPackages = with pkgs; [
+        vaapiIntel
+        vaapiVdpau
+        libvdpau-va-gl
+        intel-media-driver
+        intel-compute-runtime
+      ];
     };
     sensor.iio.enable = true;
   };
