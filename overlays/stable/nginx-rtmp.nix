@@ -5,7 +5,7 @@
 #
 
 _final: prev: {
-  nginx-rtmp-patched = prev.nginxStable.override(oldAttrs: {
+  nginx-rtmp-patched = prev.nginxStable.override (oldAttrs: {
     pname = "nginx-rtmp-patched";
     version = "stable";
     modules = oldAttrs.modules ++ [ prev.nginxModules.rtmp ];
