@@ -9,10 +9,13 @@ in
 {
   networking.hostName = "MORPHEUS-LINUX";
   networking.hostId = "e8a03c89";
-
   boot = {
     supportedFilesystems = [ "ntfs" "zfs" ];
     initrd.supportedFilesystems = [ "ntfs" "zfs" ];
+
+    kernelParams = pkgs.lib.mkAfter [
+      "usbcore.autosuspend-1"
+    ];
 
     kernelPackages =
       if enableXanmod then
