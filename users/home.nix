@@ -39,7 +39,6 @@ in
       b4
       bat
       bc
-      beeper
       brightnessctl
       cachix
       cloudflared
