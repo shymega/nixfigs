@@ -50,9 +50,11 @@ in
   environment.etc."greetd/environments".text = ''
     sway
     dwl
+    startplasma-x11
+    startplasma-wayland
+    zsh
     fish
     bash
-    startxfce4
   '';
 
   environment.sessionVariables.NIX_GSETTINGS_OVERRIDES_DIR =
