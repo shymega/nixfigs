@@ -54,6 +54,7 @@ in
       inputs.hardware.nixosModules.common-gpu-amd
       inputs.hardware.nixosModules.common-pc-ssd
       inputs.hardware.nixosModules.common-pc
+      ../hosts/nixos/NEO-LINUX/hardware-configuration.nix
     ];
     homeModules = [
       inputs.home-manager.nixosModules.home-manager
