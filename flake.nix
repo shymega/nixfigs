@@ -75,6 +75,7 @@
             pkgs = genPkgs system;
           in
           import ./lib { inherit self inputs pkgs; });
+      common = ./common;
       nixosModules = import ./modules/nixos;
       homeModules = import ./modules/home-manager;
       darwinModules = import ./modules/darwin;
