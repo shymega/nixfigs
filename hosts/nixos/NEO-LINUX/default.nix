@@ -88,9 +88,6 @@
     cpuFreqGovernor = "performance";
   };
 
-  services.xserver.enable = true;
-  services.xserver.videoDrivers = [ "amdgpu" ];
-
   hardware = {
     opengl = {
       enable = true;
@@ -98,10 +95,23 @@
       driSupport32Bit = true;
     };
   };
+
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
-  services.zfs.trim.enable = true;
-  services.zfs.trim.interval = "Sat *-*-* 04:00:00";
-  services.zfs.autoScrub.enable = true;
-  services.zfs.autoScrub.interval = "Sat *-*-* 05:00:00";
+  services = {
+    zfs = {
+      trim = {
+        enable = true;
+        interval = "Sat *-*-* 04:00:00";
+      };
+      autoScrub = {
+        enable = true;
+        interval = "Sat *-*-* 05:00:00";
+      };
+    };
+    xserver = {
+      enable = true;
+      videoDrivers = [ "amdgpu" ];
+    };
+  };
 }
