@@ -9,6 +9,7 @@
 , self
 , config
 , pkgs
+, inputs
 , ...
 }:
 let
@@ -18,6 +19,7 @@ in
 {
   networking.networkmanager = {
     dns = "systemd-resolved";
+    ensureProfiles.profiles = inputs.nixfigs-networks.networks.all;
     wifi.macAddress = "stable";
     wifi.powersave = true;
     enable = true;
