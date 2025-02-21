@@ -2,16 +2,18 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ config, pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   security.pam = {
     services = {
       login.u2fAuth = true;
+      sudo.u2fAuth = lib.mkForce false;
     };
 
     u2f = {
       enable = true;
       cue = true;
+      control = "sufficient";
     };
   };
 
