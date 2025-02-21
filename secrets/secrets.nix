@@ -8,8 +8,9 @@ let
   personal-users = [ dzrodriguez-NEO-LINUX dzrodriguez-TRINITY-LINUX ];
 
   NEO-LINUX = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ8Stawqd09idKurIZ+eSSEbmWdXIlQQJ4eaMo6bmClv";
-  TRINITY-LINUX = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ9Iwy4iP4/lpSsLGKqrnMwO0AUvOHqgBc/RimkLrnQh";
+  TRINITY-LINUX = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ9Iwy4iP4/lpSsLGKqrnMwO0AUvOHqgBc/RimkLrnQh root@TRINITY-LINUX";
   TWINS-LINUX = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMAp9kcBykTqbYroj9akZ7s6qY7NsX9uHwZMv64dOKvV";
+
   DELTA-ZERO = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKOBP4prVx3gdi5YMW4dzy06s46aobpyY8IlFBDVgjDU";
   DIAL-IN = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILd2G/XmmLSK4V+tBgkS62/qE4fsY8c0dYKyjkiYtqpX";
 
@@ -18,12 +19,11 @@ let
 
   work-machines = [ ];
   work-users = [ ];
+  work = work-machines ++ work-users;
 
   rnet-machines = [ DELTA-ZERO DIAL-IN ];
   rnet-users = [ ];
-  rnet = rnet-users ++ rnet-machines;
-
-  servers = rnet-machines;
+  rnet = rnet-machines ++ rnet-users;
 
   all-machines = personal-machines ++ work-machines ++ rnet-machines;
   all-users = personal-users ++ work-users ++ rnet-users;
@@ -33,7 +33,7 @@ in
 {
   "postfix_sasl_passwd.age".publicKeys = personal;
   "postfix_sender_relay.age".publicKeys = personal;
-  "user_dzrodriguez.age".publicKeys = allKeys;
+  "user_dzrodriguez.age".publicKeys = personal ++ rnet;
   "atuin_key.age".publicKeys = allKeys;
-  "geoclue_url.age".publicKeys = personal;
+  "geoclue_url.age".publicKeys = personal-machines;
 }
