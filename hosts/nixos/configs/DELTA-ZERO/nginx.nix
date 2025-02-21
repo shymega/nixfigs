@@ -23,7 +23,7 @@
     recommendedZstdSettings = true;
     clientMaxBodySize = config.services.matrix-synapse.settings.max_upload_size;
     virtualHosts = {
-      "mtx.shymega.org.uk" = import ./matrix-nginx.nix;
+      "matrix.rodriguez.org.uk" = import ./matrix-nginx.nix;
     };
   };
 }
