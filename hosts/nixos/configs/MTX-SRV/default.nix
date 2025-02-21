@@ -121,6 +121,7 @@
       enable = true;
       networks."10-hetzner" = {
         matchConfig.Name = "enp1s0";
+        dns = [ "1.1.1.1" ];
         networkConfig.DHCP = "ipv4";
         address = [ "2a01:4f9:c012:6ea::1/64" ];
         routes = [{ routeConfig.Gateway = "fe80::1"; }];
