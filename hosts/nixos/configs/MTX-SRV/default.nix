@@ -66,7 +66,7 @@
   };
 
   networking = {
-    hostName = "matrix";
+    hostName = "mtx";
     domain = "shymega.org.uk";
 
     timeServers = lib.mkForce [ "uk.pool.ntp.org" ];
