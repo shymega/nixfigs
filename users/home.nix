@@ -121,7 +121,6 @@ in
       wezterm
       wget
       xsv
-      yt-dlp
       zathura
       zellij
       zip
