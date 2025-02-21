@@ -5,7 +5,7 @@
 { inputs, ... }:
 _final: prev:
 {
-  asfp = import inputs.nixpkgs-android-studio-for-platform {
+  asfp = import inputs.asfp {
     inherit (prev) system;
     config = {
       allowUnfree = true;
