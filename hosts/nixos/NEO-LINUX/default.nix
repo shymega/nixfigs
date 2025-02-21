@@ -15,7 +15,37 @@ in
 
   boot = {
     supportedFilesystems = [ "ntfs" "zfs" ];
-    initrd.supportedFilesystems = [ "ntfs" "zfs" ];
+    initrd = {
+      supportedFilesystems = [ "ntfs" "zfs" ];
+
+      luks.devices = {
+        nixos = {
+          device = "/dev/disk/by-label/NIXOS";
+          preLVM = true;
+          allowDiscards = true;
+        };
+      };
+      systemd.services.rollback = {
+        description = "Rollback ZFS datasets to a pristine state";
+        wantedBy = [
+          "initrd.target"
+        ];
+        after = [
+          "zfs-import-tank.service"
+        ];
+        before = [
+          "sysroot.mount"
+        ];
+        path = with pkgs; [
+          zfs
+        ];
+        unitConfig.DefaultDependencies = "no";
+        serviceConfig.Type = "oneshot";
+        script = ''
+          zfs rollback -r tank/local/root@blank
+        '';
+      };
+    };
 
     kernelPackages =
       if enableXanmod then
@@ -35,14 +65,6 @@ in
     kernel.sysctl = {
       "fs.inotify.max_user_watches" = "819200";
       "kernel.printk" = "3 3 3 3";
-    };
-
-    initrd.luks.devices = {
-      nixos = {
-        device = "/dev/disk/by-label/NIXOS";
-        preLVM = true;
-        allowDiscards = true;
-      };
     };
 
     plymouth = {
@@ -65,27 +87,6 @@ in
         useOSProber = true;
       };
       timeout = 6;
-    };
-
-    initrd.systemd.services.rollback = {
-      description = "Rollback ZFS datasets to a pristine state";
-      wantedBy = [
-        "initrd.target"
-      ];
-      after = [
-        "zfs-import-tank.service"
-      ];
-      before = [
-        "sysroot.mount"
-      ];
-      path = with pkgs; [
-        zfs
-      ];
-      unitConfig.DefaultDependencies = "no";
-      serviceConfig.Type = "oneshot";
-      script = ''
-        zfs rollback -r tank/local/root@blank
-      '';
     };
   };
 
