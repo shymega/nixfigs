@@ -1,10 +1,5 @@
 { inputs, outputs, config, pkgs, lib, ... }:
 {
-  imports = [
-    inputs.hardware.nixosModules.gpd-pocket-3
-    ./hardware-configuration.nix
-  ];
-
   networking.hostName = "TRINITY-LINUX";
   networking.hostId = "65ad6c0b";
   time.timeZone = "Europe/London";
