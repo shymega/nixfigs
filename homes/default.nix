@@ -30,11 +30,14 @@ let
     homeManagerConfiguration {
       pkgs = libx.genPkgs hostPlatform;
       modules = [
+
         inputs.agenix.homeManagerModules.default
         inputs.nix-doom-emacs-unstraightened.hmModule
         inputs.nix-index-database.hmModules.nix-index
+        inputs._1password-shell-plugins.hmModules.default
+        inputs.shypkgs-public.hmModules.${system}.dwl
         ./configs
-        ../secrets/user
+        inputs.nixfigs-secrets.user
         ({ config, ... }: {
           nixpkgs.config = self.nixpkgs-config;
         })
