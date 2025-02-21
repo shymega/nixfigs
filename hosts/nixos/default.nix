@@ -14,10 +14,10 @@ let
       config = self.nixpkgs-config;
     };
   hmConfig = args: username: inputs.home-manager.nixosModules.home-manager {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.${username} = import ../../homes;
-          home-manager.extraSpecialArgs = args;
+    home-manager.useGlobalPkgs = true;
+    home-manager.useUserPackages = true;
+    home-manager.users.${username} = import ../../homes;
+    home-manager.extraSpecialArgs = args;
   };
   genConfiguration =
     hostname:
@@ -54,7 +54,7 @@ let
           (./configs + "/${hostname}")
           ../../modules/nixos/generators.nix
         ]
-        ++ extraModules ++ hardwareModules 
+        ++ extraModules ++ hardwareModules
         ++ (lib.optional monolithConfig (import ./monolith.nix))
         ++ (lib.optional embedHm hmConfig { inherit specialArgs username; });
       specialArgs = {
