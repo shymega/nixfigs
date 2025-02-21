@@ -29,21 +29,21 @@
       systemd-boot.enable = false;
     };
 
-  fileSystems = {
-    "/" =
-      {
-        device = "/dev/disk/by-label/NIXOS_SD";
-        fsType = "ext4";
-        options = [ "noatime" ];
-      };
+    fileSystems = {
+      "/" =
+        {
+          device = "/dev/disk/by-label/NIXOS_SD";
+          fsType = "ext4";
+          options = [ "noatime" ];
+        };
 
-    "/firmware" =
-      {
-        device = "/dev/disk/by-label/FIRMWARE";
-        fsType = "vfat";
-        options = [ "ro" "nofail" ];
-        neededForBoot = true;
-      };
-  };
+      "/firmware" =
+        {
+          device = "/dev/disk/by-label/FIRMWARE";
+          fsType = "vfat";
+          options = [ "ro" "nofail" ];
+          neededForBoot = true;
+        };
+    };
   };
 }
