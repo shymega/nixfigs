@@ -21,6 +21,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: 'main'
       - uses: cachix/install-nix-action@V27
         with:
           github_access_token: ${{ secrets.NIX_GH_ACTIONS_TOKEN }}
@@ -43,9 +45,9 @@ jobs:
           ref: 'main'
       - uses: cachix/install-nix-action@V27
         with:
-          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+          github_access_token: ${{ secrets.NIX_GH_ACTIONS_TOKEN }}
       - name: Format Nix files
-        run: nix run nixpkgs#nixpkgs-fmt -- ./*
+        run: nix run nixpkgs#nixpkgs-fmt -- .
       - name: Commit changes to codebase
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
