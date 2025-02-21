@@ -21681,11 +21681,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1721419023,
-        "narHash": "sha256-HYPMPOw7MtPkB/I9MWsDP/ULZQqDya1tQIYHDNSj3b4=",
+        "lastModified": 1721424348,
+        "narHash": "sha256-kwlYOXIW4aWo8KvQu3LBiuR7Q+lWTACa3CqXSbsWsPk=",
         "owner": "shymega",
         "repo": "bestool",
-        "rev": "0c3517f1daf486b28547f24ec82b0f9b2fe88055",
+        "rev": "fd6527a9694f194ca814a9961c35bbc98b77e635",
         "type": "github"
       },
       "original": {
@@ -47070,7 +47070,7 @@
     "dwl-source": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-SUSK3C5BMaZY/bvSLMlP0u/tPwz34KNszkaKiAUfqIM=",
+        "narHash": "sha256-wDS4EOTPRQHLd4IusuEsYkJ4mSRVRTFeNwdKR18BiEg=",
         "type": "file",
         "url": "https://codeberg.org/dwl/dwl"
       },
@@ -153846,11 +153846,11 @@
     },
     "nixpkgs-master_92": {
       "locked": {
-        "lastModified": 1721419161,
-        "narHash": "sha256-Mbqgh7P65m+dmDi/9ReZc9c8jb9k5LHeCSu2qSo1+qU=",
+        "lastModified": 1721424161,
+        "narHash": "sha256-y8WqP+cRRNKqaUjP4UaPSDYD5Ss5bRFFewgxMV2+mCs=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "57c92ee66f6c22e9e09fb50f91077f8332a4fb0b",
+        "rev": "4c837285eb356bc60294c4e5a644996d537e4cf8",
         "type": "github"
       },
       "original": {
@@ -171892,11 +171892,11 @@
     },
     "nur_92": {
       "locked": {
-        "lastModified": 1721407097,
-        "narHash": "sha256-y2uFuCkJs6hT9Ll6HnJgIVF8V3TmcW6kTyIRHwYQrWg=",
+        "lastModified": 1721420802,
+        "narHash": "sha256-8kmavDJgzkEwUujFAJCkoLk79r5DRuyVfu5TlLap624=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "798afce2460905c4e7a84f5428e8d7b36a286c24",
+        "rev": "3a24dfcc6b7bc383112e5a9e13d7c04cb659eff8",
         "type": "github"
       },
       "original": {
