@@ -60,19 +60,14 @@
       neededForBoot = true;
       fsType = "vfat";
     };
-    "/boot/efi/PRIMARY" = {
-      device = "/dev/disk/by-label/ESP_PRIMARY";
-      options = [ "ro", "nofail" ];
-      fsType = "vfat";
-    };
     "/boot/efi/WINNT" = {
       device = "/dev/disk/by-label/ESP_WINNT";
-      options = [ "ro", "nofail" ];
+      options = [ "ro" "nofail" ];
       fsType = "vfat";
     };
     "/boot/efi/BAZZITE" = {
       device = "/dev/disk/by-label/ESP_BAZZITE";
-      options = [ "ro", "nofail" ];
+      options = [ "ro" "nofail" ];
       fsType = "vfat";
     };
     "/home" = {
@@ -80,7 +75,7 @@
       fsType = "xfs";
       options = [ "defaults" "noatime" "ssd" ];
     };
-    "/data" = {
+    "/data/Games" = {
       device = "/dev/disk/by-label/GAMES";
       fsType = "btrfs";
       options = [ "defaults" "noatime" "ssd" ];
