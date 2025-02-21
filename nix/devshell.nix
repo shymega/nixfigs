@@ -2,22 +2,17 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 with pkgs; {
   default = mkShell {
     name = "nix-config";
 
     nativeBuildInputs = [
       # Nix
-      agenix
-      deploy-rs.deploy-rs
-      nil
-      nix-melt
-      nix-output-monitor
-      nix-tree
+      inputs.agenix.packages.${pkgs.system}.agenix
+      inputs.deploy-rs.packages.${pkgs.system}.deploy-rs
       nixpkgs-fmt
       cachix
-      nix-eval-jobs
       statix
 
       # Shell
@@ -27,13 +22,10 @@ with pkgs; {
       # GitHub Actions
       act
       actionlint
-      python3Packages.pyflakes
-      shellcheck
 
       # Misc
       jq
       pre-commit
-      rage
     ];
   };
 }
