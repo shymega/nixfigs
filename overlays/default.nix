@@ -25,7 +25,7 @@ let
     inputs.bestool.overlays.default
     inputs.deckcheatz.overlays.default
     inputs.dzr-taskwarrior-recur.overlays.default
-    inputs.emacsconf2nix.overlays.default
+    inputs.emacs2nix.overlays.default
     inputs.nix-alien.overlays.default
     inputs.nur.overlay
     inputs.wemod-launcher.overlays.default
