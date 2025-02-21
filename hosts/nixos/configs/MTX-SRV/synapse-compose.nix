@@ -1,5 +1,5 @@
 # Auto-generated using compose2nix v0.2.2-pre.
-{ lib, ... }:
+{ pkgs, lib, ... }:
 
 {
   # Runtime
@@ -15,27 +15,32 @@
   virtualisation.oci-containers.backend = "podman";
 
   # Containers
-  virtualisation.oci-containers.containers."synapse-postgres" = {
-    image = "postgres:latest";
+  virtualisation.oci-containers.containers."synapse-db" = {
+    image = "docker.io/postgres:alpine";
     environment = {
-      "POSTGRES_DB" = "synapse";
-      "POSTGRES_PASSWORD" = "STRONGPASSWORD";
+      "POSTGRES_INITDB_ARGS" = "--encoding=UTF-8 --lc-collate=C --lc-ctype=C";
+      "POSTGRES_PASSWORD" = "changeme";
       "POSTGRES_USER" = "synapse";
     };
     volumes = [
-      "/etc/nixos/postgres:/var/lib/postgresql/data:rw"
+      "/srv/containers/matrix/db:/var/lib/postgresql/data:rw"
     ];
     log-driver = "journald";
     extraOptions = [
-      "--ip=10.10.10.2"
-      "--network-alias=postgres"
-      "--network=default"
+      "--network-alias=db"
+      "--network=synapse_default"
     ];
   };
-  systemd.services."podman-synapse-postgres" = {
+  systemd.services."podman-synapse-db" = {
     serviceConfig = {
-      Restart = lib.mkOverride 500 "always";
+      Restart = lib.mkOverride 500 "no";
     };
+    after = [
+      "podman-network-synapse_default.service"
+    ];
+    requires = [
+      "podman-network-synapse_default.service"
+    ];
     partOf = [
       "podman-compose-synapse-root.target"
     ];
@@ -44,27 +49,56 @@
     ];
   };
   virtualisation.oci-containers.containers."synapse-synapse" = {
-    image = "matrixdotorg/synapse:latest";
+    image = "docker.io/matrixdotorg/synapse:latest";
+    environment = {
+      "SYNAPSE_CONFIG_PATH" = "/data/homeserver.yaml";
+    };
     volumes = [
-      "/etc/nixos/synapse:/data:rw"
+      "/srv/containers/matrix/synapse:/data:rw"
+    ];
+    ports = [
+      "8448:8448/tcp"
+    ];
+    dependsOn = [
+      "synapse-db"
     ];
     log-driver = "journald";
     extraOptions = [
-      "--ip=10.10.10.4"
       "--network-alias=synapse"
-      "--network=default"
+      "--network=synapse_default"
     ];
   };
   systemd.services."podman-synapse-synapse" = {
     serviceConfig = {
       Restart = lib.mkOverride 500 "always";
     };
+    after = [
+      "podman-network-synapse_default.service"
+    ];
+    requires = [
+      "podman-network-synapse_default.service"
+    ];
     partOf = [
       "podman-compose-synapse-root.target"
     ];
     wantedBy = [
       "podman-compose-synapse-root.target"
     ];
+  };
+
+  # Networks
+  systemd.services."podman-network-synapse_default" = {
+    path = [ pkgs.podman ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStop = "podman network rm -f synapse_default";
+    };
+    script = ''
+      podman network inspect synapse_default || podman network create synapse_default
+    '';
+    partOf = [ "podman-compose-synapse-root.target" ];
+    wantedBy = [ "podman-compose-synapse-root.target" ];
   };
 
   # Root service
