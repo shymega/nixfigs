@@ -24,7 +24,7 @@ let
     , monolithConfig
     , overlays
     , embedHm
-    , hostRole
+    , hostRoles
     , hardwareModules
     , baseModules
     , ...
@@ -58,7 +58,7 @@ let
                 inputs
                 embedHm
                 username
-                hostRole
+                hostRoles
                 specialArgs
                 deployable
                 hostname
@@ -81,7 +81,7 @@ let
           libx
           embedHm
           username
-          hostRole
+          hostRoles
           specialArgs
           deployable
           hostname
