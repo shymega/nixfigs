@@ -170,7 +170,7 @@
         in
         import ./modules/devshell.nix { inherit inputs pkgs self system; });
 
-      nixosConfigurations = (import ./modules/nixos.nix { inherit self inputs pkgs; }) // (import ./modules/wsl.nix { inherit self inputs pkgs; }) // (import ./modules/mobile-nixos.nix { inherit self inputs pkgs; }) // inputs.nixfigs-priv.outputs.nixosConfigurations;
+      nixosConfigurations = (import ./modules/nixos.nix { inherit self inputs pkgs lib; }) // (import ./modules/wsl.nix { inherit self inputs pkgs; }) // (import ./modules/mobile-nixos.nix { inherit self inputs pkgs; }) // inputs.nixfigs-priv.outputs.nixosConfigurations;
       homeConfigurations = import ./modules/home-manager.nix { inherit self inputs pkgs; };
       nixOnDroidConfigurations = import ./modules/nix-on-droid.nix { inherit self inputs pkgs; };
       darwinConfigurations = import ./modules/darwin.nix { inherit self inputs pkgs; };
