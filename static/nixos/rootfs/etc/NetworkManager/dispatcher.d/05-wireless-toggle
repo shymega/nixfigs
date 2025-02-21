@@ -1,8 +1,8 @@
 #!/usr/bin/env nix-shell
 #! nix-shell -p bash -p bash -p networkmanager
 
-# SPDX-FileCopyrightText: 2024 Dom Rodriguez
-#
+# SPDX-FileCopyrightText: 2024 Dom Rodriguez <shymega@shymega.org.uk
+
 # SPDX-License-Identifier: GPL-3.0-only
 
 IDENTIFIER="nm-05-wifi-toggle"
@@ -11,24 +11,37 @@ INTERFACE="${1}"
 ACTION="${2}"
 
 case "${INTERFACE}" in
-    en* | bnep* | wwan0)
+wwan0)
 	case "${ACTION}" in
-	    up)
+	up)
 		systemd-log "${IDENTIFIER}" "Turning OFF WiFi.." notice
 		nmcli radio wifi off
 		;;
-
-	    down)
+	down)
 		systemd-log "${IDENTIFIER}" "Turning ON WiFi.." notice
 		nmcli radio wifi on
 		;;
-	    *)
+	*)
 		systemd-log "${IDENTIFIER}" "Unknown action." warning
 		;;
-
 	esac
 	;;
-    *)
+wl*)
+	case "${ACTION}" in
+	up)
+		systemd-log "${IDENTIFIER}" "Turning OFF WWAN.." notice
+		nmcli radio wwan off
+		;;
+	down)
+		systemd-log "${IDENTIFIER}" "Turning ON WWAN.." notice
+		nmcli radio wwan on
+		;;
+	*)
+		systemd-log "${IDENTIFIER}" "Unknown action." warning
+		;;
+	esac
+	;;
+*)
 	systemd-log "${IDENTIFIER}" "Unknown interface." warning
 	exit 0
 	;;
