@@ -21,32 +21,7 @@
     };
   };
 
-  systemd = {
-    network = {
-      enable = true;
-      networks = {
-        "10-lan" = {
-          matchConfig.Name = [ "eno1" ];
-          networkConfig = {
-            Bridge = "vmbr0";
-          };
-        };
-        "10-lan-bridge" = {
-          matchConfig.Name = "vmbr0";
-          address = [ "78.129.218.104/24" ];
-          routes = [{ routeConfig.Gateway = "78.129.218.1"; }];
-          linkConfig.RequiredForOnline = "routable";
-        };
-      };
-
-      netdevs."vmbr0" = {
-        netdevConfig = {
-          Name = "vmbr0";
-          Kind = "bridge";
-        };
-      };
-    };
-  };
+  networking.dhcpcd.enable = true;
 
   boot = {
     kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
