@@ -13,6 +13,12 @@ let
       overlays = builtins.attrValues self.overlays ++ overlays;
       config = self.nixpkgs-config;
     };
+  hmConfig = args: username: inputs.home-manager.nixosModules.home-manager {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.${username} = import ../../homes;
+          home-manager.extraSpecialArgs = args;
+  };
   genConfiguration =
     hostname:
     { address
@@ -21,7 +27,9 @@ let
     , extraModules
     , deployable
     , monolithConfig
+    , username
     , overlays
+    , embedHm
     , hostRole
     , hardwareModules
     , baseModules
@@ -39,14 +47,16 @@ let
           }
         ) // inputs.nixpkgs.lib;
     in
-    inputs.nixpkgs.lib.nixosSystem {
+    inputs.nixpkgs.lib.nixosSystem rec {
       pkgs = genPkgs hostPlatform overlays;
       modules =
         baseModules ++ [
           (./configs + "/${hostname}")
           ../../modules/nixos/generators.nix
         ]
-        ++ extraModules ++ hardwareModules ++ (lib.optional monolithConfig (import ./monolith.nix));
+        ++ extraModules ++ hardwareModules 
+        ++ (lib.optional monolithConfig (import ./monolith.nix))
+        ++ (lib.optional embedHm hmConfig { inherit specialArgs username; });
       specialArgs = {
         hostAddress = address;
         hostType = type;
