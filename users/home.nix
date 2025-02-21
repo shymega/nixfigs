@@ -210,11 +210,7 @@
           active.labels = [ "ID" "Started" "Age" "Priority" "Project" "Due" "Description" ];
         };
         taskd = {
-          certificate = config.age.secrets.taskwarrior_sync_cert.path;
-          key = config.age.secrets.taskwarrior_sync_key.path;
-          ca = config.age.secrets.taskwarrior_sync_ca.path;
           server = "inthe.am:53589";
-          credentials = config.age.secrets.taskwarrior_sync_cred.path;
         };
       };
     };
