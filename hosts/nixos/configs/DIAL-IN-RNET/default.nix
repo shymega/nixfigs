@@ -9,7 +9,6 @@ in
 {
   imports = [ ./hardware-configuration.nix ];
 
-  networking.hostName = "DIAL-IN-RNET";
   time.timeZone = "Europe/London";
 
   boot = {
@@ -53,6 +52,9 @@ in
     };
   };
   networking = {
+    hostName = "dial-in";
+    domain = "rnet.odriguez.org.uk";
+
     timeServers = lib.mkForce [ "uk.pool.ntp.org" ];
     firewall = {
       enable = true;
