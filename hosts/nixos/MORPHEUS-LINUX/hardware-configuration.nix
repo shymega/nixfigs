@@ -50,7 +50,7 @@
         neededForBoot = true;
         fsType = "zfs";
       };
-    "/boot/efi" = {
+    "/boot/efi/NIXOS" = {
       device = "/dev/disk/by-label/ESP_NIXOS"; # Use Refind on /dev/disk/by-label/ESP_PRIMARY
       neededForBoot = true;
       fsType = "vfat";
@@ -58,6 +58,7 @@
     "/boot/efi/PRIMARY" = {
       device = "/dev/disk/by-label/ESP_PRIMARY";
       neededForBoot = true;
+      options = [ "ro" "nofail" ];
       fsType = "vfat";
     };
     "/boot/efi/WINNT" = {
