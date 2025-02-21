@@ -15,6 +15,10 @@ let
   inherit (lib.my) isDarwin isForeignNix isNixOS;
 in
 {
+  imports = [
+    inputs.agenix.nixosModules.default
+    ../../secrets/system
+  ];
   environment.etc."nix/overlays-compat/overlays.nix".text = ''
     final: prev:
     with prev.lib;
@@ -22,8 +26,36 @@ in
       foldl' (flip extends) (_: prev) overlays final
   '';
 
+  programs.ssh = {
+    extraConfig = ''
+      Host eu.nixbuild.net
+        PubkeyAcceptedKeyTypes ssh-ed25519
+        ServerAliveInterval 60
+        IPQoS throughput
+        IdentityFile /run/agenix/nixbuild_ssh_priv_key
+    '';
+    knownHosts = {
+      nixbuild = {
+        hostNames = [ "eu.nixbuild.net" ];
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPIQCZc54poJ8vqawd8TraNryQeJnvH1eLpIDgbiqymM";
+      };
+    };
+  };
+
   nix =
     {
+      distributedBuilds = true;
+      buildMachines = [
+        {
+          hostName = "eu.nixbuild.net";
+          sshUser = "${config.networking.hostName}-build-client";
+          systems = [ "aarch64-linux" "i686-linux" "armv7-linux" "x86_64-linux" ];
+          maxJobs = 100;
+          supportedFeatures = [ "benchmark" "big-parallel" ];
+          protocol = "ssh-ng";
+        }
+      ];
+
       settings = {
         accept-flake-config = true;
         extra-platforms = config.boot.binfmt.emulatedSystems;
@@ -76,7 +108,6 @@ in
         ];
         flake-registry = "${inputs.flake-registry}/flake-registry.json";
       };
-      distributedBuilds = true;
       extraOptions = ''
         gc-keep-outputs = false
         gc-keep-derivations = false
