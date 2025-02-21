@@ -25,7 +25,7 @@ let
     inputs.cosmo-codios-codid.overlays.default
     inputs.deploy-rs.overlays.default
     inputs.nix-alien.overlays.default
-    inputs.nur.overlays.default
+    inputs.nur.overlay
     inputs.shycode.overlays.default
     inputs.shymacs.overlays.default
     inputs.emacsconf2nix.overlays.default
