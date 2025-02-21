@@ -5,15 +5,8 @@
 { config, ... }:
 {
   networking.hostName = "MORPHEUS-WSL";
-  networking.hostId = "deab2f6f";
-  boot = {
-    supportedFilesystems = [ "ntfs" "zfs" ];
-    initrd.supportedFilesystems = [ "ntfs" "zfs" ];
 
-    extraModulePackages = with config.boot.kernelPackages; [ zfs ];
-  };
-
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" "armv6l-linux" "armv7l-linux" ];
 
   services = {
     ollama = {
