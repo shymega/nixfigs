@@ -47049,7 +47049,7 @@
     "dwl-source": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-JKaLF3BsZDk+eMSlKU2E73tsCBN7u5FnI29uA1PAs58=",
+        "narHash": "sha256-WbojGMUJSxTuBv/08ohiAgWJbdaKvNu9PbVCXNnbR2s=",
         "type": "file",
         "url": "https://codeberg.org/dwl/dwl"
       },
@@ -80565,15 +80565,16 @@
     },
     "hardware": {
       "locked": {
-        "lastModified": 1720737798,
-        "narHash": "sha256-G/OtEAts7ZUvW5lrGMXSb8HqRp2Jr9I7reBuvCOL54w=",
-        "owner": "nixos",
+        "lastModified": 1721235222,
+        "narHash": "sha256-+A+VR97MLj4OiSrZrLARiJiM1zT+6uGojRz/sAwfcwY=",
+        "owner": "shymega",
         "repo": "nixos-hardware",
-        "rev": "c5013aa7ce2c7ec90acee5d965d950c8348db751",
+        "rev": "f073b66ccd2525481258a4f7992e8c2b473b6c1d",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
+        "owner": "shymega",
+        "ref": "wm2-24.05",
         "repo": "nixos-hardware",
         "type": "github"
       }
@@ -153737,11 +153738,11 @@
     },
     "nixpkgs-master_92": {
       "locked": {
-        "lastModified": 1721232794,
-        "narHash": "sha256-p9h93yLtfEbFPGQPm/k1IBQBOl2WAQsqd3Bbtsu/hh0=",
+        "lastModified": 1721235041,
+        "narHash": "sha256-iCl7g8kmvGfL92aBEIaY1TjteIfT1lrftBKcX1L8q9w=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "2f53ab981a3cee896fd2a6257bece3691ca5b683",
+        "rev": "9b25bd03dc0d5b799f46d08af614f7912c305f7c",
         "type": "github"
       },
       "original": {
@@ -166747,16 +166748,16 @@
     },
     "nixpkgs_355": {
       "locked": {
-        "lastModified": 1721233551,
-        "narHash": "sha256-CjT3er2YjEjGSvhBbW8edbB5hRFw2eAVR7RlVL5liHU=",
-        "owner": "shymega",
+        "lastModified": 1720954236,
+        "narHash": "sha256-1mEKHp4m9brvfQ0rjCca8P1WHpymK3TOr3v34ydv9bs=",
+        "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "319cd2f5daf1e3b1de0a316e64352b6c5e4c56d0",
+        "rev": "53e81e790209e41f0c1efa9ff26ff2fd7ab35e27",
         "type": "github"
       },
       "original": {
-        "owner": "shymega",
-        "ref": "opengl-24.05",
+        "owner": "nixos",
+        "ref": "nixos-24.05",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -171751,11 +171752,11 @@
     },
     "nur_92": {
       "locked": {
-        "lastModified": 1721227577,
-        "narHash": "sha256-BscHUVeZSetkrjIrzfkoH+j9RaMf9ZMlc08sBUvmTxY=",
+        "lastModified": 1721234934,
+        "narHash": "sha256-Lm6hvODsLxtidw5hmx6OM+CFekgtc6YD9/jxckqq3To=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "4da3381a200d17b80d1160669aca218298524f9e",
+        "rev": "c1c05d57f89745219a98af4e97dc5c4788adcc17",
         "type": "github"
       },
       "original": {
