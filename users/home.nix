@@ -100,6 +100,7 @@
       step-cli
       stow
       texlive.combined.scheme-full
+      thunderbird
       timewarrior
       tmuxp
       unrar
