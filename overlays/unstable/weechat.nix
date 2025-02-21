@@ -14,10 +14,8 @@ _final: prev: {
           colorize_nicks
           url_hint
           weechat-autosort
-          weechat-matrix
           weechat-go
           weechat-notify-send
-          zncplayback
         ];
         plugins = builtins.attrValues availablePlugins;
       };
