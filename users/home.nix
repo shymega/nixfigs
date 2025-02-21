@@ -57,7 +57,6 @@ in
       httpie
       hub
       inetutils
-      isync
       itd
       jdk17
       jq
@@ -115,6 +114,7 @@ in
       inputs.devenv.packages."${pkgs.system}".devenv
     ] ++ (with pkgs; [
       aws-sam-cli
+      isync-patched
       awscli2
       azure-cli
       gitkraken
