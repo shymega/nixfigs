@@ -31,14 +31,6 @@ let
 
       modules = [
         inputs.agenix.nixosModules.default
-        inputs.chaotic.nixosModules.default
-        inputs.lanzaboote.nixosModules.lanzaboote
-        {
-          environment.systemPackages = [
-            inputs.agenix.packages.${system}.default
-            inputs.nix-alien.packages.${system}.nix-alien
-          ];
-        }
         ../secrets/system
         (../hosts/nixos + "/${hostname}")
         (../hosts/nixos + "/${hostname}" + "/hardware-configuration.nix")
@@ -53,7 +45,7 @@ in
 
   ## Desktop (Beelink SER6 Pro) ##
 
-  NEO-LINUX = mkNixosConfig {
+  NEO-LINUX = mkNixosConfig rec {
     hostname = "NEO-LINUX";
     system = "x86_64-linux";
     hardwareModules = [
@@ -63,6 +55,14 @@ in
       inputs.hardware.nixosModules.common-pc
     ];
     extraModules = [
+      inputs.chaotic.nixosModules.default
+      inputs.lanzaboote.nixosModules.lanzaboote
+      {
+        environment.systemPackages = [
+          inputs.agenix.packages.${system}.default
+          inputs.nix-alien.packages.${system}.nix-alien
+        ];
+      }
       ../hosts/nixos/configuration.nix
     ];
   };
@@ -71,7 +71,7 @@ in
 
   ## Raspberry Pi - desk ##
 
-  SMITH-LINUX = mkNixosConfig {
+  SMITH-LINUX = mkNixosConfig rec {
     hostname = "SMITH-LINUX";
     system = "aarch64-linux";
     baseModules = [ ];
@@ -79,45 +79,80 @@ in
       inputs.hardware.nixosModules.raspberry-pi-4
     ];
     extraModules = [
+      inputs.chaotic.nixosModules.default
+      inputs.lanzaboote.nixosModules.lanzaboote
+      {
+        environment.systemPackages = [
+          inputs.agenix.packages.${system}.default
+          inputs.nix-alien.packages.${system}.nix-alien
+        ];
+      }
+
+      ./24.05-compat.nix
       "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
     ];
   };
 
   ## End Raspberry Pi - desk ##
 
-  ## Gaming Handheld (GPD Win Max 2 (2024)) ##
-
-  MORPHEUS-LINUX = mkNixosConfig {
-    hostname = "MORPHEUS-LINUX";
-    system = "x86_64-linux";
-    hardwareModules = [
-      inputs.hardware.nixosModules.gpd-win-max-2-2023
-    ];
-    extraModules = [
-      ../hosts/nixos/configuration.nix
-    ];
-  };
-
-  ## End Gaming Handheld (GPD Win Max 2 (2024) ##
-
-  ### End UMPC devices ###
-
   # Laptop (ThinkPad X270) ##
 
-  TWINS-LINUX = mkNixosConfig {
+  TWINS-LINUX = mkNixosConfig rec {
     hostname = "TWINS-LINUX";
     system = "x86_64-linux";
     hardwareModules = [
       inputs.hardware.nixosModules.lenovo-thinkpad-x270
     ];
     extraModules = [
+      inputs.chaotic.nixosModules.default
+      inputs.lanzaboote.nixosModules.lanzaboote
+      {
+        environment.systemPackages = [
+          inputs.agenix.packages.${system}.default
+          inputs.nix-alien.packages.${system}.nix-alien
+        ];
+      }
+
       ../hosts/nixos/configuration.nix
     ];
   };
 
   # End Laptop (ThinkPad X270) ##
 
-  GRDN-BED-UNIT = mkNixosConfig {
+  ### Handhelds ###
+
+  ## Gaming Handheld (GPD Win Max 2 (2024)) ##
+
+  MORPHEUS-LINUX = mkNixosConfig rec {
+    hostname = "MORPHEUS-LINUX";
+    system = "x86_64-linux";
+    hardwareModules = [
+      inputs.hardware.nixosModules.gpd-win-max-2-2023
+    ];
+    extraModules = [
+      inputs.chaotic.nixosModules.default
+      inputs.lanzaboote.nixosModules.lanzaboote
+      {
+        environment.systemPackages = [
+          inputs.agenix.packages.${system}.default
+          inputs.nix-alien.packages.${system}.nix-alien
+        ];
+      }
+
+      ../hosts/nixos/configuration.nix
+    ];
+  };
+
+  ## End Gaming Handheld (GPD Win Max 2 (2024) ##
+
+  ## Gaming Handheld (Steam Deck (OLED/2TB)) ##
+  ## TO BE ADDED. ##
+  ## End Gaming Handheld (Steam Deck (OLED/2TB)) ##
+  ### End Handhelds ###
+
+  ### Pi Units ###
+
+  GRDN-BED-UNIT = mkNixosConfig rec {
     hostname = "GRDN-BED-UNIT";
     system = "aarch64-linux";
     baseModules = [ ];
@@ -125,23 +160,45 @@ in
       inputs.hardware.nixosModules.raspberry-pi-4
     ];
     extraModules = [
+      ./24.05-compat.nix
+      {
+        environment.systemPackages = [
+          inputs.agenix.packages.${system}.default
+          inputs.nix-alien.packages.${system}.nix-alien
+        ];
+      }
+
       "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
     ];
   };
 
-  ### Handhelds ###
+  DZR-OFFICE-BUSY-LIGHT-UNIT = mkNixosConfig rec {
+    hostname = "DZR-OFFICE-BUSY-LIGHT-UNIT";
+    system = "armv6l-linux";
+    baseModules = [ ];
+    extraModules = [
+      ./24.05-compat.nix
+      "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image.nix"
+    ];
+  };
 
-  ## Gaming Handheld (Steam Deck (OLED/2TB)) ##
-  ## TO BE ADDED. ##
-  ## End Gaming Handheld (Steam Deck (OLED/2TB)) ##
+  DZR-PETS-CAM-UNIT = mkNixosConfig rec {
+    hostname = "DZR-PETS-CAM-UNIT";
+    system = "armv6l-linux";
+    baseModules = [ ];
+    extraModules = [
+      ./24.05-compat.nix
+      "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image.nix"
+    ];
+  };
 
-  ### End Handhelds ###
+  ### End Pi Unitss ###
 
   ### Experimental Device Ports ###
 
   ## ClockworkPi uConsole (CM4) ##
   # Received, Debian installed. Work ongoing to upstream DTB and driver patches. #
-  #  CLOCKWORK-UC-CM4 = mkNixosConfig {
+  #  CLOCKWORK-UC-CM4 = mkNixosConfig rec {
   #    hostname = "CLOCKWORK-UC-CM4";
   #    system = "aarch64-linux";
   #    baseModules = [ ];
@@ -149,6 +206,13 @@ in
   #      inputs.hardware.nixosModules.raspberry-pi-4
   #    ];
   #    extraModules = [
+  #      ./24.05-compat.nix
+  #      {
+  #        environment.systemPackages = [
+  #          inputs.agenix.packages.${system}.default
+  #          inputs.nix-alien.packages.${system}.nix-alien
+  #        ];
+  #      }
   #      "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
   #    ];
   #  };
@@ -156,7 +220,7 @@ in
   ## End ClockworkPi uConsole (CM4) ##
 
   ## ClockworkPi DevTerm (CM4) ##
-  #  CLOCKWORK-DT-CM4 = mkNixosConfig {
+  #  CLOCKWORK-DT-CM4 = mkNixosConfig rec {
   #    hostname = "CLOCKWORK-DT-CM4";
   #    system = "aarch64-linux";
   #    baseModules = [ ];
@@ -164,6 +228,13 @@ in
   #      inputs.hardware.nixosModules.raspberry-pi-4
   #    ];
   #    extraModules = [
+  #      ./24.05-compat.nix
+  #      {
+  #        environment.systemPackages = [
+  #          inputs.agenix.packages.${system}.default
+  #          inputs.nix-alien.packages.${system}.nix-alien
+  #        ];
+  #      }
   #      "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
   #    ];
   #  };
