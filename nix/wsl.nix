@@ -30,7 +30,6 @@ let
       modules = [
         inputs.agenix.nixosModules.default
         inputs.nix-ld.nixosModules.nix-ld
-        inputs.nix-index-database.nixosModules.nix-index
         {
           environment.systemPackages = [
             inputs.agenix.packages.${system}.default
