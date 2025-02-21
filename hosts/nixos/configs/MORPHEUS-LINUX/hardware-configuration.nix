@@ -19,6 +19,7 @@
     };
     kernelModules = [
       "kvm-amd"
+      "amdgpu"
       "i2c_dev"
     ];
     extraModulePackages = [ ];
