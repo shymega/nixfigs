@@ -18,6 +18,10 @@
     initrd.kernelModules = [ "dm-snapshot" "amdgpu" ];
     kernelModules = [ "kvm-amd" ];
     extraModulePackages = [ ];
+    zfs = {
+      requestEncryptionCredentials = true;
+      forceImportAll = true;
+    };
     resumeDevice = "/dev/disk/by-label/SWAP";
   };
 
