@@ -11,7 +11,6 @@
       "https://attic.mildlyfunctional.gay/nixbsd"
       "https://cache.dataaturservice.se/spectrum/"
       "https://cache.nixos.org/"
-      "https://deckcheatz-nightlies.cachix.org"
       "https://deploy-rs.cachix.org/"
       "https://devenv.cachix.org"
       "https://nix-community.cachix.org"
@@ -22,7 +21,6 @@
     ];
     extra-trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-      "deckcheatz-nightlies.cachix.org-1:ygkraChLCkqqirdkGjQ68Y3LgVrdFB2bErQfj5TbmxU="
       "deploy-rs.cachix.org-1:xfNobmiwF/vzvK1gpfediPwpdIP0rpDV2rYqx40zdSI="
       "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
@@ -73,10 +71,9 @@
       formatter = treeFmtEachSystem (pkgs: treeFmtEval.${pkgs.system}.config.build.wrapper);
       # for `nix flake check`
       checks =
-        treeFmtEachSystem
-          (pkgs: {
-            formatting = treeFmtEval.${pkgs}.config.build.wrapper;
-          })
+        treeFmtEachSystem (pkgs: {
+          formatting = treeFmtEval.${pkgs}.config.build.wrapper;
+        })
         // forEachSystem (system: {
           pre-commit-check = import "${inputs.nixfigs-helpers.helpers.checks}" {
             inherit self system;
@@ -171,7 +168,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
-    nixpkgs-shymega.url = "github:shymega/nixpkgs/shymega/staging";
+    nixpkgs-shymega.url = "github:shymega/nixpkgs?ref=shymega/staging";
     nixfigs-common.url = "github:shymega/nixfigs-common";
     nixfigs-devenvs.url = "github:shymega/nixfigs-devenvs";
     nixfigs-helpers.url = "github:shymega/nixfigs-helpers";
@@ -221,8 +218,8 @@
         flake-compat.follows = "flake-compat";
       };
     };
-    android-nixpkgs = {
-      url = "github:tadfisher/android-nixpkgs/stable";
+    srvos = {
+      url = "github:nix-community/srvos";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-generators = {
@@ -230,14 +227,20 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     base16-schemes.url = "github:SenchoPens/base16.nix";
-    nix-gaming.url = "github:fufexan/nix-gaming";
+    nix-doom-emacs-unstraightened.url = "github:marienz/nix-doom-emacs-unstraightened";
+    _1password-shell-plugins.url = "github:1Password/shell-plugins";
+    shypkgs-private.url = "github:shymega/shypkgs-private";
+    shypkgs-public.url = "github:shymega/shypkgs-public";
+    android-nixpkgs = {
+      url = "github:tadfisher/android-nixpkgs/stable";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixfigs-doom-emacs = {
       url = "github:shymega/nixfigs-doom-emacs";
       flake = false;
     };
-    _1password-shell-plugins.url = "github:1Password/shell-plugins";
     jovian-nixos.url = "github:Jovian-Experiments/Jovian-NixOS";
     disko.url = "github:nix-community/disko";
-    flatpaks.url = "github:GermanBread/declarative-flatpak/stable-v3";
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
   };
 }
