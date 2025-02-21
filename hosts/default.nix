@@ -134,7 +134,7 @@ in
     pubkey = "";
     embedHm = true;
     remoteBuild = true;
-    deployable = true;
+    deployable = false;
   };
 
   NEO-WSL = mkHost {
