@@ -131,6 +131,4 @@
       ];
     };
   };
-
-  programs.steam.enable = true;
 }
