@@ -148,6 +148,23 @@ in
     deployable = false;
   };
 
+  NEO-JOVIAN = mkHost {
+    type = "nixos";
+    address = "NEO-JOVIAN.dzr.devices.10bsk.rnet.rodriguez.org.uk";
+    hostname = "NEO-JOVIAN";
+    hostPlatform = "x86_64-linux";
+    embedHm = true;
+    monolithConfig = true;
+    hostRole = "gaming";
+    extraModules = [
+      ../nix/24.05-compat.nix
+      inputs.chaotic.nixosModules.default
+    ];
+    pubkey = null;
+    remoteBuild = true;
+    deployable = false;
+  };
+
   MORPHEUS-LINUX = mkHost rec {
     type = "nixos";
     address = "MORPHEUS-LINUX.dzr.devices.10bsk.rnet.rodriguez.org.uk";
@@ -181,10 +198,14 @@ in
     address = "MORPHEUS-JOVIAN.dzr.devices.10bsk.rnet.rodriguez.org.uk";
     hostname = "MORPHEUS-JOVIAN";
     hostPlatform = "x86_64-linux";
-    hardwareModules = [ inputs.jovian-nixos.nixosModules.default ];
+    embedHm = true;
+    monolithConfig = true;
+    hostRole = "gaming";
     extraModules = [
       ../nix/24.05-compat.nix
+      inputs.chaotic.nixosModules.default
     ];
+    pubkey = null;
     remoteBuild = true;
     deployable = false;
   };
@@ -221,10 +242,14 @@ in
     address = "TRINITY-JOVIAN.dzr.devices.10bsk.rnet.rodriguez.org.uk";
     hostname = "TRINITY-JOVIAN";
     hostPlatform = "x86_64-linux";
-    hardwareModules = [ inputs.jovian-nixos.nixosModules.default ];
+    embedHm = true;
+    monolithConfig = true;
+    hostRole = "gaming";
     extraModules = [
       ../nix/24.05-compat.nix
+      inputs.chaotic.nixosModules.default
     ];
+    pubkey = null;
     remoteBuild = true;
     deployable = false;
   };
