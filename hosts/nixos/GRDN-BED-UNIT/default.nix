@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ inputs, outputs, config, pkgs, lib, ... }:
+{ inputs, pkgs, lib, ... }:
 {
   imports = [
     inputs.hardware.nixosModules.raspberry-pi-4
