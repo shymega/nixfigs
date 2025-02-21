@@ -58,22 +58,11 @@ in
         ];
         path = with pkgs; [
           coreutils
-          awk
           bash
         ];
         serviceConfig.Type = "oneshot";
         script = ''
           	  echo 0 > /sys/bus/usb/devices/usb1/1-4/authorized
-          	  echo disabled > /sys/bus/i2c/devices/i2c-GXTP7385:00/power/wakeup
-          	  echo disabled > /sys/bus/i2c/devices/i2c-PNP0C50:00/power/wakeup
-          	  for i in $(cat /proc/acpi/wakeup|grep enabled|awk '{print $1}'|xargs); do 
-          	  	case $i in
-          		 SLPB|XHCI)
-          		   ;;
-          		 *) 
-          		   echo $i | tee /proc/acpi/wakeup;
-          		 esac; 
-          	  done
         '';
       };
 
