@@ -10,7 +10,25 @@
 
   fileSystems = {
     "/" = {
-      device = "zdata/crypt/root/nixos/jovian/local/root";
+      device = "zroot/crypt/nixos/jovian/local/root";
+      fsType = "zfs";
+      neededForBoot = true;
+    };
+
+    "/data/Games" = {
+      device = "zdata/crypt/shared/games";
+      fsType = "zfs";
+      neededForBoot = true;
+    };
+
+    "/data/Development" = {
+      device = "zdata/crypt/shared/dev";
+      fsType = "zfs";
+      neededForBoot = true;
+    };
+
+    "/data/AI" = {
+      device = "zdata/crypt/shared/ai";
       fsType = "zfs";
       neededForBoot = true;
     };
@@ -27,21 +45,21 @@
     };
 
     "/etc/nixos" = {
-      device = "zdata/crypt/root/nixos/jovian/safe/nixos-config";
+      device = "zroot/crypt/nixos/linux/safe/nixos-config";
       fsType = "zfs";
       neededForBoot = true;
     };
 
     "/nix" = {
-      device = "zdata/crypt/root/nixos/jovian/local/nix-store";
+      device = "zroot/crypt/nixos/jovian/local/nix-store";
       fsType = "zfs";
       neededForBoot = true;
     };
 
     "/boot/efi" = {
-      device = "/dev/disk/by-label/ESP";
+      device = "/dev/disk/by-label/ESP_ALT";
       fsType = "vfat";
-      neededForBoot = true;
+      neededForBoot = false;
       options = [
         "fmask=0022"
         "dmask=0022"
