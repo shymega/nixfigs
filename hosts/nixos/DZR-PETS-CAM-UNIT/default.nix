@@ -4,6 +4,8 @@
 
 { inputs, config, pkgs, lib, ... }:
 {
+  imports = [ ./hardware-configuration.nix ];
+
   nixpkgs.crossSystem = lib.systems.elaborate lib.systems.examples.raspberryPi;
 
   networking = {

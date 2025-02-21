@@ -7,6 +7,8 @@ let
   enableXanmod = false;
 in
 {
+  imports = [ ./hardware-configuration.nix ];
+
   environment.etc."crypttab".text = ''
     homecrypt /dev/disk/by-label/HOMECRYPT /persist/etc/.homecrypt.bin
   '';

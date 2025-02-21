@@ -7,6 +7,8 @@ let
   enableXanmod = false;
 in
 {
+  imports = [ ./hardware-configuration.nix ];
+
   networking.hostName = "MORPHEUS-LINUX";
   networking.hostId = "e8a03c89";
   boot = {
