@@ -12,7 +12,6 @@ in
   '';
   networking.hostName = "MORPHEUS-LINUX";
   networking.hostId = "9f3120c5";
-  time.timeZone = "Europe/London";
 
   boot = {
     supportedFilesystems = [ "ntfs" "zfs" ];
