@@ -220,5 +220,6 @@
     nix-gaming.url = "github:fufexan/nix-gaming";
     treefmt-nix.url = "github:numtide/treefmt-nix";
     wemod-launcher.url = "github:shymega/wemod-launcher/refactor-shymega";
+    proxmox-nixos.url = "github:SaumonNet/proxmox-nixos";
   };
 }
