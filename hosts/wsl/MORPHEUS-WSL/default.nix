@@ -5,6 +5,7 @@
 { config, ... }:
 {
   networking.hostName = "MORPHEUS-WSL";
+  networking.hostId = "deab2f6f";
   boot = {
     supportedFilesystems = [ "ntfs" "zfs" ];
     initrd.supportedFilesystems = [ "ntfs" "zfs" ];
