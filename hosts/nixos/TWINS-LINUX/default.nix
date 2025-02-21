@@ -8,7 +8,6 @@ let
 in
 {
   networking.hostName = "TWINS-LINUX";
-  time.timeZone = "Europe/London";
   networking.hostId = "b0798d56";
 
   boot = {
