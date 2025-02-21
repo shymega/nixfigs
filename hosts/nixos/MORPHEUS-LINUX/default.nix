@@ -163,9 +163,11 @@ in
     ollama = {
       enable = true;
       acceleration = "rocm";
+      sandbox = false;
       models = "/data/AI/LLMs/Ollama/Models/";
+      writablePaths = [ "/data/AI/LLMs/Ollama/Models/" ];
       environmentVariables = {
-        HSA_OVERRIDE_GFX_VERSION = "11.0.0"; # 780M
+        HSA_OVERRIDE_GFX_VERSION = "10.3.0"; # 680M.
       };
     };
     upower.enable = true;
