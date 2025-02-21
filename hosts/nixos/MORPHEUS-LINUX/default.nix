@@ -159,4 +159,11 @@ in
     dedicatedServer.openFirewall = false;
     localNetworkGameTransfers.openFirewall = false;
   };
+
+  services = {
+    ofono = {
+      enable = true;
+      plugins = [ pkgs.modem-manager-gui pkgs.libsForQt5.modemmanager-qt ];
+    };
+  };
 }
