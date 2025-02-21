@@ -100,6 +100,17 @@ in
     };
   };
 
+  systemd.services."apply-acpi-wakeup-fixes" = {
+    description = "Apply WM2 wakeup fixes";
+    wantedBy = [ "basic.target" ];
+    path = with pkgs; [ gawk coreutils ];
+    serviceConfig.Type = "oneshot";
+    script = ''
+      for i in $(cat /proc/acpi/wakeup|grep enabled|awk '{print $1}'|xargs); do case $i in SLPB|XHCI);; *) echo $i|tee /proc/acpi/wakeup ; esac; done
+    '';
+  };
+
+
   powerManagement = {
     enable = true;
     cpuFreqGovernor = "powersave";
@@ -186,9 +197,9 @@ in
     udev = {
       packages = with pkgs; [ gnome.gnome-settings-daemon ];
       extraRules = ''
-                        SUBSYSTEM=="power_supply", KERNEL=="ADP1", ATTR{online}=="0", RUN+="${pkgs.systemd}/bin/systemctl --no-block start battery.target"
-                        SUBSYSTEM=="power_supply", KERNEL=="ADP1", ATTR{online}=="1", RUN+="${pkgs.systemd}/bin/systemctl --no-block start ac.target"
-        #		SUBSYSTEM=="usb", ATTRS{idVendor}=="28de", ATTRS{idProduct}=="1142", TAG+="systemd", ENV{SYSTEMD_WANTS}="kvm-device-selected.service"
+        SUBSYSTEM=="power_supply", KERNEL=="ADP1", ATTR{online}=="0", RUN+="${pkgs.systemd}/bin/systemctl --no-block start battery.target"
+        SUBSYSTEM=="power_supply", KERNEL=="ADP1", ATTR{online}=="1", RUN+="${pkgs.systemd}/bin/systemctl --no-block start ac.target"
+        SUBSYSTEM=="i2c", KERNEL=="i2c-GXTP7385:00", ATTR{power/wakeup}="disabled"
       '';
     };
     ofono = {
