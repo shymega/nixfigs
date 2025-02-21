@@ -255,7 +255,7 @@ in
       inputs.hardware.nixosModules.common-pc-ssd
       inputs.hardware.nixosModules.common-pc
       inputs.proxmox-nixos.nixosModules.proxmox-ve
-      (_: {
+      ({
         nixpkgs.overlays = [
           inputs.proxmox-nixos.overlays.${hostPlatform}
         ];
