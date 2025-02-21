@@ -30,8 +30,8 @@ in
         ServerAliveInterval 60
         IPQoS throughput
         ${if libx.hasSuffix "-darwin" pkgs.system then
-            if builtins.pathExists "${config.users.users.${username}.home}/.1password/agent.sock" then
-              "IdentityAgent ${config.users.users.${username}.home}/.1password/agent.sock"
+            if builtins.pathExists "${config.users.users.${username}.home}/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock" then
+              "IdentityAgent ${config.users.users.${username}.home}/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
             else
               "IdentityFile /run/agenix/nixbuild_ssh_priv_key"
           else
