@@ -193,12 +193,6 @@ in
       "/persist/etc/ssh/ssh_host_ed25519_key"
       "/etc/ssh/ssh_host_ed25519_key"
     ];
-    secrets = {
-      taskwarrior_sync_ca.file = ../secrets/taskwarrior_sync_ca.age;
-      taskwarrior_sync_cert.file = ../secrets/taskwarrior_sync_cert.age;
-      taskwarrior_sync_key.file = ../secrets/taskwarrior_sync_key.age;
-      taskwarrior_sync_cred.file = ../secrets/taskwarrior_sync_cred.age;
-    };
   };
 
   programs = {
