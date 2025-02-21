@@ -17,6 +17,7 @@ in
   formatConfigs.docker = {
     networking.firewall.enable = lib.mkForce false;
     services.fail2ban.enable = lib.mkForce false;
+    services.openssh.startWhenNeeded = lib.mkForce false;
   };
 
   nixpkgs.hostPlatform = system;
