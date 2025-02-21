@@ -4,7 +4,7 @@ let
   scripts = builtins.readDir ./.;
   scriptMapFunction = script:
     let
-      filename = lib.removeSuffix ".nix" script;
+      filename = lib.removeSuffix ".sh" script;
     in
     pkgs.writeShellScriptBin filename builtins.readFile script;
 in
