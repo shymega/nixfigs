@@ -122,6 +122,7 @@ in
         gc-keep-derivations = false
         min-free = ${toString (100 * 1024 * 1024)}
         max-free = ${toString (1024 * 1024 * 1024)}
+        !include ${config.age.secrets.nix_conf_access_tokens.path}
       '';
       package = pkgs.nixFlakes;
       registry.nixpkgs.flake = inputs.nixpkgs;
