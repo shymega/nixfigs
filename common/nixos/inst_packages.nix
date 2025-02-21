@@ -15,12 +15,9 @@
     iw
     lm_sensors
     nano
-    nix-alien
     nvme-cli
     pciutils
     powertop
-    protonvpn-cli
-    protonvpn-gui
     smartmontools
     solo2-cli
     tmux

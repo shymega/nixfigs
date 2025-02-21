@@ -7,7 +7,6 @@
     enable = true;
     user = "dzrodriguez";
     group = "users";
-    ## TODO: Move mailLocation to /var.
     mailLocation =
       "maildir:${config.users.users.dzrodriguez.home}/.mail/%d/%u/:LAYOUT=fs:INBOX=${config.users.users.dzrodriguez.home}/.mail/%d/%u/INBOX";
     enablePAM = false;
