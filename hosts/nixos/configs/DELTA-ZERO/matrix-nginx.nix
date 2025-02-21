@@ -15,6 +15,7 @@
   };
   locations."~ ^/(client/|_matrix/client/unstable/org.matrix.msc3575/sync)" = {
     proxyPass = "http://localhost:8009";
+    priority = 10;
   };
   locations."= /.well-known/matrix/server".extraConfig = ''
     more_set_headers 'Content-Type application/json';
