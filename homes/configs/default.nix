@@ -25,6 +25,7 @@ in
     inputs.agenix.homeManagerModules.default
     inputs.nix-doom-emacs-unstraightened.hmModule
     inputs.nix-index-database.hmModules.nix-index
+    inputs.shypkgs-public.hmModules.${system}.dwl
     ../../secrets/user
     ({ config, ... }: {
       nixpkgs.config = self.nixpkgs-config;
@@ -314,6 +315,14 @@ in
   ];
 
   programs = {
+    dwl = {
+      enable = true;
+      cmd = {
+        terminal = "${pkgs.wezterm}/bin/wezterm";
+        editor = "${pkgs.emacs}/bin/emacslient -cq";
+      };
+    };
+
     yt-dlp.enable = true;
     htop.enable = true;
     fish = {
