@@ -5,12 +5,13 @@
 { inputs, config, pkgs, lib, ... }:
 {
   imports = [ ./hardware-configuration.nix ];
-  nixpkgs.crossSystem = lib.systems.elaborate lib.systems.examples.raspberryPi;
+  nixpkgs.config.allowUnsupportedSystem = true;
+  nixpkgs.hostPlatform.system = "armv6l-linux";
+  nixpkgs.buildPlatform.system = "x86_64-linux";
 
   networking = {
     hostName = "DZR-OFFICE-BUSY-LIGHT-UNIT";
   };
-  nixpkgs.hostPlatform = "armv6l-linux";
 
   environment.systemPackages = with pkgs; [
     tmux
