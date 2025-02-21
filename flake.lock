@@ -47049,7 +47049,7 @@
     "dwl-source": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-ScTNe+2yPgKhbdUqpMlyU47Z6qtkbPozBOkn5fLa2G0=",
+        "narHash": "sha256-w4ShRnziYCM/10GgLl3R9K7X5JtM1vS+148IuZdiV18=",
         "type": "file",
         "url": "https://codeberg.org/dwl/dwl"
       },
@@ -149170,11 +149170,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1721037029,
-        "narHash": "sha256-wuHiinPG5CzCUBr9I51g+IRhP/69Y9gRVh+QnEtFnyI=",
+        "lastModified": 1721226275,
+        "narHash": "sha256-fwTSeMR1senkBPaKQyOkbkmFu3+8jj3UHoLZ3TcrOfw=",
         "owner": "nix-community",
         "repo": "nixos-wsl",
-        "rev": "f6db2d325bdf57d39a3ae43376bdf2a020a6aad2",
+        "rev": "8ebede998342477736e0d0acdcc13ddb166a335f",
         "type": "github"
       },
       "original": {
@@ -153737,11 +153737,11 @@
     },
     "nixpkgs-master_92": {
       "locked": {
-        "lastModified": 1721224527,
-        "narHash": "sha256-wL9n6Wm9Q7g7A8BNsNMofb5hW65x16yZuuq5P8mFF/A=",
+        "lastModified": 1721231126,
+        "narHash": "sha256-PizB3QlAFR7pdSeXwyiacdYde4JHJEgrWjwtDUwaazM=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "3a4373efe2a0a9182bd1f4a2318a145bd915d101",
+        "rev": "07b84e7b5d0daa9254f822838dc82e34084cf657",
         "type": "github"
       },
       "original": {
@@ -171751,11 +171751,11 @@
     },
     "nur_92": {
       "locked": {
-        "lastModified": 1721223981,
-        "narHash": "sha256-FV/5hfqVwmpk+jD+U3lQpsDFJlKlt/WDi/u8quxELUU=",
+        "lastModified": 1721227577,
+        "narHash": "sha256-BscHUVeZSetkrjIrzfkoH+j9RaMf9ZMlc08sBUvmTxY=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "b76c62fb9acae0598d1198ab8e5568e58b99e1d1",
+        "rev": "4da3381a200d17b80d1160669aca218298524f9e",
         "type": "github"
       },
       "original": {
@@ -207049,11 +207049,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1721032527,
-        "narHash": "sha256-4hpsvyoWYRdZ4u6xDQ8uK5BhKDqHwqNQBi1R7y3n5aI=",
+        "lastModified": 1721225860,
+        "narHash": "sha256-JM/9bP6TBzGmayO9a2fXOYaMQNZtPs87VgHpgtsuXuk=",
         "owner": "nix-community",
         "repo": "srvos",
-        "rev": "36905a236dc466b8eff20df84314d23c95da3f6c",
+        "rev": "d10fbbd58b728648d4f592aefbf987f4d01c49f3",
         "type": "github"
       },
       "original": {
