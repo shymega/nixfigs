@@ -15,11 +15,11 @@
       neededForBoot = true;
     };
 
-    "/data/Games" = {
-      device = "zdata/crypt/shared/games";
-      fsType = "zfs";
-      neededForBoot = true;
-    };
+#    "/data/Games" = {
+#      device = "zdata/crypt/shared/games";
+#      fsType = "zfs";
+#      neededForBoot = true;
+#    };
 
     "/data/Development" = {
       device = "zdata/crypt/shared/dev";
@@ -29,6 +29,12 @@
 
     "/data/AI" = {
       device = "zdata/crypt/shared/ai";
+      fsType = "zfs";
+      neededForBoot = true;
+    };
+
+    "/data/VMs" = {
+      device = "zdata/crypt/shared/virtual";
       fsType = "zfs";
       neededForBoot = true;
     };
@@ -57,7 +63,7 @@
     };
 
     "/boot/efi" = {
-      device = "/dev/disk/by-label/ESP_ALT";
+      device = "/dev/disk/by-label/ESP";
       fsType = "vfat";
       neededForBoot = false;
       options = [
