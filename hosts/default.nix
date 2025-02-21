@@ -299,6 +299,18 @@ in
     deployable = true;
   };
 
+  BUILDHOST-DOCKER = mkHost {
+    type = "nixos";
+    address = "hydra.shymega.org.uk";
+    hostname = "BUILDHOST-DOCKER";
+    username = "dzrodriguez";
+    baseModules = [ inputs.agenix.nixosModules.default ];
+    monolithConfig = false;
+    hostPlatform = "aarch64-linux";
+    pubkey = "";
+    remoteBuild = true;
+    deployable = false;
+  };
 
   "dzrodriguez@x86_64-linux" = mkHost {
     type = "home-manager";
