@@ -20,6 +20,16 @@
     kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
     extraModulePackages = with config.boot.kernelPackages; [ zfs ];
 
+    supportedFilesystems = [
+      "ntfs"
+      "zfs"
+    ];
+    zfs.extraPools = [
+      "tank"
+    ];
+    zfs.devNodes = "/dev/disk/by-partuuid";
+    zfs.forceImportAll = true;
+
     loader = {
       efi = {
         efiSysMountPoint = "/boot/efi";
@@ -171,10 +181,18 @@
 
   users = {
     mutableUsers = false;
-    users."root".password = "!"; # Lock account.
+    users."root" = {
+      password = "!"; # Lock account.
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINrrpI4JTUIr0TC39r1K3nxyieCLi1aqH413+7ulSy5t"
+      ];
+    };
     users."dzrodriguez" = {
       isNormalUser = true;
       shell = pkgs.zsh;
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINrrpI4JTUIr0TC39r1K3nxyieCLi1aqH413+7ulSy5t"
+      ];
       description = "Dom RODRIGUEZ";
       hashedPasswordFile = config.age.secrets.dzrodriguez.path;
       linger = true;

@@ -10,31 +10,33 @@
   boot = {
     initrd = {
       availableKernelModules = [
-        "xhci_pci"
-        "virtio_pci"
-        "virtio_scsi"
+        "ehci_pci"
+        "megaraid_sas"
         "usbhid"
-        "sr_mod"
+        "usb_storage"
+        "sd_mod"
       ];
       kernelModules = [ ];
     };
-    kernelModules = [ ];
+    kernelModules = [ "kvm-intel" ];
     extraModulePackages = [ ];
   };
 
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-label/NIXOS";
+      device = "/dev/disk/by-uuid/782f07ef-948d-4fdb-8dab-5022d1c8320b";
       fsType = "ext4";
+      neededForBoot = true;
     };
     "/boot/efi" = {
       device = "/dev/disk/by-label/ESP";
       fsType = "vfat";
+      neededForBoot = true;
     };
     "/data" = {
       device = "tank/data";
       fsType = "zfs";
-      neededForBoot = false;
+      neededForBoot = true;
     };
   };
 
