@@ -33,5 +33,7 @@
   system.stateVersion = "23.11";
 
   services.zfs.trim.enable = true;
+  services.zfs.trim.interval = "Sat *-*-* 04:00:00";
   services.zfs.autoScrub.enable = true;
+  services.zfs.autoScrub.interval = "Sat *-*-* 05:00:00";
 }
