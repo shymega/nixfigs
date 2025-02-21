@@ -1,2 +1,117 @@
 #!/usr/bin/env nix-shell
-#! nix-shell -i bash -p bash systemd
+#! nix-shell -p bash -p bash -p networkmanager 
+
+# -p shymega-net-scripts
+
+INTERFACE="${1}"
+ACTION="${2}"
+
+IDENTIFIER="nm-10-net-targets"
+
+portal-net() {
+    systemd-log "${IDENTIFIER}" "Network is a captive portal. Starting relevant targets..." notice
+
+    systemctl --no-block restart network-portal.target
+
+    systemctl-user-action dzr restart network-portal.target
+}
+
+check-net-online() {
+    case "${CONNECTIVITY_STATE}" in
+	PORTAL)
+	    portal-net
+	    ;;
+	LIMITED) # likely to be a portal, assume
+	    portal-net
+	    ;;
+	FULL)
+	    start-net
+	    ;;
+	*)
+	    systemd-log "${IDENTIFIER}" "Unknown connectivity state, ignoring." debug
+	    ;;
+    esac
+}
+
+stop-net() {
+    systemd-log "${IDENTIFIER}" "Network down. Stopping relevant targets..." notice
+
+    nm-reset-unit-states
+}
+
+start-net() {
+    systemd-log "${IDENTIFIER}" "Network up. Starting & stopping relevant network targets..." notice
+
+    if [[ "$(net-is-rnet)" == "RNET" ]]; then
+
+	systemd-log "${IDENTIFIER}" "Network is RNET. Starting relevant network targets..." info
+
+	systemctl --no-block restart network-rnet.target
+	systemctl-user-action dzr restart network-rnet.target
+
+	online-net
+
+    elif [[ "$(net-name)" =~ shyMobileNet ]]; then
+
+	systemd-log "${IDENTIFIER}" "Network is one of my tethering WiFi hotspots. Starting relevant network targets..." info
+
+	systemctl --no-block restart network-mifi.target
+	systemctl-user-action dzr restart network-mifi.target
+
+	online-net
+
+    elif [[ "${INTERFACE}" == "wwan0" ]]; then
+
+	systemd-log "${IDENTIFIER}" "Network is WWAN. Starting relevant network targets..." info
+
+	systemctl --no-block restart network-wwan.target
+	systemctl-user-action dzr restart network-wwan.target
+
+	online-net
+
+    elif [[ "$(net-is-vpn)" == "vpn.online.rnetvpn" && "$(net-is-rnet)" == "RNET" ]]; then
+
+	systemd-log "${IDENTIFIER}" "Network is the RNET VPN. Starting relevant network targets..." info
+
+	systemctl --no-block restart network-vpn.target
+	systemctl-user-action dzr restart network-vpn.target
+
+	systemctl --no-block restart network-rnet.target
+	systemctl-user-action dzr restart network-rnet.target
+
+	online-net
+    else
+	systemd-log "${IDENTIFIER}" "Network is unidentified." notice
+
+	online-net
+    fi
+}
+
+online-net() {
+    systemd-log "${IDENTIFIER}" "Network is now online. Starting relevant network targets..." notice
+    systemctl restart network-online.target network-other.target
+    systemctl-user-action dzr restart network-online.target network-other.target
+
+    systemd-log "${IDENTIFIER}" "Network is online, starting VPN as well" notice
+    # Add Fly wireguard setup as Nix cfg
+}
+
+systemd-log "${IDENTIFIER}" "Resetting network states..." info
+nm-reset-unit-states
+
+case "${ACTION}" in
+    connectivity-change)
+	check-net-online
+	;;
+    up)
+	start-net
+	;;
+    down)
+	stop-net
+	;;
+    *)
+	systemd-log "${IDENTIFIER}" "Action not supported, ignoring." debug
+	;;
+esac
+
+exit 0
