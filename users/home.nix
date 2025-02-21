@@ -76,6 +76,7 @@
       p7zip
       pass
       pavucontrol
+      pmbootstrap
       podman-compose
       poppler_utils
       pre-commit
