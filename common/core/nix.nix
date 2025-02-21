@@ -4,6 +4,7 @@
 
 { inputs
 , lib
+, libx
 , pkgs
 , config
 , options
@@ -11,7 +12,7 @@
 , ...
 }:
 let
-  inherit (lib.my) isDarwin isForeignNix isNixOS;
+  inherit (libx) isDarwin isForeignNix isNixOS;
 in
 {
   environment.etc."nix/overlays-compat/overlays.nix".text = ''
