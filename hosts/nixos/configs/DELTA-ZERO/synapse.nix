@@ -1,6 +1,6 @@
 { pkgs, inputs, config, ... }:
 let
-  fqdn = "${config.networking.hostName}.${config.networking.domain}";
+  fqdn = "mtx.shymega.org.uk";
   baseUrl = "https://${fqdn}";
 in
 {
@@ -56,7 +56,7 @@ in
           port = 5432;
           database = "matrix_synapse";
           sslmode = "disable";
-          host = "localhost";
+          host = "127.0.0.1";
           cp_min = 5;
           cp_max = 10;
         };
@@ -88,7 +88,7 @@ in
             x_forwarded = true;
             resources = [
               {
-                compress = false;
+                compress = true;
                 names = [ "client" "federation" ];
               }
             ];
@@ -101,7 +101,7 @@ in
             bind_addresses = [ "127.0.0.1" ];
             resources = [
               {
-                compress = false;
+                compress = true;
                 names = [ "metrics" ];
               }
             ];
@@ -134,13 +134,13 @@ in
 
           disable_existing_loggers: True
         '';
-        app_service_config_files = [
-          /var/lib/mautrix-meta-facebook/meta-registration.yaml
-          /var/lib/mautrix-meta-instagram/meta-registration.yaml
-          /var/lib/mautrix-meta-messenger/meta-registration.yaml
-          /var/lib/mautrix-slack/slack-registration.yaml
-          /var/lib/mautrix-whatsapp/whatsapp-registration.yaml
-        ];
+        #        app_service_config_files = [
+        #          /var/lib/mautrix-meta-facebook/meta-registration.yaml
+        #          /var/lib/mautrix-meta-instagram/meta-registration.yaml
+        #          /var/lib/mautrix-meta-messenger/meta-registration.yaml
+        #          /var/lib/mautrix-slack/slack-registration.yaml
+        #          /var/lib/mautrix-whatsapp/whatsapp-registration.yaml
+        #        ];
       };
       extraConfigFiles = [
         config.age.secrets.synapse_secret.path
@@ -155,8 +155,8 @@ in
       createDatabase = true;
       environmentFile = config.age.secrets.matrix-sliding-sync-env.path;
       settings = {
-        SYNCV3_SERVER = "http://localhost:8008";
-        SYNCV3_DB = "host=localhost port=5432 dbname=matrix_syncv3 user=matrix password=matrix4me sslmode=disable connect_timeout=10";
+        SYNCV3_SERVER = "http://127.0.0.1:8008";
+        SYNCV3_DB = "host=127.0.0.1 port=5432 dbname=matrix_syncv3 user=matrix password=matrix4me sslmode=disable connect_timeout=10";
         SYNCV3_LOG_LEVEL = "trace";
         SYNCV3_BINDADDR = "127.0.0.1:8009";
       };
@@ -175,9 +175,9 @@ in
           };
           database = {
             type = "postgres";
-            uri = "postgres://matrix:matrix4me@localhost/mautrix_whatsapp?sslmode=disable";
+            uri = "postgres://matrix:matrix4me@127.0.0.1/mautrix_whatsapp?sslmode=disable";
           };
-          address = "http://localhost:${toString port}";
+          address = "http://127.0.0.1:${toString port}";
           hostname = "127.0.0.1";
           hs_token = "";
           id = "whatsapp";
@@ -225,12 +225,12 @@ in
         };
         database = {
           type = "postgres";
-          uri = "postgres://matrix:matrix4me@localhost/mautrix_slack?sslmode=disable";
+          uri = "postgres://matrix:matrix4me@127.0.0.1/mautrix_slack?sslmode=disable";
         };
 
         appservice = rec {
           port = 29312;
-          address = "http://localhost:${toString port}";
+          address = "http://127.0.0.1:${toString port}";
           hostname = "127.0.0.1";
         };
 
@@ -262,14 +262,14 @@ in
         };
         database = {
           type = "postgres";
-          uri = "postgres://matrix:matrix4me@localhost/mautrix_telegram?sslmode=disable";
+          uri = "postgres://matrix:matrix4me@127.0.0.1/mautrix_telegram?sslmode=disable";
 
         };
 
 
         appservice = rec {
           port = 29313;
-          address = "http://localhost:${toString port}";
+          address = "http://127.0.0.1:${toString port}";
           hostname = "127.0.0.1";
         };
 
@@ -302,12 +302,12 @@ in
           };
           database = {
             type = "postgres";
-            uri = "postgres://matrix:matrix4me@localhost/mautrix_meta_facebook?sslmode=disable";
+            uri = "postgres://matrix:matrix4me@127.0.0.1/mautrix_meta_facebook?sslmode=disable";
           };
 
           appservice = rec {
             port = 29314;
-            address = "http://localhost:${toString port}";
+            address = "http://127.0.0.1:${toString port}";
             hostname = "127.0.0.1";
 
           };
@@ -337,13 +337,13 @@ in
           };
           database = {
             type = "postgres";
-            uri = "postgres://matrix:matrix4me@localhost/mautrix_meta_instagram?sslmode=disable";
+            uri = "postgres://matrix:matrix4me@127.0.0.1/mautrix_meta_instagram?sslmode=disable";
 
           };
 
           appservice = rec {
             port = 29314;
-            address = "http://localhost:${toString port}";
+            address = "http://127.0.0.1:${toString port}";
             hostname = "127.0.0.1";
           };
           encryption = {
@@ -371,12 +371,12 @@ in
           };
           database = {
             type = "postgres";
-            uri = "postgres://matrix:matrix4me@localhost/mautrix_meta_messenger?sslmode=disable";
+            uri = "postgres://matrix:matrix4me@127.0.0.1/mautrix_meta_messenger?sslmode=disable";
           };
 
           appservice = rec {
             port = 29316;
-            address = "http://localhost:${toString port}";
+            address = "http://127.0.0.1:${toString port}";
             hostname = "127.0.0.1";
 
             id = "messenger";
