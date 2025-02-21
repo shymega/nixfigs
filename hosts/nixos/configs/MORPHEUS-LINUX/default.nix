@@ -7,10 +7,13 @@ let
   enableXanmod = false;
 in
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [ ./hardware-configuration.nix ../../../../modules/nixos/livestream.nix ];
 
   networking.hostName = "MORPHEUS-LINUX";
   networking.hostId = "e8a03c89";
+  nixfigs.services.livestream = {
+    enable = true;
+  };
   boot = {
     supportedFilesystems = [
       "ntfs"
