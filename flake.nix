@@ -133,6 +133,7 @@
     cosmo-codios-codid = {
       url = "github:Cosmo-CoDiOS/codid";
     };
+    atuin.url = "github:atuinsh/atuin";
   };
 
   outputs = { self, ... } @ inputs:
