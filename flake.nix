@@ -52,12 +52,29 @@
         "x86_64-linux"
         "aarch64-linux"
       ];
+
+      allSystems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "armv6l-linux"
+        "armv7l-linux"
+        "riscv64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
       treeFmtEachSystem = f: inputs.nixpkgs.lib.genAttrs systems (system: f inputs.nixpkgs.legacyPackages.${system});
       treeFmtEval = treeFmtEachSystem (pkgs: inputs.treefmt-nix.lib.evalModule pkgs ./nix/formatter.nix);
 
       forEachSystem = inputs.nixpkgs.lib.genAttrs systems;
+      forAllSystems = inputs.nixpkgs.lib.genAttrs allSystems;
     in
     rec {
+      libx = forAllSystems
+        (system:
+          let
+            pkgs = genPkgs system;
+          in
+          import ./lib { inherit self inputs pkgs; });
       nixosModules = import ./modules/nixos;
       homeModules = import ./modules/home-manager;
       darwinModules = import ./modules/darwin;
