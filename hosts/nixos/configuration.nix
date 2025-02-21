@@ -75,7 +75,6 @@
     geoclue2.enable = true;
     resolved = {
       enable = true;
-      dnssec = "false";
       dnsovertls = "opportunistic";
       fallbackDns = [ "1.1.1.1" "1.0.0.1" ];
       extraConfig = ''
