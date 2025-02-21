@@ -35,6 +35,7 @@ in
       bc
       brightnessctl
       cachix
+      cachix
       cocogitto
       comma
       curl
@@ -56,6 +57,7 @@ in
       httpie
       hub
       inetutils
+      isync
       itd
       jdk17
       jq
@@ -72,6 +74,7 @@ in
       nodejs
       notmuch
       p7zip
+      parallel
       pass
       pavucontrol
       poppler_utils
@@ -105,6 +108,7 @@ in
       xsv
       yt-dlp
       zathura
+      zellij
       zip
       zoxide
     ] ++ [
@@ -115,9 +119,8 @@ in
       azure-cli
       gitkraken
       google-cloud-sdk
-      isync-patched
       weechatWithMyPlugins
-    ]) ++ (lib.optionals pkgs.stdenv.isx86_64 (with pkgs.unstable.jetbrains; [
+    ]) ++ (lib.optionals pkgs.stdenv.isx86_64 (with pkgs.jetbrains; [
       clion
       datagrip
       gateway
