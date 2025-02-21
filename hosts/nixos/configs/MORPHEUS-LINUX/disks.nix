@@ -14,11 +14,11 @@
       fsType = "zfs";
     };
 
-#    "/data/Games" = {
-#      device = "zdata/crypt/shared/games";
-#      fsType = "zfs";
-#      neededForBoot = false;
-#    };
+    #    "/data/Games" = {
+    #      device = "zdata/crypt/shared/games";
+    #      fsType = "zfs";
+    #      neededForBoot = false;
+    #    };
 
     "/data/VMs" = {
       device = "zdata/crypt/shared/virtual";

@@ -15,11 +15,11 @@
       neededForBoot = true;
     };
 
-#    "/data/Games" = {
-#      device = "zdata/crypt/shared/games";
-#      fsType = "zfs";
-#      neededForBoot = true;
-#    };
+    #    "/data/Games" = {
+    #      device = "zdata/crypt/shared/games";
+    #      fsType = "zfs";
+    #      neededForBoot = true;
+    #    };
 
     "/data/Development" = {
       device = "zdata/crypt/shared/dev";
