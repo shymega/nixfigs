@@ -414,7 +414,11 @@ in
     home-manager.enable = true;
     doom-emacs = {
       enable = true;
-      doomDir = ./doom.d;
+      emacs = pkgs.unstable.emacs29-pgtk;
+      provideEmacs = true;
+      experimentalFetchTree = true;
+      doomDir = inputs.nixfigs-doom-emacs;
+      doomLocalDir = "${homeDirectory}/.local/share/state/doom";
     };
     taskwarrior = {
       enable = true;
@@ -526,4 +530,12 @@ in
         };
       };
     };
+
+  xdg = {
+    enable = true;
+    configFile."doom-emacs" = {
+      source = inputs.nixfigs-doom-emacs;
+      recursive = true;
+    };
+  };
 }
