@@ -1,8 +1,8 @@
 { pkgs, lib, ... }:
 let
-  isDarwin = pkgs.stdenvNoCC.isDarwin;
+  inherit (pkgs.stdenvNoCC) isDarwin;
   isNixOS = builtins.pathExists "/etc/nixos" && builtins.pathExists "/nix" && pkgs.stdenvNoCC.isLinux;
-  isLinux = pkgs.stdenvNoCC.isLinux;
+  inherit (pkgs.stdenvNoCC) isLinux;
 in
 {
   programs.tmux = {
