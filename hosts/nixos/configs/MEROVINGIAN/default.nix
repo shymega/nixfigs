@@ -21,11 +21,16 @@
     extraModulePackages = with config.boot.kernelPackages; [ zfs ];
 
     loader = {
+      efi = {
+        efiSysMountPoint = "/boot/efi";
+      };
       grub = {
-        device = "/dev/disk/by-id/wwn-0x50000396ab78210e";
-        efiSupport = false;
+        #        device = "/dev/disk/by-id/wwn-0x50000396ab78210e";
+        device = "nodev";
+        efiSupport = true;
         enable = true;
-        useOSProber = false;
+        useOSProber = true;
+        efiInstallAsRemovable = true;
       };
       timeout = 6;
     };
