@@ -35,5 +35,6 @@
   system.stateVersion = "23.11";
 
   networking.hostId = "3b66435d";
-  services.zfs.autoScrub.enable = true;
+  services.zfs.trim.enable = lib.mkDefault false;
+  services.zfs.autoScrub.enable = lib.mkDefault false;
 }
