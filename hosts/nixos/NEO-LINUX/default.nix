@@ -1,9 +1,5 @@
 { inputs, outputs, config, pkgs, lib, ... }:
 {
-  imports = [
-    ./hardware-configuration.nix
-  ];
-
   environment.etc."crypttab".text = ''
     homecrypt /dev/disk/by-label/HOMECRYPT /persist/etc/.homecrypt.bin
   '';
