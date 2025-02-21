@@ -211,169 +211,167 @@ in
   };
 
   xdg.systemDirs.data = [ "/usr/share" "/var/lib/flatpak/exports/share" "$HOME/.local/share/flatpak/exports/share" ];
-  systemd.user = {
-    sessionVariables = {
-      CLUTTER_BACKEND = "wayland";
-      GDK_BACKEND = "wayland,x11";
-      QT_QPA_PLATFORM = "wayland;xcb";
-      MOZ_ENABLE_WAYLAND = "1";
-      _JAVA_AWT_WM_NONREPARENTING = "1";
-    };
 
-    programs = {
-      command-not-found.enable = true;
-      yt-dlp.enable = true;
-      htop.enable = true;
-      fish = {
-        enable = true;
-        interactiveShellInit = ''
-          set fish_greeting # Disable greeting
-        '';
-        plugins = [
-          # Enable a plugin (here grc for colorized command output) from nixpkgs
-          {
-            name = "grc";
-            src = pkgs.fishPlugins.grc.src;
-          }
-          {
-            name = "done";
-            src = pkgs.fishPlugins.done.src;
-          }
-          {
-            name = "sponge";
-            src = pkgs.fishPlugins.sponge.src;
-          }
-        ];
-      };
-      atuin = {
-        enable = true;
-        settings = {
-          key_path = config.age.secrets.atuin_key.path;
-          sync_address = "https://shynet-atuin-server.fly.dev";
-          auto_sync = false;
-          dialect = "uk";
-          secrets_filter = true;
-          enter_accept = false;
-          workspaces = true;
-          sync = {
-            records = true;
-          };
-          daemon = {
-            enabled = true;
-            systemd_socket = true;
-            sync_frequency = "120";
-          };
+  programs = {
+    command-not-found.enable = true;
+    yt-dlp.enable = true;
+    htop.enable = true;
+    fish = {
+      enable = true;
+      interactiveShellInit = ''
+        set fish_greeting # Disable greeting
+      '';
+      plugins = [
+        # Enable a plugin (here grc for colorized command output) from nixpkgs
+        {
+          name = "grc";
+          src = pkgs.fishPlugins.grc.src;
+        }
+        {
+          name = "done";
+          src = pkgs.fishPlugins.done.src;
+        }
+        {
+          name = "sponge";
+          src = pkgs.fishPlugins.sponge.src;
+        }
+      ];
+    };
+    atuin = {
+      enable = true;
+      settings = {
+        key_path = config.age.secrets.atuin_key.path;
+        sync_address = "https://shynet-atuin-server.fly.dev";
+        auto_sync = false;
+        dialect = "uk";
+        secrets_filter = true;
+        enter_accept = false;
+        workspaces = true;
+        sync = {
+          records = true;
         };
-      };
-      nix-index-database.comma.enable = true;
-      nix-index.enable = true;
-      rbw.enable = true;
-      neovim = {
-        enable = true;
-        viAlias = true;
-      };
-      git = {
-        enable = true;
-        lfs.enable = true;
-        extraConfig = {
-          #        gpg.format = "ssh";
-          #        "gpg \"ssh\"".program = "${lib.getExe' pkgs._1password-gui "op-ssh-sign"}";
-          #        commit.gpgsign = true;
-        };
-        aliases = {
-          aa = "add --all";
-          amend = "commit --amend";
-          br = "branch";
-          checkpoint = "stash --include-untracked; stash apply";
-          cp = "checkpoint";
-          cm = "commit -m";
-          co = "checkout";
-          dc = "diff --cached";
-          dft = "difftool";
-          hist = "log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short";
-          lg = "log --graph --branches --oneline --decorate --pretty=format:'%C(yellow)%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C";
-          loc = "!git diff --stat `git hash-object -t tree /dev/null` | tail -1 | cut -d' ' -f5";
-          st = "status -sb";
-          sum = "log --oneline --no-merges";
-          unstage = "reset --soft HEAD";
-          revert = "revert --no-edit";
-          squash-all = "!f(){ git reset $(git commit-tree HEAD^{tree} -m 'A new start');};f";
-        };
-      };
-      vscode = {
-        enable = true;
-        package = pkgs.vscode.fhs;
-      };
-      direnv = {
-        enable = true;
-        nix-direnv.enable = true;
-      };
-      home-manager.enable = true;
-      emacs = {
-        enable = true;
-        package = pkgs.emacs29-pgtk;
-      };
-      taskwarrior = {
-        enable = true;
-        config = {
-          report = {
-            minimal.filter = "status:pending";
-            active.columns = [ "id" "start" "entry.age" "priority" "project" "due" "description" ];
-            active.labels = [ "ID" "Started" "Age" "Priority" "Project" "Due" "Description" ];
-          };
+        daemon = {
+          enabled = true;
+          systemd_socket = true;
+          sync_frequency = "120";
         };
       };
     };
-    news.display = "silent";
-
-    systemd.user =
-      let
-        atuinDataDir = "${homeDirectory}/.local/share/atuin";
-        atuinSocket = "${atuinDataDir}/atuin.sock";
-        atuinDaemonConfig = {
-          Description = "Atuin - Magical Shell History Daemon";
-          ConditionPathIsDirectory = atuinDataDir;
-          ConditionPathExists = "${homeDirectory}/.config/atuin/config.toml";
-        };
-        atuinSyncTimerConfig = {
-          Description = "Atuin - Magical Shell History Syncer";
-          ConditionPathIsDirectory = atuinDataDir;
-          ConditionPathExists = "${homeDirectory}/.config/atuin/config.toml";
-        };
-      in
-      {
-        tmpfiles.rules = [ "L %t/discord-ipc-0 - - - - app/com.discordapp.Discord/discord-ipc-0" ];
-        sockets.atuin-daemon = {
-          Unit = atuinDaemonConfig;
-          Install.WantedBy = [ "default.target" ];
-          Socket = {
-            ListenStream = atuinSocket;
-            Accept = false;
-            RemoveOnStop = true;
-            SocketMode = [ "0600" ];
-          };
-        };
-        services = {
-          atuin-daemon = {
-            Unit = atuinDaemonConfig // { Requires = [ "atuin-daemon.socket" ]; };
-            Service = {
-              ExecStart = "${pkgs.unstable.atuin}/bin/atuin daemon";
-            };
-          };
-          atuin-sync = {
-            Unit = atuinSyncTimerConfig;
-            Service = {
-              ExecStart = "${pkgs.unstable.atuin}/bin/atuin sync";
-            };
-          };
-        };
-        timers.atuin-sync = {
-          Unit = atuinSyncTimerConfig;
-          Timer = {
-            OnBootSec = "1min";
-            OnCalendar = "OnCalendar=*:0/15";
-          };
+    nix-index-database.comma.enable = true;
+    nix-index.enable = true;
+    rbw.enable = true;
+    neovim = {
+      enable = true;
+      viAlias = true;
+    };
+    git = {
+      enable = true;
+      lfs.enable = true;
+      extraConfig = {
+        #        gpg.format = "ssh";
+        #        "gpg \"ssh\"".program = "${lib.getExe' pkgs._1password-gui "op-ssh-sign"}";
+        #        commit.gpgsign = true;
+      };
+      aliases = {
+        aa = "add --all";
+        amend = "commit --amend";
+        br = "branch";
+        checkpoint = "stash --include-untracked; stash apply";
+        cp = "checkpoint";
+        cm = "commit -m";
+        co = "checkout";
+        dc = "diff --cached";
+        dft = "difftool";
+        hist = "log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short";
+        lg = "log --graph --branches --oneline --decorate --pretty=format:'%C(yellow)%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C";
+        loc = "!git diff --stat `git hash-object -t tree /dev/null` | tail -1 | cut -d' ' -f5";
+        st = "status -sb";
+        sum = "log --oneline --no-merges";
+        unstage = "reset --soft HEAD";
+        revert = "revert --no-edit";
+        squash-all = "!f(){ git reset $(git commit-tree HEAD^{tree} -m 'A new start');};f";
+      };
+    };
+    vscode = {
+      enable = true;
+      package = pkgs.vscode.fhs;
+    };
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
+    home-manager.enable = true;
+    emacs = {
+      enable = true;
+      package = pkgs.emacs29-pgtk;
+    };
+    taskwarrior = {
+      enable = true;
+      config = {
+        report = {
+          minimal.filter = "status:pending";
+          active.columns = [ "id" "start" "entry.age" "priority" "project" "due" "description" ];
+          active.labels = [ "ID" "Started" "Age" "Priority" "Project" "Due" "Description" ];
         };
       };
+    };
   };
+  news.display = "silent";
+
+  systemd.user =
+    let
+      atuinDataDir = "${homeDirectory}/.local/share/atuin";
+      atuinSocket = "${atuinDataDir}/atuin.sock";
+      atuinDaemonConfig = {
+        Description = "Atuin - Magical Shell History Daemon";
+        ConditionPathIsDirectory = atuinDataDir;
+        ConditionPathExists = "${homeDirectory}/.config/atuin/config.toml";
+      };
+      atuinSyncTimerConfig = {
+        Description = "Atuin - Magical Shell History Syncer";
+        ConditionPathIsDirectory = atuinDataDir;
+        ConditionPathExists = "${homeDirectory}/.config/atuin/config.toml";
+      };
+    in
+    {
+      sessionVariables = {
+        CLUTTER_BACKEND = "wayland";
+        GDK_BACKEND = "wayland,x11";
+        QT_QPA_PLATFORM = "wayland;xcb";
+        MOZ_ENABLE_WAYLAND = "1";
+        _JAVA_AWT_WM_NONREPARENTING = "1";
+      };
+      tmpfiles.rules = [ "L %t/discord-ipc-0 - - - - app/com.discordapp.Discord/discord-ipc-0" ];
+      sockets.atuin-daemon = {
+        Unit = atuinDaemonConfig;
+        Install.WantedBy = [ "default.target" ];
+        Socket = {
+          ListenStream = atuinSocket;
+          Accept = false;
+          RemoveOnStop = true;
+          SocketMode = [ "0600" ];
+        };
+      };
+      services = {
+        atuin-daemon = {
+          Unit = atuinDaemonConfig // { Requires = [ "atuin-daemon.socket" ]; };
+          Service = {
+            ExecStart = "${pkgs.unstable.atuin}/bin/atuin daemon";
+          };
+        };
+        atuin-sync = {
+          Unit = atuinSyncTimerConfig;
+          Service = {
+            ExecStart = "${pkgs.unstable.atuin}/bin/atuin sync";
+          };
+        };
+      };
+      timers.atuin-sync = {
+        Unit = atuinSyncTimerConfig;
+        Timer = {
+          OnBootSec = "1min";
+          OnCalendar = "OnCalendar=*:0/15";
+        };
+      };
+    };
 }
