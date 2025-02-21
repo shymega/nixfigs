@@ -87,8 +87,6 @@ in
     hostname = "TRINITY-LINUX";
     system = "x86_64-linux";
     hardwareModules = [
-      inputs.hardware.nixosModules.common-cpu-intel
-      inputs.hardware.nixosModules.common-gpu-intel
       inputs.hardware.nixosModules.gpd-pocket-3
       inputs.hardware.nixosModules.common-pc-ssd
       inputs.hardware.nixosModules.common-pc
