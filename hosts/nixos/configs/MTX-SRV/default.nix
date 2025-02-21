@@ -67,18 +67,17 @@
       bantime-increment.enable = true;
     };
     resolved = {
-      enable = true;
-      dnssec = "false";
-      dnsovertls = "false";
-      extraConfig = ''
-        DNS=1.1.1.1 1.0.0.1
-      '';
+      enable = lib.mkForce false;
     };
   };
 
   networking = {
     hostName = "mtx";
     domain = "shymega.org.uk";
+    environment.etc = {
+      "resolv.conf".text = "nameserver 1.1.1.1\nnameserver 1.0.0..1";
+    };
+    resolvconf.enable = true;
 
     timeServers = lib.mkForce [ "uk.pool.ntp.org" ];
     firewall = {
