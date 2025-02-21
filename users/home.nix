@@ -114,7 +114,7 @@
       zathura
       zip
       zoxide
-    ] ++ (lib.optionals pkgs.stdenv.isx86_64 (with pkgs.unstable; [
+    ] ++ (lib.optionals pkgs.stdenv.isx86_64 (with pkgs; [
       bitwarden
       gitkraken
       jetbrains.clion
@@ -124,10 +124,12 @@
       jetbrains.idea-ultimate
       jetbrains.pycharm-professional
       jetbrains.rider
-      jetbrains.rust-rover
       jetbrains.webstorm
       steam-run
+    ])) ++ (lib.optionals pkgs.stdenv.isx86_64 (with pkgs.unstable; [
+      jetbrains.rust-rover
     ]));
+
   };
 
   services = {
