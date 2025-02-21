@@ -13,10 +13,15 @@ python3Packages.buildPythonApplication rec {
   src = fetchPypi {
     pname = "totp";
     inherit version;
-    hash = "";
+    hash = "sha256-reWv3pH1NaO7wKAt4kbfrewKS6RlpZFH4NsYb2ai43I=";
   };
 
   build-system = with python3Packages; [
     setuptools
+    setuptools_scm
+  ];
+
+  dependencies = with python3Packages; [
+    onetimepass
   ];
 }
