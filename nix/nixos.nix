@@ -124,9 +124,9 @@ in
 
   ### Handhelds ###
 
-  ## Gaming Handheld (GPD Win Max 2 (2023)) ##
+  ## Gaming Handheld (GPD Win Max 2 (2024)) ##
   ## TO BE ADDED. ##
-  ## End Gaming Handheld (GPD Win Max 2 (2023) ##
+  ## End Gaming Handheld (GPD Win Max 2 (2024) ##
 
   ## Gaming Handheld (Steam Deck (OLED/1TB)) ##
   ## TO BE ADDED. ##
@@ -145,7 +145,7 @@ in
   ## End ARM64 Experimental Tablet (Pine64 PineTab2 ARM) ##
 
   ## ClockworkPi uConsole (CM4) ##
-  ## TO BE ADDED. ##
+  # Received, Debian installed. Work ongoing to upstream DTB and driver patches. #
   ## End ClockworkPi uConsole (CM4) ##
 
   ## ClockworkPi DevTerm (CM4) ##
