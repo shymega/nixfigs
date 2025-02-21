@@ -25,6 +25,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          token: ${{ secrets.NIX_GH_ACTIONS_TOKEN }}
           ref: "main"
       - uses: cachix/install-nix-action@V28
         with:
@@ -47,6 +48,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.NIX_GH_ACTIONS_TOKEN }}
       - uses: cachix/install-nix-action@V28
         with:
           github_access_token: ${{ secrets.NIX_GH_ACTIONS_TOKEN }}
@@ -67,6 +70,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.NIX_GH_ACTIONS_TOKEN }}
       - name: Install Nix
         uses: cachix/install-nix-action@V28
         with:
