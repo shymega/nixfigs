@@ -23,6 +23,7 @@ stableOverlays // {
     inputs.deploy-rs.overlay
     inputs.nur.overlay
     inputs.nix-alien.overlays.default
+    inputs.cosmo-codios-codid.default
   ] ++ [
     (import ./overlays/master.nix { inherit inputs lib; })
     (import ./overlays/shymega.nix { inherit inputs lib; })
