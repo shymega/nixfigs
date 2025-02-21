@@ -30,6 +30,7 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
     nixpkgs-shymega.url = "github:shymega/nixpkgs/master";
+    nixfigs-priv.url = "git+ssh://git@github.com/shymega/nixfigs-priv.git";
     nur.url = "github:nix-community/NUR";
     devenv.url = "github:cachix/devenv/latest";
     base16-schemes = {
@@ -56,10 +57,18 @@
         darwin.follows = "nix-darwin";
       };
     };
-    nix-ld.url = "github:Mic92/nix-ld";
+    nix-ld = {
+      url = "github:Mic92/nix-ld";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-alien = {
       url = "github:thiagokokada/nix-alien";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+        nix-index-database.follows = "nix-index-database";
+        flake-compat.follows = "flake-compat";
+      };
     };
     nix-index-database = {
       url = "github:Mic92/nix-index-database";
@@ -128,6 +137,10 @@
       url = "github:NixOS/mobile-nixos";
       flake = false;
     };
+    srvos = {
+      url = "github:nix-community/srvos";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, ... } @ inputs:
@@ -180,7 +193,7 @@
         in
         import ./nix/devshell.nix { inherit inputs pkgs self system; });
 
-      nixosConfigurations = (import ./nix/nixos.nix { inherit self inputs pkgs; }) // (import ./nix/wsl.nix { inherit self inputs pkgs; }) // (import ./nix/mobile-nixos.nix { inherit self inputs pkgs; });
+      nixosConfigurations = (import ./nix/nixos.nix { inherit self inputs pkgs; }) // (import ./nix/wsl.nix { inherit self inputs pkgs; }) // (import ./nix/mobile-nixos.nix { inherit self inputs pkgs; }) // (inputs.nixfigs-priv.outputs.nixosConfigurations);
       homeConfigurations = import ./nix/home-manager.nix { inherit self inputs pkgs; };
       nixOnDroidConfigurations = import ./nix/nix-on-droid.nix { inherit self inputs pkgs; };
       darwinConfigurations = import ./nix/darwin.nix { inherit self inputs pkgs; };
