@@ -25,6 +25,7 @@
       bc
       brightnessctl
       cocogitto
+      comma
       coreutils
       curl
       darkman
