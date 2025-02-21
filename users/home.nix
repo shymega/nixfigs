@@ -20,14 +20,6 @@ in
     inputs.nix-doom-emacs-unstraightened.hmModule
   ];
 
-  #  nixpkgs = {
-  #    config = {
-  #      allowUnfreePredicate = _: true;
-  #      allowBrokenPredicate = _: true;
-  #      allowInsecurePredicate = _: true;
-  #    };
-  #  };
-
   home = {
     inherit username homeDirectory;
     enableNixpkgsReleaseCheck = true;
