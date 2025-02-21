@@ -110,6 +110,11 @@ in
     ] ++ [
       inputs.devenv.packages."${pkgs.system}".devenv
     ] ++ (with pkgs; [
+      (vivaldi.override {
+         proprietaryCodecs = true;
+         enableWidevine = true;
+      })
+    ]) ++ (with pkgs; [
       aws-sam-cli
       isync-patched
       awscli2
