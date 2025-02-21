@@ -116,11 +116,11 @@ in
       })
     ]) ++ (with pkgs; [
       aws-sam-cli
-      isync-patched
       awscli2
       azure-cli
       gitkraken
       google-cloud-sdk
+      isync-patched
       weechatWithMyPlugins
     ]) ++ (lib.optionals pkgs.stdenv.isx86_64 (with pkgs.jetbrains; [
       clion
