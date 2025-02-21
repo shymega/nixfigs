@@ -167,7 +167,8 @@ in
     };
     emacs = {
       enable = true;
-      package = pkgs.emacs28NativeComp;
+      install = true;
+      package = pkgs.emacsNativeComp;
     };
     gammastep = {
       enable = true;
