@@ -21,19 +21,11 @@
     extraModulePackages = with config.boot.kernelPackages; [ zfs ];
 
     loader = {
-      systemd-boot = {
-        enable = false;
-      };
-      efi = {
-        canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot";
-      };
       grub = {
-        device = "nodev";
-        efiSupport = true;
-        default = "saved";
+        device = "/dev/disk/by-id/wwn-0x50000396ab78210e";
+        efiSupport = false;
         enable = true;
-        useOSProber = true;
+        useOSProber = false;
       };
       timeout = 6;
     };
