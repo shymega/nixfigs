@@ -1,0 +1,1 @@
+{ inputs, ... }: { imports = [ ./home.nix ]; }
