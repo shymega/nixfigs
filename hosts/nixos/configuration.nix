@@ -59,6 +59,7 @@
       enable = true;
       drivers = [ pkgs.hplipWithPlugin ];
     };
+    saned.enable = true;
     blueman.enable = true;
     zerotierone.enable = true;
     geoclue2.enable = true;
@@ -132,6 +133,20 @@
         TimeoutStopSec = 10;
       };
     };
+  };
+
+  hardware.sane = {
+    enable = true;
+    extraBackends = with pkgs; [
+      hplipWithPlugin
+      gutenprint
+      gutenprintBin
+      hplip
+      brlaser
+      samsung-unified-linux-driver
+      splix
+      postscript-lexmark
+    ];
   };
 
   system.stateVersion = "23.11";
