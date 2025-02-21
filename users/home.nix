@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ inputs, pkgs, config, hostname, ... }:
+{ inputs, pkgs, config, hostname, username, ... }:
 let
   inherit (pkgs.stdenvNoCC) isDarwin;
   homePrefix =
@@ -29,7 +29,7 @@ in
   };
 
   home = {
-    username = "dzrodriguez";
+    inherit username;
     inherit homeDirectory;
     enableNixpkgsReleaseCheck = true;
     stateVersion = "24.05";
