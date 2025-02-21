@@ -79,8 +79,10 @@
     adb.enable = true;
     mosh.enable = true;
     _1password.enable = true;
+    _1password.package = pkgs.unstable._1password-gui;
     _1password-gui = {
       enable = true;
+      package = pkgs.unstable._1password-gui;
       polkitPolicyOwners = [ "dzrodriguez" ];
     };
   };
