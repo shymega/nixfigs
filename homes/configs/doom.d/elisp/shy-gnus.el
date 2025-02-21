@@ -2,36 +2,32 @@
 ;;; commentary:
 ;;; code:
 
-(setq gnus-save-newsrc-file t)
-(setq gnus-read-newsrc-file t)
+(setq gnus-save-newsrc-file nil
+      gnus-read-newsrc-file t)
 
-(use-package! w3m
-  :ensure t)
+(setq gnus-select-method '(nnnil nil))
 
-(defvar gnus-select-method '(nntp "leafnode-nntp"
-          (nntp-address "localhost")
-          (nntp-port-number 1119)))
-
-(defvar gnus-secondary-select-methods
-  '((nnimap "dominic.rodriguez@rodriguez.org.uk"
-     (nnimap-stream network)
-     (nnimap-address "localhost")
-     (nnir-search-engine imap)
-     (nnimap-user "dominic.rodriguez@rodriguez.org.uk"))
-    (nnimap "shymega@shymega.org.uk"
-            (nnimap-stream network)
+(setq gnus-secondary-select-methods
+  '(
+    (nnimap "personal"
             (nnimap-address "localhost")
-            (nnir-search-engine imap)
+            (nnimap-user "Dominic.Rodriguez@rodriguez.rog.uk")
+            (nnimap-stream plain))
+    (nnimap "dev"
+            (nnimap-stream plain)
+            (nnimap-address "localhost")
             (nnimap-user "shymega@shymega.org.uk"))
-  (nnimap "rnet@rodriguez.org.uk"
-          (nnimap-stream network)
-          (nnimap-address "localhost")
-          (nnir-search-engine imap)
-          (nnimap-user "rnet@rodriguez.org.uk"))))
+    (nntp "laefnode"
+          (nntp-port-number 1119)
+          (nntp-address "localhost"))
+    (nnimap "rnet"
+            (nnimap-stream plain)
+            (nnimap-user "rnet@rodriguez.org.uk")
+            (nnimap-address "localhost"))))
 
-(defvar mm-text-html-renderer 'w3m)
+(setq mm-text-html-renderer 'w3m)
 
-(defvar gnus-use-cache t)
+(setq gnus-use-cache t)
 
 (defun get-sig-from-mutt (acc)
   "Return account's signature specifed by ACC in $HOME/.mutt/accounts/%s.sig."
@@ -41,7 +37,7 @@
                                (getenv "HOME") acc)))
     (buffer-string)))
 
-(defvar gnus-posting-styles
+(setq gnus-posting-styles
   '(("dominic.rodriguez@rodriguez.org.uk"
      (signature (get-sig-from-mutt "dominic.rodriguez@rodriguez.org.uk"))
      (name "Dom Rodriguez")
@@ -59,18 +55,18 @@
      (name "Dom Rodriguez")
      (address "shymega@shymega.org.uk"))))
 
-(defvar mm-discouraged-alternatives '("text/html" "text/richtext"))
+(setq mm-discouraged-alternatives '("text/html" "text/richtext"))
 
-(defvar gnus-read-active-file 'some)
+(setq gnus-read-active-file 'some)
 
-(defvar gnus-summary-thread-gathering-function 'gnus-gather-threads-by-subject)
+(setq gnus-summary-thread-gathering-function 'gnus-gather-threads-by-subject)
 
-(defvar gnus-thread-hide-subtree t)
-(defvar gnus-thread-ignore-subject t)
+(setq gnus-thread-hide-subtree t)
+(setq gnus-thread-ignore-subject t)
 
-(defvar gnus-use-correct-string-widths nil)
+(setq gnus-use-correct-string-widths nil)
 
-(defvar gnus-thread-sort-functions
+(setq gnus-thread-sort-functions
   '((not gnus-thread-sort-by-date)
     (not gnus-thread-sort-by-number)))
 
@@ -85,26 +81,10 @@
 
 (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
 
-(defvar gnus-topic-topology '(("Gnus" visible)
+(setq gnus-topic-topology '(("Gnus" visible)
                               (("dominic.rodriguez@rodriguez.org.uk" visible nil nil))
                               (("shymega@shymega.org.uk" visible nil nil))
                               (("rnet@rodriguez.org.uk" visible nil nil))))
-(defvar gnus-topic-alist '(
-                           ("dominic.rodriguez@rodriguez.org.uk"
-                            "nnimap+dominic.rodriguez:INBOX"
-                            "nnimap+dominic.rodriguez:INBOX")
-                           ("shymega@shymega.org.uk"
-                            "nnimap+shymega:INBOX"
-                            "nnimap+shymega:INBOX")
-                           ("rnet@rodriguez.org.uk"
-                            "nnimap+rnet:INBOX"
-                            "nnimap+rnet:INBOX")
-                           ("Gnus")))
-
-(defun start-gnus ()
-  "Start GNUS with demon handlers."
-  (interactive)
-  (gnus))
 
 (provide 'shy-gnus)
 ;;; gnus.el ends here
