@@ -26,4 +26,5 @@ in
   "postfix_sasl_passwd.age".publicKeys = allKeys;
   "postfix_sender_relay.age".publicKeys = allKeys;
   "user_dzrodriguez.age".publicKeys = allKeys;
+  "atuin_key.age".publicKeys = allKeys;
 }
