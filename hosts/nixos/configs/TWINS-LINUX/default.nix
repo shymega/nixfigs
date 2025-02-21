@@ -12,8 +12,10 @@ in
 {
   imports = [ ./hardware-configuration.nix ];
 
-  networking.hostName = "TWINS-LINUX";
-  networking.hostId = "b0798d56";
+  networking = {
+    hostName = "TWINS-LINUX";
+    hostId = "6842efa5";
+  };
 
   boot = {
     supportedFilesystems = [
