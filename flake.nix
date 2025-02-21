@@ -262,5 +262,6 @@
     _1password-shell-plugins.url = "github:1Password/shell-plugins";
     jovian-nixos.url = "github:Jovian-Experiments/Jovian-NixOS";
     disko.url = "github:nix-community/disko";
+    flatpaks.url = "github:GermanBread/declarative-flatpak/stable-v3";
   };
 }
