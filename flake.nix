@@ -26,7 +26,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
-    nixpkgs-23-05.url = "github:nixos/nixpkgs/nixos-23.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
     nixpkgs-shymega.url = "github:shymega/nixpkgs/master";
@@ -87,8 +86,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-on-droid = {
-      url = "github:nix-community/nix-on-droid/release-23.05";
-      inputs.nixpkgs.follows = "nixpkgs-23-05";
+      url = "github:nix-community/nix-on-droid/release-23.11";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
