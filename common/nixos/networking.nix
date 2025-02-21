@@ -4,7 +4,7 @@
 
 { self, config, pkgs, ... }:
 let
-  inherit (pkgs.stdenvCC) isLinux;
+  inherit (pkgs.stdenvNoCC) isLinux;
   inherit (pkgs) lib;
   isNixOS = builtins.pathExists /etc/nixos && builtins.pathExists /nix && isLinux;
 in
