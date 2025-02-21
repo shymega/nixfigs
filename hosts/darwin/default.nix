@@ -22,26 +22,22 @@ let
     , ...
     }:
     let
-      lib = inputs.nixpkgs.lib.extend
-        (
-          _final: prev: {
-            my = import ../../lib {
-              inherit self inputs;
-              lib = prev;
-              pkgs = genPkgs hostPlatform;
-            };
-          }
-        ) // inputs.nixpkgs.lib;
+      libx = import ../../lib {
+        inherit self inputs;
+        inherit (inputs.nixpkgs) lib;
+        pkgs = genPkgs hostPlatform;
+      };
+      inherit (inputs.nixpkgs) lib;
     in
     darwin.lib.darwinSystem {
       system = hostPlatform;
-      pkgs = lib.my.genPkgs hostPlatform;
+      pkgs = libx.genPkgs hostPlatform;
       modules = [ (../hosts/darwin + "/${hostname}") ];
       specialArgs = {
         hostType = type;
         system = hostPlatform;
-        pkgs = lib.my.genPkgs hostPlatform;
-        inherit lib;
+        pkgs = libx.genPkgs hostPlatform;
+        inherit lib libx;
         inherit (inputs)
           base16-schemes
           home-manager

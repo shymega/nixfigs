@@ -6,7 +6,6 @@
 , system
 , inputs
 , lib
-, username
 , embedHm
 , hostRole
 , specialArgs
@@ -31,7 +30,6 @@
         self
         inputs
         lib
-        username
         embedHm
         hostRole
         specialArgs
