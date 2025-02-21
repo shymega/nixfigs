@@ -21,12 +21,14 @@ let
 
   DELTA-ZERO = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKOBP4prVx3gdi5YMW4dzy06s46aobpyY8IlFBDVgjDU";
   DIAL-IN = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILd2G/XmmLSK4V+tBgkS62/qE4fsY8c0dYKyjkiYtqpX";
+  MTX-SRV = "mtx-in.shymega.org.uk ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICtVMEyJgGsd26adPAyjYooDIfD30Ps0DzVlt3NnWorA";
 
   personal-machines = [
     NEO-LINUX
     TWINS-LINUX
     MORPHEUS-LINUX
     MORPHEUS-WSL
+    MTX-SRV
   ];
   personal = personal-users ++ personal-machines;
 
