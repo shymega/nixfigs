@@ -163,4 +163,7 @@
   };
 
   system.stateVersion = "23.11";
+
+  nixfigs.fonts.managed.enable = true;
+  nixfigs.fonts.xdg.enable = true;
 }
