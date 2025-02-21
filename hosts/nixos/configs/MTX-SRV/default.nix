@@ -30,7 +30,6 @@
     rtkit.enable = true;
     polkit.enable = true;
   };
-  users.users."dzrodriguez".shell = lib.mkForce pkgs.fish;
 
   services = {
     dbus.enable = true;
@@ -68,8 +67,8 @@
   };
 
   networking = {
-    hostName = "dial-in";
-    domain = "rnet.odriguez.org.uk";
+    hostName = "matrix";
+    domain = "shymega.org.uk";
 
     timeServers = lib.mkForce [ "uk.pool.ntp.org" ];
     firewall = {
