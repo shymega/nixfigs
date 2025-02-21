@@ -7,6 +7,7 @@
 , pkgs
 , config
 , options
+, hostRole
 , ...
 }:
 let
@@ -31,7 +32,11 @@ in
         PubkeyAcceptedKeyTypes ssh-ed25519
         ServerAliveInterval 60
         IPQoS throughput
-        IdentityAgent /home/dzrodriguez/.1password/agent.sock
+        ${if hostRole == "workstation" then
+            "IdentityAgent /home/dzrodriguez/.1password/agent.sock"
+          else
+            "/run/agenix/nixbuild_ssh_pub_key"
+        }
     '';
     knownHosts = {
       nixbuild = {
