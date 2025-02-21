@@ -1,9 +1,0 @@
-services:
-  mautrix-slack:
-    container_name: mautrix-slack
-    image: dock.mau.dev/mautrix/slack:latest
-    restart: unless-stopped
-    volumes:
-      - /srv/containers/mautrix-slack:/data
-    ports:
-      - "29335:29335"
