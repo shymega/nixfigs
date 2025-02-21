@@ -189,10 +189,32 @@ in
 
   programs = {
     rbw.enable = true;
-    git.lfs.enable = true;
     neovim = {
       enable = true;
       viAlias = true;
+    };
+    git = {
+      enable = true;
+      lfs.enable = true;
+      aliases = {
+        aa = "add --all";
+        amend = "commit --amend";
+        br = "branch";
+        checkpoint = "stash --include-untracked; stash apply";
+        cp = "checkpoint";
+        cm = "commit -m";
+        co = "checkout";
+        dc = "diff --cached";
+        dft = "difftool";
+        hist = "log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short";
+        lg = "log --graph --branches --oneline --decorate --pretty=format:'%C(yellow)%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C";
+        loc = "!git diff --stat `git hash-object -t tree /dev/null` | tail -1 | cut -d' ' -f5";
+        st = "status -sb";
+        sum = "log --oneline --no-merges";
+        unstage = "reset --soft HEAD";
+        revert = "revert --no-edit";
+        squash-all = "!f(){ git reset $(git commit-tree HEAD^{tree} -m 'A new start');};f";
+      };
     };
     vscode = {
       enable = true;
