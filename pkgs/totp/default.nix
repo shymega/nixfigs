@@ -6,7 +6,7 @@
 , fetchPypi
 }:
 python3Packages.buildPythonApplication rec {
-  pname = "totp-cli";
+  pname = "totp";
   version = "1.3.0";
   pyproject = true;
 
