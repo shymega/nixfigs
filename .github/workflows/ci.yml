@@ -68,6 +68,6 @@ jobs:
       - name: Check Flake formatting
         run: nix run nixpkgs#nixpkgs-fmt -- --check ./
       - name: Check Flake with Nix
-        run: nix flake check --all-systems --accept-flake-config --show-trace
+        run: nix flake check --all-systems --accept-flake-config --show-trace --impure
       - name: Check Flake with Statix
         run: nix run nixpkgs#statix -- check ./
