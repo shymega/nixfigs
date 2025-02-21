@@ -33,13 +33,6 @@
 
   services = {
     dbus.enable = true;
-    taskserver = {
-      enable = true;
-      fqdn = "taskd.shymega.org.uk";
-      openFirewall = true;
-      listenHost = "0.0.0.0";
-      organisations.shyNET.users = [ "shymega" ];
-    };
     zerotierone.enable = true;
     tailscale.enable = true;
     cloud-init.enable = lib.mkForce false;
