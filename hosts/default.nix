@@ -288,6 +288,7 @@ in
       inputs.srvos.nixosModules.mixins-terminfo
       inputs.hardware.nixosModules.common-pc-ssd
       inputs.hardware.nixosModules.common-pc
+      ./nixos/configs/MTX-SRV/synapse.nix
     ];
     pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICtVMEyJgGsd26adPAyjYooDIfD30Ps0DzVlt3NnWorA";
     remoteBuild = true;
