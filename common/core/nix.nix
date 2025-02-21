@@ -35,7 +35,7 @@ in
         ${if hostRole == "workstation" then
             "IdentityAgent /home/dzrodriguez/.1password/agent.sock"
           else
-            "/run/agenix/nixbuild_ssh_pub_key"
+            "IdentityFile /run/agenix/nixbuild_ssh_pub_key"
         }
     '';
     knownHosts = {
