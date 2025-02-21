@@ -36,14 +36,17 @@
       enable = true;
       package = pkgs.unstable.cloudflared;
       tunnels = {
-        "5da5dbaf-7519-466b-bc94-49ad85cbf05d" = {
+        "b487d2dd-b67d-4ee6-a610-9c1c0486de4b" = {
           ingress = {
-            "ssh.mtx.shymega.org.uk".service = "ssh://localhost:22";
-            "mtx.shymega.org.uk".service = "http://localhost:8008";
-            "mtx-sync3.shymega.org.uk".service = "http://localhost:8009";
+            "ssh.mtx.shymega.org.uk".service = "ssh://127.0.0.1:22";
+            "mtx.shymega.org.uk".service = "http://127.0.0.1:8008";
+            "mtx-syncv3.shymega.org.uk".service = "http://127.0.0.1:8009";
           };
-          originRequest.noTLSVerify = true;
-          credentialsFile = "/var/lib/cloudflared/5da5dbaf-7519-466b-bc94-49ad85cbf05d.json";
+          originRequest = {
+            keepAliveTimeout = "6m";
+            disableChunkedEncoding = true;
+          };
+          credentialsFile = "/var/lib/cloudflared/b487d2dd-b67d-4ee6-a610-9c1c0486de4b.json";
           default = "http_status:404";
         };
       };
