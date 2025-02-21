@@ -34,7 +34,6 @@ in
 
   services.nginx = {
     enable = true;
-    enableReload = true;
     recommendedBrotliSettings = true;
     recommendedGzipSettings = true;
     recommendedOptimisation = true;
@@ -46,13 +45,14 @@ in
       forceSSL = true;
       enableACME = true;
       # forward all Matrix API calls to synapse
-      locations."~ ^(/_matrix|/_synapse/_client)" = {
+      locations."~ ^(/_matrix|/_synapse/client)" = {
         proxyPass = "http://127.0.0.1:8008";
         extraConfig = ''
           proxy_connect_timeout       300;
           proxy_send_timeout          300;
           proxy_read_timeout          300;
           send_timeout                300;
+          proxy_http_version          1.1;
         '';
       };
       locations."~ ^/(client/|_matrix/client/unstable/org.matrix.msc3575/sync)" = {
@@ -62,6 +62,7 @@ in
           proxy_send_timeout          300;
           proxy_read_timeout          300;
           send_timeout                300;
+          proxy_http_version          1.1;
         '';
       };
       locations."= /.well-known/matrix/server".extraConfig = mkWellKnown serverConfig;
