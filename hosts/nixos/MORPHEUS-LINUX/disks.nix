@@ -3,7 +3,10 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 {
-  boot.zfs.requestEncryptionCredentials = true;
+  boot.zfs = {
+    requestEncryptionCredentials = true;
+    forceImportAll = true;
+  };
 
   fileSystems = {
     "/" =
