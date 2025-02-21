@@ -11,6 +11,7 @@
       "/usr/local"
       "/var/lib/NetworkManager"
       "/root"
+      "/opt"
       "/var/lib/bluetooth"
       "/var/lib/cni"
       "/var/lib/containers"
