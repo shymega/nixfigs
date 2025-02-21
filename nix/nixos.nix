@@ -36,6 +36,7 @@ let
           environment.systemPackages = [
             inputs.agenix.packages.${system}.default
             inputs.nix-alien.packages.${system}.nix-alien
+            inputs.wemod-launcher.packages.${system}.default
           ];
         }
         ../secrets
