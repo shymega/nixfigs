@@ -146,9 +146,7 @@ in
       user = "dzrodriguez";
     };
     devices.steamdeck = {
-      autoUpdate = true;
-      enable = true;
-      enableGyroDsuService = true;
+      enable = false;
     };
   };
 
