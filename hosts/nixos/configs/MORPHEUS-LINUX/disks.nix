@@ -10,48 +10,60 @@
 
   fileSystems = {
     "/" = {
-      device = "zosroot/crypt/nixos/local/root";
+      device = "zdata/crypt/root/nixos/linux/local/root";
       fsType = "zfs";
     };
 
     "/data/AI" = {
-      device = "zdata/shared/ai";
+      device = "zdata/crypt/shared/ai";
       fsType = "zfs";
-      neededForBoot = false;
+      neededForBoot = true;
     };
 
     "/data/VMs" = {
-      device = "zdata/shared/virtual";
+      device = "zdata/crypt/shared/virtual";
       fsType = "zfs";
-      neededForBoot = false;
+      neededForBoot = true;
+    };
+
+    "/data/Development" = {
+      device = "zdata/crypt/shared/dev";
+      fsType = "zfs";
+      neededForBoot = true;
     };
 
     "/home" = {
-      device = "zdata/shared/home-nixos";
+      device = "zdata/crypt/shared/homes/nixos";
       fsType = "zfs";
-      neededForBoot = false;
+      neededForBoot = true;
     };
 
     "/etc/nixos" = {
-      device = "zosroot/crypt/nixos/safe/nixos-config";
+      device = "zdata/crypt/root/nixos/linux/safe/nixos-config";
       fsType = "zfs";
       neededForBoot = true;
     };
 
     "/nix" = {
-      device = "zosroot/crypt/nixos/local/nixos-store";
+      device = "zdata/crypt/root/nixos/linux/local/nix-store";
+      fsType = "zfs";
+      neededForBoot = true;
+    };
+
+    "/guix" = {
+      device = "zdata/crypt/root/nixos/linux/local/guix-store";
       fsType = "zfs";
       neededForBoot = true;
     };
 
     "/persist" = {
-      device = "zosroot/crypt/nixos/safe/persist";
+      device = "zdata/crypt/root/nixos/linux/safe/persist";
       fsType = "zfs";
       neededForBoot = true;
     };
 
     "/var" = {
-      device = "zosroot/crypt/nixos/safe/var-store";
+      device = "zdata/crypt/root/nixos/linux/safe/var-store";
       fsType = "zfs";
       neededForBoot = true;
     };
