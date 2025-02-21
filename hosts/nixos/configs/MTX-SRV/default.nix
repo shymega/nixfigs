@@ -41,8 +41,8 @@
             "ssh.mtx.shymega.org.uk".service = "ssh://localhost:22";
             "mtx.shymega.org.uk".service = "http://localhost:8008";
             "mtx-sync3.shymega.org.uk".service = "http://localhost:8009";
-
           };
+          originRequest.noTLSVerify = true;
           credentialsFile = "/var/lib/cloudflared/5da5dbaf-7519-466b-bc94-49ad85cbf05d.json";
           default = "http_status:404";
         };
