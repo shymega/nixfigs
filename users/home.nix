@@ -373,7 +373,7 @@ in
         Install.WantedBy = [ "default.target" ];
         Socket = {
           ListenStream = atuinSocket;
-          Accept = true;
+          Accept = false;
           RemoveOnStop = true;
           SocketMode = [ "0600" ];
         };
