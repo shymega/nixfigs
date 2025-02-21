@@ -10,7 +10,7 @@
 
   fileSystems = {
     "/" = {
-      device = "zdata/crypt/root/nixos/linux/local/root";
+      device = "zroot/crypt/root/nixos/linux/local/root";
       fsType = "zfs";
     };
 
@@ -39,37 +39,37 @@
     };
 
     "/etc/nixos" = {
-      device = "zdata/crypt/root/nixos/linux/safe/nixos-config";
+      device = "zroot/crypt/root/nixos/linux/safe/nixos-config";
       fsType = "zfs";
       neededForBoot = true;
     };
 
     "/nix" = {
-      device = "zdata/crypt/root/nixos/linux/local/nix-store";
+      device = "zroot/crypt/root/nixos/linux/local/nix-store";
       fsType = "zfs";
       neededForBoot = true;
     };
 
     "/guix" = {
-      device = "zdata/crypt/root/nixos/linux/local/guix-store";
+      device = "zroot/crypt/root/nixos/linux/local/guix-store";
       fsType = "zfs";
       neededForBoot = true;
     };
 
     "/persist" = {
-      device = "zdata/crypt/root/nixos/linux/safe/persist";
+      device = "zroot/crypt/root/nixos/linux/safe/persist";
       fsType = "zfs";
       neededForBoot = true;
     };
 
     "/var" = {
-      device = "zdata/crypt/root/nixos/linux/safe/var-store";
+      device = "zroot/crypt/root/nixos/linux/safe/var-store";
       fsType = "zfs";
       neededForBoot = true;
     };
 
     "/home/dzrodriguez/.local/share/atuin" = {
-      device = "/dev/disk/by-label/ATUIN_NIXOS";
+      device = "/dev/zvol/zroot/crypt/shared/homes/atuin/nixos";
       fsType = "ext4";
     };
 

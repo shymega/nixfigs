@@ -151,9 +151,11 @@ in
     devices.steamdeck = {
       autoUpdate = true;
       enable = true;
-      enableGryoDsuService = true;
+      enableGyroDsuService = true;
     };
   };
+
+  networking.networkmanager.enable = true;
 
   system.stateVersion = "24.05";
 }
