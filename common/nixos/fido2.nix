@@ -1,6 +1,8 @@
-# SPDX-FileCopyrightText: 2023 Dom Rodriguez <shymega@shymega.org.uk>
+# SPDX-FileCopyrightText: 2024 Dom Rodriguez <shymega@shymega.org.uk
 #
 # SPDX-License-Identifier: GPL-3.0-only
+
+#
 
 { pkgs, lib, ... }:
 {
@@ -20,7 +22,10 @@
   services.pcscd.enable = false;
 
   services.udev = {
-    packages = with pkgs; [ yubikey-personalization solo2-cli ];
+    packages = with pkgs; [
+      yubikey-personalization
+      solo2-cli
+    ];
     extraRules = ''
       ACTION=="remove",\
        ENV{ID_BUS}=="usb",\
