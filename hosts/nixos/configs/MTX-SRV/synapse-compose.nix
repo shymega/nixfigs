@@ -1,5 +1,5 @@
 # Auto-generated using compose2nix v0.2.2-pre.
-{ pkgs, lib, ... }:
+{ lib, ... }:
 
 {
   # Runtime
