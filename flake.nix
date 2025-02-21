@@ -138,7 +138,11 @@
       url = "github:tadfisher/android-nixpkgs/stable";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixpkgs-android-studio-for-platform.url = "github:robbins/nixpkgs/android-studio-for-platform";
+    asfp.url = "github:robbins/nixpkgs/android-studio-for-platform";
+    networkmanager-profiles = {
+      url = "github:jmackie/nixos-networkmanager-profiles";
+      flake = false;
+    };
   };
 
   outputs = { self, ... } @ inputs:
