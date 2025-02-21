@@ -48,4 +48,6 @@ in
   "wireless.age".publicKeys = personal-machines ++ rnet-machines;
   "synapse_secret.age".publicKeys = personal-machines ++ rnet-machines;
   "cloudflare_dns_token.age".publicKeys = personal-machines ++ rnet-machines;
+  "nixbuild_ssh_priv_key.age".publicKeys = personal-machines ++ rnet-machines;
+  "nixbuild_ssh_pub_key.age".publicKeys = personal-machines ++ rnet-machines;
 }
