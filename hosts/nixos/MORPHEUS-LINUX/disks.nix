@@ -68,6 +68,12 @@
         neededForBoot = true;
       };
 
+    "/home/dominic.rodriguez/.local/share/atuin" =
+      {
+        device = "/dev/disk/by-label/ATUIN_NIXOS";
+        fsType = "ext4";
+      };
+
     "/boot/efi/BAZZITE" =
       {
         device = "/dev/disk/by-label/ESP_BAZZITE";
