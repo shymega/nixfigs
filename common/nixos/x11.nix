@@ -16,7 +16,7 @@
       displayManager = {
         startx.enable = true;
         gdm = {
-          enable = true;
+          enable = false;
           autoSuspend = false;
         };
       };
@@ -29,6 +29,14 @@
       xkb.layout = "us";
     };
     libinput.enable = true;
+    greetd = {
+      enable = true;
+      settings = {
+        default_session = {
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --remember --remember-session --cmd 'sway'";
+        };
+      };
+    };
   };
   environment.sessionVariables.NIX_GSETTINGS_OVERRIDES_DIR =
     let
