@@ -241,4 +241,36 @@ in
   ## End ClockworkPi DevTerm (CM4) ##
 
   ### End Experimental Device Ports ###
+
+  ### WSL ###
+
+  MORPHEUS-WSL = mkNixosConfig rec {
+    hostname = "MORPHEUS-WSL";
+    system = "x86_64-linux";
+    extraModules = [
+      inputs.chaotic.nixosModules.default
+      ({ lib
+       , ...
+       }:
+        {
+          # Backward-compat for 24.05, can be removed after we drop 24.05 support
+          imports = lib.optionals (lib.versionOlder lib.version "24.11pre") [
+            (lib.mkAliasOptionModule [ "hardware" "graphics" "extraPackages32" ] [ "hardware" "opengl" "extraPackages32" ])
+            (lib.mkAliasOptionModule [ "hardware" "graphics" "enable32Bit" ] [ "hardware" "opengl" "driSupport32Bit" ])
+            (lib.mkAliasOptionModule [ "hardware" "graphics" "package" ] [ "hardware" "opengl" "package" ])
+            (lib.mkAliasOptionModule [ "hardware" "graphics" "package32" ] [ "hardware" "opengl" "package32" ])
+          ];
+        })
+      {
+        environment.systemPackages = [
+          inputs.agenix.packages.${system}.default
+          inputs.nix-alien.packages.${system}.nix-alien
+        ];
+        wsl.enable = true;
+      }
+      ../hosts/nixos/configuration.nix
+    ];
+  };
+
+  ### End WSL ###
 }
