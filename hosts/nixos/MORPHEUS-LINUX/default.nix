@@ -54,7 +54,7 @@ in
           "bazzite.conf" = ''
             title Bazzite (SteamOS)
             efi /EFI/SHELL/SHELLX64.EFI
-            options -nointerrupt -nomap -noversion HD0f:EFI\BAZZITE\EFI\BOOT\BOOTX64.EFI
+            options -nointerrupt -nomap -noversion HD0f:EFI\BOOT\BOOTX64.EFI
           '';
         };
       };
