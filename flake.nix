@@ -114,18 +114,10 @@
         flake-compat.follows = "flake-compat";
       };
     };
-    mobile-nixos = {
-      url = "github:NixOS/mobile-nixos";
-      flake = false;
-    };
     srvos = {
       url = "github:nix-community/srvos";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    cosmo-codios-codid = {
-      url = "github:Cosmo-CoDiOS/codid";
-    };
-    atuin.url = "github:atuinsh/atuin";
     android-nixpkgs = {
       url = "github:tadfisher/android-nixpkgs/stable";
       inputs.nixpkgs.follows = "nixpkgs";
