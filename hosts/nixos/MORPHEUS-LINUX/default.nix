@@ -142,6 +142,10 @@ in
       enable = true;
       videoDrivers = [ "amdgpu" ];
     };
+    auto-cpufreq.enable = true;
+    power-profiles-daemon.enable = pkgs.lib.mkForce false;
+    input-remapper.enable = true;
+    thermald.enable = true;
   };
 
   programs.steam = {
