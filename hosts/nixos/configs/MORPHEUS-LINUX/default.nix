@@ -58,8 +58,8 @@ in
         memtest86.enable = true;
         netbootxyz.enable = true;
         extraInstallCommands = ''
-          ${pkgs.gnused}/bin/sed -i '/default/d' /boot/efi/NIXOS/loader/loader.conf
-          echo "default @saved" >> /boot/efi/NIXOS/loader/loader.conf
+          ${pkgs.gnused}/bin/sed -i '/default/d' /boot/efi/loader/loader.conf
+          echo "default @saved" >> /boot/efi/loader/loader.conf
         '';
         rebootForBitlocker = true;
         extraFiles = {
@@ -79,7 +79,7 @@ in
       };
       efi = {
         canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot/efi/NIXOS";
+        efiSysMountPoint = "/boot/efi";
       };
       generationsDir.copyKernels = true;
       timeout = 6;
