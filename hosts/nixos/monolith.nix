@@ -87,7 +87,7 @@
       ];
     };
     clight = {
-      enable = true;
+      enable = false;
       settings = {
         gamma = {
           disabled = true;
