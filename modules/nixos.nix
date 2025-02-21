@@ -30,6 +30,8 @@ let
       };
       modules = [
         inputs.agenix.nixosModules.default
+        inputs.chaotic.nixosModules.default
+        inputs.lanzaboote.nixosModules.lanzaboote
         {
           environment.systemPackages = [
             inputs.agenix.packages.${system}.default

@@ -27,9 +27,9 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    #    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nixpkgs-23-11.url = "github:nixos/nixpkgs/nixos-23.11";
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
     nixpkgs-shymega.url = "github:shymega/nixpkgs/master";
     nixfigs-priv.url = "github:shymega/nixfigs-priv/main";
@@ -85,8 +85,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-on-droid = {
-      url = "github:nix-community/nix-on-droid/release-23.11";
-      inputs.nixpkgs.follows = "nixpkgs-23-11";
+      url = "github:nix-community/nix-on-droid/release-24.05";
     };
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
@@ -122,6 +121,7 @@
     nix-doom-emacs-unstraightened.url = "github:marienz/nix-doom-emacs-unstraightened";
     wemod-launcher.url = "github:shymega/wemod-launcher/refactor-shymega";
     deckcheatz.url = "github:deckcheatz/deckcheatz/develop";
+    nix-gaming.url = "github:fufexan/nix-gaming";
   };
 
   outputs = { self, ... } @ inputs:
