@@ -4,19 +4,22 @@
 
 {
   services = {
+    displayManager.defaultSession = "sway";
     xserver = {
       enable = true;
-      displayManager.startx.enable = true;
       displayManager = {
-        gdm.enable = true;
-        gdm.autoSuspend = false;
-        defaultSession = "sway";
+        startx.enable = true;
+        gdm = {
+          enable = true;
+          autoSuspend = false;
+        };
       };
-      libinput.enable = true;
+
       desktopManager = {
         plasma5.enable = true;
       };
-      layout = "us";
+      xkb.layout = "us";
     };
+    libinput.enable = true;
   };
 }
