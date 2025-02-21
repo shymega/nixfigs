@@ -96,7 +96,6 @@
       driSupport32Bit = false;
       extraPackages = pkgs.lib.mkForce (with pkgs; [
         amdvlk
-        #        unstable.rocmPackages.clr
       ]);
       extraPackages32 = with pkgs; [
         driversi686Linux.amdvlk
@@ -104,11 +103,15 @@
     };
   };
 
-  #  environment.systemPackages = with pkgs.unstable; [
-  #    (ollama.override {
-  #      acceleration = "rocm";
-  #    })
-  #  ];
+  services.ollama = {
+    enable = true;
+    acceleration = "rocm";
+    package = pkgs.unstable.ollama;
+    environmentVariables = {
+      HSA_OVERRIDE_GFX_VERSION = "10.3.0"; # 680M.
+      #          HSA_OVERRIDE_GFX_VERSION = "11.0.0"; # 780M
+    };
+  };
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
