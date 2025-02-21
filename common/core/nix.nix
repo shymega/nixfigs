@@ -8,7 +8,7 @@
 , pkgs
 , config
 , options
-, hostRole
+, username
 , ...
 }:
 let
@@ -29,8 +29,14 @@ in
         PubkeyAcceptedKeyTypes ssh-ed25519
         ServerAliveInterval 60
         IPQoS throughput
-        ${if hostRole == "workstation" then
-            "IdentityAgent /home/dzrodriguez/.1password/agent.sock"
+        ${if libx.hasSuffix "-darwin" pkgs.system then
+            if builtins.pathExists "${config.users.users.${username}.home}/.1password/agent.sock" then
+              "IdentityAgent ${config.users.users.${username}.home}/.1password/agent.sock"
+            else
+              "IdentityFile /run/agenix/nixbuild_ssh_priv_key"
+          else
+            if builtins.pathExists "${config.users.users.${username}.home}/.1password/agent.sock" then
+            "IdentityAgent ${config.users.users.${username}.home}/.1password/agent.sock"
           else
             "IdentityFile /run/agenix/nixbuild_ssh_priv_key"
         }
