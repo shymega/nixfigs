@@ -16,9 +16,6 @@
       desktopManager = {
         plasma5.enable = true;
       };
-      windowManager = {
-        i3.enable = true;
-      };
       layout = "us";
     };
   };
