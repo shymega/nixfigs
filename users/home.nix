@@ -168,6 +168,12 @@ in
   };
 
   services = {
+    darkman = {
+      enable = true;
+      settings = {
+        usegeoclue = true;
+      };
+    };
     keybase.enable = true;
     gpg-agent = {
       enable = true;
