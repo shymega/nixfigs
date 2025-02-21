@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 Various Authors <generic@example.com>
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
 {
   rc_message = {
     per_second = 1000;
