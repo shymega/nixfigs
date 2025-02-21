@@ -65,11 +65,11 @@
       hmModules = homeModules;
       hmModule = homeModules;
       hosts = import ./hosts { inherit inputs self; };
-      nixosConfigurations = import ./hosts/nixos { inherit inputs self; };
+      nixosConfigurations = import ./hosts/nixos { inherit inputs self; } // inputs.nixfigs-work.nixosConfigurations;
       darwinConfigurations = import ./hosts/darwin { inherit inputs; };
       homeConfigurations = import ./homes { inherit inputs; };
       overlays = import ./overlays { inherit inputs; inherit (inputs.nixpkgs) lib; };
-      secrets = import ./secrets/system // import ./secrets/user // import inputs.nixfigs-secrets.outputs.secrets;
+      secrets = import ./secrets/system // import ./secrets/user // import inputs.nixfigs-secrets.outputs.system // import inputs.nixfigs-secrets.outputs.user; 
       deploy = import ./nix/deploy.nix { inherit self inputs; inherit (inputs.nixpkgs) lib; };
       # for `nix fmt`
       formatter = treeFmtEachSystem (pkgs: treeFmtEval.${pkgs.system}.config.build.wrapper);
@@ -113,7 +113,7 @@
       generators = import ./nix/generators.nix { inherit self; };
       packages =
         forEachSystem (system:
-          (inputs.shypkgs-private.outputs.packages.${system} // inputs.shypkgs-public.outputs.packages.${system}));
+          (inputs.shypkgs-private.packages.${system} // inputs.shypkgs-public.packages.${system}));
     };
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
@@ -122,6 +122,7 @@
     nixpkgs-shymega.url = "github:shymega/nixpkgs/shymega/staging";
     nixfigs-secrets.url = "github:shymega/nixfigs-secrets";
     nixfigs-priv.url = "github:shymega/nixfigs-priv";
+    nixfigs-work.url = "github:shymega/nixfigs-work";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     flake-registry = {
       url = "github:NixOS/flake-registry";
