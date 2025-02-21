@@ -36,7 +36,7 @@ in
       };
 
       powertop = lib.mkIf
-        (hostName == "TRINITY-LINUX" || hostName == "TWINS-LINUX")
+        (hostName == "MORPHEUS-LINUX" || hostName == "TWINS-LINUX")
         {
           description = "Auto-tune Power Management with powertop";
           unitConfig = { RefuseManualStart = true; };
@@ -49,24 +49,7 @@ in
           '';
         };
 
-      gpd-p3-reset-keyboard = lib.mkIf (hostName == "TRINITY-LINUX") {
-        description = "Reset keyboard on the GPD Pocket 3 after Powertop runs";
-        wantedBy = [
-          "ac.target"
-          "multi-user.target"
-          "battery.target"
-          "powertop.service"
-        ];
-        path = with pkgs; [
-          coreutils
-        ];
-        serviceConfig.Type = "oneshot";
-        script = ''
-          echo 'on' > /sys/bus/usb/devices/3-3/power/control
-        '';
-      };
-
-      gpd-wm2-2024-fixes = lib.mkIf (hostName == "MORHPEUS-LINUX") {
+      gpd-wm2-2024-fixes = lib.mkIf (hostName == "MORPHEUS-LINUX") {
         description = "Fix hw on GPD WM2 2024";
         wantedBy = [
           "ac.target"
