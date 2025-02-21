@@ -1,39 +1,41 @@
 { config, lib, pkgs, ... }:
 
 {
-  users.mutableUsers = false;
-  users.users."dzrodriguez" = {
-    isNormalUser = true;
-    shell = pkgs.zsh;
-    description = "Dom RODRIGUEZ";
-    passwordFile = config.age.secrets.user_dzrodriguez.path;
-    subUidRanges = [{
-      startUid = 100000;
-      count = 65536;
-    }];
-    subGidRanges = [{
-      startGid = 100000;
-      count = 65536;
-    }];
-    extraGroups = [
-      "adbusers"
-      "dialout"
-      "disk"
-      "docker"
-      "input"
-      "kvm"
-      "libvirt"
-      "libvirtd"
-      "lp"
-      "lpadmin"
-      "networkmanager"
-      "plugdev"
-      "qemu-libvirtd"
-      "systemd-journal"
-      "uucp"
-      "video"
-      "wheel"
-    ];
+  users = {
+    mutableUsers = false;
+    users."dzrodriguez" = {
+      isNormalUser = true;
+      shell = pkgs.zsh;
+      description = "Dom RODRIGUEZ";
+      hashedPasswordFile = config.age.secrets.user_dzrodriguez.path;
+      subUidRanges = [{
+        startUid = 100000;
+        count = 65536;
+      }];
+      subGidRanges = [{
+        startGid = 100000;
+        count = 65536;
+      }];
+      extraGroups = [
+        "adbusers"
+        "dialout"
+        "disk"
+        "docker"
+        "input"
+        "kvm"
+        "libvirt"
+        "libvirtd"
+        "lp"
+        "lpadmin"
+        "networkmanager"
+        "plugdev"
+        "qemu-libvirtd"
+        "systemd-journal"
+        "uucp"
+        "video"
+        "wheel"
+      ];
+    };
   };
 
   security = {
@@ -89,6 +91,8 @@
 
     waydroid.enable = true;
     lxd.enable = true;
+    docker.enable = true;
+    podman.enable = true;
 
     libvirtd = {
       enable = true;
@@ -98,7 +102,7 @@
         swtpm.enable = true;
         ovmf = {
           enable = true;
-          packages = [ pkgs.OVMFFull.fd ];
+          packages = [ pkgs.OVMFFull.fd pkgs.pkgsCross.aarch64-multiplatform.OVMF.fd ];
         };
       };
       onBoot = "ignore";
@@ -107,7 +111,6 @@
   };
 
   environment.shells = with pkgs; [ zsh fish bash ];
-
 
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {
@@ -126,5 +129,5 @@
     };
   };
 
-  system.stateVersion = "23.05";
+  system.stateVersion = "23.11";
 }
