@@ -4,7 +4,7 @@
 
 #
 
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 {
   environment.systemPackages =
     with pkgs.unstable;
@@ -31,6 +31,5 @@
       tmux
       usbutils
       wget
-    ]
-    ++ lib.optionals lib.my.isNixOS (with pkgs.unstable; [ ryzenadj ]);
+    ];
 }
