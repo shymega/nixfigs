@@ -2,10 +2,10 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ self, pkgs, ... }:
+{ self, config, pkgs, ... }:
 let
   inherit (pkgs.stdenvNoCC) isLinux;
-  inherit (pkgs.lib) optionals mkIf mkOption;
+  inherit (pkgs.lib) optionals hasSuffix;
   isNixOS = builtins.pathExists "/etc/nixos" && builtins.pathExists "/nix" && isLinux;
 in
 {
@@ -14,7 +14,7 @@ in
     wifi.macAddress = "stable";
     wifi.powersave = true;
     enable = true;
-    dispatcherScripts = optionals isNixOS [
+    dispatcherScripts = optionals (isNixOS && hasSuffix "-LINUX" config.networking.hostName) [
       {
         source = "${self}/static/nixos/rootfs/etc/NetworkManager/dispatcher.d/05-wireless-toggle";
         type = "basic";
