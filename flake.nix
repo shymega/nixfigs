@@ -1,323 +1,177 @@
 {
   description = "shymega's Nix config";
 
+  nixConfig = {
+    extra-trusted-substituters = [
+      "https://cache.dataaturservice.se/spectrum"
+      "https://cache.nixos.org/"
+      "https://devenv.cachix.org"
+      "https://nix-community.cachix.org"
+      "https://nix-on-droid.cachix.org"
+      "https://pre-commit-hooks.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "nix-on-droid.cachix.org-1:56snoMJTXmDRC1Ei24CmKoUqvHJ9XCp+nidK7qkMQrU="
+      "pre-commit-hooks.cachix.org-1:Pkk3Panw5AW24TOv6kz3PvLhlH8puAsJTBbOPmBo7Rc="
+      "spectrum-os.org-1:rnnSumz3+Dbs5uewPlwZSTP0k3g/5SRG4hD7Wbr9YuQ="
+    ];
+  };
+
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs-23-05.url = "github:nixos/nixpkgs/nixos-23.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
     nixpkgs-shymega.url = "github:shymega/nixpkgs/master";
-
     nur.url = "github:nix-community/NUR";
-    flake-utils.url = "github:numtide/flake-utils";
-
+    devenv.url = "github:cachix/devenv/latest";
+    base16-schemes = {
+      url = "github:tinted-theming/base16-schemes";
+      flake = false;
+    };
     hardware.url = "github:nixos/nixos-hardware";
     impermanence.url = "github:nix-community/impermanence";
     nix-colors.url = "github:misterio77/nix-colors";
     nix-flatpak.url = "github:gmodena/nix-flatpak/main";
-
     nixos-wsl = {
       url = "github:nix-community/nixos-wsl";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-compat.follows = "flake-compat";
+      inputs.flake-utils.follows = "flake-utils";
     };
-
     agenix = {
       url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+        darwin.follows = "nix-darwin";
+      };
     };
-
     nix-ld.url = "github:Mic92/nix-ld";
-
     nix-alien = {
       url = "github:thiagokokada/nix-alien";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     nix-index-database = {
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    doom-emacs = {
-      url = "github:nix-community/nix-doom-emacs";
-      inputs.nixpkgs.follows = "nixpkgs";
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-compat.follows = "flake-compat";
+        utils.follows = "flake-utils";
+      };
     };
-
+    flake-compat = {
+      url = "github:edolstra/flake-compat";
+      flake = false;
+    };
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-utils.url = "github:numtide/flake-utils";
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.05";
+      url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    pre-commit-hooks = {
-      url = "github:cachix/pre-commit-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    deploy-rs.url = "github:serokell/deploy-rs";
-
     nix-on-droid = {
       url = "github:nix-community/nix-on-droid/release-23.05";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-23-05";
+    };
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-compat.follows = "flake-compat";
+        flake-parts.follows = "flake-parts";
+        flake-utils.follows = "flake-utils";
+        pre-commit-hooks-nix.follows = "pre-commit-hooks";
+      };
+    };
+    nix-fast-build = {
+      url = "github:Mic92/nix-fast-build";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
+      };
+    };
+    pre-commit-hooks = {
+      url = "github:cachix/pre-commit-hooks.nix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+        flake-compat.follows = "flake-compat";
+      };
+    };
+    stylix = {
+      url = "github:danth/stylix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+        flake-compat.follows = "flake-compat";
+      };
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, ... }:
+  outputs = { self, ... } @ inputs:
     let
-      overlays-unstable = final: prev: {
-        unstable = import inputs.nixpkgs-unstable {
-          inherit (prev) system;
-          config = {
-            allowUnfree = true;
-            allowBroken = true;
-            allowUnsupportedSystem = true;
-          };
-          overlays = [
-            (
-              final: prev: {
-                weechatWithMyPlugins = prev.weechat.override {
-                  configure = { availablePlugins, ... }: {
-                    scripts = with prev.pkgs.weechatScripts; [
-                      buffer_autoset
-                      colorize_nicks
-                      url_hint
-                      weechat-autosort
-                      weechat-go
-                      weechat-notify-send
-                      zncplayback
-                      wee-slack
-                      weechat-matrix
-                    ];
-                    plugins = builtins.attrValues availablePlugins;
-                  };
-                };
-              }
-            )
-            (
-              final: prev: {
-                isync-xoauth2 = prev.symlinkJoin {
-                  name = "isync";
-                  paths = [
-                    (prev.writeShellScriptBin "mbsync" ''
-                      export SASL_PATH=${prev.cyrus_sasl.out}/lib/sasl2:${prev.cyrus-sasl-xoauth2}/lib/sasl2
-                      exec ${prev.isync}/bin/mbsync "$@"
-                    '')
-                    prev.isync
-                  ];
-                };
-              }
-            )
+      inherit (inputs.nixpkgs) lib;
 
-          ];
-        };
-      };
-      overlays-shymega = final: prev: {
-        shymega = import inputs.nixpkgs-shymega {
-          inherit (prev) system;
-          config = {
-            allowUnfree = true;
-            allowBroken = true;
-            allowUnsupportedSystem = true;
-          };
-        };
-      };
-      overlays-nixpkgs-master = final: prev: {
-        master = import inputs.nixpkgs-master {
-          inherit (prev) system;
-          config = {
-            allowUnfree = true;
-            allowBroken = true;
-            allowUnsupportedSystem = true;
-          };
-        };
-      };
-      nixPkgsOverlays = { config, pkgs, ... }: {
-        nixpkgs.config = {
-          allowUnfree = true;
-          allowBroken = true;
-          allowUnsupportedSystem = true;
-        };
-        nixpkgs.overlays = [
-          overlays-unstable
-          overlays-shymega
-          overlays-nixpkgs-master
-          inputs.nur.overlay
-          inputs.nix-alien.overlays.default
-        ];
-      };
-      mkNixosConfig = system: extraModules: inputs.nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          nixPkgsOverlays
-          inputs.agenix.nixosModules.default
-          inputs.nix-ld.nixosModules.nix-ld
-          inputs.nix-index-database.nixosModules.nix-index
-          {
-            environment.systemPackages = [
-              inputs.agenix.packages.${system}.default
-            ];
-          }
-          ./secrets
-        ] ++ extraModules;
-        specialArgs = { inherit inputs; };
-      };
-      mkHomeConfig = system: extraModules: inputs.home-manager.lib.homeManagerConfiguration {
-        pkgs = inputs.nixpkgs.legacyPackages.${system};
+      isDarwin = inputs.nixpkgs.stdenvNoCC.isDarwin;
+      isNixOS = builtins.pathExists "/etc/nixos" && builtins.pathExists "/nix" && inputs.nixpkgs.stdenvNoCC.isLinux;
+      isForeignNix = !isNixOS && inputs.nixpkgs.stdenvNoCC.isLinux && builtins.pathExists "/nix";
+      homePrefix =
+        if isDarwin then
+          "/Users"
+        else
+          "/home";
 
-        modules = [
-          nixPkgsOverlays
-          inputs.nix-index-database.hmModules.nix-index
-          inputs.agenix.homeManagerModules.default
-          inputs.doom-emacs.hmModule
-          inputs.nix-flatpak.homeManagerModules.nix-flatpak
-        ] ++ extraModules;
-        extraSpecialArgs = { inherit inputs; };
-      };
-      mkDarwinConfig = system: extraModules: inputs.nix-darwin.lib.darwinSystem {
-        inherit system;
-        modules = [
-          nixPkgsOverlays
-          inputs.agenix.darwinModules.default
-          inputs.nix-ld.nixosModules.nix-ld
-          inputs.nix-index-database.nixosModules.nix-index
-          ./secrets
-          { environment.systemPackages = [ inputs.agenix.defaultPackage.${system} ]; }
-        ] ++ extraModules;
-        specialArgs = { inherit inputs; };
-      };
+      # TODO: Add RISC-V - specific Cache, and Nixpkgs. For Pine64/other RISC-V SoCs.
+      forAllUpstreamSystems = inputs.nixpkgs.lib.genAttrs [
+        "aarch64-darwin"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "x86_64-linux"
+      ];
+      pkgs = forAllUpstreamSystems (system:
+        import inputs.nixpkgs {
+          inherit system;
+          overlays = builtins.attrValues self.overlays;
+          config = {
+            allowUnfree = true;
+            allowBroken = false;
+            allowInsecure = false;
+            allowUnsupportedSystem = false;
+          };
+        });
     in
-    (inputs.flake-utils.lib.eachDefaultSystem (system:
-      {
-        devShells.default = import ./shell.nix {
-          pkgs = inputs.nixpkgs.legacyPackages.${system};
-        };
-      })) // {
-      nixosConfigurations = {
-        ### Personal Devices ####
+    {
+      overlays = import ./nix/overlay.nix { inherit self inputs lib; };
+      devShells = forAllUpstreamSystems (system:
+        let
+          pkgs = import inputs.nixpkgs {
+            inherit system;
+            overlays = builtins.attrValues self.overlays;
+            config = {
+              allowUnfree = true;
+              allowBroken = false;
+              allowInsecure = false;
+              allowUnsupportedSystem = false;
+            };
+          };
+        in
+        (import ./nix/devshell.nix { inherit inputs pkgs self system; }));
 
-        ### Desktops ###
-
-        ## Desktop (Beelink SER6 Pro) ##
-
-        NEO-LINUX = mkNixosConfig "x86_64-linux" [
-          ./hosts/nixos/configuration.nix
-          ./hosts/shared/linux
-          ./hosts/nixos/NEO-LINUX
-        ];
-
-        ## End Desktop (Beelink SER6 Pro) ##
-
-        ## Raspberry Pi - desk ##
-        SMITH-LINUX = mkNixosConfig "aarch64-linux" [
-          ./hosts/nixos/configuration.nix
-          ./hosts/shared/linux
-          ./hosts/nixos/SMITH-LINUX
-        ];
-        ## End Raspberry Pi - desk ##
-
-        ### End Desktops ###
-
-        ### Portable Machines ###
-
-        ## UMPC (GPD Pocket 3 (i7)) ##
-
-        TRINITY-LINUX = mkNixosConfig "x86_64-linux" [
-          ./hosts/nixos/configuration.nix
-          ./hosts/shared/linux
-          ./hosts/nixos/TRINITY-LINUX
-        ];
-
-        ## End UMPC (GPD P3) ##
-
-        # Laptop (ThinkPad X270) ##
-
-        TWINS-LINUX = mkNixosConfig "x86_64-linux" [
-          ./hosts/nixos/configuration.nix
-          ./hosts/shared/linux
-          ./hosts/nixos/TWINS-LINUX
-        ];
-
-        # End Laptop (ThinkPad X270) ##
-
-        ### End Portable Machines ###
-
-        ### Handhelds ###
-
-        ## Gaming Handheld (GPD Win Max 2 (2023)) ##
-        ## TO BE ADDED. ##
-        ## End Gaming Handheld (GPD Win Max 2 (2023) ##
-
-        ## Gaming Handheld (Steam Deck (OLED/1TB)) ##
-        ## TO BE ADDED. ##
-        ## End Gaming Handheld (Steam Deck (OLED/1TB)) ##
-
-        ### End Handhelds ###
-
-        ### Experimental Device Ports ###
-
-        ## RISC-V Experimental Tablet (Pine64 PineTab2-V) ##
-        ## TO BE ADDED. ##
-        ## End RISC-v Experimental Tablet (Pine64 PineTab2-V) ##
-
-        ## ARM64 Experimental Tablet (Pine64 PineTab2 ARM64) ##
-        ## TO BE ADDED. ##
-        ## End ARM64 Experimental Tablet (Pine64 PineTab2 ARM) ##
-
-        ## ClockworkPi uConsole (CM4) ##
-        ## TO BE ADDED. ##
-        ## End ClockworkPi uConsole (CM4) ##
-
-        ## ClockworkPi DevTerm (CM4) ##
-        ## TO BE ADDED. ##
-        ## End ClockworkPi DevTerm (CM4) ##
-
-        ### Experimental Device Ports ###
-
-        ### Servers ###
-
-        ### End Servers ###
-
-        ### Cloud Machines (VMs/Containers) ###
-
-        ### End Cloud Machines (VMs/Containers) ###
-
-        ### Local Machines (VMs/Containers) ###
-
-        ### End Local Machines (VMs/Containers) ###
-
-        ## Home Automation Nodes ##
-
-        GRDN-BED-UNIT = mkNixosConfig "aarch64-linux" [
-          ./hosts/nixos/configuration.nix
-          ./hosts/shared/linux
-          ./hosts/nixos/GRDN-BED-UNIT
-        ];
-
-        ## End Home Automation Nodes ##
-
-        ### End Personal Machines ###
-
-        ### Work Machines ###
-
-        ### End Work Machines ###
-      };
-      homeConfigurations = {
-        "dzrodriguez@NEO-LINUX" = mkHomeConfig "x86_64-linux" [ ./users ];
-        "dzrodriguez@TRINITY-LINUX" = mkHomeConfig "x86_64-linux" [ ./users ];
-        "dzrodriguez@TWINS-LINUX" = mkHomeConfig "x86_64-linux" [ ./users ];
-        "dzrodriguez@SMITH-LINUX" = mkHomeConfig "aarch64-linux" [ ./users ];
-        "dzrodriguez@GRDN-BED-UNIT" = mkHomeConfig "aarch64-linux" [ ./users ];
-      };
-      #      nixOnDroidConfigurations.default = inputs.nix-on-droid.lib.nixOnDroidConfiguration {
-      #        imports = [ ];
-      #      };
-      darwinConfigurations = {
-        ### macOS (including Cloud/Local) machines ###
-        ### End macOS (including Cloud/Local) machines ###
-      };
+      nixosConfigurations = (import ./nix/nixos.nix { inherit self inputs pkgs; }) // (import ./nix/wsl.nix { inherit self inputs pkgs; });
+      homeConfigurations = (import ./nix/home-manager.nix { inherit self inputs pkgs; });
+      nixOnDroidConfigurations = import ./nix/android.nix { inherit self inputs pkgs; };
+      darwinConfigurations = import ./nix/darwin.nix { inherit self inputs pkgs; };
     };
 }
