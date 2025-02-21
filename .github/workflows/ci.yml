@@ -7,7 +7,7 @@ name: "Flake workflow"
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 8 * * 6"
+    - cron: "0 0 * * 6"
 
 # Ensures that only one deploy task per branch/environment will run at a time.
 concurrency:
