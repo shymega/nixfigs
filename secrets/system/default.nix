@@ -51,14 +51,6 @@
         group = "users";
         mode = "640";
       };
-      nixbuild_ssh_priv_key = {
-        file = ./nixbuild_ssh_priv_key.age;
-        mode = "0600";
-      };
-      nixbuild_ssh_pub_key = {
-        file = ./nixbuild_ssh_pub_key.age;
-        mode = "0600";
-      };
     };
   };
 }
