@@ -95,8 +95,6 @@ in
     system = "x86_64-linux";
     hardwareModules = [
       inputs.hardware.nixosModules.gpd-pocket-3
-      inputs.hardware.nixosModules.common-pc-ssd
-      inputs.hardware.nixosModules.common-pc
     ];
     extraModules = [
       ../hosts/nixos/configuration.nix
@@ -111,10 +109,6 @@ in
     hostname = "MORPHEUS-LINUX";
     system = "x86_64-linux";
     hardwareModules = [
-      inputs.hardware.nixosModules.common-cpu-amd
-      inputs.hardware.nixosModules.common-gpu-amd
-      inputs.hardware.nixosModules.common-pc-ssd
-      inputs.hardware.nixosModules.common-pc
       inputs.hardware.nixosModules.gpd-win-max-2-2023
     ];
     extraModules = [
@@ -133,8 +127,6 @@ in
     system = "x86_64-linux";
     hardwareModules = [
       inputs.hardware.nixosModules.lenovo-thinkpad-x270
-      inputs.hardware.nixosModules.common-pc-ssd
-      inputs.hardware.nixosModules.common-pc
     ];
     extraModules = [
       ../hosts/nixos/configuration.nix
