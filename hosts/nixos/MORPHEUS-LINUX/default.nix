@@ -116,6 +116,7 @@ in
     };
     i2c.enable = true;
     sensor.iio.enable = true;
+    cpu.amd.ryzen-smu.enable = true;
   };
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" "armv6l-linux" "armv7l-linux" ];
