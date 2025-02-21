@@ -13,6 +13,7 @@
 {
   imports =
     [
+      ./appimage.nix
       ./bluetooth.nix
       ./custom-systemd-units
       ./dovecot2.nix
@@ -22,6 +23,7 @@
       ./kernel_params.nix
       ./keychron.nix
       ./sound.nix
+      ./networking.nix
       ./steam-hardware.nix
       ./systemd-initrd.nix
       ./utils
@@ -31,17 +33,12 @@
     ++ (
       if hostname == "NEO-LINUX" || hostname == "MORPHEUS-LINUX" || hostname == "TWINS-LINUX" then
         [
-          ./appimage.nix
           ./automount.nix
           ./davmail.nix
-          ./fido2.nix
           ./graphical.nix
           ./impermanence.nix
-          ./keychron.nix
           ./matrix.nix
-          ./networking.nix
           ./postfix.nix
-          ./steam-hardware.nix
           inputs.lanzaboote.nixosModules.lanzaboote
           inputs.nix-index-database.nixosModules.nix-index
           inputs.stylix.nixosModules.stylix
