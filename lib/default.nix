@@ -13,9 +13,13 @@ rec {
     isDarwin
     isx86_64
     isi686
+    isArmv7
+    isRiscV64
+    isRiscV32
     isAarch64
     isAarch32
     ;
+  inherit (pkgs.lib.strings) hasSuffix;
   allLinuxSystems = [
     "x86_64-linux"
     "aarch64-linux"
@@ -37,11 +41,7 @@ rec {
     "aarch64-linux"
   ];
   getHomeDirectory = username: homePrefix + "/${username}";
-  isArm = isArmv6l || isArmv7l || isArm64;
-  isArm32 = isArmv6l || isAarch32;
-  isArm64 = isAarch64;
-  isArmv6l = isLinux && !isAarch64 && !isAarch32 && !isx86_64 && !isi686;
-  isArmv7l = isLinux && !isAarch64 && !isAarch32 && !isx86_64 && !isi686;
+  isArm = isArmv7 || isAarch64 || isAarch32;
   isForeignNix =
     !isNixOS && isLinux && builtins.pathExists "/nix" && !builtins.pathExists "/etc/nixos";
   isNixOS = builtins.pathExists "/etc/nixos" && builtins.pathExists "/nix" && isLinux;
@@ -63,12 +63,4 @@ rec {
     builtins.elem r allRoles;
   hasRoles = r: allRoles:
     builtins.all (role: hasRole role allRoles) r;
-  hasSuffix =
-    suffix: content:
-    let
-      inherit (builtins) stringLength substring;
-      lenContent = stringLength content;
-      lenSuffix = stringLength suffix;
-    in
-    lenContent >= lenSuffix && substring (lenContent - lenSuffix) lenContent content == suffix;
 }
