@@ -4,6 +4,7 @@
 
 { config, lib, ... }:
 {
+
   boot = {
     initrd.availableKernelModules = [
       "nvme"
