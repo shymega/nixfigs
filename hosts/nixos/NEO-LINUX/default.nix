@@ -96,7 +96,6 @@ in
   hardware = {
     opengl = {
       enable = true;
-      driSupport = false;
       extraPackages = pkgs.lib.mkForce (with pkgs; [
         amdvlk
       ]);
