@@ -27,7 +27,7 @@ in
       "zfs"
     ];
 
-    kernelParams = pkgs.lib.mkAfter [ "usbcore.autosuspend-1" ];
+    kernelParams = pkgs.lib.mkAfter [ "usbcore.autosuspend=-1" ];
 
     kernelPackages =
       if enableXanmod then
