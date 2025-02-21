@@ -94,15 +94,24 @@ in
   };
 
   hardware = {
-    opengl = {
+    graphics = {
       enable = true;
+      driSupport32Bit = true;
       extraPackages = with pkgs; [
-        rocm-opencl-icd
+        # VA-API and VDPAU
         vaapiVdpau
-        rocm-opencl-runtime
-        libvdpau-va-gl
+
+        # AMD ROCm OpenCL runtime
+        rocmPackages.clr
+        rocmPackages.clr.icd
       ];
-      extraPackages32 = [ pkgs.driversi686Linux.amdvlk ];
+    };
+    amdgpu = {
+      amdvlk = {
+        enable = true;
+        support32Bit.enable = true;
+      };
+      opencl.enable = true;
     };
     cpu.amd.ryzen-smu.enable = true;
   };
