@@ -23,11 +23,8 @@ let
     inputs.agenix.overlays.default
     inputs.android-nixpkgs.overlays.default
     inputs.deploy-rs.overlays.default
-    inputs.emacsconf2nix.overlays.default
     inputs.nix-alien.overlays.default
     inputs.nur.overlay
-    inputs.shycode.overlays.default
-    inputs.shymacs.overlays.default
   ];
 
   customOverlays = [
