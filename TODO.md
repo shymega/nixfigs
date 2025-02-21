@@ -1,0 +1,16 @@
+- Implement 'network utils'.
+- Implement 'network-specific' services.
+- Implement RAID scripts for physical Windows.
+- Implement RAID services for physical Windows.
+- Add `socks-proxy`.
+- Devise ZFS pool for WM2.
+- Devise ZFS pool for NUC.
+- Add `DIAL-IN-RNET` config.
+- Add 'roles' for systems.
+- Add 'Docker/Podman update/download/prune' script. Every
+  day at midnight.
+- Add macOS x86_64 config.
+- Add macOS ARM64 config (cloud).
+- Add `deploy-rs` config.
+- Implement Syncthing services
+- Squash all commits.
