@@ -8,67 +8,16 @@ in
   imports = [
     ../../../../modules/nixos/mautrix-slack.nix
     ../../../../modules/nixos/mautrix-whatsapp.nix
+    ./nginx.nix
     ./security.nix
     ./postgres.nix
   ];
 
   users.users."matrix-synapse".extraGroups = [ "users" ];
-
   services = {
-    nginx = {
-      enable = true;
-      recommendedTlsSettings = true;
-      recommendedOptimisation = true;
-      recommendedGzipSettings = true;
-      recommendedProxySettings = true;
-      virtualHosts = {
-        "${fqdn}" =
-          let
-            client =
-              {
-                "m.homeserver" = { "base_url" = "https://${config.var.hostname}"; };
-                "m.identity_server" = { "base_url" = "https://matrix.org"; };
-              };
-            server = { "m.server" = "${config.var.hostname}:443"; };
-          in
-          {
-            # Needed for matrix federation
-            locations."/.well-known/matrix/server".extraConfig = ''
-              add_header Content-Type application/json;
-              return 200 '${builtins.toJSON server}';
-            '';
-
-            # Needed for automatic homeserver
-            # setup of matrix clients
-            locations."/.well-known/matrix/client".extraConfig = ''
-              add_header Content-Type application/json;
-              add_header Access-Control-Allow-Origin *;
-              return 200 '${builtins.toJSON client}';
-            '';
-            enableACME = true;
-            onlySSL = true;
-            locations = {
-              "~ ^(/_matrix|/_synapse/client)" = {
-                proxyPass = "http://127.0.0.1:8008";
-                extraConfig = ''
-                  client_max_body_size 200M;
-                '';
-              };
-              "~ ^/(client/|_matrix/client/unstable/org.matrix.msc3575/sync)" = {
-                priority = 800;
-                proxyPass = "http://localhost:8009";
-              };
-              "/".extraConfig = ''
-                return 404;
-              '';
-            };
-          };
-      };
-    };
-
-
     matrix-synapse = {
       enable = true;
+      withJemalloc = true;
       settings = {
         report_stats = false;
         enable_metrics = false;
@@ -92,6 +41,7 @@ in
           msc3890_enabled = true;
         };
         database.name = "psycopg2";
+        allow_public_rooms_without_auth = true;
         database.args = {
           user = "matrix";
           password = "matrix4me";
@@ -114,8 +64,12 @@ in
             tls = false;
             x_forwarded = true;
             resources = [
-              { compress = true; names = [ "client" "federation" ]; }
-              { compress = false; names = [ "federation" ]; }
+              { compress = true; 
+                names = [ "client" ]; }
+              {
+                compress = true;
+                names = [ "federation" ]; 
+              }
             ];
           }
           {
@@ -123,10 +77,13 @@ in
             type = "metrics";
             tls = false;
             bind_addresses = [ "127.0.0.1" ];
-            resources = [ ];
+            resources = [ 
+              {
+                names = [ "metrics" ];
+              }
+            ];
           }
         ];
-        allow_guest_access = true;
       };
       extraConfigFiles = [
         config.age.secrets.synapse_secret.path
