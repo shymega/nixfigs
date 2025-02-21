@@ -38,6 +38,7 @@ in
       b4
       bat
       bc
+      beeper
       brightnessctl
       cachix
       cloudflared
@@ -123,6 +124,7 @@ in
       xsv
       zathura
       zellij
+      zenmonitor
       zip
       zoxide
     ] ++ (with pkgs.lib; optionals (hostname == "NEO-LINUX") [
