@@ -12,8 +12,10 @@ in
     inputs.jovian-nixos.nixosModules.default
   ];
 
-  networking.hostName = "MORPHEUS-JOVIAN";
-  networking.hostId = "e8a03c89";
+  networking = {
+    hostName = "MORPHEUS-JOVIAN";
+    hostId = "6ea9467e";
+  };
   boot = {
     supportedFilesystems = [
       "ntfs"
