@@ -168,7 +168,7 @@ in
       provider = "geoclue2";
     };
     redshift = {
-      enable = true;
+      enable = false;
       provider = "geoclue2";
     };
   };
