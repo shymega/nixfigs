@@ -67,17 +67,20 @@
       bantime-increment.enable = true;
     };
     resolved = {
-      enable = lib.mkForce false;
+      enable = true;
+      fallbackDns = [
+        "1.1.1.1"
+        "1.0.0.1"
+      ];
+      extraConfig = ''
+        DNS=1.1.1.1#1dot1dot1dot1.cloudflare-dns.com 1.0.0.1#1dot1dot1dot1.cloudflare-dns.com 2606:4700:4700::1111#1dot1dot1dot1.cloudflare-dns.com 2606:4700:4700::1001#1dot1dot1dot1.cloudflare-dns.com
+      '';
     };
   };
 
   networking = {
     hostName = "mtx";
     domain = "shymega.org.uk";
-    environment.etc = {
-      "resolv.conf".text = "nameserver 1.1.1.1\nnameserver 1.0.0..1";
-    };
-    resolvconf.enable = true;
 
     timeServers = lib.mkForce [ "uk.pool.ntp.org" ];
     firewall = {
@@ -121,7 +124,6 @@
       enable = true;
       networks."10-hetzner" = {
         matchConfig.Name = "enp1s0";
-        dns = [ "1.1.1.1" ];
         networkConfig.DHCP = "ipv4";
         address = [ "2a01:4f9:c012:6ea::1/64" ];
         routes = [{ routeConfig.Gateway = "fe80::1"; }];
