@@ -2,10 +2,11 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ self
-, inputs
-, lib
-, ...
+{
+  self,
+  inputs,
+  lib,
+  ...
 }:
 let
   inherit (inputs) deploy-rs;
@@ -51,10 +52,9 @@ in
   magicRollback = true;
   user = "root";
   nodes =
-    lib.mapAttrs genNixosNode
-      (
-        lib.filterAttrs (_: cfg: cfg._module.specialArgs.deployable) self.nixosConfigurations
-      )
+    lib.mapAttrs genNixosNode (
+      lib.filterAttrs (_: cfg: cfg._module.specialArgs.deployable) self.nixosConfigurations
+    )
     // lib.mapAttrs genDarwinNode (
       lib.filterAttrs (_: cfg: cfg._module.specialArgs.deployable) self.nixosConfigurations
     );
