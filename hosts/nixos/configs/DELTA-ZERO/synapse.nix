@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 Various Authors <generic@example.com>
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
 { inputs, pkgs, ... }:
 let
   fqdn = "matrix.rodriguez.org.uk";
