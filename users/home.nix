@@ -1,9 +1,13 @@
 { pkgs, config, ... }: {
   imports = [ ./network-targets.nix ./programs/rofi.nix ];
 
-  nixpkgs.config.allowUnfreePredicate = _: true;
-  nixpkgs.config.allowBrokenPredicate = _: true;
-  nixpkgs.config.allowInsecurePredicate = _: true;
+  nixpkgs = {
+    config = {
+      allowUnfreePredicate = _: true;
+      allowBrokenPredicate = _: true;
+      allowInsecurePredicate = _: true;
+    };
+  };
 
   home = {
     username = "dzrodriguez";
