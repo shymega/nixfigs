@@ -28,7 +28,7 @@
       };
     "/nix" =
       {
-        device = "tank/local/nix";
+        device = "tank/local/nixos-store";
         neededForBoot = true;
         fsType = "zfs";
       };
@@ -38,9 +38,9 @@
         neededForBoot = true;
         fsType = "zfs";
       };
-    "/var/log" =
+    "/var" =
       {
-        device = "tank/safe/log";
+        device = "tank/safe/var-store";
         neededForBoot = true;
         fsType = "zfs";
       };
@@ -50,14 +50,35 @@
         neededForBoot = true;
         fsType = "zfs";
       };
-    "/boot" = {
+    "/boot/efi" = {
       device = "/dev/disk/by-label/ESP_NIXOS"; # Use Refind on /dev/disk/by-label/ESP_PRIMARY
       neededForBoot = true;
+      fsType = "vfat";
+    };
+    "/boot/efi/PRIMARY" = {
+      device = "/dev/disk/by-label/ESP_PRIMARY";
+      neededForBoot = true;
+      fsType = "vfat";
+    };
+    "/boot/efi/PRIMARY" = {
+      device = "/dev/disk/by-label/ESP_PRIMARY";
+      options = [ "ro", "nofail" ];
+      fsType = "vfat";
+    };
+    "/boot/efi/WINNT" = {
+      device = "/dev/disk/by-label/ESP_WINNT";
+      options = [ "ro", "nofail" ];
+      fsType = "vfat";
+    };
+    "/boot/efi/BAZZITE" = {
+      device = "/dev/disk/by-label/ESP_BAZZITE";
+      options = [ "ro", "nofail" ];
       fsType = "vfat";
     };
     "/home" = {
       device = "/dev/disk/by-label/HOME";
       fsType = "xfs";
+      options = [ "defaults" "noatime" "ssd" ];
     };
     "/data" = {
       device = "/dev/disk/by-label/GAMES";
@@ -65,7 +86,7 @@
       options = [ "defaults" "noatime" "ssd" ];
     };
     "/data/VMs" = {
-      device = "/dev/disk/by-label/VMS";
+      device = "/dev/disk/by-label/VIRSTOR";
       fsType = "btrfs";
       options = [ "defaults" "noatime" "ssd" ];
     };
