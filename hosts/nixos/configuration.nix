@@ -9,6 +9,7 @@ in
 {
   users = {
     mutableUsers = false;
+    users."root".password = "!"; # Lock account.
     users."${userName}" = {
       isNormalUser = true;
       shell = pkgs.zsh;
