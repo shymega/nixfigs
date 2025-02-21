@@ -13,7 +13,7 @@ let
         ../common/core
       ]
     , hardwareModules ? [ ]
-    , homeModules ? [ mkHomeManagerConfig {} ]
+    , homeModules ? [ mkHomeManagerConfig { } ]
     , extraModules ? [ ]
     }: inputs.nix-darwin.lib.darwinSystem {
       inherit system;
