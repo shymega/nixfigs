@@ -2,4 +2,4 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ inputs, ... }: { imports = [ ./home.nix ]; }
+{ ... }: { imports = [ ./home.nix ]; }
