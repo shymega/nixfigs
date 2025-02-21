@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2023 2023 Dom Rodriguez <shymega@shymega.org.uk>
+#
+# SPDX-License-Identifier: GPL-3.0
+
 let
   dzrodriguez-NEO = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF1L44C2mZnuRysLRq98P+ri7pkpl0dyTzr/3EAQ7Qov dzrodriguez@NEO-LINUX";
   users = [ dzrodriguez-NEO ];
