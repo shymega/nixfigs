@@ -4,9 +4,9 @@
 
 { self, config, pkgs, ... }:
 let
-  inherit (pkgs.stdenvNoCC) isLinux;
-  inherit (pkgs.lib) optionals hasSuffix;
-  isNixOS = builtins.pathExists "/etc/nixos" && builtins.pathExists "/nix" && isLinux;
+  inherit (pkgs.stdenvCC) isLinux;
+  inherit (pkgs) lib;
+  isNixOS = builtins.pathExists /etc/nixos && builtins.pathExists /nix && isLinux;
 in
 {
   networking.networkmanager = {
@@ -14,7 +14,7 @@ in
     wifi.macAddress = "stable";
     wifi.powersave = true;
     enable = true;
-    dispatcherScripts = optionals (isNixOS && hasSuffix "-LINUX" config.networking.hostName) [
+    dispatcherScripts = lib.optionals (isNixOS && lib.hasSuffix "-LINUX" config.networking.hostName) [
       {
         source = "${self}/static/nixos/rootfs/etc/NetworkManager/dispatcher.d/05-wireless-toggle";
         type = "basic";
