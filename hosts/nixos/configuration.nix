@@ -3,15 +3,17 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 { config, lib, pkgs, ... }:
-
+let
+  userName = if config.networking.hostName == "MORPHEUS-LINUX" then "dominic.rodriguez" else "dzrodriguez";
+in
 {
   users = {
     mutableUsers = false;
-    users."dzrodriguez" = {
+    users."${userName}" = {
       isNormalUser = true;
       shell = pkgs.zsh;
       description = "Dom RODRIGUEZ";
-      hashedPasswordFile = config.age.secrets.user_dzrodriguez.path;
+      hashedPasswordFile = config.age.secrets."user_dominic.rodriguez".path;
       subUidRanges = [{
         startUid = 100000;
         count = 65536;
@@ -122,7 +124,7 @@
     _1password-gui = {
       enable = true;
       package = pkgs.unstable._1password-gui;
-      polkitPolicyOwners = [ "dzrodriguez" ];
+      polkitPolicyOwners = [ "${userName}" ];
     };
   };
 
