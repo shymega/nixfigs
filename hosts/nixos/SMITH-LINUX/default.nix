@@ -27,4 +27,5 @@
     };
   };
   system.stateVersion = "24.05";
+  sdImage.compressImage = false;
 }
