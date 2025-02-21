@@ -69,7 +69,7 @@
       darwinConfigurations = import ./hosts/darwin { inherit inputs; };
       homeConfigurations = import ./homes { inherit inputs; };
       overlays = import ./overlays { inherit inputs; inherit (inputs.nixpkgs) lib; };
-      secrets = import ./secrets/system // import ./secrets/user;
+      secrets = import ./secrets/system // import ./secrets/user // import inputs.nixfigs-work.outputs.secrets;
       deploy = import ./nix/deploy.nix { inherit self inputs; inherit (inputs.nixpkgs) lib; };
       # for `nix fmt`
       formatter = treeFmtEachSystem (pkgs: treeFmtEval.${pkgs.system}.config.build.wrapper);
@@ -120,6 +120,7 @@
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixpkgs-shymega.url = "github:shymega/nixpkgs/shymega/staging";
+    nixfigs-secrets.url = "github:shymega/nixfigs-secrets";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     flake-registry = {
       url = "github:NixOS/flake-registry";
