@@ -309,11 +309,11 @@ in
     _1password-shell-plugins = {
       enable = true;
       plugins = with pkgs.unstable; [
-          gh
-          awscli2
-          cachix
-          flyctl
-        ];
+        gh
+        awscli2
+        cachix
+        flyctl
+      ];
     };
     bash.enable = true;
     obs-studio = {
