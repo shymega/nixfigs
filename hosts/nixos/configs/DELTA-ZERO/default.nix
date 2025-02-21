@@ -182,6 +182,13 @@
   users = {
     mutableUsers = false;
     users."root".password = "!"; # Lock account.
+    users."matrix-synapse".extraGroups = [
+      "mautrix-whatsap"
+      "mautrix-slack"
+      "mautrix-meta-registration"
+      "mautrix-meta"
+      "matrix-synapse"
+    ];
     users."dzrodriguez" = {
       isNormalUser = true;
       shell = pkgs.zsh;
