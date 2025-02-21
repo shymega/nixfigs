@@ -203,6 +203,16 @@ in
     deployable = false;
   };
 
+  TRINITY-LINUX = mkHost {
+    type = "nixos";
+    address = "TRINITY-LINUX.dzr.devices.10bsk.rnet.rodriguez.org.uk";
+    hostname = "TRINITY-LINUX";
+    hostPlatform = "x86_64-linux";
+    hardwareModules = [ inputs.jovian-nixos.nixosModules.default ];
+    remoteBuild = true;
+    deployable = false;
+  };
+
   SMITH-LINUX = mkHost rec {
     type = "nixos";
     address = "SMITH-LINUX.dzr.devices.10bsk.rnet.rodriguez.org.uk";
