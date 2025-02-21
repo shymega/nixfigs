@@ -6,15 +6,13 @@
   age = {
     identityPaths = [
       "/persist/etc/ssh/ssh_host_ed25519_key"
-      "/home/dzrodriguez/.ssh/id_ed25519"
       "/etc/ssh/ssh_host_ed25519_key"
     ];
     secrets = {
-      postfix_sasl_passwd.file = ./postfix_sasl_passwd.age;
-      postfix_sender_relay.file = ./postfix_sender_relay.age;
-      user_dzrodriguez.file = ./user_dzrodriguez.age;
-      atuin_key.file = ./atuin_key.age;
-      geoclue_url.file = ./geoclue_url.age;
+      postfix_sasl_passwd.file = ./system/postfix_sasl_passwd.age;
+      postfix_sender_relay.file = ./system/postfix_sender_relay.age;
+      user_dzrodriguez.file = ./system/user_dzrodriguez.age;
+      geoclue_url.file = ./system/geoclue_url.age;
     };
   };
 }
