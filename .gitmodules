@@ -1,0 +1,6 @@
+[submodule "subflakes/nixfigs-priv"]
+	path = subflakes/nixfigs-priv
+	url = https://github.com/shymega/nixfigs-priv
+[submodule "subflakes/nixfigs-work"]
+	path = subflakes/nixfigs-work
+	url = https://github.com/shymega/nixfigs-work
