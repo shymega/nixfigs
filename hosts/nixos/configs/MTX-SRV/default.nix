@@ -42,7 +42,13 @@
           };
           credentialsFile = "/var/lib/cloudflared/5da5dbaf-7519-466b-bc94-49ad85cbf05d.json";
           default = "http_status:404";
-          credentialsFile = "/var/lib/cloudflared/5da5dbaf-7519-466b-bc94-49ad85cbf05d.json";
+        };
+        "8b244c80-6329-4c5f-84c1-4c7e79e737da" = {
+          ingress = {
+            "mtx.shymega.org.uk".service = "http://localhost:8008";
+          };
+          credentialsFile = "/var/lib/cloudflared/8b244c80-6329-4c5f-84c1-4c7e79e737da.json";
+          default = "http_status:404";
         };
         "8b244c80-6329-4c5f-84c1-4c7e79e737da" = {
           ingress = {
