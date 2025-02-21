@@ -1,11 +1,10 @@
-{ modulesPath, ... }:
+{ modulesPath, lib, ... }:
 {
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
   boot = {
+    loader.systemd-boot.enable = lib.mkForce false;
     loader.grub = {
-      efiSupport = true;
-      efiInstallAsRemovable = true;
-      device = "nodev";
+      efiSupport = lib.mkForce false;
     };
     initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "xen_blkfront" ];
     initrd.kernelModules = [ "nvme" ];
