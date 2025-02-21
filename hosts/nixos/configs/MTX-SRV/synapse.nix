@@ -16,7 +16,7 @@ in
 
   services = {
     nginx = {
-      enable = false;
+      enable = true;
       recommendedTlsSettings = true;
       recommendedOptimisation = true;
       recommendedGzipSettings = true;
@@ -69,7 +69,17 @@ in
           # Remotely silence local notifications
           msc3890_enabled = true;
         };
-        database.name = "sqlite3";
+        database.name = "psycopg2";
+        database.args = {
+          user = "matrix";
+          password = "matrix4me";
+          port = 5432;
+          dbname = "matrix_synapse";
+          sslmode = "disable";
+          host = "localhost";
+          cp_min = 5;
+          cp_max = 10;
+        };
         server_name = fqdn;
         dynamic_thumbnails = true;
         suppress_key_server_warning = true;
@@ -81,10 +91,10 @@ in
             type = "http";
             tls = false;
             x_forwarded = true;
-            resources = [{
-              names = [ "client" "federation" ];
-              compress = false;
-            }];
+            resources = [
+              { compress = true; names = [ "client" "federation" ]; }
+              { compress = false; names = [ "federation" ]; }
+            ];
           }
           {
             port = 9001;
@@ -104,7 +114,8 @@ in
 
     matrix-sliding-sync.enable = true;
     matrix-sliding-sync.settings.SYNCV3_SERVER = "http://localhost:8008";
-    matrix-sliding-sync.settings.SYNCV3_DB = "host=localhost port=5432 dbname=matrix_synapse user=matrix_synapse_syncv3 user=matrix password=matrix4me sslmode=disable connect_timeout=10";
+    matrix-sliding-sync.createDatabase = false;
+    matrix-sliding-sync.settings.SYNCV3_DB = "host=localhost port=5432 dbname=matrix_synapse_syncv3 user=matrix password=matrix4me sslmode=disable connect_timeout=10";
     matrix-sliding-sync.settings.SYNCV3_BINDADDR = "127.0.0.1:8009";
     matrix-sliding-sync.environmentFile = config.age.secrets."matrix-sliding-sync-env".path;
 
