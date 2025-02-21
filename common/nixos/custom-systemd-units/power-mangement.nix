@@ -18,7 +18,7 @@ in
         ];
         serviceConfig.Type = "oneshot";
         script = ''
-        ryzenadj --tctl-temp=97 --stapm-limit=25000 --fast-limit=25000 --stapm-time=500 --slow-limit=25000 --slow-time=30 --vrmmax-current=70000
+          ryzenadj --tctl-temp=97 --stapm-limit=25000 --fast-limit=25000 --stapm-time=500 --slow-limit=25000 --slow-time=30 --vrmmax-current=70000
         '';
       };
 
@@ -31,7 +31,7 @@ in
         ];
         serviceConfig.Type = "oneshot";
         script = ''
-        ryzenadj --tctl-temp=97 --stapm-limit=8000 --fast-limit=8000 --stapm-time=500 --slow-limit=8000 --slow-time=30 --vrmmax-current=70000
+          ryzenadj --tctl-temp=97 --stapm-limit=8000 --fast-limit=8000 --stapm-time=500 --slow-limit=8000 --slow-time=30 --vrmmax-current=70000
         '';
       };
 
@@ -67,7 +67,7 @@ in
         ];
         serviceConfig.Type = "oneshot";
         script = ''
-        echo 1 > /sys/bus/usb/devices/usb1/1-4/authorized
+          echo 1 > /sys/bus/usb/devices/usb1/1-4/authorized
         '';
       };
 
