@@ -11,6 +11,7 @@
     fuse
     git
     gnupg
+    offlineimap
     htop
     iw
     lm_sensors
