@@ -178,7 +178,7 @@
 
       nixosConfigurations = (import ./nix/nixos.nix { inherit self inputs pkgs; }) // (import ./nix/wsl.nix { inherit self inputs pkgs; }) // (import ./nix/mobile-nixos.nix { inherit self inputs pkgs; });
       homeConfigurations = import ./nix/home-manager.nix { inherit self inputs pkgs; };
-      nixOnDroidConfigurations = import ./nix/android.nix { inherit self inputs pkgs; };
+      nixOnDroidConfigurations = import ./nix/nix-on-droid.nix { inherit self inputs pkgs; };
       darwinConfigurations = import ./nix/darwin.nix { inherit self inputs pkgs; };
     };
 }
