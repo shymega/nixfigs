@@ -83,7 +83,7 @@
       hmModules = homeModules;
       hmModule = homeModules;
       hosts = import ./hosts { inherit inputs self; };
-      nixosConfigurations = import ./hosts/nixos { inherit inputs self; } // inputs.nixfigs-work.nixosConfigurations;
+      nixosConfigurations = import ./hosts/nixos { inherit inputs self; };
       darwinConfigurations = import ./hosts/darwin { inherit inputs; };
       homeConfigurations = import ./homes { inherit inputs; };
       overlays = import ./overlays { inherit inputs; inherit (inputs.nixpkgs) lib; };
@@ -140,8 +140,6 @@
     nixpkgs-shymega.url = "github:shymega/nixpkgs/shymega/staging";
     nixfigs-secrets.url = "github:shymega/nixfigs-secrets";
     nixfigs-networks.url = "github:shymega/nixfigs-networks";
-    nixfigs-priv.url = "github:shymega/nixfigs-priv";
-    nixfigs-work.url = "github:shymega/nixfigs-work";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     flake-registry = {
       url = "github:NixOS/flake-registry";
