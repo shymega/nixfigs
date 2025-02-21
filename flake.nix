@@ -126,6 +126,7 @@
     emacsconf2nix.url = "github:shymega/emacsconf2nix";
     bestool.url = "github:shymega/bestool/shymega-all-fixes";
     nix-gaming.url = "github:fufexan/nix-gaming";
+    aimu.url = "github:shymega/aimu/refactor-shymega";
   };
 
   outputs = { self, ... } @ inputs:
