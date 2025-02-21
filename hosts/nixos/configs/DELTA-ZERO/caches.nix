@@ -13,8 +13,8 @@
   caches = {
     global_factor = 500000.0;
     cache_entry_ttl = "24h";
-    expire_caches = false;
-    sync_response_cache_duration = "15s";
+    expire_caches = true;
+    sync_response_cache_duration = "900s";
     cache_autotuning = {
       max_cache_memory_usage = "65536M";
       target_cache_memory_usage = "32768M";
