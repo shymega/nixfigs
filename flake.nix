@@ -8,6 +8,7 @@
       "https://attic.mildlyfunctional.gay/nixbsd"
       "https://cache.dataaturservice.se/spectrum/"
       "https://cache.nixos.org/"
+      "https://cache.saumon.network/proxmox-nixos"
       "https://deckcheatz-nightlies.cachix.org"
       "https://deploy-rs.cachix.org/"
       "https://devenv.cachix.org"
@@ -29,6 +30,7 @@
       "nixbsd:gwcQlsUONBLrrGCOdEboIAeFq9eLaDqfhfXmHZs1mgc="
       "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE="
       "pre-commit-hooks.cachix.org-1:Pkk3Panw5AW24TOv6kz3PvLhlH8puAsJTBbOPmBo7Rc="
+      "proxmox-nixos:nveXDuVVhFDRFx8Dn19f1WDEaNRJjPrF2CPD2D+m1ys="
       "spectrum-os.org-2:foQk3r7t2VpRx92CaXb5ROyy/NBdRJQG2uX2XJMYZfU="
     ];
   };
