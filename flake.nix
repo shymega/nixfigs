@@ -116,6 +116,7 @@
     };
     nix-doom-emacs-unstraightened.url = "github:marienz/nix-doom-emacs-unstraightened";
     wemod-launcher.url = "github:shymega/wemod-launcher/refactor-shymega";
+    deckcheatz-tools.url = "github:deckcheatz/deckcheatz/develop";
   };
 
   outputs = { self, ... } @ inputs:
