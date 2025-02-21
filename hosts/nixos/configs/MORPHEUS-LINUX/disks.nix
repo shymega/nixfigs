@@ -14,35 +14,29 @@
       fsType = "zfs";
     };
 
-    #    "/data/Games" = {
-    #      device = "zdata/crypt/shared/games";
-    #      fsType = "zfs";
-    #      neededForBoot = false;
-    #    };
-
     "/data/VMs" = {
       device = "zdata/crypt/shared/virtual";
       fsType = "zfs";
-      neededForBoot = false;
+      neededForBoot = true;
     };
 
     "/data/AI" = {
       device = "zdata/crypt/shared/ai";
       fsType = "zfs";
-      neededForBoot = false;
+      neededForBoot = true;
     };
 
     "/data/Development" = {
       device = "zdata/crypt/shared/dev";
       fsType = "zfs";
-      neededForBoot = false;
+      neededForBoot = true;
     };
 
     "/home/dzrodriguez/Games" = {
       depends = [ "/data/Games" ];
       device = "/data/Games";
       fsType = "none";
-      neededForBoot = false;
+      neededForBoot = true;
       options = [ "bind" ];
     };
 
@@ -50,7 +44,7 @@
       depends = [ "/data/Development" ];
       device = "/data/Development";
       fsType = "none";
-      neededForBoot = false;
+      neededForBoot = true;
       options = [ "bind" ];
     };
 
@@ -93,7 +87,7 @@
     "/home/dzrodriguez/.local/share/atuin" = {
       device = "/dev/zvol/zdata/crypt/shared/homes/atuin/nixos";
       fsType = "ext4";
-      neededForBoot = false;
+      neededForBoot = true;
     };
 
     "/boot/efi" = {
