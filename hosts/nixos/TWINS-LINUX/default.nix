@@ -13,7 +13,7 @@
     supportedFilesystems = [ "ntfs" "zfs" ];
 
     kernelPackages = pkgs.linuxPackages_xanmod_latest;
-#    kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+    #    kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
     extraModulePackages = with config.boot.kernelPackages; [ zfs ];
 
     zfs.devNodes = "/dev/TWINS-LINUX/ROOT";
