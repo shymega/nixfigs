@@ -1,4 +1,15 @@
-{ pkgs, config, ... }: {
+{ self, inputs, pkgs, config, ... }:
+let
+  isDarwin = pkgs.stdenvNoCC.isDarwin;
+  isNixOS = builtins.pathExists "/etc/nixos" && builtins.pathExists "/nix" && pkgs.stdenvNoCC.isLinux;
+  isForeignNix = !isNixOS && pkgs.stdenvNoCC.isLinux && builtins.pathExists "/nix";
+  homePrefix =
+    if isDarwin then
+      "/Users"
+    else
+      "/home";
+in
+{
   imports = [ ./network-targets.nix ./programs/rofi.nix ];
 
   nixpkgs = {
@@ -11,11 +22,7 @@
 
   home = {
     username = "dzrodriguez";
-    homeDirectory =
-      if pkgs.stdenv.isDarwin then
-        "/Users/${config.home.username}"
-      else
-        "/home/${config.home.username}";
+    homeDirectory = homePrefix + "/${config.home.username}";
     enableNixpkgsReleaseCheck = true;
     stateVersion = "23.05";
     packages = with pkgs.unstable; [
@@ -52,7 +59,6 @@
       httpie
       hub
       inetutils
-      isync-xoauth2
       itd
       jdk17
       jq
@@ -107,14 +113,16 @@
       vagrant
       virt-manager
       w3m
-      weechatWithMyPlugins
       wget
       xsv
       yt-dlp
       zathura
       zip
       zoxide
-    ] ++ (lib.optionals pkgs.stdenv.isx86_64 (with pkgs.unstable; [
+    ] ++ (with pkgs; [
+      isync-xoauth2
+      weechatWithMyPlugins
+    ]) ++ (lib.optionals pkgs.stdenv.isx86_64 (with pkgs; [
       bitwarden
       gitkraken
       jetbrains.clion
@@ -128,7 +136,7 @@
       jetbrains.webstorm
       steam-run
     ])) ++ (with pkgs; [
-      aws-sam-cli
+      #      aws-sam-cli
       awscli2
       azure-cli
       google-cloud-sdk
@@ -195,15 +203,11 @@
     };
     vscode = {
       enable = true;
-      package = pkgs.unstable.vscode.fhs;
+      package = pkgs.vscode.fhs;
     };
     direnv.enable = true;
     home-manager.enable = true;
     fish.enable = true;
-    doom-emacs = {
-      enable = true;
-      doomPrivateDir = ./doom.d;
-    };
     taskwarrior = {
       enable = true;
       config = {
