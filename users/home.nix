@@ -213,7 +213,6 @@ in
   xdg.systemDirs.data = [ "/usr/share" "/var/lib/flatpak/exports/share" "$HOME/.local/share/flatpak/exports/share" ];
 
   programs = {
-    command-not-found.enable = true;
     yt-dlp.enable = true;
     htop.enable = true;
     fish = {
