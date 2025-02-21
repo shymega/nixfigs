@@ -55,7 +55,7 @@ in
       };
       efi = {
         canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot";
+        efiSysMountPoint = "/boot/efi/NIXOS";
       };
       grub = {
         device = "nodev";
@@ -138,14 +138,19 @@ in
   programs.steam = {
     enable = true;
     gamescopeSession.enable = true;
-    extest.enable = true;
     package = pkgs.steam.override {
       extraPkgs = pkgs:
         with pkgs; [
+          protontricks
+          protonup-qt
           python3Full
           python3Packages.pip
           python3Packages.tkinter
           python3Packages.virtualenv
+          steamcmd
+          steamtinkerlaunch
+          wineWowPackages.stable
+          winetricks
         ];
     };
     remotePlay.openFirewall = false;
