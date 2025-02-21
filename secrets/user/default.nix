@@ -5,10 +5,11 @@
 {
   age = {
     identityPaths = [
+      "/home/dominic.rodriguez/.ssh/id_ed25519"
       "/home/dzrodriguez/.ssh/id_ed25519"
     ];
     secrets = {
-      atuin_key.file = ../secrets/user/atuin_key.age;
+      atuin_key.file = ./atuin_key.age;
     };
   };
 }
