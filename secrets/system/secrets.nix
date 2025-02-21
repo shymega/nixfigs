@@ -13,7 +13,7 @@ let
   MORPHEUS-LINUX = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBqOAfNq3lGPElJ0L6qAqQLDykRWsN9dE4sMZkD6YVKu";
   MORPHEUS-WSL = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEw1gq7SDBBKkEBN9k4YyekfMVC68TiPmZH38gCae0+T";
 
-  DELTA-ZERO = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKOBP4prVx3gdi5YMW4dzy06s46aobpyY8IlFBDVgjDU";
+  DELTA-ZERO = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKOBP4prVx3gdi5YMW4dzy06s46aobpyY8IlFBDVgjDU ";
   DIAL-IN = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILd2G/XmmLSK4V+tBgkS62/qE4fsY8c0dYKyjkiYtqpX";
 
   personal-machines = [ NEO-LINUX TWINS-LINUX MORPHEUS-LINUX MORPHEUS-WSL ];
@@ -33,10 +33,10 @@ let
   allKeys = all-machines ++ all-users;
 in
 {
-  "postfix_sasl_passwd.age".publicKeys = personal;
-  "postfix_sender_relay.age".publicKeys = personal;
+  "postfix_sasl_passwd.age".publicKeys = personal ++ rnet;
+  "postfix_sender_relay.age".publicKeys = personal ++ rnet;
   "user_dominic.rodriguez.age".publicKeys = personal ++ rnet;
-  "geoclue_url.age".publicKeys = personal-machines;
-  "zerotier_networks.age".publicKeys = personal-machines;
+  "geoclue_url.age".publicKeys = personal-machines ++ rnet;
+  "zerotier_networks.age".publicKeys = personal-machines ++ rnet;
   "home_network_iot_p.age".publicKeys = personal-machines ++ rnet-machines;
 }
