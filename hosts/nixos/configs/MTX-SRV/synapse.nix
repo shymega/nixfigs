@@ -16,7 +16,7 @@ in
 
   services = {
     nginx = {
-      enable = false;
+      enable = true;
       recommendedTlsSettings = true;
       recommendedOptimisation = true;
       recommendedGzipSettings = true;
@@ -77,52 +77,48 @@ in
       enable = true;
       registerToSynapse = true;
       settings = {
-        homeserver = {
-          software = "standard";
-          domain = "${fqdn}";
-          address = "https://mtx.shymega.org.uk";
-        };
-        appservice = {
-          database = {
-            type = "sqlite3-fk-wal";
-            uri = "file:/var/lib/mautrix-whatsapp/data.db?_txlock=immediate";
+        appservice = rec {
+          as_token = "";
+          bot = {
+            displayname = "WhatsApp Bridge Bot";
+            username = "whatsappbot";
           };
-
-          hostname = "127.0.0.1";
-          port = 29319;
-          address = "http://mtx.shymega.org.uk";
+          database = {
+            type = "sqlite3";
+            uri = "/var/lib/mautrix-whatsapp/mautrix-whatsapp.db";
+          };
+          address = "http://localhost:${toString port}";
+          hostname = "[::]";
+          hs_token = "";
+          id = "whatsapp";
+          port = 29318;
         };
-
         bridge = {
+          command_prefix = "!wa";
+          displayname_template = "{{if .BusinessName}}{{.BusinessName}}{{else if .PushName}}{{.PushName}}{{else}}{{.JID}}{{end}} (WA)";
+          double_puppet_server_map = { };
+          login_shared_secret_map = { };
           permissions = {
             "@shymega:mtx.shymega.org.uk" = "admin";
           };
-
-          # Require encryption by default to make the bridge more secure
-          encryption = {
-            allow = false;
-            default = false;
-            require = false;
-
-            # Recommended options from mautrix documentation
-            # for optimal security.
-            delete_keys = {
-              dont_store_outbound = true;
-              ratchet_on_decrypt = true;
-              delete_fully_used_on_decrypt = true;
-              delete_prev_on_new_session = true;
-              delete_on_device_delete = true;
-              periodically_delete_expired = true;
-              delete_outdated_inbound = true;
-            };
-
-
-            verification_levels = {
-              receive = "cross-signed-tofu";
-              send = "cross-signed-tofu";
-              share = "cross-signed-tofu";
-            };
+          relay = {
+            enabled = true;
           };
+          username_template = "whatsapp_{{.}}";
+        };
+        homeserver = {
+          address = "https://${fqdn}";
+          domain = "${fqdn}";
+        };
+        logging = {
+          min_level = "info";
+          writers = [
+            {
+              format = "pretty-colored";
+              time_format = " ";
+              type = "stdout";
+            }
+          ];
         };
       };
     };
@@ -141,15 +137,15 @@ in
           uri = "file:/var/lib/mautrix-slack/data.db?_txlock=immediate";
         };
 
-        appservice = {
-          hostname = "127.0.0.1";
-          port = 29319;
-          address = "http://mtx.shymega.org.uk";
+        appservice = rec {
+          port = 29312;
+          address = "http://localhost:${toString port}";
+          hostname = "[::]";
         };
 
         # Require encryption by default to make the bridge more secure
         encryption = {
-          allow = false;
+          allow = true;
           default = false;
           require = false;
         };
@@ -165,7 +161,7 @@ in
 
 
     mautrix-telegram = {
-      enable = true;
+      enable = false;
       settings = {
         homeserver = {
           software = "standard";
@@ -178,15 +174,14 @@ in
         };
 
 
-        appservice = {
-
-          hostname = "127.0.0.1";
-          port = 29319;
-          address = "http://mtx.shymega.org.uk";
+        appservice = rec {
+          port = 29313;
+          address = "http://localhost:${toString port}";
+          hostname = "[::]";
         };
 
         encryption = {
-          allow = false;
+          allow = true;
           default = false;
           require = false;
 
@@ -203,7 +198,7 @@ in
 
     mautrix-meta.instances = {
       "facebook" = {
-        enable = true;
+        enable = false;
         settings = {
           homeserver = {
             software = "standard";
@@ -215,13 +210,14 @@ in
             uri = "file:/var/lib/mautrix-facebook/data.db?_txlock=immediate";
           };
 
-          appservice = {
-            hostname = "127.0.0.1";
-            port = 29319;
-            address = "http://mtx.shymega.org.uk";
+          appservice = rec {
+            port = 29314;
+            address = "http://localhost:${toString port}";
+            hostname = "[::]";
+
           };
           encryption = {
-            allow = false;
+            allow = true;
             default = false;
             require = false;
           };
@@ -235,7 +231,7 @@ in
       };
 
       "instagram" = {
-        enable = true;
+        enable = false;
 
         settings = {
           homeserver = {
@@ -248,13 +244,13 @@ in
             uri = "file:/var/lib/mautrix-instagram/data.db?_txlock=immediate";
           };
 
-          appservice = {
-            hostname = "127.0.0.1";
+          appservice = rec {
             port = 29314;
-            address = "http://mtx.shymega.org.uk";
+            address = "http://localhost:${toString port}";
+            hostname = "[::]";
           };
           encryption = {
-            allow = false;
+            allow = true;
             default = false;
             require = false;
           };
@@ -268,7 +264,7 @@ in
       };
 
       "messenger" = {
-        enable = true;
+        enable = false;
 
         settings = {
           homeserver = {
@@ -280,13 +276,14 @@ in
             uri = "file:/var/lib/mautrix-messenger/data.db?_txlock=immediate";
           };
 
-          appservice = {
-            hostname = "127.0.0.1";
+          appservice = rec {
             port = 29316;
+            address = "http://localhost:${toString port}";
+            hostname = "[::]";
           };
           # Require encryption by default to make the bridge more secure
           encryption = {
-            allow = false;
+            allow = true;
             default = false;
             require = false;
           };
@@ -307,7 +304,6 @@ in
               displayname = "Messenger bridge bot";
               avatar = "mxc://maunium.net/ygtkteZsXnGJLJHRchUwYWak";
             };
-            address = "http://mtx.shymega.org.uk";
           };
         };
       };

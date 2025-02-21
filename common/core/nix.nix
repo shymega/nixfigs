@@ -2,8 +2,6 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-#
-
 { inputs
 , lib
 , pkgs
@@ -33,7 +31,7 @@ in
         PubkeyAcceptedKeyTypes ssh-ed25519
         ServerAliveInterval 60
         IPQoS throughput
-        IdentityFile ${config.age.secrets.nixbuild_ssh_priv_key.path}
+        IdentityFile ${config.age.secrets.nixbuild_ssh_pub_key.path}
     '';
     knownHosts = {
       nixbuild = {
@@ -56,7 +54,6 @@ in
           protocol = "ssh-ng";
         }
       ];
-
       settings = {
         accept-flake-config = true;
         extra-platforms = config.boot.binfmt.emulatedSystems;
