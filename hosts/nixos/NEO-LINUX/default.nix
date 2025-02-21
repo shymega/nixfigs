@@ -103,6 +103,7 @@ in
       ];
       extraPackages32 = [ pkgs.driversi686Linux.amdvlk ];
     };
+    cpu.amd.ryzen-smu.enable = true;
   };
 
   services.ollama = {
