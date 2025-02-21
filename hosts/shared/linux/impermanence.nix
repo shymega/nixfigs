@@ -19,7 +19,6 @@
       "/var/lib/postfix"
       "/var/lib/wayland"
       "/var/lib/zerotier-one"
-      "/var/log"
     ];
     files = [
       "/etc/ssh/ssh_host_ed25519_key"
