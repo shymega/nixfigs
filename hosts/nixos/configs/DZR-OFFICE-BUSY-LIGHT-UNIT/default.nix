@@ -23,6 +23,8 @@
   # no GUI environment
   environment.noXlibs = lib.mkDefault true;
 
+  boot.supportedFilesystems.zfs = lib.mkForce false;
+
   # don't build documentation
   documentation.info.enable = lib.mkDefault false;
   documentation.man.enable = lib.mkDefault false;
