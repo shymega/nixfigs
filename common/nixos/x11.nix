@@ -14,7 +14,6 @@
       };
       libinput.enable = true;
       desktopManager = {
-        cinnamon.enable = true;
         plasma5.enable = true;
       };
       windowManager = {
