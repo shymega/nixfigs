@@ -18,6 +18,8 @@
     hostName = "GRDN-BED-UNIT";
   };
 
+  boot.supportedFilesystems.zfs = lib.mkForce false;
+
   users = {
     mutableUsers = false;
     users."root".password = "!"; # Lock account.
