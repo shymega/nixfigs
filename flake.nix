@@ -33,6 +33,9 @@
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
     nixpkgs-shymega.url = "github:shymega/nixpkgs/master";
     nixfigs-priv.url = "github:shymega/nixfigs-priv/main";
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+    dwl-source.url = "https://codeberg.org/dwl/dwl";
+    dwl-source.flake = false;
     nur.url = "github:nix-community/NUR";
     devenv.url = "github:cachix/devenv/latest";
     hardware.url = "github:nixos/nixos-hardware";
@@ -135,7 +138,26 @@
       pkgs = forAllUpstreamSystems (system:
         import inputs.nixpkgs {
           inherit system;
-          overlays = builtins.attrValues self.overlays;
+          overlays = builtins.attrValues self.overlays ++ [
+            (final: prev: {
+              dwl = pkgs.dwl.overrideAttrs
+                (finalAttrs: {
+                  src = inputs.dwl-source;
+                  patches = [
+                    ./pkgs/dwl/dwl-patches/attachbottom.patch
+                    ./pkgs/dwl/dwl-patches/autostart.patch
+                    ./pkgs/dwl/dwl-patches/focusdirection.patch
+                    ./pkgs/dwl/dwl-patches/monfig.patch
+                    ./pkgs/dwl/dwl-patches/point.patch
+                    ./pkgs/dwl/dwl-patches/restoreTiling.patch
+                    ./pkgs/dwl/dwl-patches/save_monitor_state.patch
+                    ./pkgs/dwl/dwl-patches/steam_fix.patch
+                    ./pkgs/dwl/dwl-patches/toggleKbLayout.patch
+                    ./pkgs/dwl/dwl-patches/vanitygaps.patch
+                  ];
+                });
+            })
+          ];
           config = {
             allowUnfree = true;
             allowBroken = false;
