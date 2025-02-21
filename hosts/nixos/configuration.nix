@@ -49,6 +49,8 @@
     sudo.wheelNeedsPassword = false; # Very dodgy!
   };
 
+  location.provider = "geoclue2";
+
   services = {
     avahi = {
       enable = true;
@@ -77,7 +79,9 @@
     zerotierone.joinNetworks = [ "159924d6300f2e03" "a09acf023309eb36" "9bee8941b58d20f4" "3efa5cb78ad4744a" ];
     geoclue2 = {
       enable = true;
-      enableDemoAgent = lib.mkDefault true;
+      enableDemoAgent = lib.mkForce true;
+      submissionUrl = lib.strings.removeSuffix "\n" (builtins.readFile config.age.secrets.geoclue_url.path);
+      geoProviderUrl = config.services.geoclue2.submissionUrl;
       appConfig = {
         redshift = {
           isAllowed = true;
@@ -89,6 +93,7 @@
         };
       };
     };
+    automatic-timezoned.enable = true;
     resolved = {
       enable = true;
       dnsovertls = "opportunistic";
