@@ -57,15 +57,17 @@
     udisks2.enable = true;
     printing = {
       enable = true;
+      browsing = true;
       drivers = with pkgs; [
-        hplipWithPlugin
+        epson-escpr
+        brlaser
         gutenprint
         gutenprintBin
         hplip
-        brlaser
+        hplipWithPlugin
+        postscript-lexmark
         samsung-unified-linux-driver
         splix
-        postscript-lexmark
       ];
     };
     saned.enable = true;
@@ -147,14 +149,15 @@
   hardware.sane = {
     enable = true;
     extraBackends = with pkgs; [
-      hplipWithPlugin
+      brlaser
+      epson-escpr
       gutenprint
       gutenprintBin
       hplip
-      brlaser
+      hplipWithPlugin
+      postscript-lexmark
       samsung-unified-linux-driver
       splix
-      postscript-lexmark
     ];
   };
 
