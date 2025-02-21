@@ -25,8 +25,9 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs-23-11.url = "github:nixos/nixpkgs/nixos-23.11";
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
     nixpkgs-shymega.url = "github:shymega/nixpkgs/master";
     nixfigs-priv.url = "github:shymega/nixfigs-priv/main";
@@ -79,12 +80,12 @@
     };
     flake-utils.url = "github:numtide/flake-utils";
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
+      url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-on-droid = {
       url = "github:nix-community/nix-on-droid/release-23.11";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-23-11";
     };
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
