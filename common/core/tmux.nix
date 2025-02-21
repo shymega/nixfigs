@@ -4,9 +4,9 @@
 
 #
 
-{ lib, ... }:
+{ lib, libx, ... }:
 let
-  inherit (lib.my) isDarwin isNixOS isLinux;
+  inherit (libx) isDarwin isNixOS isLinux;
 in
 {
   programs.tmux = {
