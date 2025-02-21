@@ -37,4 +37,5 @@ in
   "postfix_sender_relay.age".publicKeys = personal;
   "user_dominic.rodriguez.age".publicKeys = personal ++ rnet;
   "geoclue_url.age".publicKeys = personal-machines;
+  "zerotier_networks.age".publicKeys = personal-machines;
 }
