@@ -30,7 +30,6 @@ let
     homeManagerConfiguration {
       pkgs = libx.genPkgs hostPlatform;
       modules = [
-
         inputs.agenix.homeManagerModules.default
         inputs.nix-doom-emacs-unstraightened.hmModule
         inputs.nix-index-database.hmModules.nix-index
