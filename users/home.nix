@@ -356,10 +356,8 @@ in
         polkit-gnome-authentication-agent-1 = {
           Unit = {
             Description = "polkit-gnome-authentication-agent-1";
-            Wants = [ "graphical-session.target" ];
-            After = [ "graphical-session.target" ];
           };
-          Install.WantedBy = [ "graphical-session.target" ];
+          Install.WantedBy = [ "default.target" ];
           Service = {
             Type = "simple";
             ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
