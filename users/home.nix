@@ -107,7 +107,7 @@ in
       zellij
       zip
       zoxide
-    ] ++ (lib.optionals (hostname == "NEO-LINUX") [
+    ] ++ (pkgs.lib.optionals (hostname == "NEO-LINUX") [
       pkgs.asfp.android-studio-for-platform
       pkgs.android-studio
     ]) ++ (with pkgs; [
@@ -120,7 +120,7 @@ in
       weechatWithMyPlugins
       yubikey-manager-qt
       yubioath-flutter
-    ]) ++ (lib.optionals pkgs.stdenv.isx86_64 (with pkgs.jetbrains; [
+    ]) ++ (pkgs.lib.optionals pkgs.stdenv.isx86_64 (with pkgs.jetbrains; [
       clion
       datagrip
       gateway
@@ -139,7 +139,7 @@ in
     keybase.enable = true;
     gpg-agent = {
       enable = true;
-      pinentryFlavor = "gtk2";
+      pinentryPackage = pkgs.lib.mkForce pkgs.pinentry-gtk2;
       enableScDaemon = true;
       enableSshSupport = false;
       enableExtraSocket = true;
