@@ -41,6 +41,11 @@
         group = "users";
         mode = "640";
       };
+      synapse_secret = {
+        file = ./synapse_secret.age;
+        group = "users";
+        mode = "640";
+      };
     };
   };
 }
