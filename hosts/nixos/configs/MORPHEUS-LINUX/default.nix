@@ -18,10 +18,8 @@ in
     ];
     zfs.extraPools = [
       "zdata"
-      "zosroot"
     ];
     zfs.devNodes = "/dev/disk/by-partuuid";
-    zfs.forceImportAll = true;
 
     initrd.supportedFilesystems = [
       "ntfs"
@@ -81,17 +79,19 @@ in
       timeout = 6;
     };
 
-    initrd.systemd.services.rollback = {
-      description = "Rollback ZFS datasets to a pristine state";
-      wantedBy = [ "initrd.target" ];
-      after = [ "zfs-import-zosroot.service" ];
-      before = [ "sysroot.mount" ];
-      path = with pkgs; [ zfs ];
-      unitConfig.DefaultDependencies = "no";
-      serviceConfig.Type = "oneshot";
-      script = ''
-        zfs rollback -r zosroot/crypt/nixos/local/root@blank
-      '';
+    initrd.systemd.services = {
+      rollback = {
+        description = "Rollback ZFS datasets to a pristine state";
+        wantedBy = [ "initrd.target" ];
+        after = [ "zfs-import-zroot.service" ];
+        before = [ "sysroot.mount" ];
+        path = with pkgs; [ zfs ];
+        unitConfig.DefaultDependencies = "no";
+        serviceConfig.Type = "oneshot";
+        script = ''
+          zfs rollback -r zdata/crypt/root/nixos/linux/local/root/@blank
+        '';
+      };
     };
   };
 
