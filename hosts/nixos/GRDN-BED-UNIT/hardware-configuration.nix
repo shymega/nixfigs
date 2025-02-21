@@ -20,14 +20,6 @@
       "cma=128M"
       "kunit.enable=0"
     ];
-
-    loader = {
-      grub.enable = false;
-      generic-extlinux-compatible.enable = lib.mkForce false;
-      efi.canTouchEfiVariables = true;
-      efi.efiSysMountPoint = "/boot/efi";
-      systemd-boot.enable = true;
-    };
   };
 
   fileSystems = {
