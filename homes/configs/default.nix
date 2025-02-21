@@ -27,7 +27,6 @@ in
     inputs.nix-index-database.hmModules.nix-index
     inputs._1password-shell-plugins.hmModules.default
     inputs.shypkgs-public.hmModules.${system}.dwl
-    ./configs
     inputs.nixfigs-secrets.user
     ({ config, ... }: {
       nixpkgs.config = self.nixpkgs-config;
