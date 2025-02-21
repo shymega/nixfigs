@@ -5,7 +5,6 @@
 { inputs, config, pkgs, lib, ... }:
 {
   imports = [ ./hardware-configuration.nix ];
-  nixpkgs.config.allowUnsupportedSystem = true;
   nixpkgs.hostPlatform.system = "armv6l-linux";
   nixpkgs.buildPlatform.system = "x86_64-linux";
 
