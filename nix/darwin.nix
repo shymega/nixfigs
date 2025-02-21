@@ -54,7 +54,8 @@ let
         extraSpecialArgs = specialArgs;
       };
     };
-in {
+in
+{
   ### macOS (including Cloud/Local) machines ###
 
   NEO-MAC = mkDarwinConfig {
@@ -64,7 +65,8 @@ in {
       ../hosts/darwin/neo
     ];
     homeModules = [
-      mkHomeManagerConfig {
+      mkHomeManagerConfig
+      {
         extraModules = singleton
           { users.dzrodriguez = import ../users/home.nix; };
       }
