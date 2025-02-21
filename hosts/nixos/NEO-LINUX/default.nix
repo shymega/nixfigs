@@ -146,14 +146,13 @@ in
           protonup-qt
           python3Full
           python3Packages.pip
-          python3Packages.tkinter
           python3Packages.virtualenv
           steamcmd
           steamtinkerlaunch
           wemod-launcher
           wineWowPackages.stable
           winetricks
-        ];
+      ];
     };
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
