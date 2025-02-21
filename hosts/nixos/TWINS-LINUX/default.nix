@@ -117,7 +117,8 @@ in
     enable = true;
     cpuFreqGovernor = "powersave";
   };
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" "armv6l-linux" "armv7l-linux" ];
 
   hardware = {
     opengl = {
