@@ -40287,11 +40287,11 @@
   "srvos": "srvos_43"
   },
   "locked": {
-  "lastModified": 1711738594,
-  "narHash": "sha256-Ga66jslfgHQ3M1z8FvBY+ibdsTMtAl1jF+TDLUvRp9I=",
+  "lastModified": 1711739556,
+  "narHash": "sha256-4NQgaO7DEmeLEHVVsPcTguXOgFy21E44eN1YMQPSBrI=",
   "owner": "shymega",
   "repo": "nixfigs-priv",
-  "rev": "0edd4e4104a5009c830497651e01f0a05a8fe3bd",
+  "rev": "c6a704ebd807514e2e47f048b5e4fe5b7d6e6219",
   "type": "github"
   },
   "original": {
@@ -45570,11 +45570,11 @@
   },
   "nixpkgs-master_44": {
   "locked": {
-  "lastModified": 1711736762,
-  "narHash": "sha256-enLTpm5m8F0LguAflElVfkKKKmSyBeThzi49aL8wpNw=",
+  "lastModified": 1711739168,
+  "narHash": "sha256-9UyrGa7PnV81rZMYDUWJJTGRvasUDqLMMjXNlZKU4eE=",
   "owner": "nixos",
   "repo": "nixpkgs",
-  "rev": "2d864d1843c54a11f7f5b0279f937d73b3bd0a39",
+  "rev": "5102995fe26a6095281bc8c7b654e0d4a7fceda9",
   "type": "github"
   },
   "original": {
