@@ -47,8 +47,6 @@ in
 
     plymouth = {
       enable = true;
-      themePackages = with pkgs; [ breeze-plymouth ];
-      theme = "breeze";
     };
 
     loader = {
