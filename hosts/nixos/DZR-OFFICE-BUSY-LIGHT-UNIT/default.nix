@@ -7,6 +7,13 @@
   imports = [ ./hardware-configuration.nix ];
   nixpkgs.hostPlatform.system = "armv6l-linux";
   nixpkgs.buildPlatform.system = "x86_64-linux";
+  # https://github.com/NixOS/nixpkgs/issues/154163#issuecomment-1350599022
+  nixpkgs.overlays = [
+    (final: super: {
+      makeModulesClosure = x:
+        super.makeModulesClosure (x // { allowMissing = true; });
+    })
+  ];
 
   networking = {
     hostName = "DZR-OFFICE-BUSY-LIGHT-UNIT";
