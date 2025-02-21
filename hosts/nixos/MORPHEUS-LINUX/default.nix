@@ -153,6 +153,14 @@ in
     power-profiles-daemon.enable = pkgs.lib.mkForce false;
     input-remapper.enable = true;
     thermald.enable = true;
+    udev = {
+      packages = with pkgs; [ gnome.gnome-settings-daemon ];
+      extraRules = ''
+        SUBSYSTEM=="power_supply", KERNEL=="ADP1", ATTR{online}=="0", RUN+="${pkgs.systemd}/bin/systemctl --no-block start battery.target"
+        SUBSYSTEM=="power_supply", KERNEL=="ADP1", ATTR{online}=="1", RUN+="${pkgs.systemd}/bin/systemctl --no-block start ac.target"
+      '';
+    };
+
   };
 
   programs.steam = {
