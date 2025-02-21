@@ -46,7 +46,8 @@ let
         }
         ../common
       ]
-    , whopper ? true
+    , monolithConfig ? true
+    , hostRole ? "workstation"
     , hardwareModules ? [ ]
     , extraModules ? [ ]
     , pubkey ? null
@@ -60,19 +61,20 @@ let
       assert (hasSuffix "linux" hostPlatform);
       {
         inherit
-          type
-          hostPlatform
           address
+          baseModules
+          deployable
+          embedHm
+          extraModules
+          hardwareModules
+          hostPlatform
+          hostRole
+          hostname
+          monolithConfig
           pubkey
           remoteBuild
+          type
           username
-          hostname
-          extraModules
-          deployable
-          baseModules
-          whopper
-          hardwareModules
-          embedHm
           ;
       }
     else if type == "darwin" then
@@ -90,7 +92,7 @@ let
           extraModules
           deployable
           baseModules
-          whopper
+          monolithConfig
           hardwareModules
           ;
       }
@@ -135,6 +137,7 @@ in
     type = "nixos";
     address = "NEO-WINDOWS.dzr.devices.10bsk.rnet.rodriguez.org.uk";
     hostname = "NEO-WSL";
+    hostRole = "minimal";
     hostPlatform = "x86_64-linux";
     pubkey = "";
     remoteBuild = true;
@@ -161,6 +164,7 @@ in
     type = "nixos";
     address = "MORPHEUS-WINDOWS.dzr.devices.10bsk.rnet.rodriguez.org.uk";
     hostname = "MORPHEUS-WINDOWS";
+    hostRole = "minimal";
     hostPlatform = "x86_64-linux";
     pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBqOAfNq3lGPElJ0L6qAqQLDykRWsN9dE4sMZkD6YVKu";
     remoteBuild = true;
@@ -187,6 +191,7 @@ in
     type = "nixos";
     address = "TWINS-WINDOWS.dzr.devices.10bsk.rnet.rodriguez.org.uk";
     hostname = "TWINS-WINDOWS";
+    hostRole = "minimal";
     hostPlatform = "x86_64-linux";
     pubkey = "";
     remoteBuild = true;
@@ -198,7 +203,7 @@ in
     address = "SMITH-LINUX.dzr.devices.10bsk.rnet.rodriguez.org.uk";
     hostname = "SMITH-LINUX";
     hostPlatform = "aarch64-linux";
-    whopper = false;
+    monolithConfig = false;
     hardwareModules = [ inputs.hardware.nixosModules.raspberry-pi-4 ];
     extraModules = [
       ../nix/24.05-compat.nix
@@ -220,7 +225,7 @@ in
     address = "GRDN-BED-UNIT.dzr.devices.10bsk.rnet.rodriguez.org.uk";
     hostname = "GRDN-BED-UNIT";
     hostPlatform = "aarch64-linux";
-    whopper = false;
+    monolithConfig = false;
     hardwareModules = [ inputs.hardware.nixosModules.raspberry-pi-4 ];
     extraModules = [
       ../nix/24.05-compat.nix
@@ -242,7 +247,7 @@ in
     address = "delta-zero.rodriguez.org.uk";
     hostname = "DELTA-ZERO";
     username = "dzrodriguez";
-    whopper = false;
+    monolithConfig = false;
     hostPlatform = "aarch64-linux";
     extraModules = [
       inputs.srvos.nixosModules.server
@@ -261,7 +266,7 @@ in
     address = "dial-in.rnet.rodriguez.org.uk";
     hostname = "DIAL-IN-RNET";
     username = "dzrodriguez";
-    whopper = false;
+    monolithConfig = false;
     hostPlatform = "aarch64-linux";
     extraModules = [
       inputs.srvos.nixosModules.server
@@ -280,7 +285,7 @@ in
     address = "mtx.shymega.org.uk";
     hostname = "MTX-SRV";
     username = "dzrodriguez";
-    whopper = false;
+    monolithConfig = false;
     hostPlatform = "aarch64-linux";
     extraModules = [
       inputs.srvos.nixosModules.server
@@ -315,7 +320,7 @@ in
     hostPlatform = "armv6l-linux";
     remoteBuild = true;
     deployable = false;
-    whopper = false;
+    monolithConfig = false;
     hostname = "DZR-OFFICE-BUSY-LIGHT-UNIT";
     extraModules = [
       ../nix/24.05-compat.nix
@@ -335,7 +340,7 @@ in
     hostPlatform = "armv6l-linux";
     remoteBuild = true;
     deployable = false;
-    whopper = false;
+    monolithConfig = false;
     hostname = "DZR-PETS-CAM-UNIT";
     extraModules = [
       ../nix/24.05-compat.nix
@@ -358,7 +363,7 @@ in
     hostname = "CLOCKWORK-UC-CM4";
     remoteBuild = true;
     deployable = false;
-    whopper = false;
+    monolithConfig = false;
     hardwareModules = [ inputs.hardware.nixosModules.raspberry-pi-4 ];
     extraModules = [
       ../nix/24.05-compat.nix
@@ -383,7 +388,7 @@ in
     hostname = "CLOCKWORK-DT-CM4";
     remoteBuild = true;
     deployable = false;
-    whopper = false;
+    monolithConfig = false;
     hardwareModules = [ inputs.hardware.nixosModules.raspberry-pi-4 ];
     extraModules = [
       ../nix/24.05-compat.nix
