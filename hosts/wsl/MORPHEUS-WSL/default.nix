@@ -6,8 +6,6 @@
 {
   networking.hostName = "MORPHEUS-WSL";
 
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" "armv6l-linux" "armv7l-linux" ];
-
   services = {
     ollama = {
       enable = false;
