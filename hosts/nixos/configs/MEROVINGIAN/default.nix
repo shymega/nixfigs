@@ -4,11 +4,15 @@
 
 { config
 , pkgs
+, inputs
 , lib
 , ...
 }:
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    inputs.proxmox-nixos.nixosModules.proxmox-ve
+  ];
 
   time.timeZone = "Europe/London";
 

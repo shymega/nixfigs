@@ -47,6 +47,7 @@ let
         ../common
       ]
     , monolithConfig ? true
+    , overlays ? [ ]
     , hostRole ? "workstation"
     , hardwareModules ? [ ]
     , extraModules ? [ ]
@@ -65,6 +66,7 @@ let
           baseModules
           deployable
           embedHm
+          overlays
           extraModules
           hardwareModules
           hostPlatform
@@ -256,14 +258,11 @@ in
       inputs.srvos.nixosModules.mixins-terminfo
       inputs.hardware.nixosModules.common-pc-ssd
       inputs.hardware.nixosModules.common-pc
-      inputs.proxmox-nixos.nixosModules.proxmox-ve
-      (_: {
-        nixpkgs.overlays = [
-          inputs.proxmox-nixos.overlays.${hostPlatform}
-        ];
-      })
     ];
     pubkey = "";
+    overlays = [
+      inputs.proxmox-nixos.overlays.${hostPlatform}
+    ];
     remoteBuild = true;
     deployable = true;
   };
