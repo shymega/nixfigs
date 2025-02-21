@@ -15,7 +15,7 @@ in
 {
   imports = [
     ./network-targets.nix
-    ../secrets/default.nix
+    ./secrets_user.nix
     ./programs/rofi.nix
     inputs.nix-doom-emacs-unstraightened.hmModule
   ];
