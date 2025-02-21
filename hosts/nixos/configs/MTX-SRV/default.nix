@@ -2,14 +2,16 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ config
-, pkgs
+{ pkgs
 , lib
 , ...
 }:
 {
   imports = [ ./hardware-configuration.nix ];
 
+  boot.tmp.cleanOnBoot = true;
+  zramSwap.enable = true;
+  users.users.root.openssh.authorizedKeys.keys = [ ''ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBqFpN1GV1wnie+lH9HRKQ+mGvgVjQYoMZ+4u8Pu/T67'' ];
   time.timeZone = "Europe/London";
 
   boot = {
@@ -109,7 +111,7 @@
       networks."10-hetzner" = {
         matchConfig.Name = "enp1s0";
         networkConfig.DHCP = "ipv4";
-        address = [ "2a01:4f9:c012:80b1::1/64" ];
+        address = [ "2a01:4f9:c012:6ea::1/64" ];
         routes = [{ routeConfig.Gateway = "fe80::1"; }];
       };
     };
@@ -140,64 +142,4 @@
     "%h/.ssh/authorized_keys"
     "/etc/ssh/authorized_keys.d/%u"
   ];
-
-  services.dovecot2 = {
-    enable = true;
-    user = "dzrodriguez";
-    group = "users";
-    mailLocation = "maildir:${config.users.users."dzrodriguez".home}/.mail/%d/%u/:LAYOUT=fs:INBOX=${
-      config.users.users."dzrodriguez".home
-    }/.mail/%d/%u/INBOX";
-    enablePAM = false;
-    enableImap = true;
-    enablePop3 = false;
-    modules = [ pkgs.dovecot_pigeonhole ];
-    protocols = [ "sieve" ];
-    extraConfig = ''
-        listen = 127.0.0.1, ::1
-        mail_uid = 1001
-        mail_gid = 100
-        mail_privileged_group = users
-
-        namespace inbox {
-            inbox = yes
-            location =
-
-            mailbox Drafts {
-              special_use = \Drafts
-              auto = subscribe
-            }
-
-            mailbox "Junk Email" {
-              special_use = \Junk
-            }
-
-            mailbox "Sent Items" {
-              special_use = \Sent
-              auto = subscribe
-            }
-
-            mailbox "Deleted Items" {
-              special_use = \Trash
-              auto = subscribe
-            }
-
-            prefix =
-            separator = /
-        }
-
-        passdb {
-            driver = static
-            args = nopassword
-        }
-
-        plugin {
-      	  sieve = file:${config.users.users."dzrodriguez".home}/.mail/%d/%u/.sieve;active=${
-           config.users.users."dzrodriguez".home
-         }/.mail/%d/%u/.dovecot.sieve
-        }
-    '';
-  };
-
-  services.cron.enable = true;
 }
