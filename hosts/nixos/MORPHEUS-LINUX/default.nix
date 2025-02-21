@@ -11,6 +11,9 @@ in
   networking.hostId = "e8a03c89";
   boot = {
     supportedFilesystems = [ "ntfs" "zfs" ];
+    zfs.extraPools = [ "zdata" "zosroot" ];
+    zfs.devNodes = "/dev/disk/by-partuuid/";
+
     initrd.supportedFilesystems = [ "ntfs" "zfs" ];
 
     kernelParams = pkgs.lib.mkAfter [
@@ -96,8 +99,7 @@ in
       unitConfig.DefaultDependencies = "no";
       serviceConfig.Type = "oneshot";
       script = ''
-        zfs
-        rollback - r zosroot/crypt/nixos/local/root@blank
+        zfs rollback -r zosroot/crypt/nixos/local/root@blank
       '';
     };
   };
