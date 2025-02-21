@@ -119,7 +119,6 @@
     opengl = {
       enable = true;
       driSupport = true;
-      driSupport32Bit = true;
       extraPackages32 = lib.optionals pkgs.stdenv.isi686 (with pkgs.pkgsi686Linux;
         [ vaapiIntel ]);
       extraPackages = with pkgs; [
