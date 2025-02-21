@@ -61,8 +61,6 @@ in
       jdk17
       jq
       maven
-      minikube
-      minishift
       mkcert
       mpc-cli
       mpv
