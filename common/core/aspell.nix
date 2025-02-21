@@ -2,15 +2,21 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ pkgs, ... }: {
+{ pkgs, ... }:
+let
+  inherit (pkgs.stdenvNoCC) isLinux;
+in
+{
   environment.systemPackages = with pkgs; [
     aspellDicts.en
     aspellDicts.en-computers
   ];
 
   # Configure aspell system wide
-  environment.etc."aspell.conf".text = ''
-    master en_US
-    add-extra-dicts en-computers.rws
-  '';
+  lib.mkIf = (isLinux == true) {
+    environment.etc."aspell.conf".text = ''
+      master en_US
+      add-extra-dicts en-computers.rws
+    '';
+  };
 }
