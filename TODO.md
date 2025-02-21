@@ -5,6 +5,8 @@
 - Add `deploy-rs` config.
 - Add macOS ARM64 config (cloud).
 - Add macOS x86_64 config.
+- Backups - borg.
+- Backups - rsnapshot.
 - Cachix repo for packages.
 - Devise ZFS pool for NUC.
 - Devise ZFS pool for WM2.
@@ -16,3 +18,4 @@
 - Implement `.gitconfig` in HM.
 - Implement `sway` in HM.
 - Implement shells (`fish`, `zsh`, `bash`) in HM.
+- dwl (Wayland)
