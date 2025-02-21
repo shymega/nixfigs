@@ -202,6 +202,7 @@ in
     embedHm = false;
     monolithConfig = true;
     hostRoles = [ "gaming" ];
+    hardwareModules = [ inputs.hardware.nixosModules.gpd-win-max-2-2023 ];
     extraModules = [
       ../nix/24.05-compat.nix
       inputs.chaotic.nixosModules.default
