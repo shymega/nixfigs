@@ -226,6 +226,7 @@ in
         daemon = {
           enabled = true;
           systemd_socket = true;
+          sync_frequency = "120";
         };
       };
     };
