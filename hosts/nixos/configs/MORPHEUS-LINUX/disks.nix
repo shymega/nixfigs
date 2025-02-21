@@ -34,6 +34,7 @@
 
     "/home/dzrodriguez/Games" = {
       device = "/data/Games";
+      depends = [ "/data/VMs" ];
       fsType = "none";
       neededForBoot = true;
       options = [ "bind" ];
