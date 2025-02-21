@@ -138,33 +138,7 @@
         import inputs.nixpkgs {
           inherit system;
           overlays = builtins.attrValues self.overlays ++ [
-            (final: prev: {
-              offlineimap-shymega = prev.offlineimap.overrideAttrs (finalAttrs: prevAttrs: {
-                version = "git";
-                src = builtins.fetchGit {
-                  url = "https://github.com/shymega/OfflineIMAP3";
-                  ref = "shymega-fixes";
-                };
-              });
-            })
-            (final: prev: {
-              dwl = pkgs.dwl.overrideAttrs
-                (finalAttrs: {
-                  src = inputs.dwl-source;
-                  patches = [
-                    ./pkgs/dwl/dwl-patches/attachbottom.patch
-                    ./pkgs/dwl/dwl-patches/autostart.patch
-                    ./pkgs/dwl/dwl-patches/focusdirection.patch
-                    ./pkgs/dwl/dwl-patches/monfig.patch
-                    ./pkgs/dwl/dwl-patches/point.patch
-                    ./pkgs/dwl/dwl-patches/restoreTiling.patch
-                    ./pkgs/dwl/dwl-patches/save_monitor_state.patch
-                    ./pkgs/dwl/dwl-patches/steam_fix.patch
-                    ./pkgs/dwl/dwl-patches/toggleKbLayout.patch
-                    ./pkgs/dwl/dwl-patches/vanitygaps.patch
-                  ];
-                });
-            })
+            (import ./pkgs/dwl/dwl.nix)
           ];
           config = {
             allowUnfree = true;
