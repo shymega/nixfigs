@@ -69,7 +69,7 @@
       darwinConfigurations = import ./hosts/darwin { inherit inputs; };
       homeConfigurations = import ./homes { inherit inputs; };
       overlays = import ./overlays { inherit inputs; inherit (inputs.nixpkgs) lib; };
-      secrets = import ./secrets/system // import ./secrets/user // import inputs.nixfigs-work.outputs.secrets;
+      secrets = import ./secrets/system // import ./secrets/user // import inputs.nixfigs-secrets.outputs.secrets;
       deploy = import ./nix/deploy.nix { inherit self inputs; inherit (inputs.nixpkgs) lib; };
       # for `nix fmt`
       formatter = treeFmtEachSystem (pkgs: treeFmtEval.${pkgs.system}.config.build.wrapper);
