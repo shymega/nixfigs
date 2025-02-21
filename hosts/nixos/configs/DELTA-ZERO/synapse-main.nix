@@ -3,7 +3,7 @@
 {
   # Worker plumbing examples: https://github.com/element-hq/synapse/blob/master/docker/configure_workers_and_start.py
   # Documentation: https://github.com/element-hq/synapse/blob/develop/docs/workers.md
-  imports = [ ./workers ];
+#  imports = [ ./workers ];
 
   services.matrix-synapse = {
     enable = true;
