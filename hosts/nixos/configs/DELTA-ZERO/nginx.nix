@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 Various Authors <generic@example.com>
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
 { config, ... }:
 {
   networking.firewall = {
