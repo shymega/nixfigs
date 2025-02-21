@@ -2272,11 +2272,11 @@
     "nixfigs-doom-emacs": {
       "flake": false,
       "locked": {
-        "lastModified": 1725222731,
-        "narHash": "sha256-bH1Tx25TXq8xhIlxIouY1ur1z8eh9XvSGJvBz8kOAa0=",
+        "lastModified": 1725225780,
+        "narHash": "sha256-1ECvR+PNA5Bjrfzg3OvihtNbN+fC1iclK4uaSTJqWQw=",
         "owner": "shymega",
         "repo": "nixfigs-doom-emacs",
-        "rev": "65456b73fe8009fb7acf8f8951c9a94033d97c26",
+        "rev": "929cdc2246a5d338dd38fec29f88052c9900a90e",
         "type": "github"
       },
       "original": {
