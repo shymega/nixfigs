@@ -1,5 +1,5 @@
 { config, pkgs, ... }: {
-  environment.systemPackages = with pkgs.unstable; [
+  environment.systemPackages = with pkgs; [
     acpi
     curl
     encfs
@@ -11,6 +11,7 @@
     iw
     lm_sensors
     nano
+    nix-alien
     nvme-cli
     pciutils
     powertop
@@ -21,7 +22,7 @@
     tmux
     usbutils
     wget
-  ] ++ [ pkgs.nix-alien ];
+  ];
   programs = {
     nix-ld.enable = true;
     command-not-found.enable = false;
