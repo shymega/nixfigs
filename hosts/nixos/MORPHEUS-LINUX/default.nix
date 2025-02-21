@@ -12,6 +12,7 @@ in
 
   boot = {
     supportedFilesystems = [ "ntfs" "zfs" ];
+    initrd.supportedFilesystems = [ "ntfs" "zfs" ];
 
     kernelPackages =
       if enableXanmod then
@@ -37,7 +38,22 @@ in
 
     loader = {
       systemd-boot = {
-        enable = false;
+        enable = true;
+        memtest86.enable = true;
+        netbootxyz.enable = true;
+        extraFiles = { "efi/shell/shellx64.efi" = "${pkgs.edk2-uefi-shell}/shell.efi"; };
+        extraEntries = {
+          "win11.conf" = ''
+            title Windows 11
+            efi /EFI/SHELL/SHELLX64.EFI
+            options -nointerrupt -nomap -noversion HD0b:EFI\MICROSOFT\BOOT\BOOTMGFW.EFI
+          '';
+          "bazzite.conf" = ''
+            title Bazzite (SteamOS)
+            efi /EFI/SHELL/SHELLX64.EFI
+            options -nointerrupt -nomap -noversion HD0f:EFI\BAZZITE\EFI\BOOT\BOOTX64.EFI
+          '';
+        };
       };
       efi = {
         canTouchEfiVariables = true;
@@ -45,10 +61,12 @@ in
       };
       grub = {
         device = "nodev";
-        efiSupport = true;
+        efiSupport = false;
         default = "saved";
-        enable = true;
-        useOSProber = true;
+        enableCryptodisk = false;
+        enable = false;
+        useOSProber = false;
+        zfsSupport = false;
       };
       timeout = 6;
     };
@@ -59,7 +77,7 @@ in
         "initrd.target"
       ];
       after = [
-        "zfs-import-tank.service"
+        "zfs-import-zosroot.service"
       ];
       before = [
         "sysroot.mount"
@@ -70,7 +88,7 @@ in
       unitConfig.DefaultDependencies = "no";
       serviceConfig.Type = "oneshot";
       script = ''
-        zfs rollback -r tank/local/root@blank
+        zfs rollback -r zosroot/crypt/nixos/local/root@blank
       '';
     };
   };
@@ -96,6 +114,7 @@ in
   services.ollama = {
     enable = true;
     acceleration = "rocm";
+    sandbox = false;
     models = "/data/AI/LLMs/Ollama/Models/";
     writablePaths = [ "/data/AI/LLMs/Ollama/Models/" ];
     environmentVariables = {
@@ -141,9 +160,9 @@ in
           winetricks
         ];
     };
-    remotePlay.openFirewall = false;
-    dedicatedServer.openFirewall = false;
-    localNetworkGameTransfers.openFirewall = false;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+    localNetworkGameTransfers.openFirewall = true;
   };
 
   services = {
@@ -152,4 +171,10 @@ in
       plugins = [ pkgs.modem-manager-gui pkgs.libsForQt5.modemmanager-qt ];
     };
   };
+
+  services.logind.lidSwitchExternalPower = "ignore";
+  services.logind.lidSwitchDocked = "ignore";
+  services.logind.extraConfig = ''
+  LidSwitchIgnoreInhibited=no
+  '';
 }
