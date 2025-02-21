@@ -112,7 +112,7 @@ in
         interval = "Sat *-*-* 05:00:00";
       };
     };
-    auto-cpufreq.enable = true;
+    auto-cpufreq.enable = false;
     logind = {
       extraConfig = ''
         HandleLidSwitchExternalPower=ignore
