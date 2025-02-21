@@ -239,5 +239,8 @@
     shypkgs-private.url = "github:shymega/shypkgs-private";
     shypkgs-public.url = "github:shymega/shypkgs-public";
     home-statd.url = "github:shymega/home-statd";
+    _1password-shell-plugins.url = "github:1Password/shell-plugins";
+    jovian-nixos.url = "github:Jovian-Experiments/Jovian-NixOS";
+    disko.url = "github:nix-community/disko";
   };
 }
