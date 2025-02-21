@@ -16,28 +16,28 @@
       {
         device = "zdata/shared/games";
         fsType = "zfs";
-        neededForBoot = true;
+        neededForBoot = false;
       };
 
     "/data/AI" =
       {
         device = "zdata/shared/ai";
         fsType = "zfs";
-        neededForBoot = true;
+        neededForBoot = false;
       };
 
     "/data/VMs" =
       {
         device = "zdata/shared/virtual";
         fsType = "zfs";
-        neededForBoot = true;
+        neededForBoot = false;
       };
 
     "/home" =
       {
         device = "zdata/shared/home-nixos";
         fsType = "zfs";
-        neededForBoot = true;
+        neededForBoot = false;
       };
 
     "/etc/nixos" =
