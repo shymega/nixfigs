@@ -306,11 +306,11 @@
         ### End Work Machines ###
       };
       homeConfigurations = {
-        "dzrodriguez@NEO-LINUX" = mkHomeConfig "x86_64-linux" [ ./users/home.nix ];
-        "dzrodriguez@TRINITY-LINUX" = mkHomeConfig "x86_64-linux" [ ./users/home.nix ];
-        "dzrodriguez@TWINS-LINUX" = mkHomeConfig "x86_64-linux" [ ./users/home.nix ];
-        "dzrodriguez@SMITH-LINUX" = mkHomeConfig "aarch64-linux" [ ./users/home.nix ];
-        "dzrodriguez@GRDN-BED-UNIT" = mkHomeConfig "aarch64-linux" [ ./users/home.nix ];
+        "dzrodriguez@NEO-LINUX" = mkHomeConfig "x86_64-linux" [ ./users ];
+        "dzrodriguez@TRINITY-LINUX" = mkHomeConfig "x86_64-linux" [ ./users ];
+        "dzrodriguez@TWINS-LINUX" = mkHomeConfig "x86_64-linux" [ ./users ];
+        "dzrodriguez@SMITH-LINUX" = mkHomeConfig "aarch64-linux" [ ./users ];
+        "dzrodriguez@GRDN-BED-UNIT" = mkHomeConfig "aarch64-linux" [ ./users ];
       };
       #      nixOnDroidConfigurations.default = inputs.nix-on-droid.lib.nixOnDroidConfiguration {
       #        imports = [ ];
