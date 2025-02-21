@@ -2,24 +2,22 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ config, ... }:
+{ config, modulesPath, lib, ...}:
 let
-  adminEmail = "shymega2011@gmail.com";
   fqdn = "${config.networking.hostName}.${config.networking.domain}";
 in
 {
-  security.acme = {
-    defaults = {
-      email = adminEmail;
-      dnsProvider = "cloudflare";
-      credentialFiles = {
-        CLOUDFLARE_API_KEY_FILE = config.age.secrets.cloudflare_dns_token.path;
-      };
-    };
-    acceptTerms = true;
-  };
+  imports = [
+    "${toString modulesPath}/virtualisation/docker-image.nix"
+    ../../../../secrets/system
+  ];
 
-  networking.hostName = "hydra";
+  boot.isContainer = true;
+  boot.loader.grub.enable = lib.mkForce false;
+  boot.loader.systemd-boot.enable = lib.mkForce false;
+  services.journald.console = "/dev/console";
+
+  networking.hostName = "nix-cache";
   networking.domain = "shymega.org.uk";
 
   services.hydra = {
@@ -37,7 +35,7 @@ in
         PubkeyAcceptedKeyTypes ssh-ed25519
         ServerAliveInterval 60
         IPQoS throughput
-        IdentityFile ${config.age.secrets.nixbuild_ssh_pub_key.path}
+#        IdentityFile ${config.age.secrets.nixbuild_ssh_pub_key.path}
     '';
     knownHosts = {
       nixbuild = {
@@ -58,13 +56,6 @@ in
           maxJobs = 2;
           supportedFeatures = [ "benchmark" "big-parallel" ];
           protocol = "ssh-ng";
-        }
-        {
-          hostName = "localhost";
-          protocol = null;
-          system = "x86_64-linux";
-          supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
-          maxJobs = 8;
         }
       ];
     };
