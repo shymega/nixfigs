@@ -42,7 +42,6 @@
       fzf
       genact
       gh
-      gitkraken
       gnumake
       goimapnotify
       google-chrome
@@ -88,7 +87,6 @@
       poppler_utils
       pre-commit
       python3Full
-      python3Packages.aiohttp
       python3Packages.virtualenv
       q
       ranger
@@ -102,7 +100,6 @@
       speedtest-go
       starship
       statix
-      steam-run
       step-cli
       stow
       texlive.combined.scheme-full
@@ -121,7 +118,10 @@
       zathura
       zip
       zoxide
-    ];
+    ] ++ (lib.optionals pkgs.stdenv.isx86_64 [
+      gitkraken
+      steam-run
+    ]);
   };
 
   services = {
