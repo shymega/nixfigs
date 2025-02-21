@@ -126,13 +126,14 @@ in
         # AMD ROCm OpenCL runtime
         rocmPackages.clr
         rocmPackages.clr.icd
-
-        # AMDVLK drivers can be used in addition to the Mesa RADV drivers.
-        #amdvlk
       ];
-      extraPackages32 = with pkgs; [
-        driversi686Linux.amdvlk
-      ];
+    };
+    amdgpu = {
+      amdvlk = {
+        enable = true;
+        support32Bit.enable = true;
+      };
+      opencl.enable = true;
     };
     i2c.enable = true;
     sensor.iio = {
