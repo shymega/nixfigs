@@ -196,7 +196,7 @@ in
       components = [ "secrets" ];
     };
     dunst.enable = true;
-    mpd-discord-rpc.enable = false;
+    mpd-discord-rpc.enable = true;
     mpris-proxy.enable = true;
     mpdris2.enable = true;
     emacs = {
