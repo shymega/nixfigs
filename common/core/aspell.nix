@@ -2,10 +2,12 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   inherit (pkgs.stdenvNoCC) isLinux;
+  isNixOS = builtins.pathExists "/etc/nixos" && builtins.pathExists "/nix" && isLinux;
 in
+with lib;
 {
   environment.systemPackages = with pkgs; [
     aspellDicts.en
@@ -13,10 +15,8 @@ in
   ];
 
   # Configure aspell system wide
-  lib.mkIf = isLinux {
-    environment.etc."aspell.conf".text = ''
-      master en_US
-      add-extra-dicts en-computers.rws
-    '';
-  };
+  environment.etc."aspell.conf".text = optionalString isNixOS ''
+    master en_US
+    add-extra-dicts en-computers.rws
+  '';
 }
