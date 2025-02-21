@@ -268,7 +268,7 @@ in
       inputs.proxmox-nixos.overlays.${hostPlatform}
     ];
     remoteBuild = true;
-    deployable = true;
+    deployable = false;
   };
 
   DELTA-ZERO = mkHost {
@@ -328,7 +328,7 @@ in
     ];
     pubkey = "";
     remoteBuild = true;
-    deployable = true;
+    deployable = false;
   };
 
   BUILDHOST-DOCKER = mkHost {
@@ -475,7 +475,7 @@ in
 
   INSTALLER-WORKSTATION-ISO-X86 = mkHost {
     type = "nixos";
-    address = "install-server.shymega.org.uk";
+    address = "install-workstation.shymega.org.uk";
     username = "dzrodriguez";
     hostPlatform = "x86_64-linux";
     hostname = "INSTALLER-WORKSTATION-ISO";
@@ -517,7 +517,7 @@ in
 
   INSTALLER-WORKSTATION-ISO-ARM = mkHost {
     type = "nixos";
-    address = "install-server.shymega.org.uk";
+    address = "install-workstation.shymega.org.uk";
     username = "dzrodriguez";
     hostPlatform = "aarch64-linux";
     hostname = "INSTALLER-WORKSTATION-ISO";
