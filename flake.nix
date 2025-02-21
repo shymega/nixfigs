@@ -13,6 +13,7 @@
     hardware.url = "github:nixos/nixos-hardware";
     impermanence.url = "github:nix-community/impermanence";
     nix-colors.url = "github:misterio77/nix-colors";
+    nix-flatpak.url = "github:gmodena/nix-flatpak/main";
 
     nixos-wsl = {
       url = "github:nix-community/nixos-wsl";
@@ -59,6 +60,10 @@
 
     deploy-rs.url = "github:serokell/deploy-rs";
 
+    nix-on-droid = {
+      url = "github:nix-community/nix-on-droid/release-23.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ self, nixpkgs, ... }:
@@ -168,6 +173,7 @@
           inputs.nix-index-database.hmModules.nix-index
           inputs.agenix.homeManagerModules.default
           inputs.doom-emacs.hmModule
+          inputs.nix-flatpak.homeManagerModules.nix-flatpak
         ] ++ extraModules;
         extraSpecialArgs = { inherit inputs; };
       };
@@ -306,6 +312,9 @@
         "dzrodriguez@SMITH-LINUX" = mkHomeConfig "aarch64-linux" [ ./users/home.nix ];
         "dzrodriguez@GRDN-BED-UNIT" = mkHomeConfig "aarch64-linux" [ ./users/home.nix ];
       };
+      #      nixOnDroidConfigurations.default = inputs.nix-on-droid.lib.nixOnDroidConfiguration {
+      #        imports = [ ];
+      #      };
       darwinConfigurations = {
         ### macOS (including Cloud/Local) machines ###
         ### End macOS (including Cloud/Local) machines ###
