@@ -13,12 +13,6 @@ let
       overlays = builtins.attrValues self.overlays ++ overlays;
       config = self.nixpkgs-config;
     };
-  hmConfig = args: username: inputs.home-manager.nixosModules.home-manager {
-    home-manager.useGlobalPkgs = true;
-    home-manager.useUserPackages = true;
-    home-manager.users.${username} = import ../../homes;
-    home-manager.extraSpecialArgs = args;
-  };
   genConfiguration =
     hostname:
     { address
@@ -55,8 +49,7 @@ let
           ../../modules/nixos/generators.nix
         ]
         ++ extraModules ++ hardwareModules
-        ++ (lib.optional monolithConfig (import ./monolith.nix))
-        ++ (lib.optional embedHm hmConfig { inherit specialArgs username; });
+        ++ (lib.optional monolithConfig (import ./monolith.nix));
       specialArgs = {
         hostAddress = address;
         hostType = type;
