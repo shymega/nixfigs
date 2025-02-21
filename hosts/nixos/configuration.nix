@@ -79,7 +79,7 @@ in
     };
     saned.enable = true;
     zerotierone.enable = true;
-    zerotierone.joinNetworks = builtins.split "," (builtins.readFile config.age.secrets.zerotier_networks.path);
+    zerotierone.joinNetworks = lib.strings.splitString "," (builtins.readFile config.age.secrets.zerotier_networks.path);
     geoclue2 = {
       enable = true;
       enableDemoAgent = lib.mkForce true;
