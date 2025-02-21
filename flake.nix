@@ -68,6 +68,36 @@
             allowBroken = true;
             allowUnsupportedSystem = true;
           };
+          overlays = [
+            (
+              final: prev: {
+                weechatWithMyPlugins = prev.weechat.override {
+                  configure = { availablePlugins, ... }: {
+                    scripts = with prev.pkgs.weechatScripts; [
+                      buffer_autoset
+                      colorize_nicks
+                      highmon
+                      url_hint
+                      weechat-autosort
+                      weechat-go
+                      weechat-notify-send
+                      zncplayback
+                      wee-slack
+                      weechat-matrix
+                    ];
+                    plugins = builtins.attrValues availablePlugins;
+                  };
+                };
+              }
+            )
+            (
+              final: prev: {
+                mpv-unwrapped = prev.mpv-unwrapped.override {
+                  ffmpeg_5 = prev.ffmpeg_5-full;
+                };
+              }
+            )
+          ];
         };
       };
       overlays-shymega = final: prev: {
@@ -102,34 +132,6 @@
           overlays-nixpkgs-master
           inputs.nur.overlay
           inputs.nix-alien.overlays.default
-          (
-            final: prev: {
-              weechatWithMyPlugins = prev.weechat.override {
-                configure = { availablePlugins, ... }: {
-                  scripts = with prev.pkgs.weechatScripts; [
-                    buffer_autoset
-                    colorize_nicks
-                    highmon
-                    url_hint
-                    weechat-autosort
-                    weechat-go
-                    weechat-notify-send
-                    zncplayback
-                    wee-slack
-                    weechat-matrix
-                  ];
-                  plugins = builtins.attrValues availablePlugins;
-                };
-              };
-            }
-          )
-          (
-            final: prev: {
-              mpv-unwrapped = prev.mpv-unwrapped.override {
-                ffmpeg_5 = prev.ffmpeg_5-full;
-              };
-            }
-          )
         ];
       };
       mkNixos = system: extraModules: inputs.nixpkgs.lib.nixosSystem {
