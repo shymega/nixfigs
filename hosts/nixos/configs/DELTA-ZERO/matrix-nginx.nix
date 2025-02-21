@@ -5,6 +5,9 @@
   sslCertificateKey = "/etc/origin.key";
   locations."~ ^/(client/|_matrix/client/unstable/org.matrix.msc3575/sync)" = {
     proxyPass = "http://localhost:8009";
+  };
+  locations."/" = {
+    proxyPass = "http://localhost:8008";
     extraConfig = ''
       proxy_set_header X-Forwarded-For $remote_addr;
       proxy_set_header X-Forwarded-Proto $scheme;
@@ -34,7 +37,7 @@
     return 200 '${
       builtins.toJSON {
         "m.homeserver".base_url = "https://matrix.rodriguez.org.uk";
-        "org.matrix.msc3575.more".url = "https://matrix.rodriguez.org.uk";
+        "org.matrix.msc3575.proxy".url = "https://matrix.rodriguez.org.uk";
       }
     }';
   '';
