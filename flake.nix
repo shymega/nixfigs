@@ -134,6 +134,10 @@
       url = "github:Cosmo-CoDiOS/codid";
     };
     atuin.url = "github:atuinsh/atuin";
+    android-nixpkgs = {
+      url = "github:tadfisher/android-nixpkgs/stable";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, ... } @ inputs:
