@@ -119,17 +119,8 @@ in
       ];
       extraPackages32 = [ pkgs.driversi686Linux.amdvlk ];
     };
-  };
-
-  services.ollama = {
-    enable = true;
-    acceleration = "rocm";
-    sandbox = false;
-    models = "/data/AI/LLMs/Ollama/Models/";
-    writablePaths = [ "/data/AI/LLMs/Ollama/Models/" ];
-    environmentVariables = {
-      HSA_OVERRIDE_GFX_VERSION = "11.0.0"; # 780M
-    };
+    i2c.enable = true;
+    sensor.iio.enable = true;
   };
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
@@ -150,6 +141,17 @@ in
       enable = true;
       videoDrivers = [ "amdgpu" ];
     };
+    ollama = {
+      enable = true;
+      acceleration = "rocm";
+      sandbox = false;
+      models = "/data/AI/LLMs/Ollama/Models/";
+      writablePaths = [ "/data/AI/LLMs/Ollama/Models/" ];
+      environmentVariables = {
+        HSA_OVERRIDE_GFX_VERSION = "11.0.0"; # 780M
+      };
+    };
+
     auto-cpufreq.enable = false;
     power-profiles-daemon.enable = pkgs.lib.mkForce false;
     input-remapper.enable = true;
@@ -159,6 +161,17 @@ in
       extraRules = ''
         SUBSYSTEM=="power_supply", KERNEL=="ADP1", ATTR{online}=="0", RUN+="${pkgs.systemd}/bin/systemctl --no-block start battery.target"
         SUBSYSTEM=="power_supply", KERNEL=="ADP1", ATTR{online}=="1", RUN+="${pkgs.systemd}/bin/systemctl --no-block start ac.target"
+      '';
+    };
+    ofono = {
+      enable = true;
+      plugins = [ pkgs.modem-manager-gui pkgs.libsForQt5.modemmanager-qt ];
+    };
+    logind = {
+      lidSwitchExternalPower = "ignore";
+      lidSwitchDocked = "ignore";
+      extraConfig = ''
+        LidSwitchIgnoreInhibited=no
       '';
     };
 
@@ -187,22 +200,6 @@ in
     dedicatedServer.openFirewall = true;
     localNetworkGameTransfers.openFirewall = true;
   };
-
-  services = {
-    ofono = {
-      enable = true;
-      plugins = [ pkgs.modem-manager-gui pkgs.libsForQt5.modemmanager-qt ];
-    };
-  };
-
-  services.logind.lidSwitchExternalPower = "ignore";
-  services.logind.lidSwitchDocked = "ignore";
-  services.logind.extraConfig = ''
-    LidSwitchIgnoreInhibited=no
-  '';
-
-  hardware.i2c.enable = true;
-  hardware.sensor.iio.enable = true;
 
   security = {
     pam.loginLimits = [
