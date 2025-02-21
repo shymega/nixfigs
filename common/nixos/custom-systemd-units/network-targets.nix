@@ -11,7 +11,6 @@
         unitConfig = {
           PartOf = [ "network-online.target" ];
           Description = "Network is Online";
-          RefuseManualStart = "true";
         };
         serviceConfig = {
           Type = "oneshot";
@@ -23,7 +22,6 @@
       };
       network-mifi = {
         unitConfig = {
-          RefuseManualStart = "true";
           Description = "Network condition helper for MiFi connections";
           PartOf = [ "network-mifi.target" ];
         };
@@ -37,7 +35,6 @@
       };
       network-portal = {
         unitConfig = {
-          RefuseManualStart = "true";
           Description = "Network condition helper for captive portals";
           PartOf = [ "network-portal.target" ];
         };
@@ -51,7 +48,6 @@
       };
       network-rnet = {
         unitConfig = {
-          RefuseManualStart = "true";
           Description = "Network condition helper for family network";
           PartOf = [ "network-rnet.target" ];
         };
@@ -65,7 +61,6 @@
       };
       network-vpn = {
         unitConfig = {
-          RefuseManualStart = "true";
           Description = "Network condition helper for VPN connections";
           PartOf = [ "network-vpn.target" ];
         };
