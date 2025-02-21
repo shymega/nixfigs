@@ -193,6 +193,7 @@ in
       ]
       ++ [ inputs.agenix.packages.${system}.default ]
       ++ (with pkgs; [
+        ispell
         android-studio
         aws-sam-cli
         azure-cli
