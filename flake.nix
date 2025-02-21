@@ -95,13 +95,6 @@
                 };
               }
             )
-            (
-              final: prev: {
-                mpv-unwrapped = prev.mpv-unwrapped.override {
-                  ffmpeg_5 = prev.ffmpeg_5-full;
-                };
-              }
-            )
           ];
         };
       };
