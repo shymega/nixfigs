@@ -144,10 +144,12 @@
     keybase.enable = true;
     gpg-agent = {
       enable = true;
-      pinentryFlavor = "gnome3";
-      enableExtraSocket = true;
-      defaultCacheTtl = 7200;
-      maxCacheTtl = 7200;
+      pinentryFlavor = "gtk2";
+      enableScDaemon = false;
+      enableSshSupport = false;
+      enableExtraSocket = false;
+      defaultCacheTtl = 43200;
+      maxCacheTtl = 43200;
     };
     gnome-keyring = {
       enable = true;
