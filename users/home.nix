@@ -246,14 +246,14 @@ in
         secrets_filter = true;
         enter_accept = false;
         workspaces = true;
-        sync_frequency = "0";
+        sync_frequency = 0;
         sync = {
           records = true;
         };
         daemon = {
           enabled = true;
           systemd_socket = true;
-          sync_frequency = "0";
+          sync_frequency = 0;
         };
       };
     };
