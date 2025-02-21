@@ -25,8 +25,12 @@ in
   nix = {
     package = pkgs.nixFlakes;
     settings = {
+      builders-use-substitutes = true;
       access-tokens = "!include ${config.age.secrets.nix_conf_access_tokens.path}";
     };
+    extraOptions = ''
+      builders = @/etc/nix/machines
+    '';
   };
 
   home = {
