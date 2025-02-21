@@ -26,7 +26,7 @@ in
     username = "dzrodriguez";
     homeDirectory = homePrefix + "/${config.home.username}";
     enableNixpkgsReleaseCheck = true;
-    stateVersion = "23.05";
+    stateVersion = "23.11";
     packages = with pkgs.unstable; [
       android-tools
       asciinema
