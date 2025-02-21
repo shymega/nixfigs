@@ -24,6 +24,8 @@
     hostName = "DZR-PETS-CAM-UNIT";
   };
 
+  boot.supportedFilesystems.zfs = lib.mkForce false;
+
   # no GUI environment
   environment.noXlibs = lib.mkDefault true;
 
