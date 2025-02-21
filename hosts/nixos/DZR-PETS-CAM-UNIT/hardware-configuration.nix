@@ -11,10 +11,15 @@
   boot = {
     kernelPackages = lib.mkForce pkgs.linuxPackages_rpi0;
 
+    loader = {
+      grub.enable = false;
+      generic-extlinux-compatible.enable = true;
+    };
     initrd.availableKernelModules = lib.mkForce [
       "usbhid"
       "usb_storage"
       "xhci_pci"
+      "mmc_block"
     ];
 
     kernelParams = lib.mkAfter [
