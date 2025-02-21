@@ -1,1 +1,1 @@
-{ _ }: { }
+{ self, inputs, pkgs, ... }: { }
