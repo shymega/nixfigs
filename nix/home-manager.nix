@@ -38,7 +38,6 @@ in
     system = "x86_64-linux";
     extraHomeModules = [
       ../users
-      inputs.nix-flatpak.homeManagerModules.nix-flatpak
     ];
   };
   "dzrodriguez@TRINITY-LINUX" = mkHomeConfig {
@@ -46,7 +45,6 @@ in
     system = "x86_64-linux";
     extraHomeModules = [
       ../users
-      inputs.nix-flatpak.homeManagerModules.nix-flatpak
     ];
   };
   "dzrodriguez@TWINS-LINUX" = mkHomeConfig {
@@ -54,7 +52,6 @@ in
     system = "x86_64-linux";
     extraHomeModules = [
       ../users
-      inputs.nix-flatpak.homeManagerModules.nix-flatpak
     ];
   };
 }
