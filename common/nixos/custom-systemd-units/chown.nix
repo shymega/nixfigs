@@ -15,7 +15,7 @@ in
         unitConfig = { RefuseManualStart = true; };
         serviceConfig.Type = "oneshot";
         script = ''
-          	  chown -R 1000:100 /data/
+          	  chown -R 1000:100 /data
         '';
       };
     };
