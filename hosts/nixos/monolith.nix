@@ -16,6 +16,7 @@
     mutableUsers = false;
     users."root".password = "!"; # Lock account.
     users."dzrodriguez" = {
+      uid = 1000;
       isNormalUser = true;
       shell = pkgs.zsh;
       description = "Dom RODRIGUEZ";
