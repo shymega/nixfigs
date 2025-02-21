@@ -10,9 +10,10 @@ let
       "/Users"
     else
       "/home";
+  homeDirectory = homePrefix + "/${config.home.username}";
 in
 {
-  imports = [ ./network-targets.nix ./programs/rofi.nix ];
+  imports = [ ./network-targets.nix ./programs/rofi.nix inputs.nix-doom-emacs-unstraightened.hmModule ];
 
   nixpkgs = {
     config = {
@@ -154,6 +155,7 @@ in
     mpd-discord-rpc.enable = true;
     mpris-proxy.enable = true;
     mpdris2.enable = true;
+    emacs.enable = true;
     mpd = {
       enable = true;
       musicDirectory = "${config.home.homeDirectory}/Multimedia/Music/";
@@ -163,10 +165,6 @@ in
             name "PipeWire Output"
         }
       '';
-    };
-    emacs = {
-      enable = true;
-      package = pkgs.emacsNativeComp;
     };
     gammastep = {
       enable = true;
@@ -229,6 +227,11 @@ in
     emacs = {
       enable = true;
       package = pkgs.emacsNativeComp;
+    };
+    doom-emacs = {
+      enable = true;
+      doomDir = "${homeDirectory}/.cpnfig/emacs.d/.doom.d";
+      emacs = pkgs.emacs29-pgtk;
     };
     taskwarrior = {
       enable = true;
