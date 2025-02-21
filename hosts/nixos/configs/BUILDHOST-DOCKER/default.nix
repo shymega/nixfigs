@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ config, modulesPath, lib, ...}:
+{ config, modulesPath, lib, ... }:
 let
   fqdn = "${config.networking.hostName}.${config.networking.domain}";
 in
