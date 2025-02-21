@@ -54,12 +54,12 @@
       nixbuild_ssh_priv_key = {
         file = ./nixbuild_ssh_priv_key.age;
         group = "users";
-        mode = "640";
+        mode = "600";
       };
       nixbuild_ssh_pub_key = {
         file = ./nixbuild_ssh_pub_key.age;
         group = "users";
-        mode = "640";
+        mode = "600";
       };
     };
   };
