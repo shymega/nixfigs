@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ inputs, outputs, config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
 {
   environment.etc."crypttab".text = ''
     homecrypt /dev/disk/by-label/HOMECRYPT /persist/etc/.homecrypt.bin
