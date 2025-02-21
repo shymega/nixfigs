@@ -4,15 +4,16 @@
 
 { config, ... }:
 let
-  userHome = if config.networking.hostName == "MORPHEUS-LINUX" then config.users.users."dominic.rodriguez".home else config.users.users.dzrodriguez.home;
+  userName = if config.networking.hostName == "MORPHEUS-LINUX" then "dominic.rodriguez" else "dzrodriguez";
+  userHome = config.users.users.${userName}.home;
 in
 {
   services.dovecot2 = {
     enable = true;
-    user = "dzrodriguez";
+    user = userName;
     group = "users";
     mailLocation =
-      "maildir:${config.users.users.dzrodriguez.home}/.mail/%d/%u/:LAYOUT=fs:INBOX=${userHome}/.mail/%d/%u/INBOX";
+      "maildir:${userHome}/.mail/%d/%u/:LAYOUT=fs:INBOX=${userHome}/.mail/%d/%u/INBOX";
     enablePAM = false;
     enableImap = true;
     enablePop3 = false;
