@@ -4,9 +4,9 @@
 
 #
 
-{ pkgs, lib, ... }:
+{ pkgs, lib, libx, ... }:
 let
-  inherit (lib.my) isNixOS;
+  inherit (libx) isNixOS;
 in
 with lib;
 {
