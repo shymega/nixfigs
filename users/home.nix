@@ -43,6 +43,7 @@ in
       dateutils
       dex
       diesel-cli
+      difftastic
       dogdns
       encfs
       expect
