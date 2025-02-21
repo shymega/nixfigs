@@ -47,4 +47,5 @@ in
   "zerotier_networks.age".publicKeys = personal-machines ++ rnet;
   "wireless.age".publicKeys = personal-machines ++ rnet-machines;
   "synapse_secret.age".publicKeys = personal-machines ++ rnet-machines;
+  "cloudflare_dns_token.age".publicKeys = personal-machines ++ rnet-machines;
 }
