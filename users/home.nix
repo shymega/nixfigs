@@ -241,18 +241,19 @@ in
       settings = {
         key_path = config.age.secrets.atuin_key.path;
         sync_address = "https://shynet-atuin-server.fly.dev";
-        auto_sync = false;
+        auto_sync = true;
         dialect = "uk";
         secrets_filter = true;
         enter_accept = false;
         workspaces = true;
+        sync_frequency = "0";
         sync = {
           records = true;
         };
         daemon = {
           enabled = true;
           systemd_socket = true;
-          sync_frequency = "120";
+          sync_frequency = "0";
         };
       };
     };
