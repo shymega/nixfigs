@@ -2,7 +2,6 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ ... }:
 {
   boot.resumeDevice = "/dev/disk/by-label/NIXOS_SWAP";
 
