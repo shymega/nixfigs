@@ -21,9 +21,7 @@ let
     , extraModules
     , deployable
     , monolithConfig
-    , username
     , overlays
-    , embedHm
     , hostRole
     , hardwareModules
     , baseModules

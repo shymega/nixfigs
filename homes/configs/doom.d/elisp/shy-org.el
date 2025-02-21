@@ -8,9 +8,6 @@
 ;;; require org-mode
 (use-package! org :ensure t)
 
-;;; require org-mode (REVEAL.JS)
-(use-package! ox-reveal :ensure t)
-
 ;;; org-mode handle .org files
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 
