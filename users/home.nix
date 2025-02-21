@@ -15,7 +15,7 @@ in
 {
   imports = [
     ./network-targets.nix
-    ../secrets/user
+    ../secrets/user # Agenix hacky service to edit conf files
     ./programs/rofi.nix
     inputs.nix-doom-emacs-unstraightened.hmModule
   ];
@@ -65,6 +65,7 @@ in
       hub
       imagemagick
       inetutils
+      isync-patched
       itd
       jdk17
       jq
@@ -79,7 +80,6 @@ in
       mupdf
       ncmpcpp
       neomutt
-      isync-patched
       nixpkgs-fmt
       nodejs
       notmuch
