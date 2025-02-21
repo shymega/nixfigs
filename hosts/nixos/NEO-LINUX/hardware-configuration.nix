@@ -64,7 +64,6 @@
       neededForBoot = true; # required
     };
 
-
     "/home" = {
       device = "/dev/disk/by-label/HOME";
       fsType = "xfs";
@@ -75,9 +74,14 @@
       fsType = "btrfs";
       options = [ "defaults" "noatime" "ssd" ];
     };
+    "/etc/ssh".depends = [ "/persist" ];
+    "/etc/ssh".device = "/persist/etc/ssh";
+    "/etc/ssh".fsType = "none";
+    "/etc/ssh".neededForBoot = true;
+    "/etc/ssh".options = [ "bind" ];
+
   };
   swapDevices = [{ device = "/dev/disk/by-label/SWAP"; }];
-
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode =
