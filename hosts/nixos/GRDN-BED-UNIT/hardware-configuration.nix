@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ pkgs, lib, modulesPath, ... }:
+{ lib, modulesPath, ... }:
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
@@ -26,46 +26,15 @@
 
     loader = {
       grub.enable = false;
-      generic-extlinux-compatible.enable = lib.mkForce false;
-      efi.canTouchEfiVariables = true;
-      efi.efiSysMountPoint = "/boot/efi";
-      systemd-boot.enable = true;
+      systemd-boot.enable = false;
     };
-
-    initrd.systemd.services.rollback = {
-      description = "Rollback ZFS datasets to a pristine state";
-      wantedBy = [
-        "initrd.target"
-      ];
-      after = [
-        "zfs-import-tank.service"
-      ];
-      before = [
-        "sysroot.mount"
-      ];
-      path = with pkgs; [
-        zfs
-      ];
-      unitConfig.DefaultDependencies = "no";
-      serviceConfig.Type = "oneshot";
-      script = ''
-        zfs rollback -r tank/local/root@blank
-      '';
-    };
-  };
 
   fileSystems = {
     "/" =
       {
-        device = "tank/local/root";
-        fsType = "zfs";
-      };
-
-    "/boot" =
-      {
-        device = "/dev/disk/by-label/EFI";
-        fsType = "vfat";
-        neededForBoot = true;
+        device = "/dev/disk/by-label/NIXOS_SD";
+        fsType = "ext4";
+        options = [ "noatime" ];
       };
 
     "/firmware" =
@@ -75,26 +44,6 @@
         options = [ "ro" "nofail" ];
         neededForBoot = true;
       };
-
-    "/nix" =
-      {
-        device = "tank/local/nix";
-        fsType = "zfs";
-        neededForBoot = true;
-      };
-
-    "/etc/nixos" =
-      {
-        device = "tank/safe/nixos-config";
-        fsType = "zfs";
-        neededForBoot = true;
-      };
-
-    "/persist" =
-      {
-        device = "tank/safe/persist";
-        fsType = "zfs";
-        neededForBoot = true;
-      };
+  };
   };
 }
