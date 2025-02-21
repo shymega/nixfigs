@@ -17,12 +17,11 @@ in
   services = {
     matrix-synapse = {
       enable = true;
-      withJemalloc = true;
       settings = {
         report_stats = false;
         enable_metrics = false;
         enable_registration = false;
-        url_preview_enabled = false;
+        url_preview_enabled = true;
         registration_requires_token = true;
         enable_search = true;
         allow_public_rooms_over_federation = true;
@@ -41,7 +40,7 @@ in
           msc3890_enabled = true;
         };
         database.name = "psycopg2";
-        allow_public_rooms_without_auth = true;
+        allow_public_rooms_without_auth = false;
         database.args = {
           user = "matrix";
           password = "matrix4me";
@@ -64,11 +63,9 @@ in
             tls = false;
             x_forwarded = true;
             resources = [
-              { compress = true; 
-                names = [ "client" ]; }
               {
                 compress = true;
-                names = [ "federation" ]; 
+                names = [ "client" "federation" ];
               }
             ];
           }
@@ -77,7 +74,7 @@ in
             type = "metrics";
             tls = false;
             bind_addresses = [ "127.0.0.1" ];
-            resources = [ 
+            resources = [
               {
                 names = [ "metrics" ];
               }
