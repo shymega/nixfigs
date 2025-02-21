@@ -18,8 +18,8 @@
       ./dovecot2.nix
       ./fido2.nix
       ./firmware.nix
-      ./kernel_params.nix
       ./inst_packages.nix
+      ./kernel_params.nix
       ./keychron.nix
       ./sound.nix
       ./steam-hardware.nix
@@ -31,17 +31,17 @@
     ++ (
       if hostname == "NEO-LINUX" || hostname == "MORPHEUS-LINUX" || hostname == "TWINS-LINUX" then
         [
-          ./graphical.nix
-          ./postfix.nix
-          ./networking.nix
-          ./impermanence.nix
+          ./appimage.nix
           ./fido2.nix
+          ./graphical.nix
+          ./impermanence.nix
           ./keychron.nix
+          ./networking.nix
+          ./postfix.nix
           ./steam-hardware.nix
           inputs.lanzaboote.nixosModules.lanzaboote
           inputs.nix-index-database.nixosModules.nix-index
           inputs.stylix.nixosModules.stylix
-
         ]
       else
         [ ]
