@@ -44,7 +44,6 @@ in
       cloudflared
       cocogitto
       curl
-      darkman
       dateutils
       devenv
       dex
@@ -170,9 +169,17 @@ in
   services = {
     darkman = {
       enable = true;
+      package = pkgs.unstable.darkman;
       settings = {
         usegeoclue = true;
       };
+      darkModeScripts.gtk-theme = ''
+        ${pkgs.dconf.outPath}/bin/dconf write /org/gnome/desktop/interface/color-scheme "'prefer-dark'"
+      '';
+
+      lightModeScripts.gtk-theme = ''
+        ${pkgs.dconf.outPath}/bin/dconf write /org/gnome/desktop/interface/color-scheme "'prefer-light'"
+      '';
     };
     keybase.enable = true;
     gpg-agent = {
