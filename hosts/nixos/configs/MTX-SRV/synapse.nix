@@ -22,25 +22,47 @@ in
       recommendedGzipSettings = true;
       recommendedProxySettings = true;
       virtualHosts = {
-        "${fqdn}" = {
-          enableACME = true;
-          onlySSL = true;
-          locations = {
-            "~ ^(/_matrix|/_synapse/client)" = {
-              proxyPass = "http://127.0.0.1:8008";
-              extraConfig = ''
-                client_max_body_size 200M;
+        "${fqdn}" =
+          let
+            client =
+              {
+                "m.homeserver" = { "base_url" = "https://${config.var.hostname}"; };
+                "m.identity_server" = { "base_url" = "https://matrix.org"; };
+              };
+            server = { "m.server" = "${config.var.hostname}:443"; };
+          in
+          {
+            # Needed for matrix federation
+            locations."/.well-known/matrix/server".extraConfig = ''
+              add_header Content-Type application/json;
+              return 200 '${builtins.toJSON server}';
+            '';
+
+            # Needed for automatic homeserver
+            # setup of matrix clients
+            locations."/.well-known/matrix/client".extraConfig = ''
+              add_header Content-Type application/json;
+              add_header Access-Control-Allow-Origin *;
+              return 200 '${builtins.toJSON client}';
+            '';
+            enableACME = true;
+            onlySSL = true;
+            locations = {
+              "~ ^(/_matrix|/_synapse/client)" = {
+                proxyPass = "http://127.0.0.1:8008";
+                extraConfig = ''
+                  client_max_body_size 200M;
+                '';
+              };
+              "~ ^/(client/|_matrix/client/unstable/org.matrix.msc3575/sync)" = {
+                priority = 800;
+                proxyPass = "http://localhost:8009";
+              };
+              "/".extraConfig = ''
+                return 404;
               '';
             };
-            "~ ^/(client/|_matrix/client/unstable/org.matrix.msc3575/sync)" = {
-              priority = 800;
-              proxyPass = "http://localhost:8009";
-            };
-            "/".extraConfig = ''
-              return 404;
-            '';
           };
-        };
       };
     };
 
@@ -74,7 +96,7 @@ in
           user = "matrix";
           password = "matrix4me";
           port = 5432;
-          dbname = "matrix_synapse";
+          database = "matrix_synapse";
           sslmode = "disable";
           host = "localhost";
           cp_min = 5;
