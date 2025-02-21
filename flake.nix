@@ -201,6 +201,10 @@
       url = "github:tadfisher/android-nixpkgs/stable";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     aimu.url = "github:shymega/aimu/refactor-shymega";
     base16-schemes.url = "github:SenchoPens/base16.nix";
     bestool.url = "github:shymega/bestool/shymega-all-fixes";
