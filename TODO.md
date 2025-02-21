@@ -26,7 +26,7 @@ SPDX-License-Identifier: GPL-3.0-only
 - [ ] Implement `sway` in HM.
 - [ ] Implement shells (`fish`, `zsh`, `bash`) in HM.
 - [ ] Package overlay, exposed in Flake.
-- [ ] Split refactor commit.
+- [x] Split refactor commit.
 - [x] Add `DELTA-ZERO` config.
 - [x] Add `DIAL-IN-RNET` config.
 - [x] Add `deploy-rs` config.
