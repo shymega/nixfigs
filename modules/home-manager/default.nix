@@ -3,5 +3,5 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 {
-  default = ../../homes/default.nix;
+  default = ../../homes/configs/default.nix;
 }
