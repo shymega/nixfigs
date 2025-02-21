@@ -1,15 +1,15 @@
-# SPDX-FileCopyrightText: 2023 Dom Rodriguez <shymega@shymega.org.uk>
+# SPDX-FileCopyrightText: 2024 Dom Rodriguez <shymega@shymega.org.uk
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
+#
+
 {
   age = {
-    identityPaths = [
-      "/home/dominic.rodriguez/.ssh/id_ed25519"
-      "/home/dzrodriguez/.ssh/id_ed25519"
-    ];
+    identityPaths = [ "/home/dzrodriguez/.ssh/id_ed25519" ];
     secrets = {
       atuin_key.file = ./atuin_key.age;
+      nix_conf_access_tokens.file = ./nix_conf_access_tokens.age;
     };
   };
 }
