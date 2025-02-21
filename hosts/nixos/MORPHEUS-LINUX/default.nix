@@ -182,6 +182,17 @@ in
   services.logind.lidSwitchExternalPower = "ignore";
   services.logind.lidSwitchDocked = "ignore";
   services.logind.extraConfig = ''
-  LidSwitchIgnoreInhibited=no
+    LidSwitchIgnoreInhibited=no
   '';
+
+  hardware.i2c.enable = true;
+  hardware.sensor.iio.enable = true;
+
+
+  security = {
+    pam.loginLimits = [
+      { domain = "*"; item = "nofile"; type = "-"; value = "524288"; }
+      { domain = "*"; item = "memlock"; type = "-"; value = "524288"; }
+    ];
+  };
 }
