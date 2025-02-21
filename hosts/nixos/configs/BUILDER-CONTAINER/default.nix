@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 {
-  networking.hostName = "BUILDER-LXC";
+  networking.hostName = "BUILDER-CONTAINER";
 
   system.stateVersion = "24.05";
 
