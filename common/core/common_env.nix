@@ -6,7 +6,7 @@
   environment = {
     variables = {
       TERMINAL = "${pkgs.alacritty}/bin/alacritty";
-      EDITOR = "${pkgs.emacs}/bin/emacsclient -c";
+      EDITOR = "${pkgs.emacs}/bin/emacsclient -cq";
       VISUAL = "$EDITOR";
       GIT_EDITOR = "$EDITOR";
       SUDO_EDITOR = "$EDITOR";
