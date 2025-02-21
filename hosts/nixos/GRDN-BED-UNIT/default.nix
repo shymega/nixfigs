@@ -36,4 +36,7 @@
   };
 
   system.stateVersion = "23.05";
+
+  networking.hostId = "3b66435d";
+  services.zfs.autoScrub.enable = true;
 }
