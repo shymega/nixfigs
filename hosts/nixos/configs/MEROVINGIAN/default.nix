@@ -23,16 +23,15 @@
     loader = {
       efi = {
         efiSysMountPoint = "/boot/efi";
+        canTouchEfiVariables = true;
       };
       grub = {
-        #        device = "/dev/disk/by-id/wwn-0x50000396ab78210e";
         device = "nodev";
         efiSupport = true;
         enable = true;
         useOSProber = true;
-        efiInstallAsRemovable = true;
       };
-      timeout = 6;
+      timeout = 4;
     };
     kernel.sysctl = {
       "fs.inotify.max_user_watches" = "819200";
@@ -140,8 +139,8 @@
         };
         "10-lan-bridge" = {
           matchConfig.Name = "vmbr0";
-          address = [ "78.129.218.104/24" ];
-          routes = [{ routeConfig.Gateway = "78.129.218.1"; }];
+          address = [ "78.129.193.61/24" ];
+          routes = [{ routeConfig.Gateway = "78.129.193.1"; }];
           linkConfig.RequiredForOnline = "routable";
         };
       };
@@ -200,6 +199,4 @@
       ];
     };
   };
-
 }
-
