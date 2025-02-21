@@ -44,6 +44,7 @@ let
         baseModules ++ [
           (../../secrets/system)
           (./configs + "/${hostname}")
+          ../../modules/nixos/generators.nix
         ]
         ++ extraModules ++ hardwareModules ++ (lib.optional whopper (import ./monolith.nix));
       specialArgs = {
