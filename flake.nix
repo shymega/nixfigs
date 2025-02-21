@@ -164,7 +164,7 @@
       nixOnDroidConfigurations = import ./modules/nix-on-droid.nix { inherit self inputs pkgs; };
       darwinConfigurations = import ./modules/darwin.nix { inherit self inputs pkgs; };
       secrets-system = import ./secrets/system;
-      secrets = secrets-system
+      secrets = secrets-system;
       secrets-user = import ./secrets/user;
       common-core = import ./common/core { inherit self inputs pkgs; };
       common-nixos = import ./common/nixos { inherit self inputs pkgs; };
