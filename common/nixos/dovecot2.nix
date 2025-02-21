@@ -19,7 +19,7 @@ in
     enablePop3 = false;
     extraConfig = ''
       listen = 127.0.0.1, ::1
-      mail_uid = 1001
+      mail_uid = 1000
       mail_gid = 100
 
       namespace inbox {
