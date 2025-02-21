@@ -138,6 +138,7 @@ in
       google-cloud-sdk
       isync-patched
       lutris
+      offlineimap-shymega
       protontricks
       protonup-qt
       steamcmd
