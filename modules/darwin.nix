@@ -32,7 +32,7 @@ let
       home-manager-path = inputs.home-manager.outPath;
       modules = [
         inputs.agenix.nixosModules.default
-        ../secrets
+        ../secrets/system
         (../hosts/darwin + "/${hostname}")
       ] ++ baseModules ++ homeModules ++ extraModules;
       extraSpecialArgs = { inherit self inputs nixpkgs; };
