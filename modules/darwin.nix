@@ -68,7 +68,7 @@ in
       mkHomeManagerConfig
       {
         extraModules = singleton
-          { users.dzrodriguez = import ../users/home.nix; };
+          { users."dominic.rodriguez" = import ../users/home.nix; };
       }
     ];
   };
