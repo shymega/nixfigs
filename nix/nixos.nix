@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2023 2023 Dom Rodriguez <shymega@shymega.org.uk>
+# SPDX-FileCopyrightText: 2023 Dom Rodriguez <shymega@shymega.org.uk>
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
@@ -85,6 +85,15 @@ in
   ## End Desktop (Beelink SER6 Pro) ##
 
   ## Raspberry Pi - desk ##
+
+  SMITH-LINUX = mkNixosConfig {
+    hostname = "SMITH-LINUX";
+    system = "aarch64-linux";
+    hardwareModules = [
+      inputs.hardware.nixosModules.rasperry-pi-4
+    ];
+  };
+
   ## End Raspberry Pi - desk ##
 
   ### End Desktops ###
