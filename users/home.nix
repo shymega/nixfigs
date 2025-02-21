@@ -191,6 +191,7 @@ in
   age = {
     identityPaths = [
       "/persist/etc/ssh/ssh_host_ed25519_key"
+      "/etc/ssh/ssh_host_ed25519_key"
     ];
     secrets = {
       taskwarrior_sync_ca.file = ../secrets/taskwarrior_sync_ca.age;
