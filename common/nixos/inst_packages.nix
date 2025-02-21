@@ -31,7 +31,5 @@
       tmux
       usbutils
       wget
-    ] ++ (with pkgs.shymega; [
-      net-type
-    ]);
+    ];
 }
