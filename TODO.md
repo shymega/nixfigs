@@ -1,9 +1,11 @@
 - Add 'roles' for systems.
+- Add `DELTA-ZERO` config.
 - Add `DIAL-IN-RNET` config.
 - Add `Docker/Podman` update/download/prune script @ midnight.
 - Add `deploy-rs` config.
 - Add macOS ARM64 config (cloud).
 - Add macOS x86_64 config.
+- Cachix repo for packages.
 - Devise ZFS pool for NUC.
 - Devise ZFS pool for WM2.
 - Implement 'network utils'.
