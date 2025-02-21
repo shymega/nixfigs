@@ -59,7 +59,7 @@ in
           protocol = "ssh-ng";
         }
       ];
-      settings = {
+      settings = rec {
         accept-flake-config = true;
         extra-platforms = config.boot.binfmt.emulatedSystems;
         allowed-users = [ "@wheel" ];
@@ -70,7 +70,8 @@ in
           "@wheel"
         ];
         sandbox = isForeignNix || isNixOS;
-        substituters = [
+        substituters = trusted-substituters;
+        trusted-substituters = [
           "https://attic.mildlyfunctional.gay/nixbsd"
           "https://cache.dataaturservice.se/spectrum/"
           "https://cache.nixos.org/"
