@@ -15,12 +15,12 @@
         fsType = "zfs";
       };
 
-#    "/data/Games" =
-#      {
-#        device = "zdata/shared/games";
-#        fsType = "zfs";
-#        neededForBoot = false;
-#      };
+    #    "/data/Games" =
+    #      {
+    #        device = "zdata/shared/games";
+    #        fsType = "zfs";
+    #        neededForBoot = false;
+    #      };
 
     "/data/AI" =
       {
