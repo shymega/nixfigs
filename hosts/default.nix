@@ -338,7 +338,7 @@ in
     username = "dzrodriguez";
     baseModules = [ inputs.agenix.nixosModules.default ];
     monolithConfig = false;
-    hostPlatform = "aarch64-linux";
+    hostPlatform = "x86_64-linux";
     hostRole = "server";
     pubkey = "";
     remoteBuild = true;
