@@ -26,12 +26,6 @@
       "/var/lib/wayland"
       "/var/lib/zerotier-one"
     ];
-    files = [
-      "/etc/ssh/ssh_host_ed25519_key"
-      "/etc/ssh/ssh_host_ed25519_key.pub"
-      "/etc/ssh/ssh_host_rsa_key"
-      "/etc/ssh/ssh_host_rsa_key.pub"
-    ];
   };
   security.sudo.extraConfig = ''
     Defaults lecture = never
