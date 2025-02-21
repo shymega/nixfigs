@@ -68,5 +68,4 @@ jobs:
       - name: Check Flake with Nix
         run: nix flake check
       - name: Check Flake with Statix
-        if: ${{ false }}
         run: nix run nixpkgs#statix -- check ./
