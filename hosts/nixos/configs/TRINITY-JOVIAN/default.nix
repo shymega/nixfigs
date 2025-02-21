@@ -157,7 +157,5 @@ in
     };
   };
 
-  networking.networkmanager.enable = true;
-
   system.stateVersion = "24.05";
 }
