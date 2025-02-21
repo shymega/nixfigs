@@ -2,16 +2,13 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ self, pkgs, inputs, ... }:
+{ self, pkgs, ... }:
 let
   inherit (pkgs.stdenvNoCC) isLinux;
   inherit (pkgs.lib) optionals;
   isNixOS = builtins.pathExists "/etc/nixos" && builtins.pathExists "/nix" && isLinux;
 in
 {
-  imports = [
-    inputs.networkmanager-profiles
-  ];
   networking.networkmanager = {
     dns = "systemd-resolved";
     wifi.macAddress = "stable";
