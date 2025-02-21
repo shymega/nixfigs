@@ -17,11 +17,12 @@ in
   boot = {
     supportedFilesystems = [ "ntfs" "zfs" ];
 
-    kernelPackages = if enableXanmod then
-      pkgs.linuxPackages_xanmod_latest
-    else
-      config.boot.zfs.package.latestCompatibleLinuxPackages;
-    
+    kernelPackages =
+      if enableXanmod then
+        pkgs.linuxPackages_xanmod_latest
+      else
+        config.boot.zfs.package.latestCompatibleLinuxPackages;
+
     extraModulePackages = with config.boot.kernelPackages; [ zfs ];
 
     extraModprobeConfig = ''
