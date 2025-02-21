@@ -291,6 +291,4 @@ in
         };
       };
     };
-
-    programs.lutris.enable = true;
 }
