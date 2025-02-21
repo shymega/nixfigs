@@ -4,7 +4,7 @@
 
 { pkgs, lib, config, ... }:
 let
-  enableXanmod = false;
+  enableXanmod = true;
 in
 {
   imports = [ ./hardware-configuration.nix ];
@@ -17,7 +17,7 @@ in
 
     kernelPackages =
       if enableXanmod then
-        pkgs.linuxPackages_xanmod_latest
+        pkgs.linuxPackages_xanmod
       else
         config.boot.zfs.package.latestCompatibleLinuxPackages;
     extraModulePackages = with config.boot.kernelPackages; [ zfs ];
