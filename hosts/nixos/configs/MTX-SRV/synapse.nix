@@ -163,41 +163,6 @@ in
       };
     };
 
-    mautrix-slack = {
-      enable = true;
-      registerToSynapse = true;
-      settings = {
-        homeserver = {
-          software = "standard";
-          domain = "${fqdn}";
-          address = "https://mtx.shymega.org.uk";
-        };
-        database = {
-          type = "sqlite3-fk-wal";
-          uri = "file:/var/lib/mautrix-slack/data.db?_txlock=immediate";
-        };
-
-        appservice = {
-          hostname = "127.0.0.1";
-          port = 29319;
-          address = "http://localhost:8008";
-        };
-
-        # Require encryption by default to make the bridge more secure
-        encryption = {
-          allow = false;
-          default = false;
-          require = false;
-        };
-
-        bridge = {
-          permissions = {
-            "@shymega:mtx.shymega.org.uk" = "admin";
-          };
-
-        };
-      };
-    };
 
     mautrix-telegram = {
       enable = true;
