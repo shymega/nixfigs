@@ -33,6 +33,7 @@ let
     (import ./overlays/master.nix { inherit inputs lib; })
     (import ./overlays/shymega.nix { inherit inputs lib; })
     (import ./overlays/unstable.nix { inherit inputs lib; })
+    (import ./overlays/asfp.nix { inherit inputs; })
   ];
 
 in
