@@ -42,8 +42,6 @@ in
       clipman
       configure-gtk
       dbus-sway-environment
-      dracula-theme
-      gnome3.adwaita-icon-theme
       grim
       kanshi
       mako
