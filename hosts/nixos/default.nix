@@ -22,6 +22,7 @@ let
     , deployable
     , monolithConfig
     , overlays
+    , embedHm
     , hostRole
     , hardwareModules
     , baseModules
@@ -40,17 +41,17 @@ let
         ) // inputs.nixpkgs.lib;
     in
     inputs.nixpkgs.lib.nixosSystem rec {
+      system = hostPlatform;
       pkgs = genPkgs hostPlatform overlays;
       modules =
         baseModules ++ [
           (./configs + "/${hostname}")
           ../../modules/nixos/generators.nix
-          (if embedHm then
-            ./home-manager-personal.nix
-          else
-            [ ])
         ]
         ++ extraModules ++ hardwareModules
+        ++ (lib.optionals embedHm [
+          ./home-manager-personal.nix
+        ])
         ++ (lib.optional monolithConfig (import ./monolith.nix));
       specialArgs = {
         hostAddress = address;
@@ -61,7 +62,6 @@ let
           self
           inputs
           lib
-          username
           embedHm
           hostRole
           specialArgs
