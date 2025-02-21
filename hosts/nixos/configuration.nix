@@ -34,6 +34,7 @@
         "networkmanager"
         "plugdev"
         "qemu-libvirtd"
+        "scanner"
         "systemd-journal"
         "uucp"
         "video"
