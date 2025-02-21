@@ -46,6 +46,11 @@
         group = "users";
         mode = "640";
       };
+      cloudflare_dns_token = {
+        file = ./cloudflare_dns_token.age;
+        group = "users";
+        mode = "640";
+      };
     };
   };
 }
