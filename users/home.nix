@@ -13,7 +13,11 @@ let
   homeDirectory = homePrefix + "/${config.home.username}";
 in
 {
-  imports = [ ./network-targets.nix ./programs/rofi.nix inputs.nix-doom-emacs-unstraightened.hmModule ];
+  imports = [
+    ./network-targets.nix
+    ./programs/rofi.nix
+    inputs.nix-doom-emacs-unstraightened.hmModule
+  ];
 
   nixpkgs = {
     config = {
@@ -124,7 +128,8 @@ in
     ] ++ (with pkgs.lib; optionals (hostname == "NEO-LINUX") [
       pkgs.android-studio
       pkgs.unstable.android-studio-for-platform
-    ]) ++ (with pkgs; [
+    ]) ++ [ inputs.agenix.packages.${pkgs.system}.default ]
+    ++ (with pkgs; [
       aws-sam-cli
       awscli2
       azure-cli
@@ -204,13 +209,12 @@ in
   };
 
   age = {
+    identityPaths = [
+      "${config.home.homeDirectory}/.ssh/id_ed25519"
+    ];
     secrets = {
       atuin_key.file = ../secrets/atuin_key.age;
     };
-    identityPaths = [
-      "/persist/etc/ssh/ssh_host_ed25519_key"
-      "/etc/ssh/ssh_host_ed25519_key"
-    ];
   };
 
   programs = {
@@ -317,16 +321,18 @@ in
           SocketMode = [ "0600" ];
         };
       };
-      services.atuin-daemon = {
-        Unit = atuinDaemonConfig // { Requires = [ "atuin-daemon.socket" ]; };
-        Service = {
-          ExecStart = "${pkgs.atuin}/bin/atuin daemon";
+      services = {
+        atuin-daemon = {
+          Unit = atuinDaemonConfig // { Requires = [ "atuin-daemon.socket" ]; };
+          Service = {
+            ExecStart = "${pkgs.unstable.atuin}/bin/atuin daemon";
+          };
         };
-      };
-      services.atuin-sync = {
-        Unit = atuinSyncTimerConfig;
-        Service = {
-          ExecStart = "${pkgs.atuin}/bin/atuin daemon";
+        atuin-sync = {
+          Unit = atuinSyncTimerConfig;
+          Service = {
+            ExecStart = "${pkgs.unstable.atuin}/bin/atuin daemon";
+          };
         };
       };
       timers.atuin-sync = {

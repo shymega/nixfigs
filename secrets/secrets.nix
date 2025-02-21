@@ -3,8 +3,9 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 let
-  dzrodriguez-NEO-LINUX = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF1L44C2mZnuRysLRq98P+ri7pkpl0dyTzr/3EAQ7Qov dzrodriguez@NEO-LINUX";
-  users = [ dzrodriguez-NEO-LINUX ];
+  dzrodriguez-NEO-LINUX = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP7D0z5Unwjt00URZxRrx6T69PFc6xI3zHETtr0GbkM6 dzrodriguez@NEO-LINUX";
+  dzrodriguez-TRINITY-LINUX = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMof07iqwcqoSuHoL0UAfKMeM6g6B5bL2klAmOLCJtNJ dzrodriguez@TRINITY-LINUX";
+  users = [ dzrodriguez-NEO-LINUX dzrodriguez-TRINITY-LINUX ];
 
   NEO-LINUX = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ8Stawqd09idKurIZ+eSSEbmWdXIlQQJ4eaMo6bmClv";
   TRINITY-LINUX = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ9Iwy4iP4/lpSsLGKqrnMwO0AUvOHqgBc/RimkLrnQh";
