@@ -27,4 +27,5 @@
        ENV{ID_VENDOR}=="Yubico",\
        RUN+="${pkgs.systemd}/bin/loginctl lock-sessions"
     '';
-  }
+  };
+}
