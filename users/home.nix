@@ -207,7 +207,7 @@ in
       enable = true;
       temperature = {
         day = 6500;
-        night = 3700;
+        night = 3400;
       };
       provider = "geoclue2";
     };
@@ -215,7 +215,7 @@ in
       enable = true;
       temperature = {
         day = 6500;
-        night = 3700;
+        night = 3400;
       };
       provider = "geoclue2";
     };
