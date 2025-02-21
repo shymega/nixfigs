@@ -111,6 +111,8 @@ in
     enable = true;
     acceleration = "rocm";
     package = pkgs.ollama;
+    models = "/data/AI/LLMs/Ollama/models";
+    writablePaths =[ "/data/AI/LLMs/Ollama/models"];
     environmentVariables = {
       HSA_OVERRIDE_GFX_VERSION = "11.0.0"; # 780M
     };
