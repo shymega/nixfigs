@@ -61,6 +61,7 @@ in
         difftastic
         distrobox
         dogdns
+        elf2uf2-rs
         encfs
         exiftool
         expect
@@ -128,12 +129,12 @@ in
         virt-manager
         virtiofsd
         w3m
+        weechatWithMyPlugins
         wget
         xsv
         zathura
         zellij
         zenmonitor
-        weechatWithMyPlugins
         zip
         zoxide
       ]
