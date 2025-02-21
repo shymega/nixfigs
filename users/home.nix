@@ -25,7 +25,7 @@ in
 
   home = {
     username = "dzrodriguez";
-    homeDirectory = homePrefix + "/${config.home.username}";
+    homeDirectory = homeDirectory;
     enableNixpkgsReleaseCheck = true;
     stateVersion = "23.11";
     packages = with pkgs.unstable; [
