@@ -15,6 +15,7 @@ in
 {
   imports = [
     ./network-targets.nix
+    ../secrets/default.nix
     ./programs/rofi.nix
     inputs.nix-doom-emacs-unstraightened.hmModule
   ];
@@ -205,15 +206,6 @@ in
     redshift = {
       enable = false;
       provider = "geoclue2";
-    };
-  };
-
-  age = {
-    identityPaths = [
-      "${config.home.homeDirectory}/.ssh/id_ed25519"
-    ];
-    secrets = {
-      atuin_key.file = ../secrets/atuin_key.age;
     };
   };
 
