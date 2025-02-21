@@ -10,7 +10,6 @@
 {
   imports = [ ./hardware-configuration.nix ];
 
-  networking.hostName = "DELTA-ZERO";
   time.timeZone = "Europe/London";
 
   boot = {
@@ -64,6 +63,9 @@
   };
 
   networking = {
+    hostName = "dial-in";
+    domain = "rnet.odriguez.org.uk";
+
     timeServers = lib.mkForce [ "uk.pool.ntp.org" ];
     firewall = {
       enable = true;
