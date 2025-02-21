@@ -7,7 +7,7 @@
   imports = [ ./disks.nix ];
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usbhid" "sdhci_pci" "hid_apple" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelModules = [ "kvm-amd" "i2c_dev" ];
   boot.extraModulePackages = [ ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
