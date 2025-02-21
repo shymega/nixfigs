@@ -8,7 +8,6 @@
     inputs.disko.nixosModules.default
     ./disko.nix
     ./disks.nix
-    inputs.jovian-nixos.nixosModules.default
   ];
 
   boot = {
