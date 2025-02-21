@@ -36,7 +36,7 @@
     dwl-source.url = "https://codeberg.org/dwl/dwl";
     dwl-source.flake = false;
     auto-cpufreq = {
-      url = "github:AdnanHodzic/auto-cpufreq";
+      url = "github:AdnanHodzic/auto-cpufreq/a1ac308be7b558f85c91a6a3e86cbc0cebdadbbc";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nur.url = "github:nix-community/NUR";
