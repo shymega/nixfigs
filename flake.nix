@@ -229,11 +229,11 @@
       flake = false;
     };
     doom-emacs-src = {
-      url = "github:syl20bnr/spacemacs";
+      url = "github:doomemacs/doomemacs";
       flake = false;
     };
     spacemacs-src = {
-      url = "github:doomemacs/doomemacs";
+      url = "github:syl20bnr/spacemacs";
       flake = false;
     };
     shypkgs-private.url = "github:shymega/shypkgs-private";
