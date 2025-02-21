@@ -17,9 +17,26 @@
   time.timeZone = "Europe/London";
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
-    loader.grub.enable = true;
-    loader.grub.device = "/dev/sda";
+    kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+    extraModulePackages = with config.boot.kernelPackages; [ zfs ];
+
+    loader = {
+      systemd-boot = {
+        enable = false;
+      };
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot";
+      };
+      grub = {
+        device = "nodev";
+        efiSupport = true;
+        default = "saved";
+        enable = true;
+        useOSProber = true;
+      };
+      timeout = 6;
+    };
     kernel.sysctl = {
       "fs.inotify.max_user_watches" = "819200";
       "kernel.printk" = "3 3 3 3";
@@ -70,7 +87,7 @@
         DNS=1.1.1.1#1dot1dot1dot1.cloudflare-dns.com 1.0.0.1#1dot1dot1dot1.cloudflare-dns.com 2606:4700:4700::1111#1dot1dot1dot1.cloudflare-dns.com 2606:4700:4700::1001#1dot1dot1dot1.cloudflare-dns.com
       '';
     };
-    proxmox-ve.enable = true;
+    proxmox-ve.enable = false;
   };
 
   networking = {
@@ -117,11 +134,26 @@
   systemd = {
     network = {
       enable = true;
-      networks."10-hetzner" = {
-        matchConfig.Name = "enp1s0";
-        networkConfig.DHCP = "ipv4";
-        address = [ "2a01:4f9:c012:80b1::1/64" ];
-        routes = [{ routeConfig.Gateway = "fe80::1"; }];
+      networks = {
+        "10-lan" = {
+          matchConfig.Name = [ "eno1" ];
+          networkConfig = {
+            Bridge = "vmbr0";
+          };
+        };
+        "10-lan-bridge" = {
+          matchConfig.Name = "vmbr0";
+          address = [ "78.129.218.104/24" ];
+          routes = [{ routeConfig.Gateway = "78.129.218.1"; }];
+          linkConfig.RequiredForOnline = "routable";
+        };
+      };
+
+      netdevs."vmbr0" = {
+        netdevConfig = {
+          Name = "vmbr0";
+          Kind = "bridge";
+        };
       };
     };
   };
@@ -163,24 +195,10 @@
         }
       ];
       extraGroups = [
-        "i2c"
-        "adbusers"
-        "dialout"
-        "disk"
         "docker"
-        "input"
-        "kvm"
-        "libvirt"
-        "libvirtd"
-        "lp"
-        "lpadmin"
         "networkmanager"
-        "plugdev"
-        "qemu-libvirtd"
         "scanner"
         "systemd-journal"
-        "uucp"
-        "video"
         "wheel"
       ];
     };
