@@ -31,9 +31,11 @@ let
       modules = [
         inputs.agenix.nixosModules.default
         inputs.nix-ld.nixosModules.nix-ld
+        #	{ programs.nix-ld.dev.enable = true; }
         {
           environment.systemPackages = [
             inputs.agenix.packages.${system}.default
+            inputs.nix-alien.packages.${system}.nix-alien
           ];
         }
         ../secrets
