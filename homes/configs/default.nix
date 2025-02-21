@@ -556,16 +556,6 @@ in
 
   xdg = {
     enable = true;
-    configFile = {
-      "emacs.src/doom-emacs" = {
-        source = inputs.doom-emacs-src;
-        recursive = true;
-      };
-      "emacs.src/spacemacs" = {
-        source = inputs.spacemacs-src;
-        recursive = true;
-      };
-    };
     portal = {
       config = {
         sway = {
