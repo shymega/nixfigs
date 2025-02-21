@@ -76,7 +76,7 @@
 
   networking = {
     hostName = "delta-zero";
-    domain = "odriguez.org.uk";
+    domain = "rodriguez.org.uk";
 
     timeServers = lib.mkForce [ "uk.pool.ntp.org" ];
     firewall = {
