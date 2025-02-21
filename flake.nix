@@ -153,22 +153,27 @@
         isDarwin = system: hasSuffix "-darwin" system;
       in
         if isLinux system
-        then "ubuntu-22.04"
+        then "ubuntu-24.04"
         else if isDarwin system
         then "macos-14"
         else throw "Unsupported system (platform): ${system}";
       nixosConfigs = let
-        inherit (inputs.nixpkgs.lib.attrsets) filterAttrs;
-        workHostname = "ct-lt-2671";
+        inherit (inputs.nixpkgs.lib.attrsets) filterAttrs mapAttrsToList;
+        isWorkHostname = n: let
+          inherit (inputs.nixpkgs.lib.strings) hasInfix;
+        in hasInfix "ct-" n;
         pred = n: v: let
           inherit (v.pkgs) system;
+          inherit (v.config.networking) hostName;
         in
-          (system == "aarch64-linux" || system == "x86_64-linux") && n != workHostname;
+          (system == "aarch64-linux" || system == "x86_64-linux") && !isWorkHostname hostName;
       in
-        mapAttrs (n: v: {
-          hostName = n;
-          platform = systemToPlatform v.pkgs.system;
-        }) (filterAttrs pred self.nixosConfigurations);
+        {
+          include = mapAttrsToList (n: v: {
+            hostName = n;
+            platform = systemToPlatform v.pkgs.system;
+          }) (filterAttrs pred self.nixosConfigurations);
+        };
     in
       nixosConfigs;
   };
