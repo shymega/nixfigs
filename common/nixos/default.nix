@@ -36,6 +36,7 @@
           ./graphical.nix
           ./impermanence.nix
           ./keychron.nix
+          ./matrix.nix
           ./networking.nix
           ./postfix.nix
           ./steam-hardware.nix
