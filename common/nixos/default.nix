@@ -94,6 +94,14 @@
 
   systemd = {
     network.wait-online.anyInterface = true;
+    services.tailscaled = {
+      after = [
+        "network-online.target"
+      ];
+      wants = [
+        "network-online.target"
+      ];
+    };
   };
 
   users.mutableUsers = false;
