@@ -207,6 +207,7 @@ in
     hostname = "SMITH-LINUX";
     hostPlatform = "aarch64-linux";
     monolithConfig = false;
+    hostRole = "minimal";
     hardwareModules = [ inputs.hardware.nixosModules.raspberry-pi-4 ];
     extraModules = [
       ../nix/24.05-compat.nix
@@ -228,7 +229,7 @@ in
     address = "GRDN-BED-UNIT.dzr.devices.10bsk.rnet.rodriguez.org.uk";
     hostname = "GRDN-BED-UNIT";
     hostPlatform = "aarch64-linux";
-    hostRole = "server";
+    hostRole = "minimal";
     monolithConfig = false;
     hardwareModules = [ inputs.hardware.nixosModules.raspberry-pi-4 ];
     extraModules = [
@@ -308,14 +309,14 @@ in
     deployable = true;
   };
 
-  MTX-SRV = mkHost {
+  MATRIX-SRV = mkHost {
     type = "nixos";
-    address = "mtx.shymega.org.uk";
-    hostname = "MTX-SRV";
+    address = "matrix.rodriguez.org.uk";
+    hostname = "MATRIX-SRV";
     username = "dzrodriguez";
     monolithConfig = false;
     hostRole = "server";
-    hostPlatform = "aarch64-linux";
+    hostPlatform = "x86_64-linux";
     extraModules = [
       inputs.srvos.nixosModules.server
       inputs.srvos.nixosModules.hardware-hetzner-cloud-arm
@@ -323,7 +324,7 @@ in
       inputs.hardware.nixosModules.common-pc-ssd
       inputs.hardware.nixosModules.common-pc
     ];
-    pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICtVMEyJgGsd26adPAyjYooDIfD30Ps0DzVlt3NnWorA";
+    pubkey = "";
     remoteBuild = true;
     deployable = true;
   };
@@ -356,7 +357,7 @@ in
 
   DZR-OFFICE-BUSY-LIGHT-UNIT = mkHost rec {
     type = "nixos";
-    address = "dial-in.rnet.rodriguez.org.uk";
+    address = "dzr-office-busy-light-unit.rnet.rodriguez.org.uk";
     username = "dzrodriguez";
     baseModules = [ ../common ];
     hostPlatform = "armv6l-linux";
@@ -377,7 +378,7 @@ in
 
   DZR-PETS-CAM-UNIT = mkHost rec {
     type = "nixos";
-    address = "dial-in.rnet.rodriguez.org.uk";
+    address = "dzr-pets-cam-unit.rnet.rodriguez.org.uk";
     username = "dzrodriguez";
     baseModules = [ ../common ];
     hostPlatform = "armv6l-linux";
@@ -448,6 +449,7 @@ in
     ];
   };
   ## End ClockworkPi DevTerm (CM4) ##
+
   INSTALLER-SERVER-ISO-X86 = mkHost {
     type = "nixos";
     address = "install-server.shymega.org.uk";
