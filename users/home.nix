@@ -89,6 +89,7 @@ in
       python3Packages.pipx
       python3Packages.virtualenv
       q
+      qemu_full
       ranger
       rclone
       reuse
@@ -106,6 +107,7 @@ in
       unzip
       vagrant
       virt-manager
+      virtiofsd
       w3m
       wezterm
       wget
@@ -116,7 +118,7 @@ in
       zip
       zoxide
     ] ++ (pkgs.lib.optionals (hostname == "NEO-LINUX") [
-      pkgs.asfp.android-studio-for-platform
+      pkgs.android-studio-for-platform
       pkgs.android-studio
     ]) ++ (with pkgs; [
       aws-sam-cli
@@ -128,7 +130,7 @@ in
       weechatWithMyPlugins
       yubikey-manager-qt
       yubioath-flutter
-    ]) ++ (pkgs.lib.optionals pkgs.stdenv.isx86_64 (with pkgs.jetbrains; [
+    ]) ++ (pkgs.lib.optionals pkgs.stdenv.isx86_64 (with pkgs.unstable.jetbrains; [
       clion
       datagrip
       gateway
