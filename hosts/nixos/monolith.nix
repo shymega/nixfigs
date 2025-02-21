@@ -6,6 +6,7 @@
 
 { config
 , lib
+, libx
 , pkgs
 , ...
 }:
@@ -74,7 +75,7 @@
     dbus.enable = true;
     openssh.enable = true;
     upower.enable = lib.mkForce true;
-    printing = lib.optionalAttrs lib.my.isPC {
+    printing = lib.optionalAttrs libx.isPC {
       enable = true;
       browsing = true;
       drivers = with pkgs; [
