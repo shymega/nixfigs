@@ -3,10 +3,8 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 name: Conventional Commits Verification Workflow
-
 on:
-  pull_request:
-
+  workflow_call:
 jobs:
   test-pr-commit-msg:
     name: Test the PR's commit message for compliance with Conventional Commits.
@@ -15,4 +13,4 @@ jobs:
       - uses: actions/checkout@v4.1.4
       - uses: webiny/action-conventional-commits@v1.3.0
         with:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

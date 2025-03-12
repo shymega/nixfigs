@@ -100,6 +100,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     ucodenix.url = "github:e-tho/ucodenix";
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+    treefmt-nix.url = "github:numtide/treefmt-nix";
   };
 
   outputs = {self, ...} @ inputs: let
@@ -110,7 +117,7 @@
         "armv6l-linux"
         "armv7l-linux"
       ];
-    enableLix = false;
+    enableLix = true;
   in
     assert enableLix != null;
       inputs.snowfall-lib.mkFlake {
@@ -119,10 +126,22 @@
         channels-config = {
           allowUnfree = true;
         };
-        outputs-builder = channels: {
-          # Outputs in the outputs builder are transformed to support each system. This
-          # entry will be turned into multiple different outputs like `formatter.x86_64-linux.*`.
-          formatter = channels.nixpkgs.alejandra;
+        outputs-builder = channels: let
+          system = channels.nixpkgs.system;
+          treefmtConfig = import ./nix/formatter.nix;
+          treefmtWrapper = inputs.treefmt-nix.lib.mkWrapper channels.nixpkgs treefmtConfig;
+        in {
+          formatter = treefmtWrapper;
+          checks = {
+            pre-commit-check = import ./nix/checks.nix {
+              inherit self system inputs;
+              inherit (channels.nixpkgs) lib;
+            };
+          };
+          # devShell = import ./nix/devShell.nix {
+          #  inherit self system;
+          #  pkgs = channels.nixpkgs;
+          # };
         };
 
         systems.modules.nixos = with inputs;
@@ -135,7 +154,7 @@
         snowfall = {
           # Tell Snowfall Lib to look in the `./nix/` directory for your
           # Nix files.
-          root = ./nix;
+          root = ./src;
 
           # Choose a namespace to use for your flake's packages, library,
           # and overlays.
@@ -153,6 +172,30 @@
       }
       // {
         self = inputs.self;
+        packages = let
+          inherit (inputs.shypkgs-public) allSystems forAllSystems;
+        in
+          forAllSystems (system: inputs.shypkgs-public.packages.${system});
+        hydraJobs = let
+          inherit (inputs.nixpkgs.lib) isDerivation filterAttrs mapAttrs elem;
+          notBroken = pkg: !(pkg.meta.broken or false);
+          isDistributable = pkg: (pkg.meta.license or {redistributable = true;}).redistributable;
+          hasPlatform = sys: pkg: elem sys (pkg.meta.platforms or [sys]);
+          filterValidPkgs = sys: pkgs:
+            filterAttrs (_: pkg:
+              isDerivation pkg
+              && hasPlatform sys pkg
+              && notBroken pkg
+              && isDistributable pkg)
+            pkgs;
+          getConfigTopLevel = _: cfg: cfg.config.system.build.toplevel;
+          getActivationPackage = _: cfg: cfg.config.home.activationPackage;
+        in {
+          pkgs = mapAttrs filterValidPkgs self.packages;
+          hosts = mapAttrs getConfigTopLevel self.nixosConfigurations;
+          users = mapAttrs getActivationPackage self.homeConfigurations;
+        };
+
         githubActions.matrix = with builtins; let
           systemToPlatform = system: let
             inherit (inputs.nixpkgs.lib.strings) hasSuffix;
@@ -170,18 +213,19 @@
             include = let
               pred = n: v: let
                 inherit (v.pkgs) system;
-                isWorkMachine = with builtins;
-                  v:
-                    if hasAttr "nixfigs.meta" v.config
-                    then elem "work" v.config.nixfigs.meta.rolesEnabled
-                    else false;
+                isWorkMachine = v: let
+                  inherit (builtins) elem hasAttr;
+                in
+                  if hasAttr "nixfigs.meta" v.config
+                  then elem "work" v.config.nixfigs.meta.rolesEnabled
+                  else false;
               in
                 !isWorkMachine v;
             in
               mapAttrsToList (n: v: {
                 hostName = n;
                 platform = systemToPlatform v.pkgs.system;
-                system = if v.pkgs.system != "x86_64-linux" then v.pkgs.system else "x86_64-linux";
+                inherit (v.pkgs) system;
               }) (filterAttrs pred self.nixosConfigurations);
           };
         in

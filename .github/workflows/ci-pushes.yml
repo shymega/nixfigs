@@ -3,7 +3,6 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 name: Pushes CI Workflow
-
 on:
   push:
     branches: [main, refactor/snowfall]
@@ -12,26 +11,21 @@ on:
       - flake.nix
       - nix/**
   workflow_dispatch:
-
 concurrency:
   group: gh-ref-${{ github.ref }}
   cancel-in-progress: true
-
 permissions:
   contents: write
   pull-requests: write
-
 jobs:
   format-flake:
     uses: ./.github/workflows/flake-formatting.yml
     secrets: inherit
-
   flake-tests:
     needs: [format-flake]
     if: ${{ needs.format-flake.result == 'success' }}
     uses: ./.github/workflows/flake-tests.yml
     secrets: inherit
-
   build-and-push:
     needs: [flake-tests]
     if: ${{ needs.flake-tests.result == 'success' }}
