@@ -25,15 +25,9 @@
     ./sd-image-pi0v1.nix
   ];
   nixpkgs = {
-    system = "armv6l-linux";
-    crossSystem = lib.systems.elaborate lib.systems.examples.raspberryPi;
-
-    # https://github.com/NixOS/nixpkgs/issues/154163#issuecomment-1350599022
-    overlays = [
-      (_final: super: {
-        makeModulesClosure = x: super.makeModulesClosure (x // {allowMissing = true;});
-      })
-    ];
+    hostPlatform.system = "${system}";
+    buildPlatform.system = "x86_64-linux";
+    config.allowUnsupportedSystem = true;
   };
   boot.supportedFilesystems.zfs = lib.mkForce false;
 

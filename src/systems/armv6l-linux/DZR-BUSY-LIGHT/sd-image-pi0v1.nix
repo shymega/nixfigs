@@ -8,8 +8,7 @@
   ...
 }: {
   imports = [
-    "${inputs.nixpkgs}/nixos/modules/profiles/base.nix"
-    "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image.nix"
+    "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-raspberrypi.nix"
   ];
 
   networking.wireless.enable = true;
