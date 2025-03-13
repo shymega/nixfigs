@@ -161,27 +161,24 @@
         inherit (inputs.nixpkgs.lib.attrsets) filterAttrs mapAttrsToList;
         isWorkHostname = n: let
           inherit (inputs.nixpkgs.lib.strings) hasInfix;
-        in hasInfix "ct-" n;
-        pred = n: v: let
+        in
+          hasInfix "ct-" n;
+        pred = _n: v: let
           inherit (v.pkgs) system;
           inherit (v.config.networking) hostName;
         in
           (system == "aarch64-linux" || system == "x86_64-linux") && !isWorkHostname hostName;
-      in
-        {
-          include = mapAttrsToList (n: v: {
-            hostName = n;
-            platform = systemToPlatform v.pkgs.system;
-          }) (filterAttrs pred self.nixosConfigurations);
-        };
+      in {
+        include = mapAttrsToList (n: v: {
+          hostName = n;
+          platform = systemToPlatform v.pkgs.system;
+        }) (filterAttrs pred self.nixosConfigurations);
+      };
     in
       nixosConfigs;
   };
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
-    nixpkgs-shymega.url = "github:shymega/nixpkgs?ref=shymega/staging";
     nixfigs-helpers.url = "github:shymega/nixfigs-helpers";
     nixfigs-pkgs.url = "github:shymega/nixfigs-pkgs";
     nixfigs-private.url = "github:shymega/nixfigs-private";
@@ -195,15 +192,8 @@
       url = "github:serokell/deploy-rs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
-      flake = false;
-    };
     flake-utils.url = "github:numtide/flake-utils";
-    home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    home-manager.follows = "nixfigs-homes/home-manager";
     shypkgs-private.url = "github:shymega/shypkgs-private";
     shypkgs-public.url = "github:shymega/shypkgs-public";
     lix-module = {
