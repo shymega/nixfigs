@@ -6,7 +6,7 @@
   lib,
   ...
 }: {
-  imports = ["${toString modulesPath}/virtualisation/docker-image.nix"];
+  imports = ["${modulesPath}/virtualisation/docker-image.nix"];
 
   boot = {
     isContainer = true;

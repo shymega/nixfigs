@@ -22,47 +22,28 @@
 }: {
   imports = [
     ./hardware-configuration.nix
-    ./sd-image-pi0v1.nix
+    ./sd-image.nix
   ];
   nixpkgs = {
-    system = "armv6l-linux";
-    crossSystem = lib.systems.elaborate lib.systems.examples.raspberryPi;
-
-    # https://github.com/NixOS/nixpkgs/issues/154163#issuecomment-1350599022
+    hostPlatform.system = "${system}";
+    buildPlatform.system = "x86_64-linux";
+    config.allowUnsupportedSystem = true;
     overlays = [
-      (_final: super: {
-        makeModulesClosure = x: super.makeModulesClosure (x // {allowMissing = true;});
-      })
+(final: prev: let
+  nixpkgs = inputs.nixpkgs.legacyPackages.${prev.system};
+in {
+  qemu = nixpkgs.qemu.overrideAttrs (oldAttrs: {
+    pname = "qemu-fucked";
+    version = "fuckupieceofshit";
+    buildInputs = oldAttrs.buildInputs ++ (with nixpkgs; [ zlib ]);
+  });
+})
     ];
   };
-  boot.supportedFilesystems.zfs = lib.mkForce false;
-
-  # don't build documentation
-  documentation.info.enable = lib.mkDefault false;
-  documentation.man.enable = lib.mkDefault false;
-
-  # don't include a 'command not found' helper
-  programs.command-not-found.enable = lib.mkDefault false;
-
-  # disable polkit
-  security.polkit.enable = lib.mkDefault false;
-
-  # disable audit
-  security.audit.enable = lib.mkDefault false;
-
-  # disable udisks
-  services.udisks2.enable = lib.mkDefault false;
-
-  # disable containers
-  boot.enableContainers = lib.mkDefault false;
-
-  # build less locales
-  # This isn't perfect, but let's expect the user specifies an UTF-8 defaultLocale
-  i18n.supportedLocales = [(config.i18n.defaultLocale + "/UTF-8")];
 
   networking = {
     hostName = "DZR-BUSY-LIGHT";
-    firewall.enable = lib.mkDefault false;
+    firewall.enable = lib.mkForce false;
   };
 
   programs.zsh.enable = true;

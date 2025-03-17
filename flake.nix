@@ -47,10 +47,6 @@
       url = "github:NixOS/flake-registry";
       flake = false;
     };
-    shymega-flake-registry = {
-      url = "github:shymega/shymega-flake-registry";
-      flake = false;
-    };
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -86,7 +82,7 @@
     };
     _1password-shell-plugins.url = "github:1Password/shell-plugins";
     flake-utils.url = "github:numtide/flake-utils";
-    shypkgs-private.url = "github:shymega/shypkgs-private";
+    #shypkgs-private.url = "github:shymega/shypkgs-private";
     shypkgs-public.url = "github:shymega/shypkgs-public";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
@@ -100,6 +96,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     ucodenix.url = "github:e-tho/ucodenix";
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+    treefmt-nix.url = "github:numtide/treefmt-nix";
   };
 
   outputs = {self, ...} @ inputs: let
@@ -110,81 +113,135 @@
         "armv6l-linux"
         "armv7l-linux"
       ];
-    enableLix = false;
+    enableLix = true;
   in
-    assert enableLix != null;
-      inputs.snowfall-lib.mkFlake {
-        inherit inputs supportedSystems;
-        src = ./.;
-        channels-config = {
-          allowUnfree = true;
-        };
-        outputs-builder = channels: {
-          # Outputs in the outputs builder are transformed to support each system. This
-          # entry will be turned into multiple different outputs like `formatter.x86_64-linux.*`.
-          formatter = channels.nixpkgs.alejandra;
-        };
-
-        systems.modules.nixos = with inputs;
-          [
-          ]
-          ++ (inputs.nixpkgs.lib.optional enableLix
-            inputs.lix-module.nixosModules.default);
-
-        # Configure Snowfall Lib, all of these settings are optional.
-        snowfall = {
-          # Tell Snowfall Lib to look in the `./nix/` directory for your
-          # Nix files.
-          root = ./nix;
-
-          # Choose a namespace to use for your flake's packages, library,
-          # and overlays.
-          namespace = "nixfigs";
-
-          # Add flake metadata that can be processed by tools like Snowfall Frost.
-          meta = {
-            # A slug to use in documentation when displaying things like file paths.
-            name = "nixfigs";
-
-            # A title to show for your flake, typically the name.
-            title = "Dom's Nixified Flake";
-          };
-        };
-      }
-      // {
-        self = inputs.self;
-        githubActions.matrix = with builtins; let
-          systemToPlatform = system: let
-            inherit (inputs.nixpkgs.lib.strings) hasSuffix;
-            isLinux = system: hasSuffix "-linux" system;
-            isDarwin = system: hasSuffix "-darwin" system;
-          in
-            if isLinux system
-            then "ubuntu-24.04"
-            else if isDarwin system
-            then "macos-14"
-            else throw "Unsupported system (platform): ${system}";
-          nixosConfigs = let
-            inherit (inputs.nixpkgs.lib.attrsets) filterAttrs mapAttrsToList;
-          in {
-            include = let
-              pred = n: v: let
-                inherit (v.pkgs) system;
-                isWorkMachine = with builtins;
-                  v:
-                    if hasAttr "nixfigs.meta" v.config
-                    then elem "work" v.config.nixfigs.meta.rolesEnabled
-                    else false;
-              in
-                !isWorkMachine v;
-            in
-              mapAttrsToList (n: v: {
-                hostName = n;
-                platform = systemToPlatform v.pkgs.system;
-                system = if v.pkgs.system != "x86_64-linux" then v.pkgs.system else "x86_64-linux";
-              }) (filterAttrs pred self.nixosConfigurations);
-          };
-        in
-          nixosConfigs;
+    inputs.snowfall-lib.mkFlake {
+      inherit inputs supportedSystems;
+      src = ./.;
+      channels-config = {
+        allowUnfree = true;
       };
+      outputs-builder = channels: let
+        system = channels.nixpkgs.system;
+        treefmtConfig = import ./nix/formatter.nix;
+        treefmtWrapper = inputs.treefmt-nix.lib.mkWrapper channels.nixpkgs treefmtConfig;
+      in {
+        formatter = treefmtWrapper;
+        checks = {
+          pre-commit-check = import ./nix/checks.nix {
+            inherit self system inputs;
+            inherit (channels.nixpkgs) lib;
+          };
+        };
+        # devShell = import ./nix/devShell.nix {
+        #  inherit self system;
+        #  pkgs = channels.nixpkgs;
+        # };
+      };
+
+      overlays = [ self.overlays.z-fucking-hack ];
+
+      systems.modules.nixos = with inputs;
+        [
+        ]
+        ++ (inputs.nixpkgs.lib.optional enableLix
+          inputs.lix-module.nixosModules.default);
+
+      # Configure Snowfall Lib, all of these settings are optional.
+      snowfall = {
+        # Tell Snowfall Lib to look in the `./nix/` directory for your
+        # Nix files.
+        root = ./src;
+
+        # Choose a namespace to use for your flake's packages, library,
+        # and overlays.
+        namespace = "nixfigs";
+
+        # Add flake metadata that can be processed by tools like Snowfall Frost.
+        meta = {
+          # A slug to use in documentation when displaying things like file paths.
+          name = "nixfigs";
+
+          # A title to show for your flake, typically the name.
+          title = "Dom's Nixified Flake";
+        };
+      };
+    }
+    // {
+      self = inputs.self;
+      packages = let
+        inherit (inputs.shypkgs-public) allSystems forAllSystems;
+      in
+        forAllSystems (system: inputs.shypkgs-public.packages.${system});
+      hydraJobs = let
+        inherit (inputs.nixpkgs.lib) isDerivation filterAttrs mapAttrs elem;
+        notBroken = pkg: !(pkg.meta.broken or false);
+        isDistributable = pkg: (pkg.meta.license or {redistributable = true;}).redistributable;
+        hasPlatform = sys: pkg: elem sys (pkg.meta.platforms or [sys]);
+        filterValidPkgs = sys: pkgs:
+          filterAttrs (_: pkg:
+            isDerivation pkg
+            && hasPlatform sys pkg
+            && notBroken pkg
+            && isDistributable pkg)
+          pkgs;
+        getConfigTopLevel = _: cfg: cfg.config.system.build.toplevel;
+        getActivationPackage = _: cfg: cfg.config.home.activationPackage;
+      in {
+        pkgs = mapAttrs filterValidPkgs self.packages;
+        hosts = mapAttrs getConfigTopLevel self.nixosConfigurations;
+        users = mapAttrs getActivationPackage self.homeConfigurations;
+        inherit (self.builds) sdImages isoImages;
+      };
+
+      githubActions.matrix = with builtins; let
+        systemToPlatform = system: let
+          inherit (inputs.nixpkgs.lib.strings) hasSuffix;
+          isLinux = system: hasSuffix "-linux" system;
+          isDarwin = system: hasSuffix "-darwin" system;
+        in
+          if isLinux system
+          then "ubuntu-24.04"
+          else if isDarwin system
+          then "macos-14"
+          else throw "Unsupported system (platform): ${system}";
+        nixosConfigs = let
+          inherit (inputs.nixpkgs.lib.attrsets) filterAttrs mapAttrsToList;
+        in {
+          include = let
+            pred = n: v: let
+              inherit (v.pkgs) system;
+              isWorkMachine = v: let
+                inherit (builtins) elem hasAttr;
+              in
+                if hasAttr "nixfigs.meta" v.config
+                then elem "work" v.config.nixfigs.meta.rolesEnabled
+                else false;
+            in
+              !isWorkMachine v;
+          in
+            mapAttrsToList (n: v: {
+              hostName = n;
+              platform = systemToPlatform v.pkgs.system;
+              inherit (v.pkgs) system;
+            }) (filterAttrs pred self.nixosConfigurations);
+        };
+      in
+        nixosConfigs;
+
+      builds = let
+        inherit (inputs.nixpkgs.lib) hasAttrByPath filterAttrs;
+      in {
+        sdImages = with builtins;
+          mapAttrs (_: v: v.config.system.build.sdImage)
+          (filterAttrs (_: v:
+            hasAttrByPath ["config" "system" "build" "sdImage"] v)
+          self.nixosConfigurations);
+        isoImages = with builtins;
+          mapAttrs (_: v: v.config.system.build.isoImage)
+          (filterAttrs (_: v:
+            hasAttrByPath ["config" "system" "build" "isoImage"] v)
+          self.nixosConfigurations);
+      };
+    };
 }

@@ -30,7 +30,6 @@
       "kunit.enable=0"
     ];
 
-    swraid.enable = lib.mkForce false;
     loader = {
       grub.enable = false;
       generic-extlinux-compatible.enable = true;
