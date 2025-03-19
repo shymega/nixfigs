@@ -2394,6 +2394,8 @@
         "nixpkgs-shymega": "nixpkgs-shymega",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nur-xddxdd": "nur-xddxdd",
+        "shymega-flake-registry": "shymega-flake-registry",
+        "shypkgs-private": "shypkgs-private",
         "shypkgs-public": "shypkgs-public",
         "snowfall-lib": "snowfall-lib",
         "srvos": "srvos",
@@ -2437,6 +2439,37 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "shymega-flake-registry": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1740176432,
+        "narHash": "sha256-LufHLaIQoxHDrd/rxjK5Xsoah7WKz3Rj0bI5top0nyE=",
+        "owner": "shymega",
+        "repo": "shymega-flake-registry",
+        "rev": "151175f0fc31e30279f090af825bc3d8be74d9db",
+        "type": "github"
+      },
+      "original": {
+        "owner": "shymega",
+        "repo": "shymega-flake-registry",
+        "type": "github"
+      }
+    },
+    "shypkgs-private": {
+      "locked": {
+        "lastModified": 1740176424,
+        "narHash": "sha256-ahM+A+Guw7vK6qlofqGaWAq4MD4zbGD9npVPes0AdN0=",
+        "owner": "shymega",
+        "repo": "shypkgs-private-dummy",
+        "rev": "19eb1ef31873df7d2df300d32c1d1de9fab8f3cc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "shymega",
+        "repo": "shypkgs-private-dummy",
         "type": "github"
       }
     },
