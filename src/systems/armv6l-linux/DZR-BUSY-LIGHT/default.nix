@@ -29,15 +29,15 @@
     buildPlatform.system = "x86_64-linux";
     config.allowUnsupportedSystem = true;
     overlays = [
-(final: prev: let
-  nixpkgs = inputs.nixpkgs.legacyPackages.${prev.system};
-in {
-  qemu = nixpkgs.qemu.overrideAttrs (oldAttrs: {
-    pname = "qemu-fucked";
-    version = "fuckupieceofshit";
-    buildInputs = oldAttrs.buildInputs ++ (with nixpkgs; [ zlib ]);
-  });
-})
+      (final: prev: let
+        nixpkgs = inputs.nixpkgs.legacyPackages.${prev.system};
+      in {
+        qemu = nixpkgs.qemu.overrideAttrs (oldAttrs: {
+          pname = "qemu-fucked";
+          version = "fuckupieceofshit";
+          buildInputs = oldAttrs.buildInputs ++ (with nixpkgs; [zlib]);
+        });
+      })
     ];
   };
 

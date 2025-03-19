@@ -122,7 +122,7 @@
         allowUnfree = true;
       };
       outputs-builder = channels: let
-        system = channels.nixpkgs.system;
+        inherit (channels.nixpkgs) system;
         treefmtConfig = import ./nix/formatter.nix;
         treefmtWrapper = inputs.treefmt-nix.lib.mkWrapper channels.nixpkgs treefmtConfig;
       in {
@@ -139,12 +139,10 @@
         # };
       };
 
-      overlays = [ self.overlays.z-fucking-hack ];
+      overlays = [self.overlays.z-fucking-hack];
 
       systems.modules.nixos = with inputs;
-        [
-        ]
-        ++ (inputs.nixpkgs.lib.optional enableLix
+        (inputs.nixpkgs.lib.optional enableLix
           inputs.lix-module.nixosModules.default);
 
       # Configure Snowfall Lib, all of these settings are optional.
@@ -168,7 +166,7 @@
       };
     }
     // {
-      self = inputs.self;
+      inherit (inputs) self;
       packages = let
         inherit (inputs.shypkgs-public) allSystems forAllSystems;
       in
