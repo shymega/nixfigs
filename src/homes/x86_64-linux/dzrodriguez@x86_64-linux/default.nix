@@ -19,7 +19,7 @@
   # All other arguments come from the home home.
   config,
   ...
-}@args: let
+} @ args: let
   isOsModule = builtins.hasAttr "osConfig" args;
   osConfig =
     if isOsModule
@@ -37,7 +37,13 @@ in {
 
   wayland.windowManager.hyprland = {
     enable = true;
-    package = if isOsModule then null else inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-    portalPackage = if isOsModule then null else inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+    package =
+      if isOsModule
+      then null
+      else inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    portalPackage =
+      if isOsModule
+      then null
+      else inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
   };
 }
