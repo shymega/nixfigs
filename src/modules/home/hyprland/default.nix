@@ -8,7 +8,7 @@
   lib = let
     overlay = final: prev: {
       our = pkgs.lib;
-      hm = inputs.home-manager.lib.hm;
+      inherit (inputs.home-manager.lib) hm;
     };
   in
     pkgs.lib.extend overlay;
