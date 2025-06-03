@@ -1,0 +1,20 @@
+# SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
+name: PRs CI Workflow
+on:
+  pull_request:
+concurrency:
+  group: gh-ref-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  flake-tests:
+    uses: ./.github/workflows/flake-tests.yml
+    secrets: inherit
+  verify-pr-commit:
+    uses: ./.github/workflows/verify-pr-commit.yml
+    secrets: inherit
+  verify-reuse-compliance:
+    uses: ./.github/workflows/verify-reuse-compliance.yml
+    secrets: inherit
