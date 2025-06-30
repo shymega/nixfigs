@@ -28,27 +28,17 @@
   zfs_arc_max = toString (8 * 1024 * 1024 * 1024);
   zfs_arc_min = toString (8 * 1024 * 1024 * 1024 - 1);
 in {
-  imports = [
+  imports = with inputs; [
     ./hardware-configuration.nix
-    inputs.ucodenix.nixosModules.default
-    inputs.nur-xddxdd.nixosModules.setupOverlay
-    inputs.nur-xddxdd.nixosModules.nix-cache-attic
-    inputs.nixfigs-virtual-private.virtual.all
-    # inputs.himmelblau.nixosModules.himmelblau
+    ucodenix.nixosModules.default
+    nur-xddxdd.nixosModules.setupOverlay
+    nur-xddxdd.nixosModules.nix-cache-attic
+    nixfigs-virtual-private.virtual.all
   ];
   services.ucodenix = {
     enable = true;
     cpuModelId = "00A70F52";
   };
-
-  # services.himmelblau = {
-  #  enable = true;
-  #  settings = {
-  #    domains = ["rodriguez.org.uk"];
-  #    pam_allow_groups = ["ef9f6f17-e01a-4360-9c03-68b5c881b59b"];
-  #    local_groups = config.users.users."dzrodriguez".extraGroups;
-  #  };
-  # };
 
   networking = {
     hostName = "MORPHEUS-LINUX";

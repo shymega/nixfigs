@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 #
-_final: prev: {
+_: prev: {
   nginx-rtmp = prev.nginxStable.override (oldAttrs: {
     pname = "nginx-rtmp";
     modules = oldAttrs.modules ++ [prev.nginxModules.rtmp];

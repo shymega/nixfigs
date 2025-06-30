@@ -27,11 +27,11 @@
   zfs_arc_max = toString (8 * 1024 * 1024 * 1024);
   zfs_arc_min = toString (8 * 1024 * 1024 * 1024 - 1);
 in {
-  imports = [
+  imports = with inputs; [
     ./hardware-configuration.nix
-    inputs.nur-xddxdd.nixosModules.setupOverlay
-    inputs.nur-xddxdd.nixosModules.qemu-user-static-binfmt
-    inputs.nur-xddxdd.nixosModules.nix-cache-attic
+    nur-xddxdd.nixosModules.setupOverlay
+    nur-xddxdd.nixosModules.qemu-user-static-binfmt
+    nur-xddxdd.nixosModules.nix-cache-attic
   ];
   lantian.qemu-user-static-binfmt = {
     enable = true;

@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 #
-_final: prev: {
+_: prev: {
   weechatWithMyPlugins = prev.weechat.override {
     configure = {availablePlugins, ...}: {
       scripts = let

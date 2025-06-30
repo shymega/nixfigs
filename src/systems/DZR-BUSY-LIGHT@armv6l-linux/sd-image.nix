@@ -10,8 +10,8 @@
 }: {
   nixpkgs.crossSystem = lib.systems.elaborate lib.systems.examples.raspberryPi;
 
-  imports = [
-    "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-raspberrypi.nix"
+  imports = with inputs; [
+    "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-raspberrypi.nix"
     ./minification.nix
   ];
 

@@ -6,14 +6,15 @@
   lib,
   inputs,
   ...
-}: let
-  importStableOverlay = overlay: lib.composeExtensions (_: _: {__inputs = inputs;}) (import (./stable/enabled.d + "/${overlay}"));
+}:
+with lib; let
+  importStableOverlay = overlay: composeExtensions (_: _: {__inputs = inputs;}) (import (./stable/enabled.d + "/${overlay}"));
 
   stableOverlays = builtins.readDir ./stable/enabled.d;
 
   stableOverlaysWithImports =
-    lib.mapAttrs' (
-      overlay: _: lib.nameValuePair (lib.removeSuffix ".nix" overlay) (importStableOverlay overlay)
+    mapAttrs' (
+      overlay: _: nameValuePair (removeSuffix ".nix" overlay) (importStableOverlay overlay)
     )
     stableOverlays;
 
@@ -36,7 +37,7 @@
 in
   stableOverlaysWithImports
   // {
-    default = lib.composeManyExtensions (
-      defaultOverlays ++ customOverlays ++ (lib.attrValues stableOverlaysWithImports)
+    default = composeManyExtensions (
+      defaultOverlays ++ customOverlays ++ (attrValues stableOverlaysWithImports)
     );
   }

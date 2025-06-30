@@ -8,10 +8,10 @@
   lib,
   ...
 }: {
-  imports = [
+  imports = with inputs; [
     ./hardware-configuration.nix
-    inputs.hardware.nixosModules.raspberry-pi-4
-    "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+    hardware.nixosModules.raspberry-pi-4
+    "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
   ];
   networking = {
     hostName = "SMITH-LINUX";

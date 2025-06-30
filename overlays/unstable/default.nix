@@ -6,16 +6,18 @@
   inputs,
   lib,
   ...
-}: _final: prev: let
-  importUnstableOverlay = overlay: lib.composeExtensions (_: _: {__inputs = inputs;}) (import (./enabled.d + "/${overlay}"));
+}:
+with lib;
+  _: prev: let
+    importUnstableOverlay = overlay: composeExtensions (_: _: {__inputs = inputs;}) (import (./enabled.d + "/${overlay}"));
 
-  unstableOverlays = lib.mapAttrs' (
-    overlay: _: lib.nameValuePair (lib.removeSuffix ".nix" overlay) (importUnstableOverlay overlay)
-  ) (builtins.readDir ./enabled.d);
-in {
-  unstable = import inputs.nixpkgs-unstable {
-    inherit (prev) system;
-    config = inputs.self.nixpkgs-config;
-    overlays = builtins.attrValues unstableOverlays;
-  };
-}
+    unstableOverlays = mapAttrs' (
+      overlay: _: nameValuePair (removeSuffix ".nix" overlay) (importUnstableOverlay overlay)
+    ) (builtins.readDir ./enabled.d);
+  in {
+    unstable = import inputs.nixpkgs-unstable {
+      inherit (prev) system;
+      config = inputs.self.nixpkgs-config;
+      overlays = builtins.attrValues unstableOverlays;
+    };
+  }

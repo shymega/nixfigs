@@ -63,27 +63,6 @@
 
   services.libinput.enable = true;
 
-  users.users.root = {
-    password = "changeme";
-  };
-  users.ldap = rec {
-    enable = true;
-    base = "o=644e9696d070741c2aa2bf4f,dc=jumpcloud,dc=com";
-    server = "ldap://ldap.jumpcloud.com/";
-    useTLS = true;
-    bind = {
-      distinguishedName = "${builtins.readFile (pkgs.writeText "ldap-bind-dn" "secretsecretsecret")}";
-      policy = "soft";
-      passwordFile = "${pkgs.writeText "ldap-password" "hunter2"}";
-    };
-    extraConfig = ''
-      ldap_version 3
-      pam_password md5
-
-      map passwd loginShell "${pkgs.lib.getExe pkgs.bash}"
-    '';
-  };
-
   environment.systemPackages = with pkgs; [
     vim
     wget
