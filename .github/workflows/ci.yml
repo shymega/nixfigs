@@ -29,7 +29,7 @@ jobs:
       - name: Update Flake lockfile
         run: nix flake update --accept-flake-config
       - name: Commit changes to lockfile
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v6
         with:
           branch: ${{ github.ref_name }}
           commit_message: "chore(lockfile): Update Flake lockfile"
@@ -52,7 +52,7 @@ jobs:
       - name: Format Nix files
         run: nix fmt
       - name: Commit changes to codebase
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v6
         with:
           branch: ${{ github.ref_name }}
           commit_message: "chore(lint): Format Nix files"
