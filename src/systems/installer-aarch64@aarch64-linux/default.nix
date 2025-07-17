@@ -7,24 +7,6 @@
   pkgs,
   ...
 }: {
-  imports = [
-    ../../modules/nixos/iso
-  ];
-
-  nixfigs.installer = {
-    enable = true;
-    imageName = "nixos-installer-aarch64";
-    includeZeroTier = true;
-    includeZFS = true;
-    sshKeys = [
-      # Add your SSH public keys here
-      # Example: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI... user@host"
-    ];
-    extraPackages = with pkgs; [
-      # Additional packages for aarch64 installer (these are now included automatically)
-    ];
-  };
-
   # Architecture-specific optimizations
   boot.kernelParams = [
     "console=ttyS0,115200n8"
@@ -39,5 +21,8 @@
   networking.usePredictableInterfaceNames = true;
 
   # System information
-  system.stateVersion = "24.05";
+  system.stateVersion = "25.05";
+
+  nixfigs.installer.isoImage.enable = true;
+  nixfigs.installer.sdImage.enable = true;
 }
