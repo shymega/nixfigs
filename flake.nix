@@ -8,6 +8,9 @@
     inherit (inputs) self;
     rolesModule = import ./nix-support/roles.nix;
     systemsModule = import ./nix-support/systems.nix {inherit inputs;};
+    hydraModule = import ./nix-support/hydra.nix {inherit self inputs;};
+    githubActionsModule = import ./nix-support/github-actions.nix {inherit self inputs systemsModule;};
+    buildsModule = import ./nix-support/builds.nix {inherit self inputs;};
     inherit (systemsModule) treefmtSystems forEachSystem;
     treeFmtEachSystem = forEachSystem treefmtSystems;
     treeFmtEval = treeFmtEachSystem (
@@ -58,28 +61,7 @@
           totp = inputs.nixpkgs.legacyPackages.${system}.callPackage ./packages/totp {};
         });
 
-    hydraJobs = let
-      inherit (inputs.nixpkgs.lib) isDerivation filterAttrs mapAttrs elem;
-      filterValidPkgs = let
-        hasPlatform = sys: pkg: elem sys (pkg.meta.platforms or [sys]);
-        isDistributable = pkg: (pkg.meta.license or {redistributable = true;}).redistributable;
-        notBroken = pkg: !(pkg.meta.broken or false);
-      in
-        sys: pkgs:
-          filterAttrs (_: pkg:
-            isDerivation pkg
-            && hasPlatform sys pkg
-            && notBroken pkg
-            && isDistributable pkg)
-          pkgs;
-      getConfigTopLevel = _: cfg: cfg.config.system.build.toplevel;
-      getActivationPackage = _: cfg: cfg.config.home.activationPackage;
-    in {
-      pkgs = mapAttrs filterValidPkgs self.packages;
-      hosts = mapAttrs getConfigTopLevel self.nixosConfigurations;
-      users = mapAttrs getActivationPackage self.homeConfigurations;
-      inherit (self.builds) sdImages isoImages;
-    };
+    inherit (hydraModule) hydraJobs;
 
     formatter = treeFmtEachSystem (pkgs: treeFmtEval.${pkgs.system}.config.build.wrapper);
 
@@ -108,51 +90,9 @@
         }
       );
 
-    githubActions.matrix = let
-      inherit (systemsModule) systemToPlatform;
-      nixosConfigs = let
-        inherit (inputs.nixpkgs.lib.attrsets) filterAttrs mapAttrsToList;
-      in {
-        include = with builtins; let
-          pred = n: v: let
-            isWorkMachine = v:
-              if hasAttr "nixfigs.meta.rolesEnabled" v.config
-              then elem "work" v.config.nixfigs.meta.rolesEnabled
-              else false;
-            notUnsupportedSystem = let
-              unsupportedSystems = [
-                "armv6l-linux"
-                "armv7l-linux"
-                "riscv64-linux"
-              ];
-            in
-              sys: any (x: x == sys) unsupportedSystems;
-          in
-            !isWorkMachine v && !notUnsupportedSystem v.pkgs.system;
-        in
-          mapAttrsToList (n: v: {
-            hostName = n;
-            platform = systemToPlatform v.pkgs.system;
-            inherit (v.pkgs) system;
-          }) (filterAttrs pred self.nixosConfigurations);
-      };
-    in
-      nixosConfigs;
+    inherit (githubActionsModule) githubActions;
 
-    builds = let
-      inherit (inputs.nixpkgs.lib) hasAttrByPath filterAttrs;
-    in {
-      sdImages = with builtins;
-        mapAttrs (_: v: v.config.system.build.sdImage)
-        (filterAttrs (_: v:
-          hasAttrByPath ["config" "system" "build" "sdImage"] v)
-        self.nixosConfigurations);
-      isoImages = with builtins;
-        mapAttrs (_: v: v.config.system.build.isoImage)
-        (filterAttrs (_: v:
-          hasAttrByPath ["config" "system" "build" "isoImage"] v)
-        self.nixosConfigurations);
-    };
+    inherit (buildsModule) builds;
   };
 
   inputs = {
