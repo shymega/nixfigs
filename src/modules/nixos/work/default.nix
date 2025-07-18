@@ -2,11 +2,11 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ config, lib, ... }:
+{ config, lib, hostRoles, ... }:
 let
   inherit (lib) checkRoles;
-  isWork = checkRoles ["work"] config;
-  isPersonal = checkRoles ["personal"] config;
+  isWork = checkRoles ["work"] hostRoles;
+  isPersonal = checkRoles ["personal"] hostRoles;
 in {
   # Mutual exclusion - cannot be both work and personal
   assertions = [{
@@ -14,10 +14,10 @@ in {
     message = "System cannot have both 'work' and 'personal' roles simultaneously";
   }];
 
-  imports = lib.optionals isWork [
+  imports = [] ++ (if isWork then [
     ./networking.nix
     ./applications.nix
     ./compliance.nix
     ./monitoring.nix
-  ];
+  ] else [ ]);
 }
