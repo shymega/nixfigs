@@ -34,12 +34,13 @@ in
   else
     inputs.git-hooks.lib.${system}.run {
       src = lib.cleanSource "${self}/.";
+      
+      # Enhanced pre-commit hooks
       hooks = {
-        actionlint.enable = true;
-        alejandra.enable = true;
-        yamlfmt.enable = true;
+        # Nix
+        nixfmt.enable = true;
         statix = {
-          enable = false;
+          enable = true;
           settings.ignore = [
             "flake.nix"
             "*-compose.nix"
@@ -49,5 +50,45 @@ in
             ".direnv"
           ];
         };
+        deadnix.enable = true;
+        
+        # Shell scripts
+        shellcheck.enable = true;
+        shfmt.enable = true;
+        
+        # YAML/JSON
+        yamlfmt.enable = true;
+        check-yaml.enable = true;
+        check-json.enable = true;
+        
+        # Markdown
+        markdownlint.enable = true;
+        
+        # GitHub Actions
+        actionlint.enable = true;
+        
+        # General
+        check-added-large-files.enable = true;
+        check-case-conflicts.enable = true;
+        check-executables-have-shebangs.enable = true;
+        check-merge-conflicts.enable = true;
+        check-symlinks.enable = true;
+        detect-private-keys.enable = true;
+        end-of-file-fixer.enable = true;
+        trailing-whitespace.enable = true;
       };
+      
+      # Custom shell hook
+      shellHook = ''
+        echo 🔨 Welcome to nixfigs!
+        echo
+        echo "Available pre-commit hooks:"
+        echo "  - nixfmt: Nix code formatting"
+        echo "  - statix: Nix linting" 
+        echo "  - deadnix: Dead code detection"
+        echo "  - shellcheck: Shell script analysis"
+        echo "  - yamlfmt: YAML formatting"
+        echo "  - markdownlint: Markdown linting"
+        echo
+      '';
     }
