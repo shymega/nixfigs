@@ -5,12 +5,16 @@
   mkHost,
   inputs,
   ...
-}: mkHost {
+}:
+mkHost {
   type = "nixos";
   hostname = "installer-aarch64";
   hostPlatform = "aarch64-linux";
-  hostRoles = ["installer" "personal"];
-  
+  hostRoles = [
+    "installer"
+    "personal"
+  ];
+
   pubkey = null;
   embedHm = false;
   remoteBuild = false;

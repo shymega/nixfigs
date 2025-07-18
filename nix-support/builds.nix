@@ -7,19 +7,23 @@
   self,
   inputs,
   ...
-}: let
+}:
+let
   inherit (inputs.nixpkgs.lib) hasAttrByPath filterAttrs;
-in {
+in
+{
   builds = {
-    sdImages = with builtins;
-      mapAttrs (_: v: v.config.system.build.sdImage)
-      (filterAttrs (_: v:
-        hasAttrByPath ["config" "system" "build" "sdImage"] v)
-      self.nixosConfigurations);
-    isoImages = with builtins;
-      mapAttrs (_: v: v.config.system.build.isoImage)
-      (filterAttrs (_: v:
-        hasAttrByPath ["config" "system" "build" "isoImage"] v)
-      self.nixosConfigurations);
+    sdImages =
+      with builtins;
+      mapAttrs (_: v: v.config.system.build.sdImage) (
+        filterAttrs (_: v: hasAttrByPath [ "config" "system" "build" "sdImage" ] v) self.nixosConfigurations
+      );
+    isoImages =
+      with builtins;
+      mapAttrs (_: v: v.config.system.build.isoImage) (
+        filterAttrs (
+          _: v: hasAttrByPath [ "config" "system" "build" "isoImage" ] v
+        ) self.nixosConfigurations
+      );
   };
 }

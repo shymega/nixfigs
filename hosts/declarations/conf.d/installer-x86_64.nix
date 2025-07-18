@@ -5,12 +5,16 @@
   mkHost,
   inputs,
   ...
-}: mkHost {
+}:
+mkHost {
   type = "nixos";
   hostname = "installer-x86_64";
   hostPlatform = "x86_64-linux";
-  hostRoles = ["installer" "personal"];
-  
+  hostRoles = [
+    "installer"
+    "personal"
+  ];
+
   pubkey = null;
   embedHm = false;
   remoteBuild = false;
