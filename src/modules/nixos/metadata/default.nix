@@ -10,12 +10,11 @@
 with lib; {
   options.nixfigs.meta = {
     rolesEnabled = mkOption {
-      default = hostRoles or [];
+      default = hostRoles;
       type = with types; listOf str;
     };
     hostAddress = mkOption {
-      default = builtins.hasAttr "hostAddress" metadata && builtins.getAttr "hostAddress" metadata or "";
-      nullable = true;
+      default = (builtins.hasAttr "hostAddress" metadata && builtins.getAttr "hostAddress" metadata) or "";
       type = with types; str;
     };
   };
