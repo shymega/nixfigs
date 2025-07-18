@@ -9,7 +9,7 @@
   ...
 }:
 with lib; let
-  enabled = checkRoles ["workstation"] config.nixfigs.meta.rolesEnabled;
+  enabled = checkRoles ["workstation"] config;
   sway-wrapped-hw = pkgs.writeShellScript "sway-wrapped-hw" ''
     #!/bin/sh
     export WLR_NO_HARDWARE_CURSORS=1
