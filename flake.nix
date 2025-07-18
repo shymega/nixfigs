@@ -12,7 +12,7 @@
     githubActionsModule = import ./nix-support/github-actions.nix {inherit self inputs systemsModule;};
     buildsModule = import ./nix-support/builds.nix {inherit self inputs;};
     inherit (systemsModule) treefmtSystems forEachSystem;
-    treeFmtEachSystem = forEachSystem treefmtSystems;
+    treeFmtEachSystem = f: inputs.nixpkgs.lib.genAttrs treefmtSystems (system: f inputs.nixpkgs.legacyPackages.${system});
     treeFmtEval = treeFmtEachSystem (
       pkgs:
         inputs.treefmt-nix.lib.evalModule pkgs ./nix-support/formatter.nix
@@ -24,7 +24,7 @@
       allowUnfree = true;
       allowUnsupportedSystem = true;
       allowBroken = false;
-      allowInsecurePredicate = pkg: builtins.elem (lib.getName pkg) [
+      allowInsecurePredicate = pkg: builtins.elem (inputs.nixpkgs.lib.getName pkg) [
         # Add specific packages that need to be allowed here
         # Example: "package-name"
       ];
@@ -105,15 +105,12 @@
     # NixOS modules and hardware
     hardware = {
       url = "github:NixOS/nixos-hardware";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     hardware-shymega = {
       url = "github:shymega/nixos-hardware?ref=shymega";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     impermanence = {
       url = "github:nix-community/impermanence";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-wsl = {
       url = "github:nix-community/nixos-wsl";
@@ -199,7 +196,6 @@
     };
     base16-schemes = {
       url = "github:SenchoPens/base16.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     
     # Desktop environment
@@ -209,7 +205,6 @@
     };
     nix-flatpak = {
       url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     
     # Package repositories
@@ -235,7 +230,6 @@
     # Specialized tools
     ucodenix = {
       url = "github:e-tho/ucodenix";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     android-nixpkgs = {
       url = "github:tadfisher/android-nixpkgs?ref=stable";
@@ -249,7 +243,6 @@
     # Personal packages and configs
     shypkgs-private = {
       url = "github:shymega/shypkgs-private-dummy";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     shypkgs-public = {
       url = "github:shymega/shypkgs-public";
