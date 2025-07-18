@@ -15,9 +15,9 @@
   isAarch64 = config.nixpkgs.hostPlatform.isAarch64;
   isX86_64 = config.nixpkgs.hostPlatform.isx86_64;
   
-  # Auto-detect output format based on imported modules
-  hasIsoModule = config.system.build ? isoImage;
-  hasSdModule = config.system.build ? sdImage;
+  # Auto-detect output format based on configuration options
+  hasIsoModule = config ? isoImage;
+  hasSdModule = config ? sdImage;
   
   # Determine output format implicitly
   outputFormat = if hasIsoModule && hasSdModule then "both"
@@ -132,165 +132,172 @@ in
       };
     };
     
-    config = mkIf cfg.enable {
-      # Configure output formats based on imported modules
-      isoImage = mkIf (outputFormat == "iso" || outputFormat == "both") {
-        isoName = cfg.imageName;
-        # Boot mode configuration
-        makeEfiBootable = mkIf (cfg.bootMode == "uefi" || cfg.bootMode == "both") true;
-        makeUsbBootable = mkIf (cfg.bootMode == "bios" || cfg.bootMode == "both") true;
-        # Volume label
-        volumeLabel = "NIXOS_INSTALLER";
-      };
-      
-      # SD card configuration
-      sdImage = mkIf (outputFormat == "sd-card" || outputFormat == "both") {
-        imageName = cfg.imageName;
-        populateRootCommands = cfg.sdCard.populateRootCommands;
-        populateFirmwareCommands = cfg.sdCard.populateFirmwareCommands;
-        firmwareSize = cfg.sdCard.firmwareSize;
-        # Ensure we have space for the installer and tools
-        rootPartitionUUID = "44444444-4444-4444-8888-888888888888";
-        compressImage = true;
-      };
-      
-      # Enable systemd in stage 1
-      boot.initrd.systemd.enable = true;
-      
-      # ZFS support
-      boot.supportedFilesystems = mkIf cfg.includeZFS ["zfs"];
-      boot.zfs.forceImportAll = mkIf cfg.includeZFS true;
-      
-      # Network configuration
-      networking.useDHCP = lib.mkDefault true;
-      networking.useNetworkd = true;
-      systemd.network.enable = true;
-      
-      # ZeroTier configuration
-      services.zerotierone = mkIf cfg.includeZeroTier {
-        enable = true;
-        joinNetworks = mkIf (config.sops.secrets ? "zerotier-network-id") [
-          "$(cat ${config.sops.secrets."zerotier-network-id".path})"
-        ];
-      };
+    config = mkIf cfg.enable (mkMerge [
+      {
+        # Common installer configuration
+        # Enable systemd in stage 1
+        boot.initrd.systemd.enable = true;
+        
+        # ZFS support
+        boot.supportedFilesystems = mkIf cfg.includeZFS ["zfs"];
+        boot.zfs.forceImportAll = mkIf cfg.includeZFS true;
+        
+        # Network configuration
+        networking.useDHCP = lib.mkDefault true;
+        networking.useNetworkd = true;
+        systemd.network.enable = true;
+        
+        # ZeroTier configuration
+        services.zerotierone = mkIf cfg.includeZeroTier {
+          enable = true;
+          joinNetworks = mkIf (config.sops.secrets ? "zerotier-network-id") [
+            "$(cat ${config.sops.secrets."zerotier-network-id".path})"
+          ];
+        };
 
-      # SOPS secrets configuration for installer
-      sops = mkIf (isPersonal && (cfg.includeZeroTier || cfg.sshKeys == [])) {
-        defaultSopsFile = ../../../secrets/personal/installer/config.yaml;
-        secrets = {
-          "zerotier-network-id" = mkIf cfg.includeZeroTier {
-            mode = "0444";
-            owner = "root";
-            group = "root";
-          };
-          "installer-ssh-keys" = mkIf (cfg.sshKeys == []) {
-            mode = "0444";
-            owner = "root";
-            group = "root";
+        # SOPS secrets configuration for installer
+        sops = mkIf (isPersonal && (cfg.includeZeroTier || cfg.sshKeys == [])) {
+          defaultSopsFile = ../../../secrets/personal/installer/config.yaml;
+          secrets = {
+            "zerotier-network-id" = mkIf cfg.includeZeroTier {
+              mode = "0444";
+              owner = "root";
+              group = "root";
+            };
+            "installer-ssh-keys" = mkIf (cfg.sshKeys == []) {
+              mode = "0444";
+              owner = "root";
+              group = "root";
+            };
           };
         };
-      };
-      
-      # SSH configuration
-      services.openssh = {
-        enable = true;
-        settings = {
-          PasswordAuthentication = false;
-          KbdInteractiveAuthentication = false;
-          PermitRootLogin = "prohibit-password";
+        
+        # SSH configuration
+        services.openssh = {
+          enable = true;
+          settings = {
+            PasswordAuthentication = false;
+            KbdInteractiveAuthentication = false;
+            PermitRootLogin = "prohibit-password";
+          };
         };
-      };
-      
-      # User configuration
-      users.users.installer = {
-        isNormalUser = true;
-        extraGroups = ["wheel" "networkmanager"];
-        openssh.authorizedKeys.keys = cfg.sshKeys;
-        openssh.authorizedKeys.keyFiles = mkIf (cfg.sshKeys == [] && (config.sops.secrets ? "installer-ssh-keys")) [
-          config.sops.secrets."installer-ssh-keys".path
+        
+        # User configuration
+        users.users.installer = {
+          isNormalUser = true;
+          extraGroups = ["wheel" "networkmanager"];
+          openssh.authorizedKeys.keys = cfg.sshKeys;
+          openssh.authorizedKeys.keyFiles = mkIf (cfg.sshKeys == [] && (config.sops.secrets ? "installer-ssh-keys")) [
+            config.sops.secrets."installer-ssh-keys".path
+          ];
+          shell = pkgs.fish;
+        };
+        
+        users.users.root = {
+          openssh.authorizedKeys.keys = cfg.sshKeys;
+          openssh.authorizedKeys.keyFiles = mkIf (cfg.sshKeys == [] && (config.sops.secrets ? "installer-ssh-keys")) [
+            config.sops.secrets."installer-ssh-keys".path
+          ];
+        };
+        
+        # Essential packages for installer
+        environment.systemPackages = commonPackages ++ archPackages ++ cfg.extraPackages;
+        
+        # Enable fish shell
+        programs.fish.enable = true;
+        
+        # Console configuration
+        console = {
+          font = "Lat2-Terminus16";
+          keyMap = "us";
+        };
+        
+        # Locale settings
+        i18n.defaultLocale = "en_US.UTF-8";
+        
+        # Time zone
+        time.timeZone = "UTC";
+        
+        # Enable flakes
+        nix.settings.experimental-features = ["nix-command" "flakes"];
+        
+        # Auto-login for installer user
+        services.getty.autologinUser = "installer";
+        
+        # Welcome message
+        environment.etc."issue".text = ''
+          NixOS Installer (${outputFormat})
+          ======================${lib.stringAsChars (x: "=") outputFormat}
+          
+          Welcome to the NixOS installer environment!
+          
+          This system includes:
+          - ZFS support for advanced storage management
+          - ZeroTier for network connectivity
+          - SSH access with pre-configured keys
+          - Essential system administration tools
+          
+          Architecture: ${config.nixpkgs.hostPlatform.system}
+          Output format: ${outputFormat}
+          ${lib.optionalString (outputFormat == "iso" || outputFormat == "both") "Boot mode: ${cfg.bootMode}"}
+          
+          To get started:
+          1. Configure your network connection
+          2. Partition your disks (ZFS recommended)
+          3. Mount your filesystems
+          4. Install NixOS
+          
+          For help: man nixos-install
+          
+        '';
+        
+        # Disable sudo password for installer user
+        security.sudo.wheelNeedsPassword = false;
+        
+        # Architecture-specific configurations
+        boot.kernelParams = mkMerge [
+          (mkIf isAarch64 [
+            "console=ttyS0,115200n8"
+            "console=tty0"
+            "earlycon"
+          ])
+          (mkIf isX86_64 [
+            "console=ttyS0,115200n8"
+            "console=tty0"
+          ])
         ];
-        shell = pkgs.fish;
-      };
-      
-      users.users.root = {
-        openssh.authorizedKeys.keys = cfg.sshKeys;
-        openssh.authorizedKeys.keyFiles = mkIf (cfg.sshKeys == [] && (config.sops.secrets ? "installer-ssh-keys")) [
-          config.sops.secrets."installer-ssh-keys".path
-        ];
-      };
-      
-      # Essential packages for installer
-      environment.systemPackages = commonPackages ++ archPackages ++ cfg.extraPackages;
-      
-      # Enable fish shell
-      programs.fish.enable = true;
-      
-      # Console configuration
-      console = {
-        font = "Lat2-Terminus16";
-        keyMap = "us";
-      };
-      
-      # Locale settings
-      i18n.defaultLocale = "en_US.UTF-8";
-      
-      # Time zone
-      time.timeZone = "UTC";
-      
-      # Enable flakes
-      nix.settings.experimental-features = ["nix-command" "flakes"];
-      
-      # Auto-login for installer user
-      services.getty.autologinUser = "installer";
-      
-      # Welcome message
-      environment.etc."issue".text = ''
-        NixOS Installer (${outputFormat})
-        ======================${lib.stringAsChars (x: "=") outputFormat}
         
-        Welcome to the NixOS installer environment!
+        # Enable hardware support
+        hardware.enableAllFirmware = true;
+        hardware.enableRedistributableFirmware = true;
         
-        This system includes:
-        - ZFS support for advanced storage management
-        - ZeroTier for network connectivity
-        - SSH access with pre-configured keys
-        - Essential system administration tools
-        
-        Architecture: ${config.nixpkgs.hostPlatform.system}
-        Output format: ${outputFormat}
-        ${lib.optionalString (outputFormat == "iso" || outputFormat == "both") "Boot mode: ${cfg.bootMode}"}
-        
-        To get started:
-        1. Configure your network connection
-        2. Partition your disks (ZFS recommended)
-        3. Mount your filesystems
-        4. Install NixOS
-        
-        For help: man nixos-install
-        
-      '';
+        # Network interface naming
+        networking.usePredictableInterfaceNames = true;
+      }
       
-      # Disable sudo password for installer user
-      security.sudo.wheelNeedsPassword = false;
+      # Configure ISO image options if the module is available
+      (mkIf hasIsoModule {
+        isoImage = {
+          isoName = cfg.imageName;
+          # Boot mode configuration
+          makeEfiBootable = mkIf (cfg.bootMode == "uefi" || cfg.bootMode == "both") true;
+          makeUsbBootable = mkIf (cfg.bootMode == "bios" || cfg.bootMode == "both") true;
+          # Volume label
+          volumeLabel = "NIXOS_INSTALLER";
+        };
+      })
       
-      # Architecture-specific configurations
-      boot.kernelParams = mkMerge [
-        (mkIf isAarch64 [
-          "console=ttyS0,115200n8"
-          "console=tty0"
-          "earlycon"
-        ])
-        (mkIf isX86_64 [
-          "console=ttyS0,115200n8"
-          "console=tty0"
-        ])
-      ];
-      
-      # Enable hardware support
-      hardware.enableAllFirmware = true;
-      hardware.enableRedistributableFirmware = true;
-      
-      # Network interface naming
-      networking.usePredictableInterfaceNames = true;
-    };
+      # Configure SD card options if the module is available
+      (mkIf hasSdModule {
+        sdImage = {
+          imageName = cfg.imageName;
+          populateRootCommands = cfg.sdCard.populateRootCommands;
+          populateFirmwareCommands = cfg.sdCard.populateFirmwareCommands;
+          firmwareSize = cfg.sdCard.firmwareSize;
+          # Ensure we have space for the installer and tools
+          rootPartitionUUID = "44444444-4444-4444-8888-888888888888";
+          compressImage = true;
+        };
+      })
+    ]);
   }
