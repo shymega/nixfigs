@@ -4,11 +4,7 @@
 name: Pushes CI Workflow
 on:
   push:
-    branches: [main, refactor/snowfall]
-    paths:
-      - flake.lock
-      - flake.nix
-      - nix/**
+    branches: [main, refactor/mk-v]
   workflow_dispatch:
 concurrency:
   group: gh-ref-${{ github.ref }}
