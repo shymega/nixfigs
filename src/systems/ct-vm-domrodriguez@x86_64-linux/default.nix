@@ -21,11 +21,9 @@ in
   boot = {
     loader = {
       grub = {
-        enable = true;
+        enable = lib.mkForce true;
         device = "/dev/vda"; # Standard libvirt disk
-        timeout = 2;
       };
-      timeout = 2;
     };
     
     # VM-optimized kernel parameters
