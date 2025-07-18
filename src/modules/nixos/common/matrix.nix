@@ -6,7 +6,8 @@
   config,
   ...
 }:
-with lib; {
+with lib;
+{
   config = mkIf false {
     services.pantalaimon-headless.instances.rnetMatrix = {
       homeserver = "https://matrix.rodriguez.org.uk";

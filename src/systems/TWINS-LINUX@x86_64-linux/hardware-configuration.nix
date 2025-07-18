@@ -5,7 +5,8 @@
   config,
   lib,
   ...
-}: {
+}:
+{
   boot = {
     initrd.availableKernelModules = [
       "xhci_pci"
@@ -15,9 +16,9 @@
       "rtsx_pci_sdmmc"
       "hid_apple"
     ];
-    initrd.kernelModules = ["dm-snapshot"];
-    kernelModules = ["kvm-intel"];
-    extraModulePackages = [];
+    initrd.kernelModules = [ "dm-snapshot" ];
+    kernelModules = [ "kvm-intel" ];
+    extraModulePackages = [ ];
     resumeDevice = "/dev/disk/by-label/SWAP";
     zfs = {
       requestEncryptionCredentials = true;
@@ -70,15 +71,15 @@
     };
 
     "/etc/ssh" = {
-      depends = ["/persist"];
+      depends = [ "/persist" ];
       device = "/persist/etc/ssh";
       fsType = "none";
       neededForBoot = true;
-      options = ["bind"];
+      options = [ "bind" ];
     };
   };
 
-  swapDevices = [{device = "/dev/disk/by-label/SWAP";}];
+  swapDevices = [ { device = "/dev/disk/by-label/SWAP"; } ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

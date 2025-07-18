@@ -7,19 +7,17 @@
   pkgs,
   hostname,
   ...
-}: let
+}:
+let
   isPersonal =
-    hostname
-    == "NEO-LINUX"
+    hostname == "NEO-LINUX"
     || hostname == "MORPHEUS-LINUX"
     || hostname == "TRINITY-LINUX"
     || hostname == "TWINS-LINUX"
     || hostname == "DEUSEX-LINUX";
-  isDeltaZero =
-    hostname
-    == "DELTA-ZERO"
-    || hostname == "delta-zero";
-in {
+  isDeltaZero = hostname == "DELTA-ZERO" || hostname == "delta-zero";
+in
+{
   imports =
     [
       ./appimage.nix
@@ -36,30 +34,32 @@ in {
       ./utils
     ]
     ++ (
-      if isPersonal
-      then [
-        ./automount.nix
-        ./dovecot2.nix
-        ./graphical.nix
-        ./impermanence.nix
-        ./matrix.nix
-        ./postfix.nix
-        ./steam-hardware.nix
-        ./xdg.nix
-      ]
-      else []
+      if isPersonal then
+        [
+          ./automount.nix
+          ./dovecot2.nix
+          ./graphical.nix
+          ./impermanence.nix
+          ./matrix.nix
+          ./postfix.nix
+          ./steam-hardware.nix
+          ./xdg.nix
+        ]
+      else
+        [ ]
     )
     ++ (
-      if isDeltaZero
-      then [
-        ./davmail.nix
-        ./dovecot2.nix
-        ./postfix.nix
-      ]
-      else []
+      if isDeltaZero then
+        [
+          ./davmail.nix
+          ./dovecot2.nix
+          ./postfix.nix
+        ]
+      else
+        [ ]
     );
 
-  boot.kernelParams = ["log_buf_len=10M"];
+  boot.kernelParams = [ "log_buf_len=10M" ];
 
   documentation = {
     dev.enable = true;
@@ -70,7 +70,7 @@ in {
 
   networking = {
     firewall = {
-      trustedInterfaces = ["tailscale0"];
+      trustedInterfaces = [ "tailscale0" ];
       # allowedUDPPorts = [ config.services.tailscale.port ];
     };
   };
@@ -106,12 +106,14 @@ in {
   systemd = {
     network.wait-online.anyInterface = false;
     services.tailscaled = {
-      after = ["network-online.target"];
-      wants = ["network-online.target"];
+      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
     };
   };
 
-  services.udev.packages = with pkgs; lib.optional (pkgs.system == "x86_64_linux" || pkgs.system == "aarch64-linux") [xrlinuxdriver];
+  services.udev.packages =
+    with pkgs;
+    lib.optional (pkgs.system == "x86_64_linux" || pkgs.system == "aarch64-linux") [ xrlinuxdriver ];
 
   services.udev.extraRules = ''
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="5548", ATTRS{idProduct}=="6670", GROUP="users", TAG+="uaccess"
@@ -137,9 +139,10 @@ in {
   programs.nix-ld.enable = true;
   programs.java.binfmt = true;
   services.incron.enable = true;
-  security.pam.services = let
-    inherit (lib) optionalAttrs hasSuffix;
-  in
+  security.pam.services =
+    let
+      inherit (lib) optionalAttrs hasSuffix;
+    in
     optionalAttrs (hasSuffix "-LINUX" hostname) {
       login.gnupg = {
         enable = true;

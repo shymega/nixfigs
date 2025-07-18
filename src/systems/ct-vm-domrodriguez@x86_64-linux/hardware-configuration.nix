@@ -5,7 +5,13 @@
 # Hardware configuration for ct-vm-domrodriguez libvirt VM
 # Optimized for QEMU/KVM virtualization with ZFS backing
 
-{ config, lib, pkgs, modulesPath, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  ...
+}:
 
 {
   imports = [
@@ -13,17 +19,20 @@
   ];
 
   # VM CPU configuration
-  boot.initrd.availableKernelModules = [ 
-    "virtio_pci" 
-    "virtio_scsi" 
-    "virtio_blk" 
+  boot.initrd.availableKernelModules = [
+    "virtio_pci"
+    "virtio_scsi"
+    "virtio_blk"
     "virtio_net"
     "virtio_balloon"
     "virtio_rng"
     "9p"
     "9pnet_virtio"
   ];
-  boot.initrd.kernelModules = [ "virtio_balloon" "virtio_rng" ];
+  boot.initrd.kernelModules = [
+    "virtio_balloon"
+    "virtio_rng"
+  ];
   boot.kernelModules = [ "kvm-amd" ]; # Assuming AMD host (DEUSEX-LINUX)
   boot.extraModulePackages = [ ];
 
@@ -52,10 +61,10 @@
 
   # Power management (minimal for VM)
   powerManagement.enable = false;
-  
+
   # No firmware updates needed for VM
   services.fwupd.enable = lib.mkForce false;
-  
+
   # Disable hardware-specific services
   services.thermald.enable = lib.mkForce false;
   services.auto-cpufreq.enable = lib.mkForce false;
@@ -69,15 +78,18 @@
   };
 
   # Graphics driver for VM
-  services.xserver.videoDrivers = [ "virtio" "qxl" ];
-  
+  services.xserver.videoDrivers = [
+    "virtio"
+    "qxl"
+  ];
+
   # VM-specific optimizations
   boot.kernel.sysctl = {
     # Memory optimizations for VM
     "vm.swappiness" = 10;
     "vm.dirty_ratio" = 15;
     "vm.dirty_background_ratio" = 5;
-    
+
     # Network optimizations for virtualized environment
     "net.core.rmem_max" = 16777216;
     "net.core.wmem_max" = 16777216;

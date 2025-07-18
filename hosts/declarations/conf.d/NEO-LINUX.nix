@@ -12,7 +12,12 @@ mkHost rec {
   type = "nixos";
   hostname = "NEO-LINUX";
   hostPlatform = "x86_64-linux";
-  hostRoles = ["workstation" "gaming" "personal" "home-pc"];
+  hostRoles = [
+    "workstation"
+    "gaming"
+    "personal"
+    "home-pc"
+  ];
   hardwareModules = with inputs; [
     hardware.nixosModules.common-cpu-amd
     hardware.nixosModules.common-gpu-amd
@@ -21,7 +26,7 @@ mkHost rec {
   ];
   extraModules = with inputs; [
     lanzaboote.nixosModules.lanzaboote
-    {environment.systemPackages = [inputs.nixpkgs.legacyPackages.${hostPlatform}.sbctl];}
+    { environment.systemPackages = [ inputs.nixpkgs.legacyPackages.${hostPlatform}.sbctl ]; }
   ];
   pubkey = "";
   embedHm = true;

@@ -5,7 +5,8 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -43,7 +44,7 @@
   fileSystems."/" = {
     device = "/dev/disk/by-label/NIXOS_SD"; # this is important!
     fsType = "ext4";
-    options = ["noatime"];
+    options = [ "noatime" ];
   };
 
   networking.hostName = "NEO-LINUX"; # Define your hostname.

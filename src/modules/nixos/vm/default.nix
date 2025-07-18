@@ -5,8 +5,9 @@
 { config, lib, ... }:
 let
   inherit (lib) checkRoles;
-  isVM = checkRoles ["virtual-machine"] config;
-in {
+  isVM = checkRoles [ "virtual-machine" ] config;
+in
+{
   imports = lib.optionals isVM [
     ./libvirt.nix
     ./graphics.nix
