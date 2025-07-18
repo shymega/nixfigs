@@ -1,0 +1,1 @@
+../conf.d/installer-aarch64.nix
