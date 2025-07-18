@@ -14,17 +14,18 @@
     };
   genConfiguration = hostname: {
     address,
-    hostPlatform,
-    type,
-    extraModules,
-    username,
-    deployable,
-    overlays,
-    embedHm,
-    hostRoles,
-    hardwareModules,
     baseModules,
+    deployable,
+    embedHm,
     enableFoundationModules,
+    extraModules,
+    hardwareModules,
+    hostPlatform,
+    hostRoles,
+    overlays,
+    pubkey,
+    type,
+    username,
     ...
   }: let
     lib = inputs.nixpkgs.lib.extend (
@@ -50,7 +51,7 @@
         ++ (lib.optionals enableFoundationModules [
           "${self}/src/modules/core"
           "${self}/src/modules/nixos"
-          "${self}/src/modules/nixos/iso"
+          "${self}/src/modules/nixos/installer"
         ])
         ++ extraModules
         ++ hardwareModules
@@ -92,6 +93,7 @@
           hostRoles
           hostname
           inputs
+          pubkey
           self
           specialArgs
           username
