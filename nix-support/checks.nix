@@ -77,18 +77,4 @@ in
         end-of-file-fixer.enable = true;
         trailing-whitespace.enable = true;
       };
-      
-      # Custom shell hook
-      shellHook = ''
-        echo 🔨 Welcome to nixfigs!
-        echo
-        echo "Available pre-commit hooks:"
-        echo "  - nixfmt: Nix code formatting"
-        echo "  - statix: Nix linting" 
-        echo "  - deadnix: Dead code detection"
-        echo "  - shellcheck: Shell script analysis"
-        echo "  - yamlfmt: YAML formatting"
-        echo "  - markdownlint: Markdown linting"
-        echo
-      '';
     }
