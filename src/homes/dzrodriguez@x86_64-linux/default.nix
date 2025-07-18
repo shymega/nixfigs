@@ -17,7 +17,7 @@ let
 in
 {
   imports = with inputs; [
-    _1password-shell-plugins.hmModules.default
+    op-password-shell-plugins.hmModules.default
     shypkgs-public.hmModules.${system}.dwl
     nix-flatpak.homeManagerModules.nix-flatpak
     shyemacs-cfg.homeModules.emacs
