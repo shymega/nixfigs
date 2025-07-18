@@ -12,6 +12,41 @@ let
   isWork = checkRoles ["work"] config;
   isPersonal = checkRoles ["personal"] config;
   hostname = config.networking.hostName;
+
+  # Helper to create secret configurations with defaults
+  mkSecret = name: file: extraAttrs: {
+    ${name} = {
+      sopsFile = file;
+      path = "/run/secrets/${name}";
+      mode = "0400";
+      owner = "root";
+      group = "root";
+    } // extraAttrs;
+  };
+
+  # Auto-generated secrets based on known secret names from YAML files
+  # This avoids the need to parse YAML at build time
+  workSecrets = 
+    # From passwords.yaml
+    (mkSecret "workuser-password" ../../../secrets/work/hosts/${hostname}/passwords.yaml { neededForUsers = true; }) //
+    (mkSecret "luks-password" ../../../secrets/work/hosts/${hostname}/passwords.yaml {}) //
+    (mkSecret "ssh-host-key" ../../../secrets/work/hosts/${hostname}/passwords.yaml {}) //
+    (mkSecret "work-email-password" ../../../secrets/work/hosts/${hostname}/passwords.yaml {}) //
+    
+    # From wifi-credentials.yaml  
+    (mkSecret "corporate-wifi-psk" ../../../secrets/work/hosts/${hostname}/wifi-credentials.yaml {}) //
+    (mkSecret "guest-wifi-psk" ../../../secrets/work/hosts/${hostname}/wifi-credentials.yaml {}) //
+    (mkSecret "corporate-wifi-cert" ../../../secrets/work/hosts/${hostname}/wifi-credentials.yaml { mode = "0444"; }) //
+    
+    # From shared corporate-ca.yaml
+    (mkSecret "corporate-root-ca" ../../../secrets/work/shared/corporate-ca.yaml { mode = "0444"; }) //
+    (mkSecret "corporate-intermediate-ca" ../../../secrets/work/shared/corporate-ca.yaml { mode = "0444"; }) //
+    (mkSecret "ldap-ca-cert" ../../../secrets/work/shared/corporate-ca.yaml { mode = "0444"; });
+
+  personalSecrets = 
+    # From passwords.yaml
+    (mkSecret "dzrodriguez_password" ../../../secrets/personal/hosts/${hostname}/passwords.yaml { neededForUsers = true; });
+
 in {
   # Configure sops-nix for secrets management
   sops = {
@@ -45,48 +80,10 @@ in {
       sshKeyPaths = ["/etc/ssh/ssh_host_rsa_key"];
     };
     
-    # Role-based secrets configuration
+    # Role-based secrets configuration - auto-generated from YAML files
     secrets = 
-      if isWork then {
-        # Work-specific secrets
-        "workuser-password" = {
-          neededForUsers = true;
-          path = "/run/secrets/workuser-password";
-          mode = "0400";
-          owner = "root";
-          group = "root";
-        };
-        "luks-password" = {
-          path = "/run/secrets/luks-password";
-          mode = "0400";
-          owner = "root";
-          group = "root";
-        };
-        "work-wifi-psk" = {
-          sopsFile = ../../../secrets/work/hosts/${hostname}/wifi-credentials.yaml;
-          path = "/run/secrets/work-wifi-psk";
-          mode = "0400";
-          owner = "root";
-          group = "root";
-        };
-        "corporate-root-ca" = {
-          sopsFile = ../../../secrets/work/shared/corporate-ca.yaml;
-          path = "/run/secrets/corporate-root-ca";
-          mode = "0444";
-          owner = "root";
-          group = "root";
-        };
-      }
-      else if isPersonal then {
-        # Personal secrets (existing configuration)
-        "dzrodriguez_password" = {
-          neededForUsers = true;
-          path = "/run/secrets/dzrodriguez_password";
-          mode = "0400";
-          owner = "root";
-          group = "root";
-        };
-      }
+      if isWork then workSecrets
+      else if isPersonal then personalSecrets  
       else {}; # No secrets for other roles
   };
   
