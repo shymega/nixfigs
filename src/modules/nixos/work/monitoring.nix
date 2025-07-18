@@ -2,14 +2,20 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   inherit (lib) checkRoles;
-in {
-  config = lib.mkIf (checkRoles ["work"] config) {
+in
+{
+  config = lib.mkIf (checkRoles [ "work" ] config) {
     # Corporate monitoring and management
     # Note: Add actual corporate MDM/monitoring tools as needed
-    
+
     # Enhanced logging for corporate compliance
     services.journald.extraConfig = ''
       Storage=persistent
@@ -19,7 +25,7 @@ in {
       Compress=yes
       Seal=yes
     '';
-    
+
     # Security event monitoring
     services.fail2ban = {
       enable = true;
@@ -36,7 +42,7 @@ in {
         '';
       };
     };
-    
+
     # Corporate time synchronization
     services.chrony = {
       enable = true;
