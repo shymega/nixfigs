@@ -2,7 +2,8 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 #
-{lib, ...}: {
+{ lib, ... }:
+{
   boot.kernelParams = lib.mkBefore [
     "boot.shell_on_fail"
     "loglevel=3"

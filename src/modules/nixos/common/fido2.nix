@@ -6,7 +6,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   security.pam = {
     services = {
       login.u2fAuth = false;
