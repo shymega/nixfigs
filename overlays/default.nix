@@ -19,7 +19,7 @@ with lib; let
     stableOverlays;
 
   defaultOverlays = with inputs; [
-    agenix.overlays.default
+    sops-nix.overlays.default
     android-nixpkgs.overlays.default
     deckcheatz.overlays.default
     dzr-taskwarrior-recur.overlays.default
