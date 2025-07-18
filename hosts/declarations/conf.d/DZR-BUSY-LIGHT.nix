@@ -12,8 +12,8 @@ mkHost rec {
   type = "nixos";
   hostname = "DZR-BUSY-LIGHT";
   hostPlatform = "armv6l-linux";
-  hostRoles = ["minimal"];
-  baseModules = [];
+  hostRoles = [ "minimal" ];
+  baseModules = [ ];
   hardwareModules = with inputs; [
     hardware.nixosModules.common-pc
   ];

@@ -7,7 +7,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   networking = {
     hostName = "CLOCKWORK-DT-CM4";
   };
