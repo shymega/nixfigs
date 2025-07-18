@@ -18,10 +18,13 @@
   };
   programs = {
     actionlint.enable = true;
-    alejandra.enable = true;
+    nixfmt.enable = true;
     jsonfmt.enable = true;
     mdformat.enable = true;
     statix.enable = true;
     yamlfmt.enable = true;
+    shellcheck.enable = true;
+    shfmt.enable = true;
+    prettier.enable = true;
   };
 }
