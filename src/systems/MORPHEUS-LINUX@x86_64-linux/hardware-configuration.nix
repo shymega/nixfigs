@@ -5,8 +5,9 @@
   config,
   lib,
   ...
-}: {
-  imports = [./disks.nix];
+}:
+{
+  imports = [ ./disks.nix ];
   boot = {
     initrd = {
       availableKernelModules = [
@@ -17,14 +18,18 @@
         "sdhci_pci"
         "hid_apple"
       ];
-      kernelModules = ["amdgpu" "thunderbolt" "hid_apple"];
+      kernelModules = [
+        "amdgpu"
+        "thunderbolt"
+        "hid_apple"
+      ];
     };
     kernelModules = [
       "kvm-amd"
       "amdgpu"
       "i2c_dev"
     ];
-    extraModulePackages = [];
+    extraModulePackages = [ ];
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

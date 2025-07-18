@@ -8,14 +8,16 @@
   config,
   ...
 }:
-with lib; let
-  enabled = checkRoles ["workstation"] config;
+with lib;
+let
+  enabled = checkRoles [ "workstation" ] config;
   sway-wrapped-hw = pkgs.writeShellScript "sway-wrapped-hw" ''
     #!/bin/sh
     export WLR_NO_HARDWARE_CURSORS=1
     exec ${getExe pkgs.sway} --unsupported-gpu "$@"
   '';
-in {
+in
+{
   config = mkIf enabled {
     environment.etc."greetd/kanshi-config" = {
       source = "${config.users.users."dzrodriguez".home}/.config/kanshi/config";
@@ -47,39 +49,41 @@ in {
       greetd = {
         enable = true;
         settings = {
-          default_session = let
-            hyprConfig = pkgs.writeText "greetd-hyprland-config" ''
-              exec-once=${getExe pkgs.kanshi} -c /etc/greetd/kanshi-config
-              exec-once=${getExe pkgs.greetd.regreet}; hyprctl dispatch exit
-              debug {
-                disable_scale_checks = true
-              }
+          default_session =
+            let
+              hyprConfig = pkgs.writeText "greetd-hyprland-config" ''
+                exec-once=${getExe pkgs.kanshi} -c /etc/greetd/kanshi-config
+                exec-once=${getExe pkgs.greetd.regreet}; hyprctl dispatch exit
+                debug {
+                  disable_scale_checks = true
+                }
 
-              misc {
-                disable_hyprland_logo = true
-                disable_splash_rendering = true
-              }
-              env = GTK_USE_PORTAL,0
-              env = GDK_DEBUG,no-portals
-              env = AQ_NO_MODIFIERS,1
-              env = GDK_BACKEND,wayland
-              env = GDK_SCALE,2
-              env = MOZ_ENABLE_WAYLAND,1
-              env = QT_AUTO_SCREEN_SCALE_FACTOR,1
-              env = QT_QPA_PLATFORM,wayland;xcb
-              env = QT_ENABLE_HIGHDPI_SCALING,1
-              env = QT_WAYLAND_DISABLE_WINDOWDECORATION,1
-              env = SDL_VIDEODRIVER,wayland
-              env = XDG_SESSION_TYPE,wayland
-              env = _JAVA_AWT_WM_NONREPARENTING,1
-              cursor {
-                no_hardware_cursors = 1
-              }
-            '';
-          in {
-            command = "${getExe pkgs.hyprland} --config ${hyprConfig}";
-            user = "greeter";
-          };
+                misc {
+                  disable_hyprland_logo = true
+                  disable_splash_rendering = true
+                }
+                env = GTK_USE_PORTAL,0
+                env = GDK_DEBUG,no-portals
+                env = AQ_NO_MODIFIERS,1
+                env = GDK_BACKEND,wayland
+                env = GDK_SCALE,2
+                env = MOZ_ENABLE_WAYLAND,1
+                env = QT_AUTO_SCREEN_SCALE_FACTOR,1
+                env = QT_QPA_PLATFORM,wayland;xcb
+                env = QT_ENABLE_HIGHDPI_SCALING,1
+                env = QT_WAYLAND_DISABLE_WINDOWDECORATION,1
+                env = SDL_VIDEODRIVER,wayland
+                env = XDG_SESSION_TYPE,wayland
+                env = _JAVA_AWT_WM_NONREPARENTING,1
+                cursor {
+                  no_hardware_cursors = 1
+                }
+              '';
+            in
+            {
+              command = "${getExe pkgs.hyprland} --config ${hyprConfig}";
+              user = "greeter";
+            };
         };
       };
     };
@@ -95,8 +99,14 @@ in {
       enable = true;
       settings = {
         commands = {
-          reboot = ["loginctl" "reboot"];
-          poweroff = ["loginctl" "poweroff"];
+          reboot = [
+            "loginctl"
+            "reboot"
+          ];
+          poweroff = [
+            "loginctl"
+            "poweroff"
+          ];
         };
         GTK.application_prefer_dark_theme = true;
         appearance.greeting_msg = "Welcome back to ${config.networking.hostName}!";

@@ -2,9 +2,11 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 #
-{lib, ...}: let
+{ lib, ... }:
+let
   inherit (lib) isDarwin isNixOS isLinux;
-in {
+in
+{
   programs = {
     tmux = {
       enable = true;

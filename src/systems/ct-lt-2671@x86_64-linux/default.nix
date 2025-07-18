@@ -2,7 +2,15 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ inputs, self, config, lib, pkgs, hostRoles, ... }:
+{
+  inputs,
+  self,
+  config,
+  lib,
+  pkgs,
+  hostRoles,
+  ...
+}:
 let
   inherit (lib) checkRoles;
 in
@@ -23,13 +31,13 @@ in
       systemd-boot.enable = false; # Disabled for Lanzaboote secure boot
       efi.canTouchEfiVariables = true;
     };
-    
+
     # Secure boot with Lanzaboote
     lanzaboote = {
       enable = true;
       pkiBundle = "/etc/secureboot";
     };
-    
+
     # Disk encryption (configure based on actual setup)
     initrd = {
       systemd.enable = true;
@@ -39,7 +47,7 @@ in
         allowDiscards = true;
       };
     };
-    
+
     # Kernel hardening for work environment
     kernelParams = [
       "lockdown=confidentiality"
@@ -55,9 +63,12 @@ in
     "/" = {
       device = "/dev/mapper/luks-root";
       fsType = "ext4";
-      options = [ "defaults" "noatime" ];
+      options = [
+        "defaults"
+        "noatime"
+      ];
     };
-    
+
     "/boot" = {
       device = "/dev/disk/by-uuid/placeholder-boot-uuid"; # Replace with actual UUID
       fsType = "vfat";
@@ -65,20 +76,25 @@ in
   };
 
   # Swap configuration
-  swapDevices = [{
-    device = "/dev/mapper/luks-swap";
-    encrypted = {
-      enable = true;
-      label = "luks-swap";
-      blkDev = "/dev/disk/by-uuid/placeholder-swap-uuid"; # Replace with actual UUID
-    };
-  }];
+  swapDevices = [
+    {
+      device = "/dev/mapper/luks-swap";
+      encrypted = {
+        enable = true;
+        label = "luks-swap";
+        blkDev = "/dev/disk/by-uuid/placeholder-swap-uuid"; # Replace with actual UUID
+      };
+    }
+  ];
 
   # Work-specific user configuration
   users.users.workuser = {
     isNormalUser = true;
     description = "Work User";
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+    ];
     hashedPassword = "$6$placeholder"; # Replace with actual hashed password
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPlaceholderWorkUserSSHKey" # Replace with actual key
@@ -96,7 +112,7 @@ in
     curl
     wget
     htop
-    
+
     # Security tools
     gnupg
     age
