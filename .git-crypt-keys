@@ -1,0 +1,24 @@
+# SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
+# Git-crypt key configuration
+# This file contains the GPG keys authorized to decrypt work files
+
+# Dom Rodriguez's work GPG key (replace with actual fingerprint)
+# To add this key: git-crypt add-gpg-user FINGERPRINT
+WORK_GPG_KEY=1234567890ABCDEF1234567890ABCDEF12345678
+
+# Corporate GPG key (if available)
+# CORPORATE_GPG_KEY=CORPORATE_FINGERPRINT_HERE
+
+# Instructions for key management:
+# 1. Generate work-specific GPG key: gpg --gen-key
+# 2. Add key to git-crypt: git-crypt add-gpg-user FINGERPRINT
+# 3. Export public key for backup: gpg --export --armor FINGERPRINT > work-key.asc
+# 4. Store symmetric key securely for fallback access
+
+# Symmetric key backup instructions:
+# - The symmetric key is stored in .git/git-crypt/keys/default
+# - Back up this key securely for recovery purposes
+# - Use: git-crypt export-key /path/to/backup/key.bin
