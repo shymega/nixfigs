@@ -1,1 +1,0 @@
-../conf.d/installer-iso-aarch64.nix
