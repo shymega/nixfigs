@@ -10,23 +10,6 @@ in {
     # Corporate monitoring and management
     # Note: Add actual corporate MDM/monitoring tools as needed
     
-    # System monitoring and logging
-    services.prometheus.exporters = {
-      node = {
-        enable = true;
-        enabledCollectors = [
-          "systemd"
-          "processes" 
-          "network_route"
-          "filesystem"
-        ];
-        disabledCollectors = [
-          "textfile" # Disable to prevent information leakage
-        ];
-        openFirewall = false; # Keep monitoring internal
-      };
-    };
-    
     # Enhanced logging for corporate compliance
     services.journald.extraConfig = ''
       Storage=persistent
@@ -36,20 +19,6 @@ in {
       Compress=yes
       Seal=yes
     '';
-    
-    # Network monitoring
-    services.netdata = {
-      enable = true;
-      config = {
-        global = {
-          "default port" = "19999";
-          "bind to" = "127.0.0.1"; # Local access only
-        };
-        web = {
-          "mode" = "none"; # Disable web interface for security
-        };
-      };
-    };
     
     # Security event monitoring
     services.fail2ban = {
@@ -76,28 +45,5 @@ in {
         "pool.ntp.org"
       ];
     };
-    
-    # Placeholder for corporate monitoring agent
-    # Uncomment and configure when corporate monitoring is available
-    /*
-    systemd.services.corporate-agent = {
-      enable = true;
-      description = "Corporate monitoring agent";
-      after = [ "network.target" ];
-      serviceConfig = {
-        Type = "simple";
-        ExecStart = "${pkgs.writeShellScript "corporate-agent" ''
-          # Placeholder script for corporate monitoring
-          # Replace with actual corporate monitoring agent
-          echo "Corporate monitoring agent would run here"
-          sleep infinity
-        ''}";
-        Restart = "always";
-        RestartSec = 30;
-        User = "root";
-      };
-      wantedBy = [ "multi-user.target" ];
-    };
-    */
   };
 }
