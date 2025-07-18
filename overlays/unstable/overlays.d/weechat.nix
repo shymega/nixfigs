@@ -4,21 +4,21 @@
 #
 _: prev: {
   weechatWithMyPlugins = prev.weechat.override {
-    configure = {availablePlugins, ...}: {
-      scripts = let
-        weechat-matrix = prev.weechatScripts.weechat-matrix.overrideAttrs (oldAttrs: {
-          patches =
-            oldAttrs.patches
-            or []
-            ++ [
-              (prev.fetchpatch {
-                url = "https://patch-diff.githubusercontent.com/raw/poljar/weechat-matrix/pull/349.diff?full_index=1";
-                hash = "sha256-oJ+vfdSWhEWdKG52c9kiOXCeOscq+sSL3N8CoI7OiZo=";
-              })
-            ];
-        });
-      in
-        with prev.weechatScripts;
+    configure =
+      { availablePlugins, ... }:
+      {
+        scripts =
+          let
+            weechat-matrix = prev.weechatScripts.weechat-matrix.overrideAttrs (oldAttrs: {
+              patches = oldAttrs.patches or [ ] ++ [
+                (prev.fetchpatch {
+                  url = "https://patch-diff.githubusercontent.com/raw/poljar/weechat-matrix/pull/349.diff?full_index=1";
+                  hash = "sha256-oJ+vfdSWhEWdKG52c9kiOXCeOscq+sSL3N8CoI7OiZo=";
+                })
+              ];
+            });
+          in
+          with prev.weechatScripts;
           [
             autosort
             edit
@@ -29,8 +29,8 @@ _: prev: {
             weechat-notify-send
             zncplayback
           ]
-          ++ [weechat-matrix];
-      plugins = builtins.attrValues availablePlugins;
-    };
+          ++ [ weechat-matrix ];
+        plugins = builtins.attrValues availablePlugins;
+      };
   };
 }

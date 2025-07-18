@@ -11,6 +11,11 @@
 mkHost rec {
   type = "home-manager";
   hostPlatform = "x86_64-linux";
-  hostRoles = ["workstation" "gaming" "personal" "home-pc"];
+  hostRoles = [
+    "workstation"
+    "gaming"
+    "personal"
+    "home-pc"
+  ];
   username = "dzrodriguez";
 }

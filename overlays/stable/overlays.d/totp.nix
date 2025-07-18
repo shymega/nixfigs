@@ -2,4 +2,4 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 #
-(_finaL: prev: {totp = prev.callPackage ../../../packages/totp {};})
+(_finaL: prev: { totp = prev.callPackage ../../../packages/totp { }; })
