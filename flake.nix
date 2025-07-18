@@ -182,17 +182,69 @@
   };
 
   inputs = {
+    # Core Nix ecosystem
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable";
-    nixfigs-virtual-private.url = "github:shymega/nixfigs-virtual-private-dummy";
-    nixfigs-work.url = "github:shymega/nixfigs-work-dummy";
-    nixfigs-private.url = "github:shymega/nixfigs-private-dummy";
-    nixfigs-secrets.url = "github:shymega/nixfigs-secrets";
-    nixfigs-networks.url = "github:shymega/nixfigs-networks-dummy";
-    devenv.url = "github:cachix/devenv?ref=latest";
-    hardware.url = "github:NixOS/nixos-hardware";
-    hardware-shymega.url = "github:shymega/nixos-hardware?ref=shymega";
-    impermanence.url = "github:nix-community/impermanence";
+    nixpkgs-shymega.url = "github:shymega/nixpkgs?ref=shymega/staging";
+    flake-utils.url = "github:numtide/flake-utils";
+    
+    # NixOS modules and hardware
+    hardware = {
+      url = "github:NixOS/nixos-hardware";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    hardware-shymega = {
+      url = "github:shymega/nixos-hardware?ref=shymega";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    impermanence = {
+      url = "github:nix-community/impermanence";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixos-wsl = {
+      url = "github:nix-community/nixos-wsl";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    srvos = {
+      url = "github:nix-community/srvos";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    jovian-nixos = {
+      url = "github:Jovian-Experiments/Jovian-NixOS";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    
+    # Home management
+    home-manager = {
+      url = "github:nix-community/home-manager?ref=release-25.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    
+    # macOS support
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    
+    # Security and secrets
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote?ref=v0.4.2";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    
+    # Development tools
+    devenv = {
+      url = "github:cachix/devenv?ref=latest";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-ld = {
       url = "github:Mic92/nix-ld";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -208,31 +260,22 @@
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixos-wsl = {
-      url = "github:nix-community/nixos-wsl";
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    
+    # Deployment
     deploy-rs = {
       url = "github:serokell/deploy-rs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixpkgs-shymega.url = "github:shymega/nixpkgs?ref=shymega/staging";
-    nixos-flake-registry = {
-      url = "github:NixOS/flake-registry";
-      flake = false;
-    };
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    home-manager = {
-      url = "github:nix-community/home-manager?ref=release-25.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    lanzaboote = {
-      url = "github:nix-community/lanzaboote?ref=v0.4.2";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    
+    # System customization
     stylix = {
       url = "github:danth/stylix?ref=release-25.05";
       inputs = {
@@ -240,46 +283,64 @@
         home-manager.follows = "home-manager";
       };
     };
-    srvos = {
-      url = "github:nix-community/srvos";
+    base16-schemes = {
+      url = "github:SenchoPens/base16.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixos-generators = {
-      url = "github:nix-community/nixos-generators";
+    
+    # Desktop environment
+    hyprland = {
+      url = "github:hyprwm/Hyprland?rev=f08167c877227b2c9e0b59e7d38d072bdcd944a5";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-darwin = {
-      url = "github:LnL7/nix-darwin";
+    nix-flatpak = {
+      url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    base16-schemes.url = "github:SenchoPens/base16.nix";
-    nix-doom-emacs-unstraightened.url = "github:marienz/nix-doom-emacs-unstraightened";
-    nixfigs-doom-emacs-personal = {
-      url = "github:shymega/nixfigs-doom-emacs";
-      flake = false;
-    };
-    _1password-shell-plugins.url = "github:1Password/shell-plugins";
-    flake-utils.url = "github:numtide/flake-utils";
-    shypkgs-private.url = "github:shymega/shypkgs-private-dummy";
-    shypkgs-public.url = "github:shymega/shypkgs-public";
-    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
-    chaotic.url = "github:chaotic-cx/nyx?ref=nyxpkgs-unstable";
-    lix-module = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.93.0.tar.gz";
+    
+    # Package repositories
+    chaotic = {
+      url = "github:chaotic-cx/nyx?ref=nyxpkgs-unstable";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    jovian-nixos.url = "github:Jovian-Experiments/Jovian-NixOS";
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nur-xddxdd = {
       url = "github:xddxdd/nur-packages";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    ucodenix.url = "github:e-tho/ucodenix";
-    git-hooks = {
-      url = "github:cachix/git-hooks.nix";
+    
+    # Nix alternatives
+    lix-module = {
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.93.0.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    treefmt-nix.url = "github:numtide/treefmt-nix";
-    hyprland.url = "github:hyprwm/Hyprland?rev=f08167c877227b2c9e0b59e7d38d072bdcd944a5";
+    
+    # Specialized tools
+    ucodenix = {
+      url = "github:e-tho/ucodenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    android-nixpkgs = {
+      url = "github:tadfisher/android-nixpkgs?ref=stable";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nm2nix = {
+      url = "github:Janik-Haag/nm2nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    
+    # Personal packages and configs
+    shypkgs-private = {
+      url = "github:shymega/shypkgs-private-dummy";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    shypkgs-public = {
+      url = "github:shymega/shypkgs-public";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     shyemacs-cfg = {
       url = "github:shymega/emacs-cfg";
       inputs = {
@@ -287,16 +348,57 @@
         home-manager.follows = "home-manager";
       };
     };
-    nur.url = "github:nix-community/NUR";
-    android-nixpkgs = {
-      url = "github:tadfisher/android-nixpkgs?ref=stable";
+    
+    # Gaming
+    deckcheatz = {
+      url = "github:deckcheatz/deckcheatz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    deckcheatz.url = "github:deckcheatz/deckcheatz";
-    dzr-taskwarrior-recur.url = "github:shymega/dzr-taskwarrior-recur";
-    wemod-launcher.url = "github:DeckCheatz/wemod-launcher?ref=refactor-shymega";
-    xrlinuxdriver.url = "github:shymega/XRLinuxDriver?ref=shymega/nix-flake-support";
-    nm2nix.url = "github:Janik-Haag/nm2nix";
+    wemod-launcher = {
+      url = "github:DeckCheatz/wemod-launcher?ref=refactor-shymega";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    
+    # Hardware drivers
+    xrlinuxdriver = {
+      url = "github:shymega/XRLinuxDriver?ref=shymega/nix-flake-support";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    
+    # Personal utilities
+    dzr-taskwarrior-recur = {
+      url = "github:shymega/dzr-taskwarrior-recur";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    
+    # Editor configs
+    nix-doom-emacs-unstraightened = {
+      url = "github:marienz/nix-doom-emacs-unstraightened";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    
+    # Shell plugins
+    _1password-shell-plugins = {
+      url = "github:1Password/shell-plugins";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    
+    # Private configs (dummy repos)
+    nixfigs-virtual-private.url = "github:shymega/nixfigs-virtual-private-dummy";
+    nixfigs-work.url = "github:shymega/nixfigs-work-dummy";
+    nixfigs-private.url = "github:shymega/nixfigs-private-dummy";
+    nixfigs-secrets.url = "github:shymega/nixfigs-secrets";
+    nixfigs-networks.url = "github:shymega/nixfigs-networks-dummy";
+    
+    # Non-flake inputs
+    nixos-flake-registry = {
+      url = "github:NixOS/flake-registry";
+      flake = false;
+    };
+    nixfigs-doom-emacs-personal = {
+      url = "github:shymega/nixfigs-doom-emacs";
+      flake = false;
+    };
   };
 }
 
