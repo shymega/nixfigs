@@ -7,6 +7,26 @@ let
   inherit (lib) checkRoles;
 in {
   config = lib.mkIf (checkRoles ["work"] config) {
+    # Validation assertions for work systems
+    assertions = lib.mkIf (checkRoles ["work"] config) [
+    {
+      assertion = config.security.auditd.enable;
+      message = "Work systems must have audit logging enabled";
+    }
+    {
+      assertion = config.services.fwupd.enable;
+      message = "Work systems must have firmware updates enabled";
+    }
+    {
+      assertion = !config.services.syncthing.enable;
+      message = "Work systems cannot run personal sync services";
+    }
+    {
+      assertion = config.networking.firewall.enable;
+      message = "Work systems must have firewall enabled";
+    }
+  ];
+
     # Required security services for corporate compliance
     services.fwupd.enable = true; # Firmware updates
     security.auditd.enable = true; # Audit logging
@@ -62,24 +82,4 @@ in {
       '';
     };
   };
-  
-  # Validation assertions for work systems
-  assertions = lib.mkIf (checkRoles ["work"] config) [
-    {
-      assertion = config.security.auditd.enable;
-      message = "Work systems must have audit logging enabled";
-    }
-    {
-      assertion = config.services.fwupd.enable;
-      message = "Work systems must have firmware updates enabled";
-    }
-    {
-      assertion = !config.services.syncthing.enable;
-      message = "Work systems cannot run personal sync services";
-    }
-    {
-      assertion = config.networking.firewall.enable;
-      message = "Work systems must have firewall enabled";
-    }
-  ];
 }
