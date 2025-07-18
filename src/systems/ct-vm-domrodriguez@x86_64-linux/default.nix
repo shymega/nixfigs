@@ -17,14 +17,6 @@ in
   networking.hostName = "ct-vm-domrodriguez";
   networking.hostId = "87654321"; # Generate unique ID: head -c4 /dev/urandom | od -A none -t x4
 
-  # VM system metadata
-  nixfigs.meta = {
-    rolesEnabled = ["virtual-machine" "personal" "workstation" "libvirt"];
-    hostPlatform = "x86_64-linux";
-    isVirtualMachine = true;
-    hostMachine = "DEUSEX-LINUX"; # Parent host
-  };
-
   # Boot configuration for VM
   boot = {
     loader = {

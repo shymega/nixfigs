@@ -17,13 +17,6 @@ in
   networking.hostName = "ct-lt-2671";
   networking.hostId = "12345678"; # Generate unique ID: head -c4 /dev/urandom | od -A none -t x4
 
-  # Work system metadata
-  nixfigs.meta = {
-    rolesEnabled = ["workstation" "work"];
-    hostPlatform = "x86_64-linux";
-    isWorkMachine = true;
-  };
-
   # Boot configuration for corporate compliance
   boot = {
     loader = {
