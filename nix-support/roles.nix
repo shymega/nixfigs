@@ -38,7 +38,7 @@ rec {
         rolesList = if builtins.isList targetRoles then targetRoles else [targetRoles];
         
         # Auto-detect if second argument is config (attrset with nixfigs) or hostRoles (list)
-        isConfig = builtins.isAttrs configOrHostRoles && configOrHostRoles ? nixfigs;
+        isConfig = builtins.isAttrs configOrHostRoles;
         
         enabledRoles = if isConfig 
           then configOrHostRoles.nixfigs.meta.rolesEnabled
