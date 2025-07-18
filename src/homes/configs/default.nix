@@ -85,7 +85,7 @@ in {
   home = {
     inherit username homeDirectory;
     enableNixpkgsReleaseCheck = true;
-    stateVersion = "24.05";
+    stateVersion = "25.05";
     packages = with pkgs.unstable;
       [
         (isync-patched.override {withCyrusSaslXoauth2 = true;})
