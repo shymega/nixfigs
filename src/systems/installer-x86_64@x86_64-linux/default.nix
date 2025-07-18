@@ -11,9 +11,9 @@
     ../../modules/nixos/iso
   ];
 
-  nixfigs.isoImage = {
+  nixfigs.installer = {
     enable = true;
-    isoName = "nixos-installer-x86_64";
+    imageName = "nixos-installer-x86_64";
     includeZeroTier = true;
     includeZFS = true;
     sshKeys = [
@@ -21,13 +21,7 @@
       # Example: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI... user@host"
     ];
     extraPackages = with pkgs; [
-      # Additional packages for x86_64 installer
-      dmidecode
-      pciutils
-      usbutils
-      lshw
-      smartmontools
-      nvme-cli
+      # Additional packages for x86_64 installer (these are now included automatically)
     ];
   };
 
