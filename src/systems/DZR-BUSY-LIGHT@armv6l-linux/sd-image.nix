@@ -7,7 +7,8 @@
   config,
   lib,
   ...
-}: {
+}:
+{
   nixpkgs.crossSystem = lib.systems.elaborate lib.systems.examples.raspberryPi;
 
   imports = with inputs; [
@@ -36,7 +37,7 @@
 
   users = {
     extraGroups = {
-      gpio = {};
+      gpio = { };
     };
   };
   services.getty.autologinUser = "app";

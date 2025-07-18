@@ -21,5 +21,5 @@ python3Packages.buildPythonApplication rec {
     setuptools_scm
   ];
 
-  dependencies = with python3Packages; [onetimepass];
+  dependencies = with python3Packages; [ onetimepass ];
 }
