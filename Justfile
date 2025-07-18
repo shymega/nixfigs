@@ -222,6 +222,96 @@ validate-secrets:
     @echo "Validating personal secrets..."
     @find secrets/personal -name "*.yaml" -exec env SOPS_AGE_KEY_FILE=~/.config/sops/personal/keys.txt sops -d {} > /dev/null \; 2>/dev/null || echo "⚠️  Personal secrets validation failed (keys may not be set up)"
 
+# === GIT-CRYPT MANAGEMENT ===
+
+# Check git-crypt status
+git-crypt-status:
+    @if command -v git-crypt >/dev/null 2>&1; then \
+        git-crypt status; \
+    else \
+        echo "git-crypt not installed. Install with: nix-shell -p git-crypt"; \
+    fi
+
+# Lock git-crypt (encrypt work files)
+git-crypt-lock:
+    @if command -v git-crypt >/dev/null 2>&1; then \
+        git-crypt lock; \
+        echo "Work files encrypted. Use 'just git-crypt-unlock' to decrypt."; \
+    else \
+        echo "git-crypt not installed"; \
+    fi
+
+# Unlock git-crypt (decrypt work files)
+git-crypt-unlock:
+    @if command -v git-crypt >/dev/null 2>&1; then \
+        git-crypt unlock; \
+        echo "Work files decrypted and ready for editing."; \
+    else \
+        echo "git-crypt not installed"; \
+    fi
+
+# Unlock with symmetric key file
+git-crypt-unlock-key keyfile:
+    @if command -v git-crypt >/dev/null 2>&1; then \
+        git-crypt unlock {{keyfile}}; \
+        echo "Work files decrypted using key file."; \
+    else \
+        echo "git-crypt not installed"; \
+    fi
+
+# Add GPG user to git-crypt
+git-crypt-add-user fingerprint:
+    @if command -v git-crypt >/dev/null 2>&1; then \
+        git-crypt add-gpg-user {{fingerprint}}; \
+        echo "Added GPG user {{fingerprint}} to git-crypt"; \
+        echo "Commit the changes with: git add .git-crypt/keys/ && git commit"; \
+    else \
+        echo "git-crypt not installed"; \
+    fi
+
+# Export git-crypt symmetric key for backup
+git-crypt-export-key:
+    @if command -v git-crypt >/dev/null 2>&1; then \
+        git-crypt export-key git-crypt-backup-key.bin; \
+        echo "Symmetric key exported to git-crypt-backup-key.bin"; \
+        echo "Store this file securely - it can decrypt all work files!"; \
+    else \
+        echo "git-crypt not installed"; \
+    fi
+
+# Initialize git-crypt (first time setup)
+git-crypt-init:
+    @if command -v git-crypt >/dev/null 2>&1; then \
+        git-crypt init; \
+        echo "Git-crypt initialized. Add GPG users with: just git-crypt-add-user FINGERPRINT"; \
+    else \
+        echo "git-crypt not installed"; \
+    fi
+
+# Check which files are encrypted
+git-crypt-list-encrypted:
+    @if command -v git-crypt >/dev/null 2>&1; then \
+        git-crypt status -e; \
+    else \
+        echo "git-crypt not installed"; \
+    fi
+
+# Validate work files can be built (requires unlocked git-crypt)
+validate-work-build:
+    @echo "Checking if git-crypt is unlocked..."
+    @if command -v git-crypt >/dev/null 2>&1; then \
+        if git-crypt status >/dev/null 2>&1; then \
+            echo "✅ Git-crypt unlocked, attempting work build..."; \
+            just build-work; \
+        else \
+            echo "❌ Git-crypt locked. Run 'just git-crypt-unlock' first."; \
+            exit 1; \
+        fi; \
+    else \
+        echo "⚠️  Git-crypt not available, building without encryption..."; \
+        just build-work; \
+    fi
+
 # === DOCUMENTATION ===
 
 # Generate system documentation
