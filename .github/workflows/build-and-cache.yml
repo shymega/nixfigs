@@ -1,0 +1,227 @@
+# SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
+name: "Build NixOS systems and push to Attic cache"
+
+on:
+  push:
+    branches: [ main ]
+  schedule:
+    - cron: '0 2 * * 6'  # Every Saturday at 02:00 UTC
+  workflow_dispatch:
+
+jobs:
+  nix-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup nixbuild.net
+        uses: nixbuild/nix-quick-install-action@v28
+        with:
+          nix_conf: |
+            extra-trusted-public-keys = nixbuild.net/nixos-23.05-1:LeOWXeJOBOhLAhqB2yHNUH7VQb7HWHm1Qp8b2iCGjzY=
+            extra-substituters = https://nixbuild.net
+            builders = ssh://eu.nixbuild.net x86_64-linux,aarch64-linux - 100 1 big-parallel,kvm,nixos-test
+            builders-use-substitutes = true
+
+      - name: Setup SSH for nixbuild.net  
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.NIXBUILD_SSH_KEY }}" > ~/.ssh/nixbuild_ed25519
+          chmod 600 ~/.ssh/nixbuild_ed25519
+          echo "Host eu.nixbuild.net" >> ~/.ssh/config
+          echo "  HostName eu.nixbuild.net" >> ~/.ssh/config
+          echo "  User root" >> ~/.ssh/config
+          echo "  IdentityFile ~/.ssh/nixbuild_ed25519" >> ~/.ssh/config
+          echo "  IdentitiesOnly yes" >> ~/.ssh/config
+
+      - name: Setup sops-nix key
+        run: |
+          mkdir -p ~/.config/sops/age
+          echo "${{ secrets.SOPS_AGE_KEY }}" > ~/.config/sops/age/keys.txt
+          chmod 600 ~/.config/sops/age/keys.txt
+
+      - name: Generate Nix Matrix
+        id: set-matrix
+        run: |
+          set -Eeu
+          
+          # Override dummy inputs with real repositories
+          OVERRIDE_ARGS=""
+          OVERRIDE_ARGS="$OVERRIDE_ARGS --override-input nixfigs-virtual-private ${{ secrets.NIXFIGS_VIRTUAL_PRIVATE_URL }}"
+          OVERRIDE_ARGS="$OVERRIDE_ARGS --override-input nixfigs-work ${{ secrets.NIXFIGS_WORK_URL }}"
+          OVERRIDE_ARGS="$OVERRIDE_ARGS --override-input nixfigs-private ${{ secrets.NIXFIGS_PRIVATE_URL }}"
+          OVERRIDE_ARGS="$OVERRIDE_ARGS --override-input nixfigs-networks ${{ secrets.NIXFIGS_NETWORKS_URL }}"
+          OVERRIDE_ARGS="$OVERRIDE_ARGS --override-input shypkgs-private ${{ secrets.SHYPKGS_PRIVATE_URL }}"
+          
+          # Generate matrix using the githubActions output
+          matrix="$(nix eval --json $OVERRIDE_ARGS '.#githubActions')"
+          
+          # Filter to only include x86_64-linux and aarch64-linux systems
+          filtered_matrix=$(echo "$matrix" | jq '{
+            include: [
+              .include[] | select(.system == "x86_64-linux" or .system == "aarch64-linux")
+            ]
+          }')
+          
+          echo "matrix=$filtered_matrix" >> "$GITHUB_OUTPUT"
+          echo "Generated matrix for systems:"
+          echo "$filtered_matrix" | jq -r '.include[] | "\(.hostName)@\(.system)"'
+
+  build-and-push-attic:
+    name: "Build ${{ matrix.hostName }}@${{ matrix.system }} on ${{ matrix.platform }}"
+    needs: nix-matrix
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{fromJSON(needs.nix-matrix.outputs.matrix)}}
+    steps:
+      - name: Free disk space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: true
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # Fetch full history for proper sops-nix key resolution
+          fetch-depth: 0
+
+      - name: Setup Git authentication
+        run: |
+          git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com".insteadOf https://github.com
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          extra-conf: |
+            fallback = true
+            http-connections = 128
+            max-substitution-jobs = 128
+            extra-trusted-public-keys = nixbuild.net/nixos-23.05-1:LeOWXeJOBOhLAhqB2yHNUH7VQb7HWHm1Qp8b2iCGjzY= private-nixfigs.attics.nix.shymega.org.uk:LMl+lAu57+YHjOm6U0EYzT4VBK4YKGqGU/YZxdLLreg=
+            extra-substituters = https://nixbuild.net https://private-nixfigs.attics.nix.shymega.org.uk/nixfigs
+            builders = ssh://eu.nixbuild.net x86_64-linux,aarch64-linux - 100 1 big-parallel,kvm,nixos-test
+            builders-use-substitutes = true
+
+      - name: Setup nixbuild.net SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.NIXBUILD_SSH_KEY }}" > ~/.ssh/nixbuild_ed25519
+          chmod 600 ~/.ssh/nixbuild_ed25519
+          cat >> ~/.ssh/config << EOF
+          Host eu.nixbuild.net
+            HostName eu.nixbuild.net
+            User root
+            IdentityFile ~/.ssh/nixbuild_ed25519
+            IdentitiesOnly yes
+            StrictHostKeyChecking accept-new
+          EOF
+
+      - name: Setup sops-nix key
+        run: |
+          mkdir -p ~/.config/sops/age
+          echo "${{ secrets.SOPS_AGE_KEY }}" > ~/.config/sops/age/keys.txt
+          chmod 600 ~/.config/sops/age/keys.txt
+
+      - name: Setup Attic authentication
+        run: |
+          sudo mkdir -p /etc/nix
+          echo "machine private-nixfigs.attics.nix.shymega.org.uk password ${{ secrets.ATTIC_TOKEN }}" | sudo tee /etc/nix/netrc > /dev/null
+          sudo chmod 600 /etc/nix/netrc
+
+      - name: Enable Magic Nix Cache
+        uses: DeterminateSystems/magic-nix-cache-action@main
+
+      - name: Setup Attic client
+        uses: ryanccn/attic-action@v0
+        with:
+          endpoint: "https://private-nixfigs.attics.nix.shymega.org.uk/"
+          cache: "nixfigs"
+          token: ${{ secrets.ATTIC_TOKEN }}
+
+      - name: Build NixOS system
+        env:
+          NIX_CONFIG: |
+            extra-experimental-features = nix-command flakes
+            accept-flake-config = true
+        run: |
+          set -Eeu
+          
+          # Setup override arguments for dummy inputs
+          OVERRIDE_ARGS=""
+          OVERRIDE_ARGS="$OVERRIDE_ARGS --override-input nixfigs-virtual-private ${{ secrets.NIXFIGS_VIRTUAL_PRIVATE_URL }}"
+          OVERRIDE_ARGS="$OVERRIDE_ARGS --override-input nixfigs-work ${{ secrets.NIXFIGS_WORK_URL }}"
+          OVERRIDE_ARGS="$OVERRIDE_ARGS --override-input nixfigs-private ${{ secrets.NIXFIGS_PRIVATE_URL }}"
+          OVERRIDE_ARGS="$OVERRIDE_ARGS --override-input nixfigs-networks ${{ secrets.NIXFIGS_NETWORKS_URL }}"
+          OVERRIDE_ARGS="$OVERRIDE_ARGS --override-input shypkgs-private ${{ secrets.SHYPKGS_PRIVATE_URL }}"
+          
+          echo "Building ${{ matrix.hostName }} for ${{ matrix.system }}..."
+          
+          # Build the NixOS system
+          nix build $OVERRIDE_ARGS \
+            --accept-flake-config \
+            --show-trace \
+            --builders "" \
+            ".#nixosConfigurations.${{ matrix.hostName }}.config.system.build.toplevel"
+          
+          echo "Build completed successfully"
+
+      - name: Push to Attic cache
+        run: |
+          set -Eeu
+          
+          # Setup override arguments for dummy inputs  
+          OVERRIDE_ARGS=""
+          OVERRIDE_ARGS="$OVERRIDE_ARGS --override-input nixfigs-virtual-private ${{ secrets.NIXFIGS_VIRTUAL_PRIVATE_URL }}"
+          OVERRIDE_ARGS="$OVERRIDE_ARGS --override-input nixfigs-work ${{ secrets.NIXFIGS_WORK_URL }}"
+          OVERRIDE_ARGS="$OVERRIDE_ARGS --override-input nixfigs-private ${{ secrets.NIXFIGS_PRIVATE_URL }}"
+          OVERRIDE_ARGS="$OVERRIDE_ARGS --override-input nixfigs-networks ${{ secrets.NIXFIGS_NETWORKS_URL }}"
+          OVERRIDE_ARGS="$OVERRIDE_ARGS --override-input shypkgs-private ${{ secrets.SHYPKGS_PRIVATE_URL }}"
+          
+          echo "Pushing ${{ matrix.hostName }} to Attic cache..."
+          
+          # Push the built system and its dependencies to Attic
+          nix run nixpkgs#attic-client -- push nixfigs \
+            $(nix path-info $OVERRIDE_ARGS \
+              --accept-flake-config \
+              --derivation \
+              ".#nixosConfigurations.${{ matrix.hostName }}.config.system.build.toplevel")
+          
+          echo "Successfully pushed to Attic cache"
+
+      - name: Build summary
+        if: always()
+        run: |
+          echo "## Build Summary for ${{ matrix.hostName }}@${{ matrix.system }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Host**: ${{ matrix.hostName }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **System**: ${{ matrix.system }}" >> $GITHUB_STEP_SUMMARY  
+          echo "- **Platform**: ${{ matrix.platform }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status**: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ job.status }}" = "success" ]; then
+            echo "✅ Build and cache push completed successfully" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Build or cache push failed" >> $GITHUB_STEP_SUMMARY
+          fi
