@@ -32,26 +32,6 @@ in {
       openssh
     ];
 
-    # Corporate browser policies
-    programs.firefox = {
-      enable = true;
-      policies = {
-        DisablePrivateBrowsing = false; # Allow private browsing
-        DisableProfileImport = true;
-        DontCheckDefaultBrowser = true;
-        Homepage.URL = "https://www.google.com"; # Replace with corporate intranet
-        
-        # Corporate security extensions (add as needed)
-        ExtensionSettings = {
-          # uBlock Origin for security
-          "uBlock0@raymondhill.net" = {
-            install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
-            installation_mode = "force_installed";
-          };
-        };
-      };
-    };
-
     # Restrict nix package installation for regular users
     nix.settings.allowed-users = [ "root" ];
     
