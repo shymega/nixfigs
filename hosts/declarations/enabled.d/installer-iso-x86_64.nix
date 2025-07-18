@@ -1,1 +1,0 @@
-../conf.d/installer-iso-x86_64.nix

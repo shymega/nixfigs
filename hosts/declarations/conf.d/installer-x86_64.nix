@@ -17,9 +17,6 @@
     "${nixpkgs}/nixos/modules/installer/sd-card/sd-image.nix"
   ];
   
-  extraModules = [
-    ../../../src/systems/installer-x86_64@x86_64-linux/default.nix
-  ];
   
   pubkey = null;
   embedHm = false;
