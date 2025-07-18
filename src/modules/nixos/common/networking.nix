@@ -9,9 +9,11 @@
   pkgs,
   inputs,
   ...
-}: let
+}:
+let
   inherit (lib) isNixOS optionals hasSuffix;
-in {
+in
+{
   networking.networkmanager = {
     dns = "systemd-resolved";
     unmanaged = [

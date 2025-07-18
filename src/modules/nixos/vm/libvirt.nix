@@ -2,11 +2,17 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   inherit (lib) checkRoles;
-  isLibvirtVM = checkRoles ["virtual-machine" "libvirt"] config;
-in {
+  isLibvirtVM = checkRoles [ "virtual-machine" "libvirt" ] config;
+in
+{
   config = lib.mkIf isLibvirtVM {
     # VM-specific optimizations
     boot = {
@@ -18,7 +24,7 @@ in {
         "systemd.show_status=auto"
         "rd.udev.log_priority=3"
       ];
-      
+
       # Reduce boot time
       loader.timeout = 1;
     };
@@ -27,10 +33,10 @@ in {
     services = {
       # QEMU guest agent for libvirt management
       qemuGuest.enable = true;
-      
+
       # SPICE guest agent for clipboard/display management
       spice-vdagentd.enable = true;
-      
+
       # Auto-resize display to match window
       spice-autorandr.enable = true;
     };
@@ -39,7 +45,7 @@ in {
     hardware = {
       # Enable virtio drivers
       enableAllFirmware = false; # VMs don't need firmware
-      
+
       # Graphics optimization for VMs
       opengl = {
         enable = true;
@@ -53,7 +59,7 @@ in {
     networking = {
       # Use predictable interface names
       usePredictableInterfaceNames = true;
-      
+
       # Optimize for virtualized networking
       dhcpcd.enable = false;
       networkmanager.enable = true;
@@ -71,10 +77,10 @@ in {
       # No power management in VMs
       thermald.enable = lib.mkForce false;
       auto-cpufreq.enable = lib.mkForce false;
-      
+
       # No firmware updates in VMs
       fwupd.enable = lib.mkForce false;
-      
+
       # Disable bluetooth in VMs
       blueman.enable = lib.mkForce false;
     };
@@ -82,7 +88,10 @@ in {
     # VM filesystem optimizations
     fileSystems = {
       "/" = {
-        options = [ "noatime" "compress=zstd" ]; # Optimize for VM storage
+        options = [
+          "noatime"
+          "compress=zstd"
+        ]; # Optimize for VM storage
       };
     };
 
