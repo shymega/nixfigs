@@ -31,6 +31,7 @@ in {
       ./kernel_params.nix
       ./keychron.nix
       ./networking.nix
+      ./sops.nix
       ./systemd-initrd.nix
       ./utils
     ]
