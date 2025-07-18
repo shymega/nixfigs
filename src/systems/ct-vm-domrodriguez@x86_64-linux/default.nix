@@ -2,7 +2,14 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ inputs, self, config, lib, pkgs, ... }:
+{
+  inputs,
+  self,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   inherit (lib) checkRoles;
 in
@@ -25,7 +32,7 @@ in
         device = "/dev/vda"; # Standard libvirt disk
       };
     };
-    
+
     # VM-optimized kernel parameters
     kernelParams = [
       "quiet"
@@ -33,17 +40,17 @@ in
       "systemd.show_status=auto"
       "rd.udev.log_priority=3"
     ];
-    
+
     # Enable required kernel modules for VM
     initrd.availableKernelModules = [
       "virtio_pci"
-      "virtio_scsi" 
+      "virtio_scsi"
       "virtio_net"
       "virtio_blk"
       "virtio_balloon"
       "virtio_rng"
     ];
-    
+
     # VM doesn't need initrd secrets
     initrd.systemd.enable = true;
   };
@@ -60,21 +67,30 @@ in
     "/" = {
       device = "vmpool/ct-vm-domrodriguez/root";
       fsType = "zfs";
-      options = [ "zfsutil" "noatime" ];
+      options = [
+        "zfsutil"
+        "noatime"
+      ];
     };
-    
+
     "/home" = {
       device = "vmpool/ct-vm-domrodriguez/home";
       fsType = "zfs";
-      options = [ "zfsutil" "noatime" ];
+      options = [
+        "zfsutil"
+        "noatime"
+      ];
     };
-    
+
     "/nix" = {
       device = "vmpool/ct-vm-domrodriguez/nix";
       fsType = "zfs";
-      options = [ "zfsutil" "noatime" ];
+      options = [
+        "zfsutil"
+        "noatime"
+      ];
     };
-    
+
     "/boot" = {
       device = "/dev/disk/by-label/boot";
       fsType = "ext4";
@@ -88,11 +104,11 @@ in
   users.users.domrodriguez = {
     isNormalUser = true;
     description = "Dom Rodriguez (VM User)";
-    extraGroups = [ 
-      "wheel" 
-      "networkmanager" 
-      "audio" 
-      "video" 
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "audio"
+      "video"
       "input"
       "render" # For graphics acceleration
     ];
@@ -101,7 +117,7 @@ in
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPlaceholderVMUserSSHKey" # Replace with actual key
     ];
-    
+
     # Auto-login shell for remote access
     shell = pkgs.zsh;
   };
@@ -114,22 +130,22 @@ in
     # Essential VM tools
     qemu-utils
     libguestfs
-    
+
     # System monitoring
     htop
     iotop
-    
+
     # Network tools
     nettools
     iproute2
     dnsutils
-    
+
     # Development tools
     git
     vim
     curl
     wget
-    
+
     # ZFS tools
     zfs
     zfsutils-linux
@@ -139,16 +155,16 @@ in
   services = {
     # Disable unnecessary services for VM
     thermald.enable = lib.mkForce false;
-    
+
     # Enable essential VM services
     qemuGuest.enable = true;
     openssh.enable = true;
-    
+
     # ZFS services
     zfs = {
       autoScrub.enable = false; # Host handles scrubbing
       autoSnapshot.enable = true; # VM-level snapshots
-      autoSnapshot.frequent = 8;  # Every 15 minutes
+      autoSnapshot.frequent = 8; # Every 15 minutes
       autoSnapshot.hourly = 24;
       autoSnapshot.daily = 7;
       autoSnapshot.weekly = 4;
@@ -160,7 +176,7 @@ in
   hardware = {
     # Audio for remote desktop
     pulseaudio.enable = false; # Using PipeWire instead
-    
+
     # Graphics for VM
     opengl = {
       enable = true;
@@ -178,7 +194,7 @@ in
 
   # Locale settings
   i18n.defaultLocale = "en_GB.UTF-8";
-  
+
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_GB.UTF-8";
     LC_IDENTIFICATION = "en_GB.UTF-8";
@@ -205,7 +221,7 @@ in
       enable = true;
       wheelNeedsPassword = true;
     };
-    
+
     # VM-appropriate AppArmor settings
     apparmor.enable = true;
   };
