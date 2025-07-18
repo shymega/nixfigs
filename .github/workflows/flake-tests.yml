@@ -1,0 +1,18 @@
+# SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
+#
+# SPDX-License-Identifier: GPL-3.0-only
+name: "Basic Flake Test"
+on:
+  workflow_call:
+jobs:
+  check-flake:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.NIX_GH_ACTIONS_TOKEN }}
+      - uses: DeterminateSystems/nix-installer-action@main
+        with:
+          github-token: ${{ secrets.NIX_GH_ACTIONS_TOKEN }}
+      - name: Check Flake with Nix
+        run: nix flake check --all-systems --accept-flake-config
