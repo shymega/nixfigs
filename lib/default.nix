@@ -10,7 +10,7 @@
   rolesModule = import ../nix-support/roles.nix;
 in rec {
   inherit (rolesModule) roles;
-  inherit (rolesModule.utils) checkRole checkRoleIn checkRoles checkAllRoles;
+  inherit (rolesModule.utils) checkRoles;
   inherit
     (pkgs.stdenv.hostPlatform)
     isLinux

@@ -9,7 +9,7 @@
   ...
 }:
 with lib; let
-  enabled = checkRoles ["personal" "work" "workstation"] config.nixfigs.meta.rolesEnabled;
+  enabled = checkRoles ["personal" "work" "workstation"] config;
 in {
   config = mkIf enabled {
     boot.extraModprobeConfig = ''
