@@ -2,7 +2,8 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 #
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   xdg.portal = {
     enable = true;
     config.common.default = "wlr;gtk";

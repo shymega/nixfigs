@@ -7,16 +7,17 @@
   inputs,
   ...
 }:
-with lib; let
-  importStableOverlay = overlay: composeExtensions (_: _: {__inputs = inputs;}) (import (./stable/enabled.d + "/${overlay}"));
+with lib;
+let
+  importStableOverlay =
+    overlay:
+    composeExtensions (_: _: { __inputs = inputs; }) (import (./stable/enabled.d + "/${overlay}"));
 
   stableOverlays = builtins.readDir ./stable/enabled.d;
 
-  stableOverlaysWithImports =
-    mapAttrs' (
-      overlay: _: nameValuePair (removeSuffix ".nix" overlay) (importStableOverlay overlay)
-    )
-    stableOverlays;
+  stableOverlaysWithImports = mapAttrs' (
+    overlay: _: nameValuePair (removeSuffix ".nix" overlay) (importStableOverlay overlay)
+  ) stableOverlays;
 
   defaultOverlays = with inputs; [
     sops-nix.overlays.default
@@ -31,13 +32,13 @@ with lib; let
   ];
 
   customOverlays = [
-    (import ./shymega {inherit inputs lib;})
-    (import ./unstable {inherit inputs lib;})
+    (import ./shymega { inherit inputs lib; })
+    (import ./unstable { inherit inputs lib; })
   ];
 in
-  stableOverlaysWithImports
-  // {
-    default = composeManyExtensions (
-      defaultOverlays ++ customOverlays ++ (attrValues stableOverlaysWithImports)
-    );
-  }
+stableOverlaysWithImports
+// {
+  default = composeManyExtensions (
+    defaultOverlays ++ customOverlays ++ (attrValues stableOverlaysWithImports)
+  );
+}

@@ -7,19 +7,18 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   zfsIsUnstable = config.boot.zfs.package == pkgs.zfsUnstable;
-  myZfsCompatibleXanmodKernelPackages =
-    lib.filterAttrs (
-      name: kernelPackages:
-        (lib.hasInfix "_xanmod" name)
-        && (builtins.tryEval kernelPackages).success
-        && (
-          (!zfsIsUnstable && !kernelPackages.${pkgs.zfs.kernelModuleAttribute}.meta.broken)
-          || (zfsIsUnstable && !kernelPackages.zfs_unstable.meta.broken)
-        )
+  myZfsCompatibleXanmodKernelPackages = lib.filterAttrs (
+    name: kernelPackages:
+    (lib.hasInfix "_xanmod" name)
+    && (builtins.tryEval kernelPackages).success
+    && (
+      (!zfsIsUnstable && !kernelPackages.${pkgs.zfs.kernelModuleAttribute}.meta.broken)
+      || (zfsIsUnstable && !kernelPackages.zfs_unstable.meta.broken)
     )
-    pkgs.unstable.linuxKernel.packages;
+  ) pkgs.unstable.linuxKernel.packages;
   latestXanmodKernelPackage = lib.last (
     lib.sort (a: b: (lib.versionOlder a.kernel.version b.kernel.version)) (
       builtins.attrValues myZfsCompatibleXanmodKernelPackages
@@ -27,7 +26,8 @@
   );
   zfs_arc_max = toString (8 * 1024 * 1024 * 1024);
   zfs_arc_min = toString (8 * 1024 * 1024 * 1024 - 1);
-in {
+in
+{
   imports = with inputs; [
     ./hardware-configuration.nix
     ucodenix.nixosModules.default
@@ -47,7 +47,10 @@ in {
   };
   boot = {
     zfs = {
-      extraPools = ["ztank" "zdata"];
+      extraPools = [
+        "ztank"
+        "zdata"
+      ];
       devNodes = "/dev/disk/by-uuid";
     };
     binfmt = {
@@ -106,7 +109,9 @@ in {
     '';
 
     kernelPackages = latestXanmodKernelPackage;
-    extraModulePackages = [config.boot.kernelPackages.${config.boot.zfs.package.kernelModuleAttribute}];
+    extraModulePackages = [
+      config.boot.kernelPackages.${config.boot.zfs.package.kernelModuleAttribute}
+    ];
 
     kernel.sysctl = {
       "fs.inotify.max_user_watches" = "819200";
@@ -150,10 +155,10 @@ in {
     initrd.systemd.services = {
       rollback = {
         description = "Rollback ZFS datasets to a pristine state";
-        wantedBy = ["initrd.target"];
-        after = ["zfs-import-ztank.service"];
-        before = ["sysroot.mount"];
-        path = with pkgs; [zfs];
+        wantedBy = [ "initrd.target" ];
+        after = [ "zfs-import-ztank.service" ];
+        before = [ "sysroot.mount" ];
+        path = with pkgs; [ zfs ];
         unitConfig.DefaultDependencies = "no";
         serviceConfig.Type = "oneshot";
         script = ''
@@ -175,7 +180,7 @@ in {
 
   systemd.services."apply-acpi-wakeup-fixes" = {
     description = "Apply WM2 wakeup fixes";
-    wantedBy = ["basic.target"];
+    wantedBy = [ "basic.target" ];
     path = with pkgs; [
       gawk
       coreutils
@@ -205,7 +210,7 @@ in {
         rocmPackages.clr
         rocmPackages.clr.icd
       ];
-      extraPackages32 = with pkgs; [driversi686Linux.amdvlk];
+      extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
     };
     amdgpu = {
       initrd.enable = true;
@@ -245,7 +250,7 @@ in {
     };
     xserver = {
       enable = true;
-      videoDrivers = ["amdgpu"];
+      videoDrivers = [ "amdgpu" ];
     };
     ollama = {
       enable = false;
@@ -264,7 +269,7 @@ in {
     input-remapper.enable = true;
     thermald.enable = true;
     udev = {
-      packages = with pkgs; [gnome-settings-daemon];
+      packages = with pkgs; [ gnome-settings-daemon ];
       extraRules = ''
         SUBSYSTEM=="power_supply", KERNEL=="ADP1", ATTR{online}=="0", RUN+="${pkgs.lib.getExe' pkgs.systemd "systemctl"} --no-block start battery.target"
         SUBSYSTEM=="power_supply", KERNEL=="ADP1", ATTR{online}=="1", RUN+="${pkgs.lib.getExe' pkgs.systemd "systemctl"} --no-block start ac.target"
@@ -320,8 +325,8 @@ in {
     enable = true;
     gamescopeSession.enable = true;
     package = pkgs.steam.override {
-      extraPkgs = pkgs:
-        with pkgs; [
+      extraPkgs =
+        pkgs: with pkgs; [
           steamtinkerlaunch
         ];
     };

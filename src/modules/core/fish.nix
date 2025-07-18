@@ -6,10 +6,12 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   inherit (lib) mkOption mkIf;
   inherit (lib.types) bool;
-in {
+in
+{
   options = {
     nixfigs.shells.fish = {
       enable = mkOption {
