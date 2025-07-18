@@ -1,0 +1,1 @@
+../conf.d/installer-x86_64.nix
