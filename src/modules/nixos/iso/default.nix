@@ -15,6 +15,16 @@
   isAarch64 = config.nixpkgs.hostPlatform.isAarch64;
   isX86_64 = config.nixpkgs.hostPlatform.isx86_64;
   
+  # Auto-detect output format based on imported modules
+  hasIsoModule = config.system.build ? isoImage;
+  hasSdModule = config.system.build ? sdImage;
+  
+  # Determine output format implicitly
+  outputFormat = if hasIsoModule && hasSdModule then "both"
+                else if hasIsoModule then "iso"
+                else if hasSdModule then "sd-card"
+                else "iso"; # fallback
+  
   # Common packages for all architectures
   commonPackages = with pkgs; [
     # ZFS utilities
@@ -68,11 +78,6 @@ in
           description = "Name of the installer image";
         };
 
-        outputFormat = mkOption {
-          type = types.enum ["iso" "sd-card" "both"];
-          default = "iso";
-          description = "Output format: iso, sd-card, or both";
-        };
 
         bootMode = mkOption {
           type = types.enum ["bios" "uefi" "both"];
@@ -128,8 +133,8 @@ in
     };
     
     config = mkIf cfg.enable {
-      # Configure output formats
-      isoImage = mkIf (cfg.outputFormat == "iso" || cfg.outputFormat == "both") {
+      # Configure output formats based on imported modules
+      isoImage = mkIf (outputFormat == "iso" || outputFormat == "both") {
         isoName = cfg.imageName;
         # Boot mode configuration
         makeEfiBootable = mkIf (cfg.bootMode == "uefi" || cfg.bootMode == "both") true;
@@ -139,7 +144,7 @@ in
       };
       
       # SD card configuration
-      sdImage = mkIf (cfg.outputFormat == "sd-card" || cfg.outputFormat == "both") {
+      sdImage = mkIf (outputFormat == "sd-card" || outputFormat == "both") {
         imageName = cfg.imageName;
         populateRootCommands = cfg.sdCard.populateRootCommands;
         populateFirmwareCommands = cfg.sdCard.populateFirmwareCommands;
@@ -240,8 +245,8 @@ in
       
       # Welcome message
       environment.etc."issue".text = ''
-        NixOS Installer (${cfg.outputFormat})
-        ======================${lib.stringAsChars (x: "=") cfg.outputFormat}
+        NixOS Installer (${outputFormat})
+        ======================${lib.stringAsChars (x: "=") outputFormat}
         
         Welcome to the NixOS installer environment!
         
@@ -252,8 +257,8 @@ in
         - Essential system administration tools
         
         Architecture: ${config.nixpkgs.hostPlatform.system}
-        Output format: ${cfg.outputFormat}
-        ${lib.optionalString (cfg.outputFormat == "iso" || cfg.outputFormat == "both") "Boot mode: ${cfg.bootMode}"}
+        Output format: ${outputFormat}
+        ${lib.optionalString (outputFormat == "iso" || outputFormat == "both") "Boot mode: ${cfg.bootMode}"}
         
         To get started:
         1. Configure your network connection
