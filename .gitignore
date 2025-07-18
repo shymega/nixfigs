@@ -6,3 +6,15 @@
 /.pre-commit-config.yaml
 /.direnv
 /.claude/settings.local.json
+
+# Git-crypt backup keys (sensitive!)
+git-crypt-backup-key.bin
+*.git-crypt-key
+git-crypt-key.*
+
+# Work-specific environment files
+.env.work
+config/work.*
+
+# Temporary git-crypt files
+.git-crypt-tmp/
