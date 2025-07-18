@@ -2,26 +2,35 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   inherit (lib) checkRoles;
-  isVM = checkRoles ["virtual-machine"] config;
-in {
+  isVM = checkRoles [ "virtual-machine" ] config;
+in
+{
   config = lib.mkIf isVM {
     # Rustdesk service configuration
     systemd.services.rustdesk = {
       enable = true;
       description = "Rustdesk remote desktop service";
-      after = [ "network.target" "graphical-session.target" ];
+      after = [
+        "network.target"
+        "graphical-session.target"
+      ];
       wantedBy = [ "multi-user.target" ];
-      
+
       environment = {
         DISPLAY = ":0";
         WAYLAND_DISPLAY = "wayland-0";
         # Restrict to local network access only
         RUSTDESK_SERVER = "192.168.122.1"; # Host IP
       };
-      
+
       serviceConfig = {
         Type = "simple";
         User = "domrodriguez";
@@ -29,16 +38,20 @@ in {
         ExecStart = "${pkgs.rustdesk}/bin/rustdesk --service";
         Restart = "always";
         RestartSec = 5;
-        
+
         # Security restrictions
         NoNewPrivileges = true;
         PrivateTmp = true;
         ProtectSystem = "strict";
         ProtectHome = "read-only";
-        
+
         # Network restrictions
-        RestrictAddressFamilies = [ "AF_INET" "AF_INET6" "AF_UNIX" ];
-        
+        RestrictAddressFamilies = [
+          "AF_INET"
+          "AF_INET6"
+          "AF_UNIX"
+        ];
+
         # Capabilities needed for remote desktop
         AmbientCapabilities = [ "CAP_SYS_PTRACE" ];
         CapabilityBoundingSet = [ "CAP_SYS_PTRACE" ];
@@ -50,26 +63,26 @@ in {
       [options]
       # Network configuration
       listen-address = "0.0.0.0:21116"
-      
+
       # Security settings
       password = "vmaccess2024" # Change this password
       encryption = true
-      
+
       # Display settings
       video-codec = "h264"
       quality = "balanced"
-      
+
       # Access control - restrict to local network
       whitelist = ["192.168.122.0/24"]
-      
+
       # Logging
       log-level = "info"
       log-file = "/var/log/rustdesk.log"
-      
+
       [server]
       # Use local relay server if available
       relay-server = "192.168.122.1:21117"
-      
+
       [display]
       # VM display optimizations
       capture-cursor = true
@@ -104,7 +117,7 @@ in {
 
     # Wayland/X11 compatibility for remote desktop
     programs.xwayland.enable = true;
-    
+
     # Enable screen sharing permissions
     xdg.portal = {
       enable = true;
@@ -135,7 +148,10 @@ in {
     networking.firewall = {
       # Only allow Rustdesk from specific networks
       interfaces."virbr0" = {
-        allowedTCPPorts = [ 21116 21117 ];
+        allowedTCPPorts = [
+          21116
+          21117
+        ];
         allowedUDPPorts = [ 21116 ];
       };
     };
@@ -155,7 +171,7 @@ in {
             echo "$(date): Rustdesk service not running" >> /var/log/rustdesk-monitor.log
             systemctl restart rustdesk
           fi
-          
+
           # Log connection attempts
           netstat -tn | grep :21116 | wc -l >> /var/log/rustdesk-connections.log
         '';
