@@ -300,7 +300,7 @@
     };
 
     # Shell plugins
-    _1password-shell-plugins = {
+    op-password-shell-plugins = {
       url = "github:1Password/shell-plugins";
       inputs.nixpkgs.follows = "nixpkgs";
     };
