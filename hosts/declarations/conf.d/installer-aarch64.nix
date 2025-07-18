@@ -7,8 +7,8 @@
   ...
 }: mkHost {
   type = "nixos";
-  hostname = "installer-x86_64";
-  hostPlatform = "x86_64-linux";
+  hostname = "installer-aarch64";
+  hostPlatform = "aarch64-linux";
   hostRoles = ["installer" "personal"];
   
   hardwareModules = with inputs; [
