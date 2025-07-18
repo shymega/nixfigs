@@ -7,7 +7,8 @@
   lib,
   ...
 }:
-with lib; {
+with lib;
+{
   # don't build documentation
   documentation.info.enable = mkForce false;
   documentation.man.enable = mkForce false;
@@ -32,5 +33,5 @@ with lib; {
 
   # build less locales
   # This isn't perfect, but let's expect the user specifies an UTF-8 defaultLocale
-  i18n.supportedLocales = [(config.i18n.defaultLocale + "/UTF-8")];
+  i18n.supportedLocales = [ (config.i18n.defaultLocale + "/UTF-8") ];
 }

@@ -2,7 +2,8 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 #
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   environment = {
     variables = {
       TERMINAL = "${pkgs.lib.getExe pkgs.alacritty}";
