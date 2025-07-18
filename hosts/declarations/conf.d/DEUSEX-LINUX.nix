@@ -24,7 +24,7 @@ mkHost rec {
     lanzaboote.nixosModules.lanzaboote
     {environment.systemPackages = [inputs.nixpkgs.legacyPackages.${hostPlatform}.sbctl];}
   ];
-  pubkey = "";
+  pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJQGDjP3VZNFfU5RkZjHXMzAFCURAzfFhDtEbsqcbJr8";
   embedHm = true;
   remoteBuild = true;
   deployable = true;
