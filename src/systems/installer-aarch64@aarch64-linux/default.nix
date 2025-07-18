@@ -11,9 +11,9 @@
     ../../modules/nixos/iso
   ];
 
-  nixfigs.isoImage = {
+  nixfigs.installer = {
     enable = true;
-    isoName = "nixos-installer-aarch64";
+    imageName = "nixos-installer-aarch64";
     includeZeroTier = true;
     includeZFS = true;
     sshKeys = [
@@ -21,12 +21,7 @@
       # Example: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI... user@host"
     ];
     extraPackages = with pkgs; [
-      # Additional packages for aarch64 installer
-      lshw
-      smartmontools
-      # ARM-specific tools
-      dtc
-      u-boot-tools
+      # Additional packages for aarch64 installer (these are now included automatically)
     ];
   };
 
