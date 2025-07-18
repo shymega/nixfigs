@@ -10,11 +10,11 @@ default:
     @just --list
 
 # Variables for dummy input overrides (set these in your environment)
-NIXFIGS_VIRTUAL_PRIVATE_URL := env_var_or_default('NIXFIGS_VIRTUAL_PRIVATE_URL', 'github:shymega/nixfigs-virtual-private-dummy')
-NIXFIGS_WORK_URL := env_var_or_default('NIXFIGS_WORK_URL', 'github:shymega/nixfigs-work-dummy')
-NIXFIGS_PRIVATE_URL := env_var_or_default('NIXFIGS_PRIVATE_URL', 'github:shymega/nixfigs-private-dummy')
-NIXFIGS_NETWORKS_URL := env_var_or_default('NIXFIGS_NETWORKS_URL', 'github:shymega/nixfigs-networks-dummy')
-SHYPKGS_PRIVATE_URL := env_var_or_default('SHYPKGS_PRIVATE_URL', 'github:shymega/shypkgs-private-dummy')
+NIXFIGS_VIRTUAL_PRIVATE_URL := env_var_or_default('NIXFIGS_VIRTUAL_PRIVATE_URL', 'github:shymega/nixfigs-virtual-private')
+NIXFIGS_WORK_URL := env_var_or_default('NIXFIGS_WORK_URL', 'github:shymega/nixfigs-work')
+NIXFIGS_PRIVATE_URL := env_var_or_default('NIXFIGS_PRIVATE_URL', 'github:shymega/nixfigs-private')
+NIXFIGS_NETWORKS_URL := env_var_or_default('NIXFIGS_NETWORKS_URL', 'github:shymega/nixfigs-networks')
+SHYPKGS_PRIVATE_URL := env_var_or_default('SHYPKGS_PRIVATE_URL', 'github:shymega/shypkgs-private')
 
 # Override arguments for dummy inputs
 override_args := "--override-input nixfigs-virtual-private " + NIXFIGS_VIRTUAL_PRIVATE_URL + " --override-input nixfigs-work " + NIXFIGS_WORK_URL + " --override-input nixfigs-private " + NIXFIGS_PRIVATE_URL + " --override-input nixfigs-networks " + NIXFIGS_NETWORKS_URL + " --override-input shypkgs-private " + SHYPKGS_PRIVATE_URL
