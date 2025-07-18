@@ -25,7 +25,10 @@
       allowUnfree = true;
       allowUnsupportedSystem = true;
       allowBroken = false;
-      allowInsecurePredicate = _: true;
+      allowInsecurePredicate = pkg: builtins.elem (lib.getName pkg) [
+        # Add specific packages that need to be allowed here
+        # Example: "package-name"
+      ];
     };
     overlays = import ./overlays {
       inherit inputs;
@@ -218,8 +221,8 @@
       url = "github:NixOS/flake-registry";
       flake = false;
     };
-    agenix = {
-      url = "github:ryantm/agenix";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {

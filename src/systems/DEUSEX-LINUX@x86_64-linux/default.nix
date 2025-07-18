@@ -52,7 +52,7 @@ in {
     users."dzrodriguez" = {
       isNormalUser = true;
       description = "Dom RODRIGUEZ";
-      password = lib.mkForce "changeme";
+      hashedPasswordFile = "/run/secrets/dzrodriguez_password"; # Use sops-nix for password management
       linger = true;
       subUidRanges = [
         {
