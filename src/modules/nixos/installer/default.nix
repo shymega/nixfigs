@@ -4,7 +4,9 @@
 {
   lib,
   config,
+  hostname,
   pkgs,
+  inputs,
   ...
 }: let
   cfg = config.nixfigs.installer;
@@ -16,8 +18,8 @@
   isX86_64 = config.nixpkgs.hostPlatform.isx86_64;
   
   # Auto-detect output format based on configuration options
-  hasIsoModule = config ? isoImage;
-  hasSdModule = config ? sdImage;
+  hasIsoModule = cfg.isoImage.enable;
+  hasSdModule = cfg.sdImage.enable;
   
   # Determine output format implicitly
   outputFormat = if hasIsoModule && hasSdModule then "both"
@@ -68,13 +70,21 @@
   ] else [];
 in
   with lib; {
+        imports = with inputs; [
+        "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+        "${nixpkgs}/nixos/modules/installer/cd-dvd/iso-image.nix"
+        "${nixpkgs}/nixos/modules/installer/sd-card/sd-image.nix"
+        ];
     options = {
       nixfigs.installer = {
         enable = mkEnableOption "Enable installer image generation";
+
+        isoImage.enable = mkEnableOption "Enable ISO image generation";
+        sdImage.enable = mkEnableOption "Enable SD card image generation";
         
         imageName = mkOption {
           type = types.str;
-          default = "nixos-installer";
+          default = "nixos-installer-${pkgs.system}--${hostname}";
           description = "Name of the installer image";
         };
 
@@ -99,7 +109,7 @@ in
 
         sshKeys = mkOption {
           type = types.listOf types.str;
-          default = [];
+          default = ["${pubkey}"];
           description = "SSH public keys to include in the installer";
         };
 
@@ -282,8 +292,6 @@ in
           # Boot mode configuration
           makeEfiBootable = mkIf (cfg.bootMode == "uefi" || cfg.bootMode == "both") true;
           makeUsbBootable = mkIf (cfg.bootMode == "bios" || cfg.bootMode == "both") true;
-          # Volume label
-          volumeLabel = "NIXOS_INSTALLER";
         };
       })
       
@@ -295,7 +303,6 @@ in
           populateFirmwareCommands = cfg.sdCard.populateFirmwareCommands;
           firmwareSize = cfg.sdCard.firmwareSize;
           # Ensure we have space for the installer and tools
-          rootPartitionUUID = "44444444-4444-4444-8888-888888888888";
           compressImage = true;
         };
       })
