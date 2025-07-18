@@ -7,19 +7,77 @@
   pkgs,
   ...
 }: let
-  cfg = config.nixfigs.isoImage;
+  cfg = config.nixfigs.installer;
   isWork = builtins.elem "work" (config.nixfigs.hostRoles or []);
   isPersonal = builtins.elem "personal" (config.nixfigs.hostRoles or []);
+  
+  # Determine architecture-specific settings
+  isAarch64 = config.nixpkgs.hostPlatform.isAarch64;
+  isX86_64 = config.nixpkgs.hostPlatform.isx86_64;
+  
+  # Common packages for all architectures
+  commonPackages = with pkgs; [
+    # ZFS utilities
+    zfs
+    # Network tools
+    curl
+    wget
+    # Text editors
+    vim
+    nano
+    # System tools
+    htop
+    tree
+    lsof
+    # Git for cloning configurations
+    git
+    # Partition tools
+    gptfdisk
+    parted
+    # Archive tools
+    unzip
+    # Fish shell
+    fish
+  ];
+  
+  # Architecture-specific packages
+  archPackages = with pkgs; if isAarch64 then [
+    # ARM-specific tools
+    dtc
+    u-boot-tools
+    lshw
+    smartmontools
+  ] else if isX86_64 then [
+    # x86_64-specific tools
+    dmidecode
+    pciutils
+    usbutils
+    lshw
+    smartmontools
+    nvme-cli
+  ] else [];
 in
   with lib; {
     options = {
-      nixfigs.isoImage = {
-        enable = mkEnableOption "Enable ISO image generation";
+      nixfigs.installer = {
+        enable = mkEnableOption "Enable installer image generation";
         
-        isoName = mkOption {
+        imageName = mkOption {
           type = types.str;
           default = "nixos-installer";
-          description = "Name of the ISO image";
+          description = "Name of the installer image";
+        };
+
+        outputFormat = mkOption {
+          type = types.enum ["iso" "sd-card" "both"];
+          default = "iso";
+          description = "Output format: iso, sd-card, or both";
+        };
+
+        bootMode = mkOption {
+          type = types.enum ["bios" "uefi" "both"];
+          default = "both";
+          description = "Boot mode support for ISO: bios, uefi, or both";
         };
 
         includeZeroTier = mkOption {
@@ -43,13 +101,53 @@ in
         extraPackages = mkOption {
           type = types.listOf types.package;
           default = [];
-          description = "Additional packages to include in the ISO";
+          description = "Additional packages to include in the installer";
+        };
+
+        # SD card specific options
+        sdCard = {
+          populateRootCommands = mkOption {
+            type = types.lines;
+            default = "";
+            description = "Commands to populate the root filesystem on SD card";
+          };
+
+          populateFirmwareCommands = mkOption {
+            type = types.lines;
+            default = "";
+            description = "Commands to populate the firmware partition on SD card";
+          };
+
+          firmwareSize = mkOption {
+            type = types.int;
+            default = 128;
+            description = "Size of the firmware partition in MB";
+          };
         };
       };
     };
     
     config = mkIf cfg.enable {
-      isoImage.isoName = cfg.isoName;
+      # Configure output formats
+      isoImage = mkIf (cfg.outputFormat == "iso" || cfg.outputFormat == "both") {
+        isoName = cfg.imageName;
+        # Boot mode configuration
+        makeEfiBootable = mkIf (cfg.bootMode == "uefi" || cfg.bootMode == "both") true;
+        makeUsbBootable = mkIf (cfg.bootMode == "bios" || cfg.bootMode == "both") true;
+        # Volume label
+        volumeLabel = "NIXOS_INSTALLER";
+      };
+      
+      # SD card configuration
+      sdImage = mkIf (cfg.outputFormat == "sd-card" || cfg.outputFormat == "both") {
+        imageName = cfg.imageName;
+        populateRootCommands = cfg.sdCard.populateRootCommands;
+        populateFirmwareCommands = cfg.sdCard.populateFirmwareCommands;
+        firmwareSize = cfg.sdCard.firmwareSize;
+        # Ensure we have space for the installer and tools
+        rootPartitionUUID = "44444444-4444-4444-8888-888888888888";
+        compressImage = true;
+      };
       
       # Enable systemd in stage 1
       boot.initrd.systemd.enable = true;
@@ -117,29 +215,7 @@ in
       };
       
       # Essential packages for installer
-      environment.systemPackages = with pkgs; [
-        # ZFS utilities
-        zfs
-        # Network tools
-        curl
-        wget
-        # Text editors
-        vim
-        nano
-        # System tools
-        htop
-        tree
-        lsof
-        # Git for cloning configurations
-        git
-        # Partition tools
-        gptfdisk
-        parted
-        # Archive tools
-        unzip
-        # Fish shell
-        fish
-      ] ++ cfg.extraPackages;
+      environment.systemPackages = commonPackages ++ archPackages ++ cfg.extraPackages;
       
       # Enable fish shell
       programs.fish.enable = true;
@@ -164,8 +240,8 @@ in
       
       # Welcome message
       environment.etc."issue".text = ''
-        NixOS Installer ISO
-        ===================
+        NixOS Installer (${cfg.outputFormat})
+        ======================${lib.stringAsChars (x: "=") cfg.outputFormat}
         
         Welcome to the NixOS installer environment!
         
@@ -174,6 +250,10 @@ in
         - ZeroTier for network connectivity
         - SSH access with pre-configured keys
         - Essential system administration tools
+        
+        Architecture: ${config.nixpkgs.hostPlatform.system}
+        Output format: ${cfg.outputFormat}
+        ${lib.optionalString (cfg.outputFormat == "iso" || cfg.outputFormat == "both") "Boot mode: ${cfg.bootMode}"}
         
         To get started:
         1. Configure your network connection
@@ -187,5 +267,25 @@ in
       
       # Disable sudo password for installer user
       security.sudo.wheelNeedsPassword = false;
+      
+      # Architecture-specific configurations
+      boot.kernelParams = mkMerge [
+        (mkIf isAarch64 [
+          "console=ttyS0,115200n8"
+          "console=tty0"
+          "earlycon"
+        ])
+        (mkIf isX86_64 [
+          "console=ttyS0,115200n8"
+          "console=tty0"
+        ])
+      ];
+      
+      # Enable hardware support
+      hardware.enableAllFirmware = true;
+      hardware.enableRedistributableFirmware = true;
+      
+      # Network interface naming
+      networking.usePredictableInterfaceNames = true;
     };
   }
