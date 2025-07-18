@@ -7,13 +7,9 @@
   outputs = inputs: let
     inherit (inputs) self;
     rolesModule = import ./nix-support/roles.nix;
-    treeFmtEachSystem = let
-      allSystems = [
-        "x86_64-linux"
-        "aarch64-linux"
-      ];
-    in
-      f: inputs.nixpkgs.lib.genAttrs allSystems (system: f inputs.nixpkgs.legacyPackages.${system});
+    systemsModule = import ./nix-support/systems.nix {inherit inputs;};
+    inherit (systemsModule) treefmtSystems forEachSystem;
+    treeFmtEachSystem = forEachSystem treefmtSystems;
     treeFmtEval = treeFmtEachSystem (
       pkgs:
         inputs.treefmt-nix.lib.evalModule pkgs ./nix-support/formatter.nix
@@ -88,35 +84,23 @@
     formatter = treeFmtEachSystem (pkgs: treeFmtEval.${pkgs.system}.config.build.wrapper);
 
     devShells = let
-      allSystems = [
-        "x86_64-linux"
-        "x86_64-darwin"
-        "aarch64-linux"
-        "aarch64-darwin"
-      ];
-      forEachSystem = f: inputs.nixpkgs.lib.genAttrs allSystems f;
+      inherit (systemsModule) devshellSystems forDevSystems;
     in
-      forEachSystem (system: {
+      forDevSystems (system: {
         default = import ./nix-support/devshell.nix {
           inherit inputs self system;
         };
       });
 
     checks = let
-      allSystems = [
-        "x86_64-linux"
-        "x86_64-darwin"
-        "aarch64-linux"
-        "aarch64-darwin"
-      ];
-      forEachSystem = f: inputs.nixpkgs.lib.genAttrs allSystems f;
+      inherit (systemsModule) checkSystems forDevSystems;
     in
       builtins.mapAttrs (_system: deployLib: deployLib.deployChecks self.deploy)
       inputs.deploy-rs.lib
       // treeFmtEachSystem (pkgs: {
         formatting = treeFmtEval.${pkgs}.config.build.wrapper;
       })
-      // forEachSystem (
+      // forDevSystems (
         system: {
           pre-commit-check = import ./nix-support/checks.nix {
             inherit inputs system self;
@@ -125,17 +109,7 @@
       );
 
     githubActions.matrix = let
-      systemToPlatform = system: let
-        inherit (inputs.nixpkgs.lib.strings) hasSuffix;
-        isDarwin = system: hasSuffix "-darwin" system;
-      in
-        if system == "aarch64-linux"
-        then "ubuntu-24.04-arm"
-        else if hasSuffix "-linux" system
-        then "ubuntu-24.04"
-        else if isDarwin system
-        then "macos-14"
-        else throw "Unsupported system (platform): ${system}";
+      inherit (systemsModule) systemToPlatform;
       nixosConfigs = let
         inherit (inputs.nixpkgs.lib.attrsets) filterAttrs mapAttrsToList;
       in {
