@@ -2,5 +2,57 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-nix.secrets/** filter=git-crypt diff=git-crypt
-nix/systems/x86_64/ct-*/** filter=git-crypt diff=git-crypt
+# Git-crypt configuration for work-specific files
+# These patterns define which files should be encrypted with git-crypt
+
+# Work-specific configurations (encrypt everything in work modules)
+src/modules/nixos/work/** filter=git-crypt diff=git-crypt
+src/systems/ct-lt-2671@x86_64-linux/** filter=git-crypt diff=git-crypt
+
+# Work secrets (already using SOPS, but add git-crypt as additional layer)
+secrets/work/** filter=git-crypt diff=git-crypt
+
+# Work host declarations
+hosts/declarations/conf.d/ct-lt-2671.nix filter=git-crypt diff=git-crypt
+
+# Work-specific documentation or notes
+docs/WORK-* filter=git-crypt diff=git-crypt
+*.work.md filter=git-crypt diff=git-crypt
+
+# Corporate/work-specific scripts or tools
+scripts/work/** filter=git-crypt diff=git-crypt
+tools/work/** filter=git-crypt diff=git-crypt
+
+# Environment-specific configs that might contain work info
+.env.work filter=git-crypt diff=git-crypt
+config/work.* filter=git-crypt diff=git-crypt
+
+# Exclude certain files from encryption (keep these readable)
+# License files should remain unencrypted
+*.license !filter
+LICENSE* !filter
+COPYING* !filter
+
+# README files should remain readable for work repos
+README.md !filter
+*/README.md !filter
+
+# Git-related files should not be encrypted
+.git* !filter
+.gitignore !filter
+
+# Nix-related files that need to be readable for builds
+flake.nix !filter
+flake.lock !filter
+shell.nix !filter
+default.nix !filter
+
+# CI/CD files should remain readable
+.github/** !filter
+.gitlab-ci.yml !filter
+Justfile !filter
+
+# Build and development files
+result* !filter
+.direnv* !filter
+.envrc !filter
