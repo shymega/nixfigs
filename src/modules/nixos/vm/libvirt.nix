@@ -4,7 +4,7 @@
 
 { config, lib, pkgs, ... }:
 let
-  inherit (config.nixfigs.roles) checkRoles;
+  inherit (lib) checkRoles;
   isLibvirtVM = checkRoles ["virtual-machine" "libvirt"] config;
 in {
   config = lib.mkIf isLibvirtVM {

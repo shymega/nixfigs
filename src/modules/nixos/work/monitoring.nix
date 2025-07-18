@@ -4,7 +4,7 @@
 
 { config, lib, pkgs, ... }:
 let
-  inherit (config.nixfigs.roles) checkRoles;
+  inherit (lib) checkRoles;
 in {
   config = lib.mkIf (checkRoles ["work"] config) {
     # Corporate monitoring and management
