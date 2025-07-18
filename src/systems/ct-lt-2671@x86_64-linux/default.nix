@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-{ inputs, self, config, lib, pkgs, ... }:
+{ inputs, self, config, lib, pkgs, hostRoles, ... }:
 let
   inherit (lib) checkRoles;
 in
