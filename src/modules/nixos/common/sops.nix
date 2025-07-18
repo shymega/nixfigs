@@ -8,7 +8,7 @@
   ...
 }:
 let
-  inherit (config.nixfigs.roles) checkRoles;
+  inherit (lib) checkRoles;
   isWork = checkRoles ["work"] config;
   isPersonal = checkRoles ["personal"] config;
   hostname = config.networking.hostName;

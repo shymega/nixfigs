@@ -4,7 +4,7 @@
 
 { config, lib, ... }:
 let
-  inherit (config.nixfigs.roles) checkRoles;
+  inherit (lib) checkRoles;
 in {
   config = lib.mkIf (checkRoles ["work"] config) {
     # Work-specific network configurations
