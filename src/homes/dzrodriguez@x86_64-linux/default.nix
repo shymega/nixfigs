@@ -9,11 +9,13 @@
   self,
   config,
   username,
-  osConfig ? {},
+  osConfig ? { },
   ...
-} @ args: let
+}@args:
+let
   isOsModule = builtins.hasAttr "config" osConfig;
-in {
+in
+{
   imports = with inputs; [
     _1password-shell-plugins.hmModules.default
     shypkgs-public.hmModules.${system}.dwl

@@ -3,18 +3,19 @@
 # SPDX-License-Identifier: GPL-3.0-only
 {
   lib,
-  hostRoles ? [],
-  metadata ? {},
+  hostRoles ? [ ],
+  metadata ? { },
   ...
 }:
-with lib; {
+with lib;
+{
   options.nixfigs.meta = {
     rolesEnabled = mkOption {
       default = hostRoles;
       type = with types; listOf str;
     };
     hostAddress = mkOption {
-      default = (builtins.hasAttr "hostAddress" metadata && builtins.getAttr "hostAddress" metadata) or "";
+      default = builtins.hasAttr "hostAddress" metadata && builtins.getAttr "hostAddress" metadata;
       type = with types; str;
     };
   };
