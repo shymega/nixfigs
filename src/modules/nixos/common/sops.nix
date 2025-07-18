@@ -6,11 +6,20 @@
   config,
   lib,
   ...
-}: {
+}:
+let
+  inherit (config.nixfigs.roles) checkRoles;
+  isWork = checkRoles ["work"] config;
+  isPersonal = checkRoles ["personal"] config;
+  hostname = config.networking.hostName;
+in {
   # Configure sops-nix for secrets management
   sops = {
-    # Default file for secrets
-    defaultSopsFile = ../../../secrets/hosts/${config.networking.hostName}/passwords.yaml;
+    # Role-based default secrets file
+    defaultSopsFile = 
+      if isWork then ../../../secrets/work/hosts/${hostname}/passwords.yaml
+      else if isPersonal then ../../../secrets/personal/hosts/${hostname}/passwords.yaml
+      else ../../../secrets/hosts/${hostname}/passwords.yaml; # Fallback for other roles
     
     # Validate sops files at build time
     validateSopsFiles = true;
@@ -36,17 +45,49 @@
       sshKeyPaths = ["/etc/ssh/ssh_host_rsa_key"];
     };
     
-    # Secrets configuration
-    secrets = {
-      # User password
-      "dzrodriguez_password" = {
-        neededForUsers = true;
-        path = "/run/secrets/dzrodriguez_password";
-        mode = "0400";
-        owner = "root";
-        group = "root";
-      };
-    };
+    # Role-based secrets configuration
+    secrets = 
+      if isWork then {
+        # Work-specific secrets
+        "workuser-password" = {
+          neededForUsers = true;
+          path = "/run/secrets/workuser-password";
+          mode = "0400";
+          owner = "root";
+          group = "root";
+        };
+        "luks-password" = {
+          path = "/run/secrets/luks-password";
+          mode = "0400";
+          owner = "root";
+          group = "root";
+        };
+        "work-wifi-psk" = {
+          sopsFile = ../../../secrets/work/hosts/${hostname}/wifi-credentials.yaml;
+          path = "/run/secrets/work-wifi-psk";
+          mode = "0400";
+          owner = "root";
+          group = "root";
+        };
+        "corporate-root-ca" = {
+          sopsFile = ../../../secrets/work/shared/corporate-ca.yaml;
+          path = "/run/secrets/corporate-root-ca";
+          mode = "0444";
+          owner = "root";
+          group = "root";
+        };
+      }
+      else if isPersonal then {
+        # Personal secrets (existing configuration)
+        "dzrodriguez_password" = {
+          neededForUsers = true;
+          path = "/run/secrets/dzrodriguez_password";
+          mode = "0400";
+          owner = "root";
+          group = "root";
+        };
+      }
+      else {}; # No secrets for other roles
   };
   
   # Ensure sops key directory exists
