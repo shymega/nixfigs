@@ -1,7 +1,8 @@
 # SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
 #
 # SPDX-License-Identifier: GPL-3.0-only
-{config, ...}: {
+{ config, ... }:
+{
   # configure restic backup services
   services.restic.backups = {
     shynet-machines = {
@@ -11,7 +12,7 @@
       repositoryFile = config.age.secrets."restic_repo".path;
       passwordFile = config.age.secrets."restic_pw".path;
 
-      paths = ["${config.users.users.dzrodriguez.home}"];
+      paths = [ "${config.users.users.dzrodriguez.home}" ];
 
       pruneOpts = [
         "--keep-daily 7"

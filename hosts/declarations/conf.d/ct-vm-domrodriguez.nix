@@ -12,7 +12,12 @@ mkHost rec {
   type = "nixos";
   hostname = "ct-vm-domrodriguez";
   hostPlatform = "x86_64-linux";
-  hostRoles = ["virtual-machine" "personal" "workstation" "libvirt"]; # VM-specific roles
+  hostRoles = [
+    "virtual-machine"
+    "personal"
+    "workstation"
+    "libvirt"
+  ]; # VM-specific roles
   hardwareModules = with inputs; [
     hardware.nixosModules.common-cpu-amd # Assuming AMD host (DEUSEX-LINUX)
     hardware.nixosModules.common-pc

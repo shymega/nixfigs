@@ -5,34 +5,39 @@
   self,
   inputs,
   ...
-}: let
-  genPkgs = system: overlays:
+}:
+let
+  genPkgs =
+    system: overlays:
     import inputs.nixpkgs {
       inherit system;
       overlays = builtins.attrValues self.overlays ++ overlays;
       config = self.nixpkgs-config;
     };
-  genConfiguration = hostname: {
-    address,
-    hostPlatform,
-    type,
-    username,
-    deployable,
-    overlays,
-    embedHm,
-    hostRoles,
-    ...
-  }: let
-    lib = inputs.nixpkgs.lib.extend (
-      final: prev:
+  genConfiguration =
+    hostname:
+    {
+      address,
+      hostPlatform,
+      type,
+      username,
+      deployable,
+      overlays,
+      embedHm,
+      hostRoles,
+      ...
+    }:
+    let
+      lib = inputs.nixpkgs.lib.extend (
+        final: prev:
         (import "${self}/lib" {
           pkgs = genPkgs hostPlatform overlays;
           inherit self inputs;
         })
         // inputs.home-manager.lib.hm
         // inputs.nixpkgs.lib
-    );
-  in
+      );
+    in
     inputs.nix-darwin.lib.darwinSystem {
       system = hostPlatform;
       pkgs = genPkgs hostPlatform overlays;
@@ -59,6 +64,6 @@
       };
     };
 in
-  inputs.nixpkgs.lib.mapAttrs genConfiguration (
-    inputs.nixpkgs.lib.filterAttrs (_: host: host.type == "darwin") self.hosts
-  )
+inputs.nixpkgs.lib.mapAttrs genConfiguration (
+  inputs.nixpkgs.lib.filterAttrs (_: host: host.type == "darwin") self.hosts
+)

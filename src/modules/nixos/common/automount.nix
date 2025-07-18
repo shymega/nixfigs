@@ -1,7 +1,8 @@
 # SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
 #
 # SPDX-License-Identifier: GPL-3.0-only
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   system.activationScripts.rp2040-mountpoint = ''
     ${pkgs.lib.getExe' pkgs.coreutils "mkdir"} -pv /mnt/dev/rp2040
   '';
