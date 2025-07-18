@@ -22,11 +22,11 @@
       with inputs; [
         {
           environment.systemPackages = with inputs; [
-            agenix.packages.${hostPlatform}.default
+            sops-nix.packages.${hostPlatform}.default
             nix-alien.packages.${hostPlatform}.nix-alien
           ];
         }
-        agenix.nixosModules.default
+        sops-nix.nixosModules.default
         chaotic.nixosModules.default
         lix-module.nixosModules.default
       ],
