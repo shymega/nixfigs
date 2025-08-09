@@ -4,33 +4,6 @@
 {
   description = "Main entrypoint to my NixOS flakes";
 
-  nixConfig = {
-    extra-trusted-substituters = [
-      "https://attic.mildlyfunctional.gay/nixbsd"
-      "https://cache.dataaturservice.se/spectrum/"
-      "https://cache.nixos.org/"
-      "https://deploy-rs.cachix.org/"
-      "https://devenv.cachix.org"
-      "https://nix-community.cachix.org"
-      "https://nix-gaming.cachix.org"
-      "https://nix-on-droid.cachix.org"
-      "https://numtide.cachix.org"
-      "https://pre-commit-hooks.cachix.org"
-    ];
-    extra-trusted-public-keys = [
-      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-      "deploy-rs.cachix.org-1:xfNobmiwF/vzvK1gpfediPwpdIP0rpDV2rYqx40zdSI="
-      "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
-      "nix-on-droid.cachix.org-1:56snoMJTXmDRC1Ei24CmKoUqvHJ9XCp+nidK7qkMQrU="
-      "nixbsd:gwcQlsUONBLrrGCOdEboIAeFq9eLaDqfhfXmHZs1mgc="
-      "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE="
-      "pre-commit-hooks.cachix.org-1:Pkk3Panw5AW24TOv6kz3PvLhlH8puAsJTBbOPmBo7Rc="
-      "spectrum-os.org-2:foQk3r7t2VpRx92CaXb5ROyy/NBdRJQG2uX2XJMYZfU="
-    ];
-  };
-
   outputs = inputs: let
     inherit (inputs) self;
     genPkgs = system:
@@ -64,7 +37,8 @@
     formatter = treeFmtEachSystem (pkgs: treeFmtEval.${pkgs.system}.config.build.wrapper);
     # for `nix flake check`
     checks =
-      treeFmtEachSystem (pkgs: {
+      treeFmtEachSystem
+      (pkgs: {
         formatting = treeFmtEval.${pkgs}.config.build.wrapper;
       })
       // forEachSystem (system: {
@@ -161,27 +135,27 @@
         inherit (inputs.nixpkgs.lib.attrsets) filterAttrs mapAttrsToList;
         isWorkHostname = n: let
           inherit (inputs.nixpkgs.lib.strings) hasInfix;
-        in hasInfix "ct-" n;
-        pred = n: v: let
+        in
+          hasInfix "ct-" n;
+        pred = _n: v: let
           inherit (v.pkgs) system;
           inherit (v.config.networking) hostName;
         in
           (system == "aarch64-linux" || system == "x86_64-linux") && !isWorkHostname hostName;
-      in
-        {
-          include = mapAttrsToList (n: v: {
+      in {
+        include =
+          mapAttrsToList
+          (n: v: {
             hostName = n;
             platform = systemToPlatform v.pkgs.system;
-          }) (filterAttrs pred self.nixosConfigurations);
-        };
+          })
+          (filterAttrs pred self.nixosConfigurations);
+      };
     in
       nixosConfigs;
   };
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
-    nixpkgs-shymega.url = "github:shymega/nixpkgs?ref=shymega/staging";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixfigs-helpers.url = "github:shymega/nixfigs-helpers";
     nixfigs-pkgs.url = "github:shymega/nixfigs-pkgs";
     nixfigs-private.url = "github:shymega/nixfigs-private";
@@ -195,15 +169,8 @@
       url = "github:serokell/deploy-rs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
-      flake = false;
-    };
     flake-utils.url = "github:numtide/flake-utils";
-    home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    home-manager.follows = "nixfigs-homes/home-manager";
     shypkgs-private.url = "github:shymega/shypkgs-private";
     shypkgs-public.url = "github:shymega/shypkgs-public";
     lix-module = {
