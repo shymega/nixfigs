@@ -19,7 +19,7 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           token: ${{ secrets.NIX_GH_ACTIONS_TOKEN }}
           ref: "main"
@@ -42,7 +42,7 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           token: ${{ secrets.NIX_GH_ACTIONS_TOKEN }}
           ref: "main"
@@ -64,7 +64,7 @@ jobs:
     if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           token: ${{ secrets.NIX_GH_ACTIONS_TOKEN }}
           ref: "main"
