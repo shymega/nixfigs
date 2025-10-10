@@ -27,7 +27,7 @@ mkHost rec {
   ];
   extraModules = with inputs; [
     lanzaboote.nixosModules.lanzaboote
-    { environment.systemPackages = [ inputs.nixpkgs.legacyPackages.${hostPlatform}.sbctl ]; }
+    {environment.systemPackages = [inputs.nixpkgs.legacyPackages.${hostPlatform}.sbctl];}
   ];
   pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJQGDjP3VZNFfU5RkZjHXMzAFCURAzfFhDtEbsqcbJr8";
   embedHm = true;

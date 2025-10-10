@@ -1,7 +1,6 @@
 # SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
 #
 # SPDX-License-Identifier: GPL-3.0-only
-
 {
   inputs,
   self,
@@ -10,11 +9,9 @@
   pkgs,
   hostRoles,
   ...
-}:
-let
+}: let
   inherit (lib) checkRoles;
-in
-{
+in {
   imports = [
     ./hardware-configuration.nix
     ../../modules/nixos
