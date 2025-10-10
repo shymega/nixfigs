@@ -26,7 +26,7 @@ mkHost rec {
   ];
   extraModules = with inputs; [
     lanzaboote.nixosModules.lanzaboote
-    { environment.systemPackages = [ inputs.nixpkgs.legacyPackages.${hostPlatform}.sbctl ]; }
+    {environment.systemPackages = [inputs.nixpkgs.legacyPackages.${hostPlatform}.sbctl];}
   ];
   pubkey = "";
   embedHm = true;

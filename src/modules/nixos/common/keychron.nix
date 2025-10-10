@@ -8,11 +8,9 @@
   pkgs,
   ...
 }:
-with lib;
-let
-  enabled = checkRoles [ "personal" "work" "workstation" ] config;
-in
-{
+with lib; let
+  enabled = checkRoles ["personal" "work" "workstation"] config;
+in {
   config = mkIf enabled {
     boot.extraModprobeConfig = ''
       options hid_apple fnmode=0
@@ -20,7 +18,7 @@ in
     environment.systemPackages = with pkgs; [
       via
     ];
-    services.udev.packages = [ pkgs.via ];
+    services.udev.packages = [pkgs.via];
     hardware.keyboard.qmk.enable = true;
   };
 }

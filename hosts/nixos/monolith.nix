@@ -9,8 +9,7 @@
   pkgs,
   inputs,
   ...
-}:
-{
+}: {
   imports = [
     ../../modules/nixos/secrets.nix
     ../../modules/nixos/roles.nix
@@ -99,7 +98,7 @@
     };
     zerotierone = {
       enable = true;
-      joinNetworks = [ "@secret@" ];
+      joinNetworks = ["@secret@"];
     };
     geoclue2 = {
       enable = true;
@@ -136,12 +135,12 @@
   };
 
   networking = {
-    timeServers = lib.mkForce [ "uk.pool.ntp.org" ];
+    timeServers = lib.mkForce ["uk.pool.ntp.org"];
     usePredictableInterfaceNames = lib.mkForce false;
 
     firewall = {
       enable = true;
-      interfaces."podman+".allowedUDPPorts = [ 53 ];
+      interfaces."podman+".allowedUDPPorts = [53];
       allowedTCPPortRanges = [
         {
           from = 1714;
@@ -173,7 +172,7 @@
     _1password-gui = {
       enable = true;
       package = pkgs._1password-gui;
-      polkitPolicyOwners = [ "dzrodriguez" ];
+      polkitPolicyOwners = ["dzrodriguez"];
     };
   };
 

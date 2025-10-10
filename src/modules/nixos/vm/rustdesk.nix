@@ -1,18 +1,15 @@
 # SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
 #
 # SPDX-License-Identifier: GPL-3.0-only
-
 {
   config,
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) checkRoles;
-  isVM = checkRoles [ "virtual-machine" ] config;
-in
-{
+  isVM = checkRoles ["virtual-machine"] config;
+in {
   config = lib.mkIf isVM {
     # Rustdesk service configuration
     systemd.services.rustdesk = {
@@ -22,7 +19,7 @@ in
         "network.target"
         "graphical-session.target"
       ];
-      wantedBy = [ "multi-user.target" ];
+      wantedBy = ["multi-user.target"];
 
       environment = {
         DISPLAY = ":0";
@@ -53,8 +50,8 @@ in
         ];
 
         # Capabilities needed for remote desktop
-        AmbientCapabilities = [ "CAP_SYS_PTRACE" ];
-        CapabilityBoundingSet = [ "CAP_SYS_PTRACE" ];
+        AmbientCapabilities = ["CAP_SYS_PTRACE"];
+        CapabilityBoundingSet = ["CAP_SYS_PTRACE"];
       };
     };
 
@@ -122,7 +119,7 @@ in
     xdg.portal = {
       enable = true;
       wlr.enable = true;
-      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+      extraPortals = [pkgs.xdg-desktop-portal-gtk];
       config.common.default = "*";
     };
 
@@ -134,7 +131,7 @@ in
 
     # Log rotation for Rustdesk
     services.logrotate.settings.rustdesk = {
-      files = [ "/var/log/rustdesk.log" ];
+      files = ["/var/log/rustdesk.log"];
       frequency = "daily";
       rotate = 7;
       compress = true;
@@ -152,7 +149,7 @@ in
           21116
           21117
         ];
-        allowedUDPPorts = [ 21116 ];
+        allowedUDPPorts = [21116];
       };
     };
 
@@ -160,7 +157,7 @@ in
     systemd.services.rustdesk-monitor = {
       enable = true;
       description = "Monitor Rustdesk service health";
-      after = [ "rustdesk.service" ];
+      after = ["rustdesk.service"];
       serviceConfig = {
         Type = "oneshot";
         User = "domrodriguez";
@@ -186,7 +183,7 @@ in
         OnCalendar = "*:0/5"; # Every 5 minutes
         Persistent = true;
       };
-      wantedBy = [ "timers.target" ];
+      wantedBy = ["timers.target"];
     };
   };
 }

@@ -1,81 +1,78 @@
 {
-  osConfig ? { },
-  config ? { },
+  osConfig ? {},
+  config ? {},
   lib,
   pkgs,
   ...
 }:
 with lib;
-with builtins;
-let
+with builtins; let
   cfg = config.nixfigs.email ? osConfig.nixfigs.email;
-  enabled = cfg.enable && (cfg.accounts != [ ]);
+  enabled = cfg.enable && (cfg.accounts != []);
 
-  emailAccount =
-    { name, ... }:
-    {
-      options = rec {
-        name = mkOption {
-          type = types.str;
-          readOnly = true;
-        };
+  emailAccount = {name, ...}: {
+    options = rec {
+      name = mkOption {
+        type = types.str;
+        readOnly = true;
+      };
+      enable = mkEnableOption {
+        default = true;
+      };
+      enabledMuas = mkOption {
+        type = with types; listOf str;
+        default = [
+          "neomutt"
+        ];
+      };
+      realName = mkOption {
+        type = types.str;
+      };
+      replyTo = mkOption {
+        type = types.str;
+        default = fromAddress;
+      };
+      fromAddress = mkOption {
+        type = types.str;
+      };
+      userName = mkOption {
+        type = types.str;
+        default = fromAddress;
+      };
+      davmail = mkEnableOption {
+        default = false;
+      };
+      mailServer = mkOption {
+        type = types.str;
+      };
+      enableIdle = mkEnableOption {
+        default = false;
+      };
+      emailSignature = mkOption {
+        type = types.str;
+      };
+      neomutt = {
         enable = mkEnableOption {
-          default = true;
+          default = elem "neomutt" enabledMuas;
         };
-        enabledMuas = mkOption {
-          type = with types; listOf str;
-          default = [
-            "neomutt"
-          ];
+        extraConfig = mkOption {
+          type = types.attrs;
+          description = "Any extra configuration for Neomutt";
+          default = {};
         };
-        realName = mkOption {
-          type = types.str;
+      };
+      aerc = {
+        enable = mkEnableOption {
+          default = elem "aerc" enabledMuas;
         };
-        replyTo = mkOption {
-          type = types.str;
-          default = fromAddress;
-        };
-        fromAddress = mkOption {
-          type = types.str;
-        };
-        userName = mkOption {
-          type = types.str;
-          default = fromAddress;
-        };
-        davmail = mkEnableOption {
-          default = false;
-        };
-        mailServer = mkOption {
-          type = types.str;
-        };
-        enableIdle = mkEnableOption {
-          default = false;
-        };
-        emailSignature = mkOption {
-          type = types.str;
-        };
-        neomutt = {
-          enable = mkEnableOption {
-            default = elem "neomutt" enabledMuas;
-          };
-          extraConfig = mkOption {
-            type = types.attrs;
-            description = "Any extra configuration for Neomutt";
-            default = { };
-          };
-        };
-        aerc = {
-          enable = mkEnableOption {
-            default = elem "aerc" enabledMuas;
-          };
-          extraConfig = mkOption {
-            type = types.attrs;
-            description = "Any extra configuration for Aerc";
-            default = { };
-          };
+        extraConfig = mkOption {
+          type = types.attrs;
+          description = "Any extra configuration for Aerc";
+          default = {};
         };
       };
     };
+  };
 
   genEnableSystemdUnit = listToAttrs (
     map (acc: {
@@ -86,9 +83,9 @@ let
         ];
         overrideStrategy = "asDropin";
       };
-    }) cfg.accounts
+    })
+    cfg.accounts
   );
-in
-{
-  config = mkIf enabled { };
+in {
+  config = mkIf enabled {};
 }

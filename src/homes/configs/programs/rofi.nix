@@ -13,7 +13,7 @@ lib.mkIf true {
     extraConfig = {
       dpi = 0;
     };
-    plugins = with pkgs; [ rofi-emoji ];
+    plugins = with pkgs; [rofi-emoji];
     cycle = true;
     pass.enable = true;
   };

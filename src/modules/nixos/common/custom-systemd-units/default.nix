@@ -2,8 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 #
-{ ... }:
-{
+{...}: {
   imports = [
     ./power-targets.nix
     ./network-targets.nix

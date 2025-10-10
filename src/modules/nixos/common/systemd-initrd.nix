@@ -2,7 +2,6 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 #
-{ lib, ... }:
-{
+{lib, ...}: {
   boot.initrd.systemd.enable = lib.mkForce true;
 }
