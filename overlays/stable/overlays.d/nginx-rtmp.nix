@@ -5,6 +5,6 @@
 _: prev: {
   nginx-rtmp = prev.nginxStable.override (oldAttrs: {
     pname = "nginx-rtmp";
-    modules = oldAttrs.modules ++ [ prev.nginxModules.rtmp ];
+    modules = oldAttrs.modules ++ [prev.nginxModules.rtmp];
   });
 }

@@ -4,112 +4,103 @@
 {
   description = "Dom's Nixified Flake";
 
-  outputs =
-    inputs:
-    let
-      inherit (inputs) self;
-      rolesModule = import ./nix-support/roles.nix;
-      systemsModule = import ./nix-support/systems.nix { inherit inputs; };
-      hydraModule = import ./nix-support/hydra.nix { inherit self inputs; };
-      githubActionsModule = import ./nix-support/github-actions.nix {
-        inherit self inputs systemsModule;
-      };
-      buildsModule = import ./nix-support/builds.nix { inherit self inputs; };
-      inherit (systemsModule) treefmtSystems forEachSystem;
-      treeFmtEachSystem =
-        f: inputs.nixpkgs.lib.genAttrs treefmtSystems (system: f inputs.nixpkgs.legacyPackages.${system});
-      treeFmtEval = treeFmtEachSystem (
-        pkgs: inputs.treefmt-nix.lib.evalModule pkgs ./nix-support/formatter.nix
-      );
+  outputs = inputs: let
+    inherit (inputs) self;
+    rolesModule = import ./nix-support/roles.nix;
+    systemsModule = import ./nix-support/systems.nix {inherit inputs;};
+    hydraModule = import ./nix-support/hydra.nix {inherit self inputs;};
+    githubActionsModule = import ./nix-support/github-actions.nix {
+      inherit self inputs systemsModule;
+    };
+    buildsModule = import ./nix-support/builds.nix {inherit self inputs;};
+    inherit (systemsModule) treefmtSystems forEachSystem;
+    treeFmtEachSystem = f: inputs.nixpkgs.lib.genAttrs treefmtSystems (system: f inputs.nixpkgs.legacyPackages.${system});
+    treeFmtEval = treeFmtEachSystem (
+      pkgs: inputs.treefmt-nix.lib.evalModule pkgs ./nix-support/formatter.nix
+    );
+  in {
+    inherit (rolesModule) roles;
+    inherit (rolesModule) utils;
+    nixpkgs-config = {
+      allowUnfree = true;
+      allowUnsupportedSystem = true;
+      allowBroken = false;
+      allowInsecurePredicate = pkg:
+        builtins.elem (inputs.nixpkgs.lib.getName pkg) [
+          # Add specific packages that need to be allowed here
+          # Example: "package-name"
+        ];
+    };
+    overlays = import ./overlays {
+      inherit inputs;
+      inherit (inputs.nixpkgs) lib;
+    };
+    deploy = import ./nix-support/deploy.nix {inherit self inputs;};
+    homeConfigurations = import ./hosts/homes {inherit inputs;};
+    nixosConfigurations = import ./hosts/nixos {inherit self inputs;};
+    darwinConfigurations = import ./hosts/darwin {inherit self inputs;};
+    hosts = with builtins; let
+      lak = list:
+        listToAttrs (
+          map (v: {
+            name = v.hostname or "home-manager-cfg";
+            value = v;
+          })
+          list
+        );
+      raw = import ./hosts {inherit self inputs;};
     in
-    {
-      inherit (rolesModule) roles;
-      inherit (rolesModule) utils;
-      nixpkgs-config = {
-        allowUnfree = true;
-        allowUnsupportedSystem = true;
-        allowBroken = false;
-        allowInsecurePredicate =
-          pkg:
-          builtins.elem (inputs.nixpkgs.lib.getName pkg) [
-            # Add specific packages that need to be allowed here
-            # Example: "package-name"
-          ];
-      };
-      overlays = import ./overlays {
-        inherit inputs;
-        inherit (inputs.nixpkgs) lib;
-      };
-      deploy = import ./nix-support/deploy.nix { inherit self inputs; };
-      homeConfigurations = import ./hosts/homes { inherit inputs; };
-      nixosConfigurations = import ./hosts/nixos { inherit self inputs; };
-      darwinConfigurations = import ./hosts/darwin { inherit self inputs; };
-      hosts =
-        with builtins;
-        let
-          lak =
-            list:
-            listToAttrs (
-              map (v: {
-                name = v.hostname or "home-manager-cfg";
-                value = v;
-              }) list
-            );
-          raw = import ./hosts { inherit self inputs; };
-        in
-        lak (
-          map (
-            v:
+      lak (
+        map (
+          v:
             import v {
               inherit self inputs;
               inherit (raw) genPkgs mkHost;
             }
-          ) raw.enabled
-        );
-      packages =
-        let
-          inherit (inputs.shypkgs-public) forAllSystems;
-        in
-        forAllSystems (
-          system:
+        )
+        raw.enabled
+      );
+    packages = let
+      inherit (inputs.shypkgs-public) forAllSystems;
+    in
+      forAllSystems (
+        system:
           inputs.shypkgs-public.packages.${system}
           // {
-            totp = inputs.nixpkgs.legacyPackages.${system}.callPackage ./packages/totp { };
+            totp = inputs.nixpkgs.legacyPackages.${system}.callPackage ./packages/totp {};
           }
-        );
+      );
 
-      inherit (hydraModule) hydraJobs;
+    inherit (hydraModule) hydraJobs;
 
-      formatter = treeFmtEachSystem (pkgs: treeFmtEval.${pkgs.system}.config.build.wrapper);
+    formatter = treeFmtEachSystem (pkgs: treeFmtEval.${pkgs.system}.config.build.wrapper);
 
-      devShells =
-        let
-          inherit (systemsModule) devshellSystems forDevSystems;
-        in
-        forDevSystems (system: {
-          default = import ./nix-support/devshell.nix {
-            inherit inputs self system;
-          };
-        });
+    devShells = let
+      inherit (systemsModule) devshellSystems forDevSystems;
+    in
+      forDevSystems (system: {
+        default = import ./nix-support/devshell.nix {
+          inherit inputs self system;
+        };
+      });
 
-      checks =
-        let
-          inherit (systemsModule) checkSystems forDevSystems;
-        in
-        builtins.mapAttrs (_system: deployLib: deployLib.deployChecks self.deploy) inputs.deploy-rs.lib
-        // treeFmtEachSystem (pkgs: {
-          formatting = treeFmtEval.${pkgs}.config.build.wrapper;
-        })
-        // forDevSystems (system: {
-          pre-commit-check = import ./nix-support/checks.nix {
-            inherit inputs system self;
-          };
-        });
+    checks = let
+      inherit (systemsModule) checkSystems forDevSystems;
+    in
+      builtins.mapAttrs (_system: deployLib: deployLib.deployChecks self.deploy) inputs.deploy-rs.lib
+      // treeFmtEachSystem (pkgs: {
+        formatting = treeFmtEval.${pkgs}.config.build.wrapper;
+      })
+      // forDevSystems (system: {
+        pre-commit-check = import ./nix-support/checks.nix {
+          inherit inputs system self;
+        };
+      });
 
-      inherit (githubActionsModule) githubActions;
+    inherit (githubActionsModule) githubActions;
 
-      inherit (buildsModule) builds;
-    };
+    inherit (buildsModule) builds;
+  };
 
   inputs = {
     # Core Nix ecosystem

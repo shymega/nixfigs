@@ -2,11 +2,9 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 #
-{ config, ... }:
-let
+{config, ...}: let
   userHome = config.users.users.dzrodriguez.home;
-in
-{
+in {
   services.dovecot2 = {
     enable = true;
     user = "dzrodriguez";
