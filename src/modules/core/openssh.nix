@@ -2,8 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 #
-{ lib, ... }:
-{
+{lib, ...}: {
   services.openssh = {
     enable = true;
     startWhenNeeded = true;

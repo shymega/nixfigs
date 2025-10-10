@@ -1,19 +1,16 @@
 # SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
 #
 # SPDX-License-Identifier: GPL-3.0-only
-
 {
   config,
   lib,
   hostRoles,
   ...
-}:
-let
+}: let
   inherit (lib) checkRoles;
-  isWork = checkRoles [ "work" ] hostRoles;
-  isPersonal = checkRoles [ "personal" ] hostRoles;
-in
-{
+  isWork = checkRoles ["work"] hostRoles;
+  isPersonal = checkRoles ["personal"] hostRoles;
+in {
   # Mutual exclusion - cannot be both work and personal
   assertions = [
     {
@@ -23,13 +20,12 @@ in
   ];
 
   imports =
-    if isWork then
-        [
-          ./networking.nix
-          ./applications.nix
-          ./compliance.nix
-          ./monitoring.nix
-        ]
-      else
-        [ ];
+    if isWork
+    then [
+      ./networking.nix
+      ./applications.nix
+      ./compliance.nix
+      ./monitoring.nix
+    ]
+    else [];
 }

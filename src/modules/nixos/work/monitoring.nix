@@ -1,18 +1,15 @@
 # SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
 #
 # SPDX-License-Identifier: GPL-3.0-only
-
 {
   config,
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) checkRoles;
-in
-{
-  config = lib.mkIf (checkRoles [ "work" ] config) {
+in {
+  config = lib.mkIf (checkRoles ["work"] config) {
     # Corporate monitoring and management
     # Note: Add actual corporate MDM/monitoring tools as needed
 

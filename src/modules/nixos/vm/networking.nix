@@ -1,13 +1,14 @@
 # SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
 #
 # SPDX-License-Identifier: GPL-3.0-only
-
-{ config, lib, ... }:
-let
-  inherit (lib) checkRoles;
-  isVM = checkRoles [ "virtual-machine" ] config;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  inherit (lib) checkRoles;
+  isVM = checkRoles ["virtual-machine"] config;
+in {
   config = lib.mkIf isVM {
     # VM-specific networking
     networking = {
@@ -37,7 +38,7 @@ in
         ];
 
         # Allow SSH for management
-        allowedTCPPorts = [ 22 ] ++ config.networking.firewall.allowedTCPPorts;
+        allowedTCPPorts = [22] ++ config.networking.firewall.allowedTCPPorts;
 
         # Custom rules for host-only access
         extraCommands = ''

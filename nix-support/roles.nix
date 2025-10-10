@@ -29,20 +29,24 @@ rec {
     "wsl"
   ];
   utils = rec {
-    checkRoles =
-      targetRoles: configOrHostRoles:
-      let
-        # Private helper function
-        checkRole = role: (builtins.elem role roles);
+    checkRoles = targetRoles: configOrHostRoles: let
+      # Private helper function
+      checkRole = role: (builtins.elem role roles);
 
-        # Normalize target roles to list
-        rolesList = if builtins.isList targetRoles then targetRoles else [ targetRoles ];
+      # Normalize target roles to list
+      rolesList =
+        if builtins.isList targetRoles
+        then targetRoles
+        else [targetRoles];
 
-        # Auto-detect if second argument is config (attrset with nixfigs) or hostRoles (list)
-        isConfig = builtins.isAttrs configOrHostRoles;
+      # Auto-detect if second argument is config (attrset with nixfigs) or hostRoles (list)
+      isConfig = builtins.isAttrs configOrHostRoles;
 
-        enabledRoles = if isConfig then configOrHostRoles.nixfigs.meta.rolesEnabled else configOrHostRoles; # treat as hostRoles list
-      in
+      enabledRoles =
+        if isConfig
+        then configOrHostRoles.nixfigs.meta.rolesEnabled
+        else configOrHostRoles; # treat as hostRoles list
+    in
       # Check if any target role is valid AND any target role is enabled
       (builtins.any checkRole rolesList)
       && (builtins.any (role: builtins.elem role enabledRoles) rolesList);

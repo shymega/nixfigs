@@ -1,13 +1,14 @@
 # SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
 #
 # SPDX-License-Identifier: GPL-3.0-only
-
-{ config, lib, ... }:
-let
-  inherit (lib) checkRoles;
-in
 {
-  config = lib.mkIf (checkRoles [ "work" ] config) {
+  config,
+  lib,
+  ...
+}: let
+  inherit (lib) checkRoles;
+in {
+  config = lib.mkIf (checkRoles ["work"] config) {
     # Block personal services when in work mode
     networking.firewall.extraCommands = ''
       # Block Syncthing on work systems
