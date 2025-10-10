@@ -1,13 +1,14 @@
 # SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
 #
 # SPDX-License-Identifier: GPL-3.0-only
-
-{ config, lib, ... }:
-let
-  inherit (lib) checkRoles;
-  isVM = checkRoles [ "virtual-machine" ] config;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  inherit (lib) checkRoles;
+  isVM = checkRoles ["virtual-machine"] config;
+in {
   imports = lib.optionals isVM [
     ./libvirt.nix
     ./graphics.nix

@@ -1,19 +1,15 @@
 # SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
 #
 # SPDX-License-Identifier: GPL-3.0-only
-
 # Hardware configuration for ct-vm-domrodriguez libvirt VM
 # Optimized for QEMU/KVM virtualization with ZFS backing
-
 {
   config,
   lib,
   pkgs,
   modulesPath,
   ...
-}:
-
-{
+}: {
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
   ];
@@ -33,8 +29,8 @@
     "virtio_balloon"
     "virtio_rng"
   ];
-  boot.kernelModules = [ "kvm-amd" ]; # Assuming AMD host (DEUSEX-LINUX)
-  boot.extraModulePackages = [ ];
+  boot.kernelModules = ["kvm-amd"]; # Assuming AMD host (DEUSEX-LINUX)
+  boot.extraModulePackages = [];
 
   # Hardware acceleration for VM
   hardware.opengl = {

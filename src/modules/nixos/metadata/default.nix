@@ -3,12 +3,11 @@
 # SPDX-License-Identifier: GPL-3.0-only
 {
   lib,
-  hostRoles ? [ ],
-  metadata ? { },
+  hostRoles ? [],
+  metadata ? {},
   ...
 }:
-with lib;
-{
+with lib; {
   options.nixfigs.meta = {
     rolesEnabled = mkOption {
       default = hostRoles;

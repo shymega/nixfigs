@@ -8,19 +8,16 @@
   ...
 }:
 with lib;
-_: prev:
-let
-  importShymegaOverlay =
-    overlay: composeExtensions (_: _: { __inputs = inputs; }) (import (./enabled.d + "/${overlay}"));
+  _: prev: let
+    importShymegaOverlay = overlay: composeExtensions (_: _: {__inputs = inputs;}) (import (./enabled.d + "/${overlay}"));
 
-  shymegaOverlays = mapAttrs' (
-    overlay: _: nameValuePair (removeSuffix ".nix" overlay) (importShymegaOverlay overlay)
-  ) (builtins.readDir ./enabled.d);
-in
-{
-  shymega = import inputs.nixpkgs-shymega {
-    inherit (prev) system;
-    config = inputs.self.nixpkgs-config;
-    overlays = builtins.attrValues shymegaOverlays;
-  };
-}
+    shymegaOverlays = mapAttrs' (
+      overlay: _: nameValuePair (removeSuffix ".nix" overlay) (importShymegaOverlay overlay)
+    ) (builtins.readDir ./enabled.d);
+  in {
+    shymega = import inputs.nixpkgs-shymega {
+      inherit (prev) system;
+      config = inputs.self.nixpkgs-config;
+      overlays = builtins.attrValues shymegaOverlays;
+    };
+  }

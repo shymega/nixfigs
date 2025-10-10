@@ -25,7 +25,7 @@ mkHost rec {
   extraModules = with inputs; [
     # TPM and secure boot for corporate compliance
     lanzaboote.nixosModules.lanzaboote
-    { environment.systemPackages = [ inputs.nixpkgs.legacyPackages.${hostPlatform}.sbctl ]; }
+    {environment.systemPackages = [inputs.nixpkgs.legacyPackages.${hostPlatform}.sbctl];}
   ];
   pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPlaceholderWorkLaptopSSHKey"; # Replace with actual key
   embedHm = true;

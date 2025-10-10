@@ -7,11 +7,9 @@
   config,
   ...
 }:
-with lib;
-let
-  enabled = checkRoles [ "gaming" "steam-deck" "jovian" ] config;
-in
-{
+with lib; let
+  enabled = checkRoles ["gaming" "steam-deck" "jovian"] config;
+in {
   config = mkIf enabled {
     hardware.steam-hardware.enable = true;
   };

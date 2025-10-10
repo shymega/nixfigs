@@ -2,4 +2,4 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 #
-(_finaL: prev: { mautrix-slack = prev.callPackage ../../pkgs/mautrix-slack { }; })
+(_finaL: prev: {mautrix-slack = prev.callPackage ../../pkgs/mautrix-slack {};})
