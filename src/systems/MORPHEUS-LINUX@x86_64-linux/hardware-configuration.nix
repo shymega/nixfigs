@@ -5,9 +5,8 @@
   config,
   lib,
   ...
-}:
-{
-  imports = [ ./disks.nix ];
+}: {
+  imports = [./disks.nix];
   boot = {
     initrd = {
       availableKernelModules = [
@@ -29,7 +28,7 @@
       "amdgpu"
       "i2c_dev"
     ];
-    extraModulePackages = [ ];
+    extraModulePackages = [];
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
