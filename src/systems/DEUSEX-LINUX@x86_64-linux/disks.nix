@@ -38,7 +38,7 @@
     };
 
     "/home/dzrodriguez/Games" = {
-      depends = [ "/data/Games" ];
+      depends = ["/data/Games"];
       device = "/data/Games";
       fsType = "none";
       neededForBoot = false;
@@ -50,7 +50,7 @@
     };
 
     "/var/lib/ollama" = {
-      depends = [ "/data/AI" ];
+      depends = ["/data/AI"];
       device = "/data/AI/LLMs/Ollama/Models";
       fsType = "none";
       neededForBoot = false;
@@ -62,11 +62,11 @@
     };
 
     "/home/dzrodriguez/dev" = {
-      depends = [ "/data/Development" ];
+      depends = ["/data/Development"];
       device = "/data/Development";
       fsType = "none";
       neededForBoot = false;
-      options = [ "bind" ];
+      options = ["bind"];
     };
 
     "/home" = {
@@ -109,7 +109,7 @@
       device = "/dev/zvol/zdata/crypt/shared/homes/atuin/nixos/linux"; # Replace with by-label.
       fsType = "ext4";
       neededForBoot = false;
-      options = [ "x-systemd.automount" ];
+      options = ["x-systemd.automount"];
     };
 
     "/boot/efi" = {
@@ -123,11 +123,11 @@
     };
 
     "/etc/ssh" = {
-      depends = [ "/persist" ];
+      depends = ["/persist"];
       device = "/persist/etc/ssh";
       fsType = "none";
       neededForBoot = true;
-      options = [ "bind" ];
+      options = ["bind"];
     };
   };
 }

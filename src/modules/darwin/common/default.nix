@@ -7,8 +7,7 @@
   pkgs,
   lib,
   ...
-}:
-{
+}: {
   imports = [
     inputs.home-manager.darwinModules.home-manager
     inputs.nix-index-database.darwinModules.nix-index
@@ -50,7 +49,7 @@
       autoUpdate = true;
       upgrade = true;
     };
-    brews = [ "git" ];
+    brews = ["git"];
   };
 
   programs.fish.loginShellInit = "fish_add_path --move --prepend --path $HOME/.nix-profile/bin /run/wrappers/bin /etc/profiles/per-user/$USER/bin /run/current-system/sw/bin /nix/var/nix/profiles/default/bin";
