@@ -7,8 +7,7 @@
   lib,
   ...
 }:
-with lib;
-{
+with lib; {
   environment.systemPackages = with pkgs; [
     aspellDicts.en
     aspellDicts.en-computers
