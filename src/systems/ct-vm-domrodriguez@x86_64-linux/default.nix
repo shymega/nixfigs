@@ -1,7 +1,6 @@
 # SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
 #
 # SPDX-License-Identifier: GPL-3.0-only
-
 {
   inputs,
   self,
@@ -9,11 +8,9 @@
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) checkRoles;
-in
-{
+in {
   imports = [
     ./hardware-configuration.nix
     ../../modules/nixos
@@ -56,7 +53,7 @@ in
   };
 
   # ZFS configuration for VM (backed by host ZFS dataset)
-  boot.supportedFilesystems = [ "zfs" ];
+  boot.supportedFilesystems = ["zfs"];
   boot.zfs = {
     forceImportRoot = false;
     allowHibernation = false; # VMs typically don't hibernate
@@ -98,7 +95,7 @@ in
   };
 
   # No swap needed for VM (host manages memory)
-  swapDevices = [ ];
+  swapDevices = [];
 
   # VM user configuration
   users.users.domrodriguez = {
