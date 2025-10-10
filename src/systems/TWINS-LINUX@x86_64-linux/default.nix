@@ -7,8 +7,7 @@
   config,
   lib,
   ...
-}:
-let
+}: let
   lockedXanmodLatestGitKernelPackage = pkgs.linuxPackagesFor (
     pkgs.linux_xanmod_latest.override {
       argsOverride = rec {
@@ -27,8 +26,7 @@ let
   );
   zfs_arc_max = toString (8 * 1024 * 1024 * 1024);
   zfs_arc_min = toString (8 * 1024 * 1024 * 1024 - 1);
-in
-{
+in {
   imports = with inputs; [
     ./hardware-configuration.nix
     nur-xddxdd.nixosModules.setupOverlay
@@ -73,7 +71,7 @@ in
       }
     ];
 
-    extraModulePackages = with config.boot.kernelPackages; [ zfs ];
+    extraModulePackages = with config.boot.kernelPackages; [zfs];
 
     zfs.devNodes = "/dev/TWINS-LINUX/ROOT";
 
@@ -128,10 +126,10 @@ in
 
     initrd.systemd.services.rollback = {
       description = "Rollback ZFS datasets to a pristine state";
-      wantedBy = [ "initrd.target" ];
-      after = [ "zfs-import-tank.service" ];
-      before = [ "sysroot.mount" ];
-      path = with pkgs; [ zfs ];
+      wantedBy = ["initrd.target"];
+      after = ["zfs-import-tank.service"];
+      before = ["sysroot.mount"];
+      path = with pkgs; [zfs];
       unitConfig.DefaultDependencies = "no";
       serviceConfig.Type = "oneshot";
       script = ''
@@ -201,7 +199,7 @@ in
     opengl = {
       enable = true;
       driSupport = true;
-      extraPackages32 = with pkgs.pkgsi686Linux; [ vaapiIntel ];
+      extraPackages32 = with pkgs.pkgsi686Linux; [vaapiIntel];
       extraPackages = with pkgs; [
         vaapiIntel
         vaapiVdpau
