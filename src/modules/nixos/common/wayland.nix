@@ -2,8 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 #
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   programs.sway = {
     enable = true;
     package = pkgs.sway;

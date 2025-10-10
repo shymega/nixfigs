@@ -7,8 +7,7 @@
   pkgs,
   lib,
   ...
-}:
-{
+}: {
   imports = with inputs; [
     ./hardware-configuration.nix
     hardware.nixosModules.raspberry-pi-4
