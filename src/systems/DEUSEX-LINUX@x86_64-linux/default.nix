@@ -7,34 +7,37 @@
   pkgs,
   lib,
   ...
-}:
-let
+}: let
   zfs_arc_max = toString (8 * 1024 * 1024 * 1024);
   zfs_arc_min = toString (8 * 1024 * 1024 * 1024 - 1);
-  myZfsCompatibleStockKernelPackages = lib.filterAttrs (
-    name: kernelPackages:
-    (builtins.match "linux_[0-9]+_[0-9]+" name) != null
-    && (builtins.tryEval kernelPackages).success
-    && (!kernelPackages.${pkgs.zfs.kernelModuleAttribute}.meta.broken)
-  ) pkgs.linuxKernel.packages;
+  myZfsCompatibleStockKernelPackages =
+    lib.filterAttrs (
+      name: kernelPackages:
+        (builtins.match "linux_[0-9]+_[0-9]+" name)
+        != null
+        && (builtins.tryEval kernelPackages).success
+        && (!kernelPackages.${pkgs.zfs.kernelModuleAttribute}.meta.broken)
+    )
+    pkgs.linuxKernel.packages;
   latestStockKernelPackage = lib.last (
     lib.sort (a: b: (lib.versionOlder a.kernel.version b.kernel.version)) (
       builtins.attrValues myZfsCompatibleStockKernelPackages
     )
   );
-  myZfsCompatibleXanmodKernelPackages = lib.filterAttrs (
-    name: kernelPackages:
-    (lib.hasInfix "_xanmod" name)
-    && (builtins.tryEval kernelPackages).success
-    && (!kernelPackages.${pkgs.zfs.kernelModuleAttribute}.meta.broken)
-  ) pkgs.linuxKernel.packages;
+  myZfsCompatibleXanmodKernelPackages =
+    lib.filterAttrs (
+      name: kernelPackages:
+        (lib.hasInfix "_xanmod" name)
+        && (builtins.tryEval kernelPackages).success
+        && (!kernelPackages.${pkgs.zfs.kernelModuleAttribute}.meta.broken)
+    )
+    pkgs.linuxKernel.packages;
   latestXanmodKernelPackage = lib.last (
     lib.sort (a: b: (lib.versionOlder a.kernel.version b.kernel.version)) (
       builtins.attrValues myZfsCompatibleXanmodKernelPackages
     )
   );
-in
-{
+in {
   imports = with inputs; [
     ./hardware-configuration.nix
     ucodenix.nixosModules.default
@@ -116,10 +119,10 @@ in
       systemd.services = {
         rollback = {
           description = "Rollback ZFS datasets to a pristine state";
-          wantedBy = [ "initrd.target" ];
-          after = [ "zfs-import-ztank.service" ];
-          before = [ "sysroot.mount" ];
-          path = with pkgs; [ zfs ];
+          wantedBy = ["initrd.target"];
+          after = ["zfs-import-ztank.service"];
+          before = ["sysroot.mount"];
+          path = with pkgs; [zfs];
           unitConfig.DefaultDependencies = "no";
           serviceConfig.Type = "oneshot";
           script = ''
@@ -127,8 +130,8 @@ in
           '';
         };
         create-needed-for-boot-dirs = {
-          after = pkgs.lib.mkForce [ "zfs-import-ztank.service" ];
-          wants = pkgs.lib.mkForce [ "zfs-import-ztank.service" ];
+          after = pkgs.lib.mkForce ["zfs-import-ztank.service"];
+          wants = pkgs.lib.mkForce ["zfs-import-ztank.service"];
         };
       };
     };
@@ -221,7 +224,7 @@ in
         rocmPackages.clr
         rocmPackages.clr.icd
       ];
-      extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
+      extraPackages32 = with pkgs; [driversi686Linux.amdvlk];
     };
     amdgpu = {
       initrd.enable = true;
@@ -263,7 +266,7 @@ in
     };
     xserver = {
       enable = true;
-      videoDrivers = [ "amdgpu" ];
+      videoDrivers = ["amdgpu"];
     };
     ollama = {
       enable = true;
@@ -282,7 +285,7 @@ in
     input-remapper.enable = false;
     thermald.enable = true;
     udev = {
-      packages = with pkgs; [ gnome-settings-daemon ];
+      packages = with pkgs; [gnome-settings-daemon];
       extraRules = ''
         SUBSYSTEM=="power_supply", KERNEL=="ACAD", ATTR{online}=="0", RUN+="${pkgs.lib.getExe' pkgs.systemd "systemctl"} --no-block start battery.target"
         SUBSYSTEM=="power_supply", KERNEL=="ACAD", ATTR{online}=="1", RUN+="${pkgs.lib.getExe' pkgs.systemd "systemctl"} --no-block start ac.target"
@@ -325,8 +328,8 @@ in
     enable = false;
     gamescopeSession.enable = true;
     package = pkgs.steam.override {
-      extraPkgs =
-        pkgs: with pkgs; [
+      extraPkgs = pkgs:
+        with pkgs; [
           steamtinkerlaunch
         ];
     };
@@ -339,12 +342,12 @@ in
 
   specialisation = {
     stock-latest-nixpkgs-kernel.configuration = {
-      system.nixos.tags = [ "stock-kernel" ];
+      system.nixos.tags = ["stock-kernel"];
       boot.kernelPackages = lib.mkForce latestStockKernelPackage;
     };
     xanmod-latest-nixpkgs-kernel-no-patch.configuration = {
-      system.nixos.tags = [ "xanmod-latest-nixpkgs-kernel-no-patch" ];
-      boot.kernelPatches = lib.mkForce [ ];
+      system.nixos.tags = ["xanmod-latest-nixpkgs-kernel-no-patch"];
+      boot.kernelPatches = lib.mkForce [];
       boot.kernelPackages = lib.mkForce latestXanmodKernelPackage;
     };
   };

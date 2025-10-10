@@ -5,36 +5,31 @@
   inputs,
   self,
   ...
-}:
-let
-  genPkgs =
-    system: overlays:
+}: let
+  genPkgs = system: overlays:
     import inputs.nixpkgs {
       inherit system;
       overlays = builtins.attrValues self.overlays ++ overlays;
       config = self.nixpkgs-config;
     };
-  genConfiguration =
-    hostname:
-    {
-      address,
-      baseModules,
-      deployable,
-      embedHm,
-      enableFoundationModules,
-      extraModules,
-      hardwareModules,
-      hostPlatform,
-      hostRoles,
-      overlays,
-      pubkey,
-      type,
-      username,
-      ...
-    }:
-    let
-      lib = inputs.nixpkgs.lib.extend (
-        final: prev:
+  genConfiguration = hostname: {
+    address,
+    baseModules,
+    deployable,
+    embedHm,
+    enableFoundationModules,
+    extraModules,
+    hardwareModules,
+    hostPlatform,
+    hostRoles,
+    overlays,
+    pubkey,
+    type,
+    username,
+    ...
+  }: let
+    lib = inputs.nixpkgs.lib.extend (
+      final: prev:
         (import "${self}/lib" {
           pkgs = genPkgs hostPlatform overlays;
           inherit self inputs;
@@ -42,8 +37,8 @@ let
         // {
           inherit (inputs.home-manager.lib) hm;
         }
-      );
-    in
+    );
+  in
     inputs.nixpkgs.lib.nixosSystem rec {
       pkgs = genPkgs hostPlatform overlays;
       system = hostPlatform;
@@ -106,6 +101,6 @@ let
       };
     };
 in
-inputs.nixpkgs.lib.mapAttrs genConfiguration (
-  inputs.nixpkgs.lib.filterAttrs (_: host: host.type == "nixos") self.hosts
-)
+  inputs.nixpkgs.lib.mapAttrs genConfiguration (
+    inputs.nixpkgs.lib.filterAttrs (_: host: host.type == "nixos") self.hosts
+  )

@@ -9,11 +9,9 @@
   options,
   username,
   ...
-}:
-let
+}: let
   inherit (lib) isDarwin isForeignNix isNixOS;
-in
-{
+in {
   environment.etc."nix/overlays-compat/overlays.nix".text = ''
     final: prev:
     with prev.lib;
@@ -22,25 +20,21 @@ in
   '';
 
   programs.ssh = {
-    extraConfig =
-      let
-        cfgLine =
-          let
-            sshSecret = "/run/agenix/nixbuild_ssh_priv_key";
-          in
-          "IdentityFile ${sshSecret}";
-      in
-      ''
-        Host eu.nixbuild.net
-          HostName eu.nixbuild.net
-          PubkeyAcceptedKeyTypes ssh-ed25519
-          ServerAliveInterval 60
-          IPQoS throughput
-          ${cfgLine}
-      '';
+    extraConfig = let
+      cfgLine = let
+        sshSecret = "/run/agenix/nixbuild_ssh_priv_key";
+      in "IdentityFile ${sshSecret}";
+    in ''
+      Host eu.nixbuild.net
+        HostName eu.nixbuild.net
+        PubkeyAcceptedKeyTypes ssh-ed25519
+        ServerAliveInterval 60
+        IPQoS throughput
+        ${cfgLine}
+    '';
     knownHosts = {
       nixbuild = {
-        hostNames = [ "eu.nixbuild.net" ];
+        hostNames = ["eu.nixbuild.net"];
         publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPIQCZc54poJ8vqawd8TraNryQeJnvH1eLpIDgbiqymM";
       };
     };
@@ -70,7 +64,7 @@ in
       settings = {
         accept-flake-config = true;
         extra-platforms = config.boot.binfmt.emulatedSystems;
-        allowed-users = [ "@wheel" ];
+        allowed-users = ["@wheel"];
         build-users-group = "nixbld";
         builders-use-substitutes = true;
         trusted-users = [
@@ -125,7 +119,7 @@ in
       };
       optimise = {
         automatic = true;
-        dates = [ "06:00" ];
+        dates = ["06:00"];
       };
       package = pkgs.nix;
       nixPath = options.nix.nixPath.default ++ lib.singleton "nixpkgs-overlays=/etc/nix/overlays-compat/";
