@@ -1,20 +1,17 @@
 # SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
 #
 # SPDX-License-Identifier: GPL-3.0-only
-
 {
   config,
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib) checkRoles;
-in
-{
-  config = lib.mkIf (checkRoles [ "work" ] config) {
+in {
+  config = lib.mkIf (checkRoles ["work"] config) {
     # Validation assertions for work systems
-    assertions = lib.mkIf (checkRoles [ "work" ] config) [
+    assertions = lib.mkIf (checkRoles ["work"] config) [
       {
         assertion = config.security.auditd.enable;
         message = "Work systems must have audit logging enabled";

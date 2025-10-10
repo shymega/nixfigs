@@ -6,14 +6,13 @@
   inputs,
   pkgs ? inputs.nixpkgs.legacyPackages.x86_64-linux,
   ...
-}:
-let
+}: let
   rolesModule = import ../nix-support/roles.nix;
-in
-rec {
+in rec {
   inherit (rolesModule) roles;
   inherit (rolesModule.utils) checkRoles;
-  inherit (pkgs.stdenv.hostPlatform)
+  inherit
+    (pkgs.stdenv.hostPlatform)
     isLinux
     isDarwin
     isx86_64
@@ -58,9 +57,11 @@ rec {
   isDarwinx86 = pkgs.system == "x86_64-darwin";
   forEachSystem = genAttrs defaultSystems;
   forAllEachSystems = genAttrs allSystems;
-  homePrefix = if isDarwin then "/Users" else "/home";
-  genPkgs =
-    system:
+  homePrefix =
+    if isDarwin
+    then "/Users"
+    else "/home";
+  genPkgs = system:
     import inputs.nixpkgs {
       inherit system;
       overlays = builtins.attrValues self.overlays;

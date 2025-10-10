@@ -6,16 +6,14 @@
   config,
   lib,
   ...
-}:
-let
+}: let
   inherit (config.networking) hostName;
-in
-{
+in {
   systemd = {
     services = {
       chown-data = lib.mkIf (hostName == "NEO-LINUX") {
         description = "Change permissions on /data";
-        wantedBy = [ "multi-user.target" ];
+        wantedBy = ["multi-user.target"];
         unitConfig = {
           RefuseManualStart = true;
         };
