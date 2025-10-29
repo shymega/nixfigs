@@ -1,0 +1,20 @@
+# SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
+/result
+/.pre-commit-config.yaml
+/.direnv
+/.claude/settings.local.json
+
+# Git-crypt backup keys (sensitive!)
+git-crypt-backup-key.bin
+*.git-crypt-key
+git-crypt-key.*
+
+# Work-specific environment files
+.env.work
+config/work.*
+
+# Temporary git-crypt files
+.git-crypt-tmp/

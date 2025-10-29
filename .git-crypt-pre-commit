@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
+# Git-crypt pre-commit hook
+# Ensures git-crypt is unlocked before commits that affect work files
+
+set -euo pipefail
+
+# Check if git-crypt is available
+if ! command -v git-crypt >/dev/null 2>&1; then
+    echo "Warning: git-crypt not installed. Work files may not be properly encrypted."
+    exit 0
+fi
+
+# Check if there are any work-related files in the staging area
+work_files_staged=$(git diff --cached --name-only | grep -E "(src/modules/nixos/work|src/systems/ct-lt-2671|secrets/work|hosts/declarations/conf.d/ct-lt-2671)" || true)
+
+if [ -n "$work_files_staged" ]; then
+    echo "Work files detected in staging area:"
+    echo "$work_files_staged"
+    
+    # Check if git-crypt is unlocked
+    if ! git-crypt status >/dev/null 2>&1; then
+        echo ""
+        echo "❌ Error: Git-crypt is locked, but work files are being committed."
+        echo "   Work files need to be decrypted for proper processing."
+        echo ""
+        echo "To fix this:"
+        echo "   1. Unlock git-crypt: git-crypt unlock"
+        echo "   2. Or use symmetric key: git-crypt unlock /path/to/key.bin"
+        echo "   3. Then commit again: git commit"
+        echo ""
+        exit 1
+    fi
+    
+    echo "✅ Git-crypt is unlocked. Work files will be properly encrypted on commit."
+fi
+
+exit 0
