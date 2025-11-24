@@ -10,7 +10,7 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           token: ${{ secrets.NIX_GH_ACTIONS_TOKEN }}
           ref: "main"
@@ -34,7 +34,7 @@ jobs:
       - uses: jlumbroso/free-disk-space@main
         with:
           tool-cache: true
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - run: "sudo mkdir -p /etc/nix\necho \"machine shynet-nix-attic.shymega.org.uk password ${{ secrets.GH_ATTIC_TOKEN }}\" | sudo tee /etc/nix/netrc > /dev/null\ngit config --global url.\"https://${{ secrets.NIX_GH_ACTIONS_TOKEN }}@github.com\".insteadOf https://github.com          \n"
       - uses: DeterminateSystems/nix-installer-action@main
         with:
