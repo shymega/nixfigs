@@ -34,7 +34,7 @@
     };
     inherit (inputs.nixfigs-pkgs) overlays packages nixpkgs-config;
     # for `nix fmt`
-    formatter = treeFmtEachSystem (pkgs: treeFmtEval.${pkgs.system}.config.build.wrapper);
+    formatter = treeFmtEachSystem (pkgs: treeFmtEval.${pkgs.stdenv.hostPlatform.system}.config.build.wrapper);
     # for `nix flake check`
     checks =
       treeFmtEachSystem
@@ -147,7 +147,7 @@
           mapAttrsToList
           (n: v: {
             hostName = n;
-            platform = systemToPlatform v.pkgs.system;
+            platform = systemToPlatform v.pkgs.stdenv.hostPlatform.system;
           })
           (filterAttrs pred self.nixosConfigurations);
       };
