@@ -11,6 +11,18 @@
 in rec {
   inherit (rolesModule) roles;
   inherit (rolesModule.utils) checkRoles;
+
+  # Import secrets functions
+  mkSecretsConfig =
+    (import ./secrets.nix {
+      inherit inputs;
+      lib = pkgs.lib;
+    }).mkSecretsConfig;
+  mkSopsConfig =
+    (import ./secrets.nix {
+      inherit inputs;
+      lib = pkgs.lib;
+    }).mkSopsConfig;
   inherit
     (pkgs.stdenv.hostPlatform)
     isLinux
@@ -53,8 +65,8 @@ in rec {
   isPC = isx86_64 || isi686;
   isPC64 = isx86_64;
   isPC32 = isi686;
-  isDarwinArm = pkgs.system == "aarch64-darwin";
-  isDarwinx86 = pkgs.system == "x86_64-darwin";
+  isDarwinArm = pkgs.stdenv.hostPlatform.system == "aarch64-darwin";
+  isDarwinx86 = pkgs.stdenv.hostPlatform.system == "x86_64-darwin";
   forEachSystem = genAttrs defaultSystems;
   forAllEachSystems = genAttrs allSystems;
   homePrefix =

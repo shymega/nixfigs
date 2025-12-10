@@ -22,23 +22,25 @@ with lib; let
   defaultOverlays = with inputs; [
     sops-nix.overlays.default
     android-nixpkgs.overlays.default
-    deckcheatz.overlays.default
     dzr-taskwarrior-recur.overlays.default
     nix-alien.overlays.default
     nix-doom-emacs-unstraightened.overlays.default
     nur.overlays.default
     shypkgs-public.overlays.default
-    xrlinuxdriver.overlays.default
+    (final: prev: {
+      cloud-hypervisor-graphics = import "${spectrum}/pkgs/cloud-hypervisor" {
+        inherit final;
+        super = prev;
+      };
+    })
   ];
 
   customOverlays = [
     (import ./shymega {inherit inputs lib;})
     (import ./unstable {inherit inputs lib;})
   ];
-in
-  stableOverlaysWithImports
-  // {
-    default = composeManyExtensions (
-      defaultOverlays ++ customOverlays ++ (attrValues stableOverlaysWithImports)
-    );
-  }
+in {
+  default = composeManyExtensions (
+    defaultOverlays ++ customOverlays ++ (attrValues stableOverlaysWithImports)
+  );
+}

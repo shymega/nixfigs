@@ -173,8 +173,8 @@ in {
     # Fonts for VM
     fonts.packages = with pkgs; [
       noto-fonts
+      noto-fonts-color-emoji
       noto-fonts-cjk-sans
-      noto-fonts-emoji
       liberation_ttf
       fira-code
       fira-code-symbols

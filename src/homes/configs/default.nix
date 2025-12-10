@@ -20,14 +20,14 @@ in {
   disabledModules = [
     "services/window-managers/hyprland.nix"
   ];
-  imports = [
+  imports = with inputs; [
     ./network-targets.nix
     (import ./programs/rofi.nix {inherit lib pkgs;})
-    inputs.agenix.homeManagerModules.default
-    inputs.nix-doom-emacs-unstraightened.hmModule
-    inputs.nix-index-database.hmModules.nix-index
-    inputs.op-password-shell-plugins.hmModules.default
-    inputs.shypkgs-public.hmModules.${system}.dwl
+    agenix.homeManagerModules.default
+    nix-doom-emacs-unstraightened.hmModule
+    nix-index-database.homeModules.nix-index
+    op-password-shell-plugins.hmModules.default
+    shypkgs-public.hmModules.${system}.dwl
     ../../secrets/user
   ];
 
@@ -132,7 +132,7 @@ in {
         maven
         mkcert
         moneydance
-        mpc-cli
+        mpc
         mupdf
         ncmpcpp
         nixpkgs-fmt
@@ -144,10 +144,10 @@ in {
         pavucontrol
         pdftk
         poetry
-        poppler_utils
+        poppler-utils
         pre-commit
         public-inbox
-        python3Full
+        python3
         python3Packages.pip
         python3Packages.pipx
         python3Packages.virtualenv
@@ -185,7 +185,6 @@ in {
       ++ [inputs.agenix.packages.${system}.default]
       ++ (with pkgs; [
         android-studio
-        aws-sam-cli
         azure-cli
         bestool
         gitkraken
@@ -204,7 +203,6 @@ in {
         wezterm
         wineWowPackages.stable
         winetricks
-        yubikey-manager-qt
         yubioath-flutter
       ])
       ++ (

@@ -33,7 +33,7 @@
         "${self}/src/homes/${username}@${hostPlatform}"
         agenix.homeManagerModules.default
         nix-doom-emacs-unstraightened.hmModule
-        nix-index-database.hmModules.nix-index
+        nix-index-database.homeModules.nix-index
       ];
       extraSpecialArgs = {
         hostType = type;

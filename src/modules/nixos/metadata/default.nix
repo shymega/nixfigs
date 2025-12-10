@@ -14,7 +14,8 @@ with lib; {
       type = with types; listOf str;
     };
     hostAddress = mkOption {
-      default = builtins.hasAttr "hostAddress" metadata && builtins.getAttr "hostAddress" metadata;
+      default = metadata;
+      nullable = true;
       type = with types; str;
     };
   };

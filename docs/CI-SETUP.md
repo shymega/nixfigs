@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
 # GitHub CI Build Setup
 
 This document describes the GitHub CI workflow for building NixOS systems and pushing to Attic cache.

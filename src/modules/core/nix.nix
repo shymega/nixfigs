@@ -107,7 +107,7 @@ in {
         gc-keep-derivations = false
         min-free = ${toString (100 * 1024 * 1024)}
         max-free = ${toString (1024 * 1024 * 1024)}
-        !include ${config.age.secrets.nix_conf_access_tokens.path}
+        ${lib.optionalString (config ? age && config.age ? secrets && config.age.secrets ? nix_conf_access_tokens) "!include ${config.age.secrets.nix_conf_access_tokens.path}"}
       '';
       registry = {
         home-manager.flake = inputs.home-manager;
@@ -121,7 +121,7 @@ in {
         automatic = true;
         dates = ["06:00"];
       };
-      package = pkgs.nix;
+      package = lib.mkDefault pkgs.nix;
       nixPath = options.nix.nixPath.default ++ lib.singleton "nixpkgs-overlays=/etc/nix/overlays-compat/";
       gc = {
         automatic = true;

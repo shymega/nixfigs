@@ -37,10 +37,10 @@ in
           jetbrains-mono
           liberation_ttf
           noto-fonts
-          noto-fonts-emoji
+          noto-fonts-color-emoji
           source-code-pro
           terminus_font
-          vistafonts
+          vista-fonts
         ];
       })
       (mkIf (config.nixfigs.fonts.xdg.enable && isLinux) {fonts.fontDir.enable = true;})

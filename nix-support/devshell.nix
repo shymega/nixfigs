@@ -31,7 +31,9 @@ in
         nativeBuildInputs = with pkgs; [
           act
           actionlint
+          age
           deploy-rs
+          git-crypt
           jq
           nil
           nix-melt
@@ -43,6 +45,8 @@ in
           rage
           shellcheck
           shfmt
+          sops
+          ssh-to-age
           statix
         ];
 

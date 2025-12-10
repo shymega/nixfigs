@@ -37,19 +37,7 @@ in
       # Enhanced pre-commit hooks
       hooks = {
         # Nix
-        nixfmt.enable = true;
-        statix = {
-          enable = true;
-          settings.ignore = [
-            "flake.nix"
-            "*-compose.nix"
-            "mautrix-whatsapp.nix"
-            "mautrix-slack.nix"
-            ".devenv"
-            ".direnv"
-          ];
-        };
-        deadnix.enable = true;
+        alejandra.enable = true;
 
         # Shell scripts
         shellcheck.enable = true;
@@ -74,6 +62,5 @@ in
         check-symlinks.enable = true;
         detect-private-keys.enable = true;
         end-of-file-fixer.enable = true;
-        trailing-whitespace.enable = true;
       };
     }

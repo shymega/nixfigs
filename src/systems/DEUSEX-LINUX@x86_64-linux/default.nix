@@ -218,7 +218,7 @@ in {
       extraPackages = with pkgs; [
         amdvlk
         # VA-API and VDPAU
-        vaapiVdpau
+        libva-vdpau-driver
 
         # AMD ROCm OpenCL runtime
         rocmPackages.clr
@@ -269,7 +269,7 @@ in {
       videoDrivers = ["amdgpu"];
     };
     ollama = {
-      enable = true;
+      enable = false;
       package = pkgs.ollama;
       acceleration = "rocm";
       models = "/var/lib/ollama";

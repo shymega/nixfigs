@@ -1,10 +1,15 @@
 # SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
 #
 # SPDX-License-Identifier: GPL-3.0-only
+
 name: Pushes CI Workflow
 on:
   push:
-    branches: [main, refactor/mk-v]
+    branches: [main, refactor/snowfall]
+    paths:
+      - flake.lock
+      - flake.nix
+      - nix/**
   workflow_dispatch:
 concurrency:
   group: gh-ref-${{ github.ref }}

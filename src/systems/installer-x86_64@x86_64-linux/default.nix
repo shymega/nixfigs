@@ -18,7 +18,7 @@
   hardware.enableRedistributableFirmware = true;
 
   # Network interface naming
-  networking.usePredictableInterfaceNames = true;
+  networking.usePredictableInterfaceNames = lib.mkDefault true;
 
   # System information
   system.stateVersion = "25.05";

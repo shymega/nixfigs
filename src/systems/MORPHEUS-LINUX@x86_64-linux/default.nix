@@ -204,7 +204,7 @@ in {
       extraPackages = with pkgs; [
         amdvlk
         # VA-API and VDPAU
-        vaapiVdpau
+        libva-vdpau-driver
 
         # AMD ROCm OpenCL runtime
         rocmPackages.clr

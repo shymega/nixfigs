@@ -202,7 +202,7 @@ in {
       extraPackages32 = with pkgs.pkgsi686Linux; [vaapiIntel];
       extraPackages = with pkgs; [
         vaapiIntel
-        vaapiVdpau
+        libva-vdpau-driver
         libvdpau-va-gl
         intel-media-driver
         intel-compute-runtime

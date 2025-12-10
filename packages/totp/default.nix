@@ -18,7 +18,7 @@ python3Packages.buildPythonApplication rec {
 
   build-system = with python3Packages; [
     setuptools
-    setuptools_scm
+    setuptools-scm
   ];
 
   dependencies = with python3Packages; [onetimepass];
