@@ -41,11 +41,11 @@
   in
     inputs.nixpkgs.lib.nixosSystem rec {
       pkgs = genPkgs hostPlatform overlays;
-      system = hostPlatform;
       modules =
         baseModules
         ++ (with inputs; [
           "${self}/src/systems/${hostname}@${hostPlatform}"
+          {nixpkgs.pkgs = pkgs;}
         ])
         ++ (lib.optionals enableFoundationModules [
           "${self}/src/modules/core"
@@ -74,8 +74,8 @@
                   self
                   specialArgs
                   username
+                  hostPlatform
                   ;
-                system = hostPlatform;
               };
             };
           }

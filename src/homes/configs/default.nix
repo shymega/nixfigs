@@ -6,7 +6,7 @@
   pkgs,
   config,
   username,
-  system,
+  hostPlatform,
   osConfig ? null,
   self,
   lib,
@@ -27,7 +27,7 @@ in {
     nix-doom-emacs-unstraightened.hmModule
     nix-index-database.homeModules.nix-index
     op-password-shell-plugins.hmModules.default
-    shypkgs-public.hmModules.${system}.dwl
+    shypkgs-public.hmModules.${hostPlatform}.dwl
     ../../secrets/user
   ];
 
@@ -182,7 +182,7 @@ in {
         zip
         zoxide
       ]
-      ++ [inputs.agenix.packages.${system}.default]
+      ++ [inputs.agenix.packages.${hostPlatform}.default]
       ++ (with pkgs; [
         android-studio
         azure-cli

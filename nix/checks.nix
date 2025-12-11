@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 {
-  system,
+  hostPlatform,
   inputs,
   lib,
   self,
@@ -10,7 +10,7 @@
 }: let
   genPkgs = system:
     import inputs.nixpkgs {
-      inherit system;
+      inherit hostPlatform;
     };
   isUnsupportedSystem = let
     unsupportedSystems = [
@@ -22,7 +22,7 @@
   in
     any (x: x == system) unsupportedSystems;
   dummyCheck = let
-    pkgs = genPkgs system;
+    pkgs = genPkgs hostPlatform;
   in
     with pkgs;
       writeShellScriptBin "dummy-check"
@@ -33,7 +33,7 @@ in
   if isUnsupportedSystem
   then dummyCheck
   else
-    inputs.git-hooks.lib.${system}.run {
+    inputs.git-hooks.lib.${hostPlatform}.run {
       src = lib.cleanSource "${self}/.";
       hooks = {
         actionlint.enable = true;

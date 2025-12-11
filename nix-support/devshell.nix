@@ -3,9 +3,9 @@
 # SPDX-License-Identifier: GPL-3.0-only
 {
   self,
-  system,
+  hostPlatform,
   inputs,
-  pkgs ? inputs.nixpkgs.legacyPackages.${system},
+  pkgs ? inputs.nixpkgs.legacyPackages.${hostPlatform},
   ...
 }: let
   isUnsupportedSystem = let
@@ -50,6 +50,6 @@ in
           statix
         ];
 
-        inherit (self.checks.${system}.pre-commit-check) shellHook;
-        buildInputs = self.checks.${system}.pre-commit-check.enabledPackages;
+        inherit (self.checks.${hostPlatform}.pre-commit-check) shellHook;
+        buildInputs = self.checks.${hostPlatform}.pre-commit-check.enabledPackages;
       }

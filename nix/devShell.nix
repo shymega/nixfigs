@@ -4,7 +4,7 @@
 {
   pkgs,
   self,
-  system,
+  hostPlatform,
   ...
 }: let
   isUnsupportedSystem = let
@@ -45,6 +45,6 @@ in
           statix
         ];
 
-        shellHook = self.checks.${system}.pre-commit-check.shellHook;
-        buildInputs = self.checks.${system}.pre-commit-check.enabledPackages;
+        shellHook = self.checks.${hostPlatform}.pre-commit-check.shellHook;
+        buildInputs = self.checks.${hostPlatform}.pre-commit-check.enabledPackages;
       }

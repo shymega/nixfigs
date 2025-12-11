@@ -228,7 +228,7 @@
           in
             mapAttrsToList (n: v: {
               hostName = n;
-              platform = systemToPlatform v.pkgs.system;
+              platform = systemToPlatform v.pkgs.stdenv.hostPlatform.system;
               inherit (v.pkgs) system;
             }) (filterAttrs pred self.nixosConfigurations);
         };

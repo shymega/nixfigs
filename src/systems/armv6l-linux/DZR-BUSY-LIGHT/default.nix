@@ -27,7 +27,7 @@
   ];
   nixpkgs = {
     hostPlatform.system = "${system}";
-    buildPlatform.system = "${pkgs.system}";
+    buildPlatform.system = "${pkgs.stdenv.hostPlatform.system}";
     config.allowUnsupportedSystem = true;
   };
 

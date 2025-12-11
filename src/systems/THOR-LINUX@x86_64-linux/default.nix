@@ -34,9 +34,6 @@ in {
     nur-xddxdd.nixosModules.setupOverlay
     nur-xddxdd.nixosModules.nix-cache-attic
     nur-xddxdd.nixosModules.qemu-user-static-binfmt
-    chaotic.nixosModules.nyx-cache
-    chaotic.nixosModules.nyx-overlay
-    chaotic.nixosModules.nyx-registry
   ];
 
   lantian.qemu-user-static-binfmt.enable = true;
