@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 {
-  system,
+  hostPlatform,
   inputs,
   lib ? inputs.nixpkgs.lib,
   self,
@@ -20,9 +20,9 @@
   dummyCheck = let
     genPkgs = system:
       import inputs.nixpkgs {
-        inherit system;
+        inherit hostPlatform;
       };
-    pkgs = genPkgs system;
+    pkgs = genPkgs hostPlatform;
   in
     pkgs.writeShellScriptBin "dummy-check" ''
       exit 0
@@ -31,7 +31,7 @@ in
   if isUnsupportedSystem
   then dummyCheck
   else
-    inputs.git-hooks.lib.${system}.run {
+    inputs.git-hooks.lib.${hostPlatform}.run {
       src = lib.cleanSource "${self}/.";
 
       # Enhanced pre-commit hooks
