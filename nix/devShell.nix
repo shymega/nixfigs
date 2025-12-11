@@ -1,11 +1,10 @@
-# SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
+# SPDX-FileCopyrightText: 2024 Dom Rodriguez <shymega@shymega.org.uk>
 #
 # SPDX-License-Identifier: GPL-3.0-only
 {
+  pkgs,
   self,
   hostPlatform,
-  inputs,
-  pkgs ? inputs.nixpkgs.legacyPackages.${hostPlatform},
   ...
 }: let
   isUnsupportedSystem = let
@@ -46,6 +45,6 @@ in
           statix
         ];
 
-        inherit (self.checks.${hostPlatform}.pre-commit-check) shellHook;
+        shellHook = self.checks.${hostPlatform}.pre-commit-check.shellHook;
         buildInputs = self.checks.${hostPlatform}.pre-commit-check.enabledPackages;
       }
