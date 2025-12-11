@@ -6,7 +6,7 @@
   pkgs,
   config,
   username,
-  system,
+  hostPlatform,
   osConfig ? null,
   self,
   lib,
@@ -23,11 +23,19 @@ in {
   imports = [
     ./network-targets.nix
     (import ./programs/rofi.nix {inherit lib pkgs;})
+<<<<<<< HEAD
     inputs.agenix.homeManagerModules.default
     inputs.nix-doom-emacs-unstraightened.hmModule
     inputs.nix-index-database.hmModules.nix-index
     inputs.op-password-shell-plugins.hmModules.default
     inputs.shypkgs-public.hmModules.${system}.dwl
+=======
+    agenix.homeManagerModules.default
+    nix-doom-emacs-unstraightened.hmModule
+    nix-index-database.homeModules.nix-index
+    op-password-shell-plugins.hmModules.default
+    shypkgs-public.hmModules.${hostPlatform}.dwl
+>>>>>>> 9aa18130 (fix: Fix `pkgs.system` usages)
     ../../secrets/user
   ];
 
@@ -182,7 +190,7 @@ in {
         zip
         zoxide
       ]
-      ++ [inputs.agenix.packages.${system}.default]
+      ++ [inputs.agenix.packages.${hostPlatform}.default]
       ++ (with pkgs; [
         android-studio
         aws-sam-cli
