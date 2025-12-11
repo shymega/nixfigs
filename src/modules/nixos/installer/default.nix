@@ -93,7 +93,7 @@ in
 
         imageName = mkOption {
           type = types.str;
-          default = "nixos-installer-${pkgs.system}--${hostname}";
+          default = "nixos-installer-${pkgs.stdenv.hostPlatform.system}--${hostname}";
           description = "Name of the installer image";
         };
 
