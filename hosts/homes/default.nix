@@ -37,12 +37,12 @@
       ];
       extraSpecialArgs = {
         hostType = type;
-        system = hostPlatform;
         inherit
           inputs
           username
           self
           lib
+          hostPlatform
           ;
       };
     };
