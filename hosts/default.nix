@@ -27,8 +27,12 @@
           ];
         }
         sops-nix.nixosModules.default
+<<<<<<< HEAD
         chaotic.nixosModules.default
         lix-module.nixosModules.default
+=======
+        determinate.nixosModules.default
+>>>>>>> 9aa18130 (fix: Fix `pkgs.system` usages)
       ],
     overlays ? [],
     hostRoles ? [],
