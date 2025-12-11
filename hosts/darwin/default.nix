@@ -34,17 +34,16 @@
     );
   in
     inputs.nix-darwin.lib.darwinSystem {
-      system = hostPlatform;
       pkgs = genPkgs hostPlatform overlays;
       modules = [
         "${self}/src/hosts/${hostname}@${hostPlatform}"
         "${self}/src/modules/core"
         "${self}/src/modules/darwin"
+        {nixpkgs.pkgs = pkgs;}
       ];
       specialArgs = {
         hostAddress = address;
         hostType = type;
-        system = hostPlatform;
         inherit
           deployable
           embedHm
@@ -55,6 +54,7 @@
           lib
           self
           username
+          hostPlatform
           ;
       };
     };
