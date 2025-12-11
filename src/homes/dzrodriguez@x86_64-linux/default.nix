@@ -5,7 +5,7 @@
   lib,
   pkgs,
   inputs,
-  system,
+  hostPlatform,
   self,
   config,
   username,
@@ -16,7 +16,7 @@
 in {
   imports = with inputs; [
     op-password-shell-plugins.hmModules.default
-    shypkgs-public.hmModules.${system}.dwl
+    shypkgs-public.hmModules.${hostPlatform}.dwl
     nix-flatpak.homeManagerModules.nix-flatpak
     shyemacs-cfg.homeModules.emacs
   ];
