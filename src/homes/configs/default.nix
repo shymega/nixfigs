@@ -22,20 +22,12 @@ in {
   ];
   imports = [
     ./network-targets.nix
-    (import ./programs/rofi.nix {inherit lib pkgs;})
-<<<<<<< HEAD
-    inputs.agenix.homeManagerModules.default
-    inputs.nix-doom-emacs-unstraightened.hmModule
-    inputs.nix-index-database.hmModules.nix-index
-    inputs.op-password-shell-plugins.hmModules.default
-    inputs.shypkgs-public.hmModules.${system}.dwl
-=======
+    ./programs/rofi.nix
     agenix.homeManagerModules.default
     nix-doom-emacs-unstraightened.hmModule
     nix-index-database.homeModules.nix-index
     op-password-shell-plugins.hmModules.default
     shypkgs-public.hmModules.${hostPlatform}.dwl
->>>>>>> 9aa18130 (fix: Fix `pkgs.system` usages)
     ../../secrets/user
   ];
 
