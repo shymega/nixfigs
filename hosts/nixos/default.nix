@@ -84,7 +84,6 @@
         hostAddress = address;
         hostType = type;
         inherit lib;
-        system = hostPlatform;
         inherit
           deployable
           embedHm
