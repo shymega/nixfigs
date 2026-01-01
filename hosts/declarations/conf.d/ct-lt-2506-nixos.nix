@@ -10,7 +10,7 @@
 }:
 mkHost rec {
   type = "nixos";
-  hostname = "ct-lt-2671";
+  hostname = "ct-lt-2506-nixos";
   hostPlatform = "x86_64-linux";
   hostRoles = [
     "workstation"

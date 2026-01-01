@@ -19,7 +19,7 @@ in {
   ];
 
   # System identification
-  networking.hostName = "ct-lt-2671";
+  networking.hostName = "ct-lt-2506-nixos";
   networking.hostId = "12345678"; # Generate unique ID: head -c4 /dev/urandom | od -A none -t x4
 
   # Boot configuration for corporate compliance
