@@ -14,7 +14,7 @@
     };
   mkHost = {
     type ? "nixos",
-    address ? "${hostname}.dzr.devices.rnet.rodriguez.org.uk",
+    address ? "${hostname}.rnet.rodriguez.org.uk",
     hostname ? null,
     hostPlatform ? "x86_64-linux",
     username ? "dzrodriguez",
