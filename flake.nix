@@ -314,5 +314,9 @@
       url = "github:shymega/nixfigs-doom-emacs";
       flake = false;
     };
+    gitalias = {
+      url = "github:GitAlias/gitalias";
+      flake = false;
+    };
   };
 }
