@@ -27,12 +27,6 @@
           ];
         }
         sops-nix.nixosModules.default
-<<<<<<< HEAD
-        chaotic.nixosModules.default
-        lix-module.nixosModules.default
-=======
-        determinate.nixosModules.default
->>>>>>> ac012ee3 (fix: Fix `pkgs.system` usages)
       ],
     overlays ? [],
     hostRoles ? [],
@@ -47,47 +41,50 @@
     inherit (inputs.nixpkgs.lib.strings) hasSuffix;
   in
     if type == "nixos"
-    then assert (hasSuffix "linux" hostPlatform); {
-      inherit
-        address
-        baseModules
-        deployable
-        embedHm
-        extraModules
-        hardwareModules
-        hostPlatform
-        hostRoles
-        hostname
-        overlays
-        pubkey
-        remoteBuild
-        type
-        username
-        genPkgs
-        enableFoundationModules
-        ;
-    }
+    then
+      assert (hasSuffix "linux" hostPlatform); {
+        inherit
+          address
+          baseModules
+          deployable
+          embedHm
+          extraModules
+          hardwareModules
+          hostPlatform
+          hostRoles
+          hostname
+          overlays
+          pubkey
+          remoteBuild
+          type
+          username
+          genPkgs
+          enableFoundationModules
+          ;
+      }
     else if type == "darwin"
-    then assert (hasSuffix "darwin" hostPlatform); {
-      inherit
-        address
-        baseModules
-        deployable
-        extraModules
-        hardwareModules
-        hostPlatform
-        hostname
-        pubkey
-        remoteBuild
-        type
-        username
-        genPkgs
-        ;
-    }
+    then
+      assert (hasSuffix "darwin" hostPlatform); {
+        inherit
+          address
+          baseModules
+          deployable
+          extraModules
+          hardwareModules
+          hostPlatform
+          hostname
+          pubkey
+          remoteBuild
+          type
+          username
+          genPkgs
+          ;
+      }
     else if type == "home-manager"
-    then assert username != null; {
-      inherit type hostPlatform username;
-    }
+    then
+      assert username != null; {
+        inherit type hostPlatform username;
+      }
     else throw "unknown host type '${type}'";
 in {
   inherit genPkgs mkHost;
