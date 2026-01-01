@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024-2026 Dom Rodriguez <shymega@shymega.org.uk>
+
+SPDX-License-Identifier: GPL-3.0-only
+-->
+
 # Roles System Documentation
 
 The Nixfigs configuration uses a role-based system to organize and categorize different types of systems and their configurations. This document explains how roles work and how to use them effectively.
