@@ -64,7 +64,7 @@ docs: add comprehensive implementation documentation
 **EVERY** Nix file MUST start with SPDX headers:
 
 ```nix
-# SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
+# SPDX-FileCopyrightText: 2024-2026 Dom Rodriguez <shymega@shymega.org.uk>
 #
 # SPDX-License-Identifier: GPL-3.0-only
 ```
@@ -79,7 +79,7 @@ docs: add comprehensive implementation documentation
 
 #### Standard Module Structure
 ```nix
-# SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
+# SPDX-FileCopyrightText: 2024-2026 Dom Rodriguez <shymega@shymega.org.uk>
 #
 # SPDX-License-Identifier: GPL-3.0-only
 {
@@ -371,7 +371,7 @@ sops secrets/work/shared/new-secret.yaml
 
 3. Structure:
    ```nix
-   # SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
+   # SPDX-FileCopyrightText: 2024-2026 Dom Rodriguez <shymega@shymega.org.uk>
    #
    # SPDX-License-Identifier: GPL-3.0-only
    final: prev: {

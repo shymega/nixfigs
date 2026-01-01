@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
+# SPDX-FileCopyrightText: 2024-2026 Dom Rodriguez <shymega@shymega.org.uk>
 #
 # SPDX-License-Identifier: GPL-3.0-only
 {
@@ -62,7 +62,7 @@ in {
       listen-address = "0.0.0.0:21116"
 
       # Security settings
-      password = "vmaccess2024" # Change this password
+      password = "vmaccess2026" # Change this password
       encryption = true
 
       # Display settings
