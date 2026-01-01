@@ -104,7 +104,7 @@
 
   inputs = {
     # Core Nix ecosystem
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable";
     nixpkgs-shymega.url = "github:shymega/nixpkgs?ref=shymega/staging";
     flake-utils.url = "github:numtide/flake-utils";
@@ -138,7 +138,7 @@
 
     # Home management
     home-manager = {
-      url = "github:nix-community/home-manager?ref=release-25.05";
+      url = "github:nix-community/home-manager?ref=release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -195,7 +195,7 @@
 
     # System customization
     stylix = {
-      url = "github:danth/stylix?ref=release-25.05";
+      url = "github:danth/stylix?ref=release-25.11";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };
@@ -270,149 +270,10 @@
       };
     };
 
-<<<<<<< HEAD
     # Gaming
     deckcheatz = {
       url = "github:deckcheatz/deckcheatz";
       inputs.nixpkgs.follows = "nixpkgs";
-=======
-  outputs = {self, ...} @ inputs: let
-    supportedSystems =
-      inputs.snowfall-lib.inputs.flake-utils-plus.lib.defaultSystems
-      ++ [
-        "riscv64-linux"
-        "armv6l-linux"
-        "armv7l-linux"
-      ];
-    enableLix = true;
-  in
-    inputs.snowfall-lib.mkFlake {
-      inherit inputs supportedSystems;
-      src = ./.;
-      channels-config = {
-        allowUnfree = true;
-      };
-      outputs-builder = channels: let
-        system = channels.nixpkgs.system;
-        treefmtConfig = import ./nix/formatter.nix;
-        treefmtWrapper = inputs.treefmt-nix.lib.mkWrapper channels.nixpkgs treefmtConfig;
-      in {
-        formatter = treefmtWrapper;
-        checks = {
-          pre-commit-check = import ./nix/checks.nix {
-            inherit self system inputs;
-            inherit (channels.nixpkgs) lib;
-          };
-        };
-        # devShell = import ./nix/devShell.nix {
-        #  inherit self system;
-        #  pkgs = channels.nixpkgs;
-        # };
-      };
-
-      systems.modules.nixos = with inputs;
-        [
-        ]
-        ++ (inputs.nixpkgs.lib.optional enableLix
-          inputs.lix-module.nixosModules.default);
-
-      # Configure Snowfall Lib, all of these settings are optional.
-      snowfall = {
-        # Tell Snowfall Lib to look in the `./nix/` directory for your
-        # Nix files.
-        root = ./src;
-
-        # Choose a namespace to use for your flake's packages, library,
-        # and overlays.
-        namespace = "nixfigs";
-
-        # Add flake metadata that can be processed by tools like Snowfall Frost.
-        meta = {
-          # A slug to use in documentation when displaying things like file paths.
-          name = "nixfigs";
-
-          # A title to show for your flake, typically the name.
-          title = "Dom's Nixified Flake";
-        };
-      };
-    }
-    // {
-      self = inputs.self;
-      packages = let
-        inherit (inputs.shypkgs-public) allSystems forAllSystems;
-      in
-        forAllSystems (system: inputs.shypkgs-public.packages.${system});
-      hydraJobs = let
-        inherit (inputs.nixpkgs.lib) isDerivation filterAttrs mapAttrs elem;
-        notBroken = pkg: !(pkg.meta.broken or false);
-        isDistributable = pkg: (pkg.meta.license or {redistributable = true;}).redistributable;
-        hasPlatform = sys: pkg: elem sys (pkg.meta.platforms or [sys]);
-        filterValidPkgs = sys: pkgs:
-          filterAttrs (_: pkg:
-            isDerivation pkg
-            && hasPlatform sys pkg
-            && notBroken pkg
-            && isDistributable pkg)
-          pkgs;
-        getConfigTopLevel = _: cfg: cfg.config.system.build.toplevel;
-        getActivationPackage = _: cfg: cfg.config.home.activationPackage;
-      in {
-        pkgs = mapAttrs filterValidPkgs self.packages;
-        hosts = mapAttrs getConfigTopLevel self.nixosConfigurations;
-        users = mapAttrs getActivationPackage self.homeConfigurations;
-        inherit (self.builds) sdImages isoImages;
-      };
-
-      githubActions.matrix = with builtins; let
-        systemToPlatform = system: let
-          inherit (inputs.nixpkgs.lib.strings) hasSuffix;
-          isLinux = system: hasSuffix "-linux" system;
-          isDarwin = system: hasSuffix "-darwin" system;
-        in
-          if isLinux system
-          then "ubuntu-24.04"
-          else if isDarwin system
-          then "macos-14"
-          else throw "Unsupported system (platform): ${system}";
-        nixosConfigs = let
-          inherit (inputs.nixpkgs.lib.attrsets) filterAttrs mapAttrsToList;
-        in {
-          include = let
-            pred = n: v: let
-              inherit (v.pkgs) system;
-              isWorkMachine = v: let
-                inherit (builtins) elem hasAttr;
-              in
-                if hasAttr "nixfigs.meta" v.config
-                then elem "work" v.config.nixfigs.meta.rolesEnabled
-                else false;
-            in
-              !isWorkMachine v && n != "DZR-BUSY-LIGHT";
-          in
-            mapAttrsToList (n: v: {
-              hostName = n;
-              platform = systemToPlatform v.pkgs.stdenv.hostPlatform.system;
-              inherit (v.pkgs) system;
-            }) (filterAttrs pred self.nixosConfigurations);
-        };
-      in
-        nixosConfigs;
-
-      builds = let
-        inherit (inputs.nixpkgs.lib) hasAttrByPath filterAttrs;
-      in {
-        sdImages = with builtins;
-          mapAttrs (_: v: v.config.system.build.sdImage)
-          (filterAttrs (_: v:
-            hasAttrByPath ["config" "system" "build" "sdImage"] v)
-          self.nixosConfigurations);
-        isoImages = with builtins;
-          mapAttrs (_: v: v.config.system.build.isoImage)
-          (filterAttrs (_: v:
-            hasAttrByPath ["config" "system" "build" "isoImage"] v)
-          self.nixosConfigurations);
-      };
->>>>>>> ac012ee3 (fix: Fix `pkgs.system` usages)
     };
     wemod-launcher = {
       url = "github:DeckCheatz/wemod-launcher?ref=refactor-shymega";
