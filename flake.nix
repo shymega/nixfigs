@@ -206,7 +206,7 @@
 
     # Desktop environment
     hyprland = {
-      url = "github:hyprwm/Hyprland?ref=v0.53.0";
+      url = "github:hyprwm/Hyprland?ref=v0.53.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland-plugins = {
