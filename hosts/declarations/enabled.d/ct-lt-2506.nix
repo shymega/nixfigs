@@ -1,0 +1,1 @@
+../conf.d/ct-lt-2506.nix
