@@ -10,7 +10,7 @@
 }:
 mkHost rec {
   type = "nixos";
-  hostname = "ct-lt-2671";
+  hostname = "ct-lt-2506-nixos";
   hostPlatform = "x86_64-linux";
   hostRoles = [
     "workstation"
@@ -30,5 +30,5 @@ mkHost rec {
   pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPlaceholderWorkLaptopSSHKey"; # Replace with actual key
   embedHm = true;
   remoteBuild = false; # Disable remote build for work systems
-  deployable = false; # Disable deployment for work systems for security
+  deployable = true;
 }
