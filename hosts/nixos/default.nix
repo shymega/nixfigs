@@ -46,7 +46,6 @@
         ++ (with inputs; [
           "${self}/src/systems/${hostname}@${hostPlatform}"
           nixfigs-secrets.system
-          {nixpkgs.pkgs = pkgs;}
         ])
         ++ (lib.optionals enableFoundationModules [
           "${self}/src/modules/core"
