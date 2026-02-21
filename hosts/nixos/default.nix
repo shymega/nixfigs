@@ -75,7 +75,6 @@
                   self
                   specialArgs
                   username
-                  hostPlatform
                   ;
               };
             };
