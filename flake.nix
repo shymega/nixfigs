@@ -64,10 +64,14 @@
       inherit (inputs.shypkgs-public) forAllSystems;
     in
       forAllSystems (
-        system:
+        system: let
+          pkgs = import inputs.nixpkgs {
+            inherit system;
+          };
+        in
           inputs.shypkgs-public.packages.${system}
           // {
-            totp = inputs.nixpkgs.legacyPackages.${system}.callPackage ./packages/totp {};
+            totp = pkgs.callPackage ./packages/totp {};
           }
       );
 
