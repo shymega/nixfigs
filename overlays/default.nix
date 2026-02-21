@@ -20,15 +20,13 @@ with lib; let
     stableOverlays;
 
   defaultOverlays = with inputs; [
-    sops-nix.overlays.default
-    android-nixpkgs.overlays.default
-    deckcheatz.overlays.default
     dzr-taskwarrior-recur.overlays.default
     nix-alien.overlays.default
+    nix-cachyos-kernel.overlays.pinned
     nix-doom-emacs-unstraightened.overlays.default
     nur.overlays.default
     shypkgs-public.overlays.default
-    xrlinuxdriver.overlays.default
+    sops-nix.overlays.default
   ];
 
   customOverlays = [
