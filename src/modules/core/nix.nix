@@ -121,7 +121,6 @@ in {
         automatic = true;
         dates = ["06:00"];
       };
-      package = pkgs.nix;
       nixPath = options.nix.nixPath.default ++ lib.singleton "nixpkgs-overlays=/etc/nix/overlays-compat/";
       gc = {
         automatic = true;
