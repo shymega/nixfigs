@@ -278,6 +278,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # CachyOS Kernels (And ZFS)
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
+
     # Private configs (dummy repos)
     nixfigs-virtual-private.url = "github:shymega/nixfigs-virtual-private-dummy";
     nixfigs-work.url = "github:shymega/nixfigs-work-dummy";
