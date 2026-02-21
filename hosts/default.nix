@@ -27,7 +27,6 @@
           ];
         }
         sops-nix.nixosModules.default
-        chaotic.nixosModules.default
         determinate.nixosModules.default
       ],
     overlays ? [],
