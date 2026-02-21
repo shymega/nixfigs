@@ -206,7 +206,7 @@
 
     # Desktop environment
     hyprland = {
-      url = "github:hyprwm/Hyprland?ref=v0.52.2";
+      url = "github:hyprwm/Hyprland?ref=v0.53.3";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland-plugins = {
@@ -214,11 +214,11 @@
       inputs.hyprland.follows = "hyprland"; # Prevents version mismatch.
     };
     split-monitor-workspaces = {
-      url = "github:Duckonaut/split-monitor-workspaces?rev=8f0c875a5ba9864b1267e74e6f03533d18c2bca0";
+      url = "github:Duckonaut/split-monitor-workspaces?rev=657a845bc2f5f057cff5e2d9bcd1c5dd2e3c9dfe";
       inputs.hyprland.follows = "hyprland"; # <- make sure this line is present for the plugin to work as intended
     };
     nix-flatpak = {
-      url = "github:gmodena/nix-flatpak/?ref=v0.6.0";
+      url = "github:gmodena/nix-flatpak/?ref=v0.7.0";
     };
 
     # Package repositories
