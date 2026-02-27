@@ -5,7 +5,7 @@
 {
   python3Packages,
   fetchPypi,
-}: 
+}:
 python3Packages.buildPythonApplication (finalAttrs: {
   pname = "totp";
   version = "1.3.0";
