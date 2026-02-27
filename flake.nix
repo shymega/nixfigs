@@ -210,11 +210,11 @@
 
     # Desktop environment
     hyprland = {
-      url = "github:hyprwm/Hyprland?ref=v0.53.3";
+      url = "github:hyprwm/Hyprland?ref=v0.54.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins";
+      url = "github:hyprwm/hyprland-plugins?ref=v0.53.0";
       inputs.hyprland.follows = "hyprland"; # Prevents version mismatch.
     };
     split-monitor-workspaces = {
