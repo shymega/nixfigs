@@ -218,8 +218,17 @@
       inputs.hyprland.follows = "hyprland"; # Prevents version mismatch.
     };
     split-monitor-workspaces = {
-      url = "github:Duckonaut/split-monitor-workspaces?rev=657a845bc2f5f057cff5e2d9bcd1c5dd2e3c9dfe";
+      url = "github:Duckonaut/split-monitor-workspaces?rev=1680bf943b86e373db4b770d3280cf09ee08f208";
       inputs.hyprland.follows = "hyprland"; # <- make sure this line is present for the plugin to work as intended
+    };
+    snappy-switcher.url = "github:OpalAayan/snappy-switcher";
+    hy3 = {
+      url = "github:outfoxxed/hy3?ref=hl0.53.0.1";
+      inputs.hyprland.follows = "hyprland";
+    };
+    Hyprspace = {
+      url = "github:KZDKM/Hyprspace";
+      inputs.hyprland.follows = "hyprland";
     };
     nix-flatpak = {
       url = "github:gmodena/nix-flatpak/?ref=v0.7.0";
