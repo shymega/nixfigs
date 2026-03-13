@@ -188,6 +188,7 @@
     stylix = {
       url = "github:danth/stylix?ref=release-25.11";
       inputs = {
+        base16.follows = "base16-schemes";
         nixpkgs.follows = "nixpkgs";
       };
     };
@@ -196,23 +197,21 @@
     };
 
     # Desktop environment
-    hyprland = {
-      url = "github:hyprwm/Hyprland?ref=v0.54.2";
+
+    ## Hyprland
+    nixfigs-hypr = {
+      url = "github:shymega/nixfigs-hypr";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins?ref=v0.53.0";
-      inputs.hyprland.follows = "hyprland"; # Prevents version mismatch.
+
+    ## KDE Plasma
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
     };
-    split-monitor-workspaces = {
-      url = "github:Duckonaut/split-monitor-workspaces?rev=7f15447980ba2e6e3c57ca268ab556eb70ef562e";
-      inputs.hyprland.follows = "hyprland"; # <- make sure this line is present for the plugin to work as intended
-    };
-    snappy-switcher.url = "github:OpalAayan/snappy-switcher";
-    hy3 = {
-      url = "github:outfoxxed/hy3?ref=hl0.54.2";
-      inputs.hyprland.follows = "hyprland";
-    };
+
+    ## Flatpaks
     nix-flatpak = {
       url = "github:gmodena/nix-flatpak/?ref=v0.7.0";
     };
@@ -252,13 +251,21 @@
       url = "github:shymega/shypkgs-public";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    shyemacs-cfg = {
-      url = "github:shymega/emacs-cfg";
+    shyemacs = {
+      url = "github:shymega/shyemacs.nix";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         home-manager.follows = "home-manager";
       };
     };
+    shyvim = {
+      url = "github:shymega/shyvim.nix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
+
 
     # Personal utilities
     dzr-taskwarrior-recur = {
