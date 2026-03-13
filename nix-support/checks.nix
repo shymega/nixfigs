@@ -16,7 +16,7 @@
     ];
     inherit (builtins) any;
   in
-    any (x: x == system) unsupportedSystems;
+    any (x: x == hostPlatform) unsupportedSystems;
   dummyCheck = let
     genPkgs = system:
       import inputs.nixpkgs {

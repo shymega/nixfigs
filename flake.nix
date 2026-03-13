@@ -81,9 +81,9 @@
     devShells = let
       inherit (systemsModule) devshellSystems forDevSystems;
     in
-      forDevSystems (system: {
+      forDevSystems (hostPlatform: {
         default = import ./nix-support/devshell.nix {
-          inherit inputs system;
+          inherit inputs hostPlatform;
         };
       });
 
@@ -94,9 +94,9 @@
       // treeFmtEachSystem (pkgs: {
         formatting = treeFmtEval.${pkgs}.config.build.wrapper;
       })
-      // forDevSystems (system: {
+      // forDevSystems (hostPlatform: {
         pre-commit-check = import ./nix-support/checks.nix {
-          inherit inputs system;
+          inherit inputs hostPlatform;
         };
       });
 
