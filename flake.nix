@@ -110,6 +110,7 @@
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable";
     nixpkgs-shymega.url = "github:shymega/nixpkgs?ref=shymega/staging";
+    nixpkgs-shymega-zfs-bash-fix.url = "github:shymega/nixpkgs?ref=shymega/nixpkgs-unstable-zfs-bash-fix";
     flake-utils.url = "github:numtide/flake-utils";
 
     # NixOS modules and hardware
@@ -291,7 +292,13 @@
     };
 
     # CachyOS Kernels (And ZFS)
-    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
+    nix-cachyos-kernel = {
+      url = "github:xddxdd/nix-cachyos-kernel/release";
+      inputs.nixpkgs.follows = "nixpkgs-shymega-zfs-bash-fix";
+    };
+
+    # OpenClaw
+    nix-openclaw.url = "github:openclaw/nix-openclaw";
 
     # Private configs (dummy repos)
     nixfigs-virtual-private.url = "github:shymega/nixfigs-virtual-private-dummy";
