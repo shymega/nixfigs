@@ -266,7 +266,6 @@
       };
     };
 
-
     # Personal utilities
     dzr-taskwarrior-recur = {
       url = "github:shymega/dzr-taskwarrior-recur";
