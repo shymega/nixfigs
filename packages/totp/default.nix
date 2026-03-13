@@ -6,13 +6,13 @@
   python3Packages,
   fetchPypi,
 }:
-python3Packages.buildPythonApplication (finalAttrs: {
+python3Packages.buildPythonApplication rec {
   pname = "totp";
   version = "1.3.0";
   pyproject = true;
 
   src = fetchPypi {
-    inherit (finalAttrs) pname version;
+    inherit pname version;
     hash = "sha256-reWv3pH1NaO7wKAt4kbfrewKS6RlpZFH4NsYb2ai43I=";
   };
 
@@ -22,4 +22,4 @@ python3Packages.buildPythonApplication (finalAttrs: {
   ];
 
   dependencies = with python3Packages; [onetimepass];
-})
+}
