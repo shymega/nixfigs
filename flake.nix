@@ -34,6 +34,7 @@
     overlays = import ./overlays {
       inherit inputs;
     };
+    packages = import ./nix-support/packages.nix {inherit inputs;};
     deploy = import ./nix-support/deploy.nix {inherit inputs;};
     homeConfigurations = import ./hosts/homes {inherit inputs;};
     nixosConfigurations = import ./hosts/nixos {inherit inputs;};
@@ -58,20 +59,6 @@
             }
         )
         raw.enabled
-      );
-    packages = let
-      inherit (inputs.shypkgs-public) forAllSystems;
-    in
-      forAllSystems (
-        system: let
-          pkgs = import inputs.nixpkgs {
-            inherit system;
-          };
-        in
-          inputs.shypkgs-public.packages.${system}
-          // {
-            totp = pkgs.callPackage ./packages/totp {};
-          }
       );
 
     inherit (hydraModule) hydraJobs;

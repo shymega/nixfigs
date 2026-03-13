@@ -22,7 +22,6 @@ in
       nix-alien.overlays.default
       nix-cachyos-kernel.overlays.pinned
       nix-doom-emacs-unstraightened.overlays.default
-      nur.overlays.default
       shypkgs-public.overlays.default
       sops-nix.overlays.default
     ];
