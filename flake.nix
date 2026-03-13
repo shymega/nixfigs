@@ -76,7 +76,7 @@
 
     inherit (hydraModule) hydraJobs;
 
-    formatter = treeFmtEachSystem (pkgs: treeFmtEval.${pkgs.system}.config.build.wrapper);
+    formatter = treeFmtEachSystem (pkgs: treeFmtEval.${pkgs.stdenv.hostPlatform.system}.config.build.wrapper);
 
     devShells = let
       inherit (systemsModule) devshellSystems forDevSystems;
