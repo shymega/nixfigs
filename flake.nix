@@ -32,7 +32,7 @@
       inherit self inputs;
       inherit (inputs.nixpkgs) lib;
     };
-    inherit (inputs.nixfigs-pkgs) overlays packages nixpkgs-config;
+    inherit (inputs.nixfigs-pkgs) overlays nixpkgs-config;
     # for `nix fmt`
     formatter = treeFmtEachSystem (pkgs: treeFmtEval.${pkgs.stdenv.hostPlatform.system}.config.build.wrapper);
     # for `nix flake check`
