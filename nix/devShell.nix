@@ -45,6 +45,6 @@ in
           statix
         ];
 
-        shellHook = self.checks.${hostPlatform}.pre-commit-check.shellHook;
+        inherit (self.checks.${hostPlatform}.pre-commit-check) shellHook;
         buildInputs = self.checks.${hostPlatform}.pre-commit-check.enabledPackages;
       }

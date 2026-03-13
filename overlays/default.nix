@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 #
-{ inputs, ...}: let
+{inputs, ...}: let
   inherit (inputs.nixpkgs) lib;
 in
   with lib; let
