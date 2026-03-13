@@ -50,7 +50,6 @@
           lib
           self
           username
-          hostPlatform
           ;
       };
     };
