@@ -1,1 +1,0 @@
-../overlays.d/nix-output-monitor.nix
