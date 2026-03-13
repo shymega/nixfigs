@@ -36,7 +36,6 @@
         "${self}/src/hosts/${hostname}@${hostPlatform}"
         "${self}/src/modules/core"
         "${self}/src/modules/darwin"
-        {nixpkgs.pkgs = pkgs;}
       ];
       specialArgs = {
         hostAddress = address;
