@@ -210,7 +210,7 @@
 
     # Desktop environment
     hyprland = {
-      url = "github:hyprwm/Hyprland?ref=v0.54.0";
+      url = "github:hyprwm/Hyprland?ref=v0.54.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland-plugins = {
@@ -223,11 +223,7 @@
     };
     snappy-switcher.url = "github:OpalAayan/snappy-switcher";
     hy3 = {
-      url = "github:outfoxxed/hy3?ref=hl0.53.0.1";
-      inputs.hyprland.follows = "hyprland";
-    };
-    Hyprspace = {
-      url = "github:KZDKM/Hyprspace";
+      url = "github:outfoxxed/hy3?ref=hl0.54.2";
       inputs.hyprland.follows = "hyprland";
     };
     nix-flatpak = {
@@ -254,6 +250,10 @@
     };
     nm2nix = {
       url = "github:Janik-Haag/nm2nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    kanshi2nix = {
+      url = "github:shymega/kanshi2nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
