@@ -4,7 +4,6 @@
 {
   mkHost,
   genPkgs,
-  self,
   inputs,
   ...
 }:

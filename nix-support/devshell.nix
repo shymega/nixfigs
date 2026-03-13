@@ -2,12 +2,12 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 {
-  self,
   hostPlatform,
   inputs,
   pkgs ? inputs.nixpkgs.legacyPackages.${hostPlatform},
   ...
 }: let
+  inherit (inputs) self;
   isUnsupportedSystem = let
     unsupportedSystems = [
       "armv6l-linux"

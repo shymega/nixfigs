@@ -2,11 +2,8 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 # Hydra job definitions
-{
-  self,
-  inputs,
-  ...
-}: let
+{inputs, ...}: let
+  inherit (inputs) self;
   inherit
     (inputs.nixpkgs.lib)
     isDerivation

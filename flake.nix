@@ -8,11 +8,11 @@
     inherit (inputs) self;
     rolesModule = import ./nix-support/roles.nix;
     systemsModule = import ./nix-support/systems.nix {inherit inputs;};
-    hydraModule = import ./nix-support/hydra.nix {inherit self inputs;};
+    hydraModule = import ./nix-support/hydra.nix {inherit inputs;};
     githubActionsModule = import ./nix-support/github-actions.nix {
-      inherit self inputs systemsModule;
+      inherit inputs systemsModule;
     };
-    buildsModule = import ./nix-support/builds.nix {inherit self inputs;};
+    buildsModule = import ./nix-support/builds.nix {inherit inputs;};
     inherit (systemsModule) treefmtSystems forEachSystem;
     treeFmtEachSystem = f: inputs.nixpkgs.lib.genAttrs treefmtSystems (system: f inputs.nixpkgs.legacyPackages.${system});
     treeFmtEval = treeFmtEachSystem (
@@ -33,12 +33,11 @@
     };
     overlays = import ./overlays {
       inherit inputs;
-      inherit (inputs.nixpkgs) lib;
     };
-    deploy = import ./nix-support/deploy.nix {inherit self inputs;};
+    deploy = import ./nix-support/deploy.nix {inherit inputs;};
     homeConfigurations = import ./hosts/homes {inherit inputs;};
-    nixosConfigurations = import ./hosts/nixos {inherit self inputs;};
-    darwinConfigurations = import ./hosts/darwin {inherit self inputs;};
+    nixosConfigurations = import ./hosts/nixos {inherit inputs;};
+    darwinConfigurations = import ./hosts/darwin {inherit inputs;};
     hosts = with builtins; let
       lak = list:
         listToAttrs (
@@ -48,13 +47,13 @@
           })
           list
         );
-      raw = import ./hosts {inherit self inputs;};
+      raw = import ./hosts {inherit inputs;};
     in
       lak (
         map (
           v:
             import v {
-              inherit self inputs;
+              inherit inputs;
               inherit (raw) genPkgs mkHost;
             }
         )
@@ -84,7 +83,7 @@
     in
       forDevSystems (system: {
         default = import ./nix-support/devshell.nix {
-          inherit inputs self system;
+          inherit inputs system;
         };
       });
 
@@ -97,7 +96,7 @@
       })
       // forDevSystems (system: {
         pre-commit-check = import ./nix-support/checks.nix {
-          inherit inputs system self;
+          inherit inputs system;
         };
       });
 

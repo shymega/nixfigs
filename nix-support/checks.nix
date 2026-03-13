@@ -5,9 +5,9 @@
   hostPlatform,
   inputs,
   lib ? inputs.nixpkgs.lib,
-  self,
   ...
 }: let
+  inherit (inputs) self;
   isUnsupportedSystem = let
     unsupportedSystems = [
       "armv6l-linux"
