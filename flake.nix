@@ -43,7 +43,8 @@
       })
       // forEachSystem (system: {
         pre-commit-check = import "${inputs.nixfigs-helpers.helpers.checks}" {
-          inherit self system;
+          inherit self;
+          hostPlatform = system;
           inherit (inputs.nixfigs-helpers) inputs;
           inherit (inputs.nixpkgs) lib;
         };
