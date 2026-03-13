@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024-2026 Dom Rodriguez <shymega@shymega.org.uk>
+
+SPDX-License-Identifier: GPL-3.0-only
+-->
+
 # NixOS Installer ISO Configuration
 
 This directory contains the configuration for building a generic NixOS installer ISO with the following features:
