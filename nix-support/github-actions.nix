@@ -3,11 +3,11 @@
 # SPDX-License-Identifier: GPL-3.0-only
 # GitHub Actions matrix configuration
 {
-  self,
   inputs,
   systemsModule,
   ...
 }: let
+  inherit (inputs) self;
   inherit (systemsModule) systemToPlatform;
   inherit (inputs.nixpkgs.lib.attrsets) filterAttrs mapAttrsToList;
 in {

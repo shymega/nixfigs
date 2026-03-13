@@ -2,12 +2,11 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 {
-  self,
   inputs,
   lib ? inputs.nixpkgs.lib,
   ...
 }: let
-  inherit (inputs) deploy-rs;
+  inherit (inputs) deploy-rs self;
 
   deploySystem = system: let
     inherit (lib) hasSuffix;

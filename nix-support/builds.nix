@@ -2,11 +2,8 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 # Build definitions for SD images and ISO images
-{
-  self,
-  inputs,
-  ...
-}: let
+{ inputs, ...}: let
+  inherit (inputs) self;
   inherit (inputs.nixpkgs.lib) hasAttrByPath filterAttrs;
 in {
   builds = {
