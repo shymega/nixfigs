@@ -79,8 +79,6 @@
       specialArgs = {
         hostAddress = address;
         hostType = type;
-        inherit lib;
-        system = hostPlatform;
         inherit
           deployable
           embedHm
@@ -90,6 +88,7 @@
           inputs
           pubkey
           self
+          lib
           specialArgs
           username
           ;
