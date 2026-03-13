@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
 #
 # SPDX-License-Identifier: GPL-3.0-only
-{ inputs, ...}: let
+{inputs, ...}: let
   inherit (inputs) self;
   genPkgs = system: overlays:
     import inputs.nixpkgs {
