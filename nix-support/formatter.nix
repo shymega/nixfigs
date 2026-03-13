@@ -6,8 +6,12 @@
 
   settings = {
     global.excludes = [
+      "*.envrc"
+      "*.license"
       "*.age"
       "*.md"
+      "*.yaml"
+      "*.yml"
       "*.gpg"
       "*.bin"
     ];
