@@ -338,7 +338,7 @@ in {
     localNetworkGameTransfers.openFirewall = true;
   };
 
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 
   specialisation = {
     stock-latest-nixpkgs-kernel.configuration = {

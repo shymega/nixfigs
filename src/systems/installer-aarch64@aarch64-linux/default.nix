@@ -21,7 +21,7 @@
   networking.usePredictableInterfaceNames = true;
 
   # System information
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 
   nixfigs.installer.isoImage.enable = true;
   nixfigs.installer.sdImage.enable = true;
