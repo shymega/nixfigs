@@ -122,7 +122,9 @@
     then "ubuntu-24.04-arm"
     else if hasSuffix "-linux" system
     then "ubuntu-24.04"
+    else if system == "x86_64-darwin"
+    then "macos-26-intel"
     else if isDarwin system
-    then "macos-14"
+    then "macos-26"
     else throw "Unsupported system (platform): ${system}";
 }
