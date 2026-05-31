@@ -178,19 +178,6 @@ in {
     };
   };
 
-  systemd.services."apply-acpi-wakeup-fixes" = {
-    description = "Apply WM2 wakeup fixes";
-    wantedBy = ["basic.target"];
-    path = with pkgs; [
-      gawk
-      coreutils
-    ];
-    serviceConfig.Type = "oneshot";
-    script = ''
-      for i in $(cat /proc/acpi/wakeup|grep enabled|awk '{print $1}'|xargs); do case $i in SLPB|XHCI);; *) echo $i|tee /proc/acpi/wakeup ; esac; done
-    '';
-  };
-
   powerManagement = {
     enable = true;
     cpuFreqGovernor = "powersave";
