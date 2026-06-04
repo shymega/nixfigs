@@ -33,7 +33,6 @@ in rec {
     "riscv64-linux"
   ];
   allDarwinSystems = [
-    "x86_64-darwin"
     "aarch64-darwin"
   ];
   allSystemsAttrs = {
@@ -54,7 +53,6 @@ in rec {
   isPC64 = isx86_64;
   isPC32 = isi686;
   isDarwinArm = pkgs.system == "aarch64-darwin";
-  isDarwinx86 = pkgs.system == "x86_64-darwin";
   forEachSystem = genAttrs defaultSystems;
   forAllEachSystems = genAttrs allSystems;
   homePrefix =
