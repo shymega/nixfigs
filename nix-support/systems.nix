@@ -14,7 +14,6 @@
     "armv6l-linux"
     "armv7l-linux"
     "riscv64-linux"
-    "x86_64-darwin"
     "aarch64-darwin"
   ];
 
@@ -29,7 +28,6 @@
 
   # Darwin-specific systems
   darwinSystems = [
-    "x86_64-darwin"
     "aarch64-darwin"
   ];
 
@@ -48,7 +46,6 @@
   # Systems supported by devshells
   devshellSystems = [
     "x86_64-linux"
-    "x86_64-darwin"
     "aarch64-linux"
     "aarch64-darwin"
   ];
@@ -56,7 +53,6 @@
   # Systems supported by checks
   checkSystems = [
     "x86_64-linux"
-    "x86_64-darwin"
     "aarch64-linux"
     "aarch64-darwin"
   ];
@@ -72,7 +68,6 @@
       "armv6l-linux"
       "armv7l-linux"
       "riscv64-linux"
-      "x86_64-darwin"
       "aarch64-darwin"
     ]
     f;
@@ -89,7 +84,6 @@
   forDevSystems = f:
     lib.genAttrs [
       "x86_64-linux"
-      "x86_64-darwin"
       "aarch64-linux"
       "aarch64-darwin"
     ]
@@ -103,7 +97,6 @@
       "armv6l-linux"
       "armv7l-linux"
       "riscv64-linux"
-      "x86_64-darwin"
       "aarch64-darwin"
     ];
 
@@ -122,8 +115,6 @@
     then "ubuntu-24.04-arm"
     else if hasSuffix "-linux" system
     then "ubuntu-24.04"
-    else if system == "x86_64-darwin"
-    then "macos-26-intel"
     else if isDarwin system
     then "macos-26"
     else throw "Unsupported system (platform): ${system}";
