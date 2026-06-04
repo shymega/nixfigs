@@ -108,7 +108,7 @@
 
   inputs = {
     # Core Nix ecosystem
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable";
     nixpkgs-shymega.url = "github:shymega/nixpkgs?ref=shymega/staging";
     flake-utils.url = "github:numtide/flake-utils";
@@ -142,7 +142,7 @@
 
     # Home management
     home-manager = {
-      url = "github:nix-community/home-manager?ref=release-25.11";
+      url = "github:nix-community/home-manager?ref=release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -199,7 +199,7 @@
 
     # System customization
     stylix = {
-      url = "github:danth/stylix?ref=release-25.11";
+      url = "github:danth/stylix?ref=release-26.05";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };
@@ -210,15 +210,15 @@
 
     # Desktop environment
     hyprland = {
-      url = "github:hyprwm/Hyprland?ref=v0.54.0";
+      url = "github:hyprwm/Hyprland?ref=v0.55.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins?ref=v0.53.0";
+      url = "github:hyprwm/hyprland-plugins?ref=v0.55.0";
       inputs.hyprland.follows = "hyprland"; # Prevents version mismatch.
     };
     split-monitor-workspaces = {
-      url = "github:Duckonaut/split-monitor-workspaces?rev=657a845bc2f5f057cff5e2d9bcd1c5dd2e3c9dfe";
+      url = "github:Duckonaut/split-monitor-workspaces?rev=3aeb50c7fba3141590529b3f1a19dd80d1e77925";
       inputs.hyprland.follows = "hyprland"; # <- make sure this line is present for the plugin to work as intended
     };
     nix-flatpak = {
