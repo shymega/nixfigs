@@ -81,8 +81,8 @@
   };
   sdImage = {
     compressImage = false;
-    imageName = "CLOCKWORK-UC-CM4.img";
   };
+  image.fileName = "CLOCKWORK-UC-CM4.img";
 
   networking = {
     interfaces."wlan0".useDHCP = true;
