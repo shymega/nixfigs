@@ -232,7 +232,7 @@ in {
     };
   };
 
-  system.stateVersion = "25.05";
+  system.stateVersion = "26.05";
 
   environment.systemPackages = with pkgs; [
     (writeShellScriptBin "reset-gpu" ''
