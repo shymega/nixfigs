@@ -28,7 +28,7 @@ in {
   home = {
     inherit username homeDirectory;
     enableNixpkgsReleaseCheck = true;
-    stateVersion = "25.05";
+    stateVersion = "26.05";
     packages = with pkgs;
       [
         (isync-patched.override {withCyrusSaslXoauth2 = true;})
