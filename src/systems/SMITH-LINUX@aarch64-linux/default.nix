@@ -81,8 +81,8 @@
   };
   sdImage = {
     compressImage = false;
-    imageName = "SMITH-LINUX.img";
   };
+  image.fileName = "SMITH-LINUX.img";
 
   networking = {
     interfaces."wlan0".useDHCP = true;
