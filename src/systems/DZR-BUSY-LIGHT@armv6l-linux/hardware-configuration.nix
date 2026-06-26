@@ -12,8 +12,6 @@
   };
 
   boot = {
-    kernelPackages = lib.mkForce pkgs.linuxPackages_rpi0;
-
     initrd.availableKernelModules = lib.mkForce [
       "usbhid"
       "usb_storage"
