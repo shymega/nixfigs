@@ -209,7 +209,8 @@
     };
 
     # Desktop environment
-    hyprland.follows = "nixfigs-pkgs/hyprnix/hyprland";
+    hyprnix.url = "github:hyprwm/hyprnix";
+    hyprland.follows = "hyprnix/hyprland";
     hyprland-plugins = {
       url = "github:hyprwm/hyprland-plugins?ref=v0.55.0";
       inputs.hyprland.follows = "hyprland"; # Prevents version mismatch.
