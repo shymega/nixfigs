@@ -210,15 +210,14 @@
     };
 
     # Desktop environment
-    hyprnix.url = "github:hyprwm/hyprnix";
     hyprland.follows = "hyprnix/hyprland";
     hyprland-plugins = {
       url = "github:hyprwm/hyprland-plugins?ref=v0.55.0";
       inputs.hyprland.follows = "hyprland"; # Prevents version mismatch.
     };
     split-monitor-workspaces = {
-      url = "github:Duckonaut/split-monitor-workspaces?rev=3aeb50c7fba3141590529b3f1a19dd80d1e77925";
-      inputs.hyprland.follows = "hyprland"; # <- make sure this line is present for the plugin to work as intended
+      url = "github:Duckonaut/split-monitor-workspaces?rev=7d74bc416d0ddc6b192a42453921eb09209db8ea";
+      inputs.hyprland.follows = "hyprland";
     };
     nix-flatpak = {
       url = "github:gmodena/nix-flatpak/?ref=v0.7.0";
@@ -263,12 +262,6 @@
       };
     };
 
-    # Personal utilities
-    dzr-taskwarrior-recur = {
-      url = "github:shymega/dzr-taskwarrior-recur";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # Editor configs
     nix-doom-emacs-unstraightened = {
       url = "github:marienz/nix-doom-emacs-unstraightened";
@@ -300,5 +293,11 @@
       url = "github:shymega/nixfigs-doom-emacs";
       flake = false;
     };
+
+    # Overlays
+    dzr-taskwarrior-recur.url = "github:shymega/dzr-taskwarrior-recur";
+    breezy-desktop.url = "git+https://github.com/shymega/breezy-desktop?ref=shymega/add-nix-flake-support";
+    nix-openclaw.url = "github:openclaw/nix-openclaw";
+    hyprnix.url = "github:hyprwm/hyprnix";
   };
 }
