@@ -67,7 +67,6 @@
 
   sdImage = {
     compressImage = true;
-    imageName = "DZR-BUSY-LIGHT.img";
 
     populateRootCommands = "";
     populateFirmwareCommands = with config.system.build; ''
@@ -75,6 +74,7 @@
     '';
     firmwareSize = 64;
   };
+  image.fileName = "DZR-BUSY-LIGHT.img";
 
   hardware = {
     # needed for wlan0 to work (https://github.com/NixOS/nixpkgs/issues/115652)
