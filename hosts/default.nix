@@ -28,6 +28,7 @@
         }
         sops-nix.nixosModules.default
         determinate.nixosModules.default
+        nixfigs-secrets.system
       ],
     overlays ? [],
     hostRoles ? [],

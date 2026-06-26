@@ -45,7 +45,6 @@
         baseModules
         ++ (with inputs; [
           "${self}/src/systems/${hostname}@${hostPlatform}"
-          nixfigs-secrets.system
         ])
         ++ (lib.optionals enableFoundationModules [
           "${self}/src/modules/core"
