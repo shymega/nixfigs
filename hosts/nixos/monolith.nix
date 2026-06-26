@@ -218,7 +218,7 @@
     };
   };
 
-  system.stateVersion = "25.05";
+  system.stateVersion = "26.05";
 
   fonts.enableDefaultPackages = true;
   nixfigs = {

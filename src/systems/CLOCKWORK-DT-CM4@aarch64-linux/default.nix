@@ -11,7 +11,7 @@
   networking = {
     hostName = "CLOCKWORK-DT-CM4";
   };
-  system.stateVersion = "25.05";
+  system.stateVersion = "26.05";
 
   imports = with inputs; [
     ./hardware-configuration.nix
