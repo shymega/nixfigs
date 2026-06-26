@@ -29,7 +29,7 @@ in {
     inherit username homeDirectory;
     enableNixpkgsReleaseCheck = true;
     stateVersion = "25.05";
-    packages = with pkgs.unstable;
+    packages = with pkgs;
       [
         (isync-patched.override {withCyrusSaslXoauth2 = true;})
         alpaca
@@ -153,7 +153,7 @@ in {
       ++ (
         with pkgs;
           lib.optionals isPC (
-            with pkgs.unstable.jetbrains; [
+            with pkgs.jetbrains; [
               clion
               datagrip
               gateway
@@ -173,7 +173,7 @@ in {
   services = {
     darkman = {
       enable = true;
-      package = pkgs.unstable.darkman;
+      package = pkgs.darkman;
       settings = {
         usegeoclue = true;
       };
@@ -293,7 +293,7 @@ in {
     };
     atuin = {
       enable = true;
-      package = pkgs.unstable.atuin;
+      package = pkgs.atuin;
       settings = {
         key_path = config.age.secrets.atuin_key.path;
         sync_address = "https://api.atuin.sh";
@@ -359,7 +359,7 @@ in {
     home-manager.enable = true;
     doom-emacs = {
       enable = true;
-      emacs = pkgs.unstable.emacs29-pgtk;
+      emacs = pkgs.emacs-pgtk;
       provideEmacs = true;
       experimentalFetchTree = true;
       doomDir = inputs.nixfigs-doom-emacs;
