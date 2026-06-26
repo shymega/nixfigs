@@ -199,7 +199,6 @@ in {
       enable = true;
       components = ["secrets"];
     };
-    dunst.enable = true;
     mpd-discord-rpc.enable = true;
     mpris-proxy.enable = true;
     mpdris2.enable = true;
@@ -220,14 +219,6 @@ in {
       '';
     };
     gammastep = {
-      enable = true;
-      temperature = {
-        day = 6500;
-        night = 3400;
-      };
-      provider = "geoclue2";
-    };
-    redshift = {
       enable = true;
       temperature = {
         day = 6500;
@@ -260,13 +251,6 @@ in {
         obs-backgroundremoval
         obs-pipewire-audio-capture
       ];
-    };
-    dwl = {
-      enable = true;
-      cmd = {
-        terminal = "${pkgs.wezterm}/bin/wezterm";
-        editor = "${pkgs.emacs}/bin/emacslient -cq";
-      };
     };
     yt-dlp.enable = true;
     htop.enable = true;
