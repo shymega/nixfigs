@@ -19,12 +19,25 @@ with lib; let
     )
     stableOverlays;
 
-  defaultOverlays = with inputs; [
+  defaultOverlays = with inputs; let
+    openclawOverlaySafe = final: prev:
+    # Only apply when stdenv exists (real nixpkgs, not flake check)
+      if prev ? stdenv
+      then inputs.nix-openclaw.overlays.default final prev
+      else {};
+    hyprnixOverlaySafe = _: prev: let
+      system = prev.stdenv.hostPlatform.system;
+    in
+      hyprnix.packages.${system} or {};
+  in [
+    devenv.overlays.default
     dzr-taskwarrior-recur.overlays.default
+    hyprnixOverlaySafe
     nix-alien.overlays.default
     nix-cachyos-kernel.overlays.pinned
     nix-doom-emacs-unstraightened.overlays.default
     nur.overlays.default
+    openclawOverlaySafe
     shypkgs-public.overlays.default
     sops-nix.overlays.default
   ];
