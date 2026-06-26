@@ -58,8 +58,8 @@
 
   sdImage = {
     compressImage = false;
-    imageName = "GRDN-BED-UNIT.img";
   };
+  image.fileName = "GRDN-BED-UNIT.img";
 
   networking = {
     interfaces."wlan0".useDHCP = true;
