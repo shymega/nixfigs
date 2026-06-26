@@ -20,13 +20,13 @@ in {
   disabledModules = [
     "services/window-managers/hyprland.nix"
   ];
-  imports = [
+  imports = with inputs; [
     ./network-targets.nix
     ./programs/rofi.nix
     agenix.homeManagerModules.default
     nix-doom-emacs-unstraightened.hmModule
     nix-index-database.homeModules.nix-index
-    op-password-shell-plugins.hmModules.default
+    _1password-shell-plugins.hmModules.default
     shypkgs-public.hmModules.${hostPlatform}.dwl
     ../../secrets/user
   ];
