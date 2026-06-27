@@ -2,12 +2,10 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 name: "Renovate"
-
 on:
   schedule:
     - cron: "0 0 * * 6"
   workflow_dispatch:
-
 jobs:
   renovate:
     runs-on: ubuntu-latest
