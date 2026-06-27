@@ -80,9 +80,9 @@ jobs:
             fallback = true
             http-connections = 128
             max-substitution-jobs = 128
-            extra-trusted-public-keys = nixbuild.net/nixos-23.05-1:LeOWXeJOBOhLAhqB2yHNUH7VQb7HWHm1Qp8b2iCGjzY= private-nixfigs.attics.nix.shymega.org.uk:LMl+lAu57+YHjOm6U0EYzT4VBK4YKGqGU/YZxdLLreg=
-            extra-substituters = https://nixbuild.net https://private-nixfigs.attics.nix.shymega.org.uk/nixfigs
-            builders = ssh://eu.nixbuild.net x86_64-linux,aarch64-linux - 100 1 big-parallel,kvm,nixos-test
+            extra-trusted-public-keys =
+            extra-substituters = https://ncps.nix.shymega.org.uk
+            builders = ssh://eu.nixbuild.net x86_64-linux,aarch64-linux,armv7l-linux - 100 1 big-parallel,benchmark
             builders-use-substitutes = true
       - name: Setup nixbuild.net SSH
         run: |
@@ -105,14 +105,14 @@ jobs:
       - name: Setup Attic authentication
         run: |
           sudo mkdir -p /etc/nix
-          echo "machine private-nixfigs.attics.nix.shymega.org.uk password ${{ secrets.ATTIC_TOKEN }}" | sudo tee /etc/nix/netrc > /dev/null
+          echo "machine attic-priv.nix.shymega.org.uk password ${{ secrets.ATTIC_TOKEN }}" | sudo tee /etc/nix/netrc > /dev/null
           sudo chmod 600 /etc/nix/netrc
       - name: Enable Magic Nix Cache
         uses: DeterminateSystems/magic-nix-cache-action@main
       - name: Setup Attic client
         uses: ryanccn/attic-action@v0
         with:
-          endpoint: "https://private-nixfigs.attics.nix.shymega.org.uk/"
+          endpoint: "https://attic-priv.nix.shymega.org.uk/"
           cache: "nixfigs"
           token: ${{ secrets.ATTIC_TOKEN }}
       - name: Build NixOS system
