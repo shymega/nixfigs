@@ -9,7 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: sudo apt-get install -y qemu-user-static
       - uses: DeterminateSystems/nix-installer-action@main
         with:
           github-token: ${{ secrets.NIX_GH_ACTIONS_TOKEN }}
@@ -17,13 +16,10 @@ jobs:
             fallback = true
             http-connections = 128
             max-substitution-jobs = 128
-            extra-platforms = aarch64-linux armv7l-linux armv6l-linux
-            substituters = https://nix-community.cachix.org?priority=41 https://numtide.cachix.org?priority=42 https://cache.nixos.org/
-            trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE=
-      - name: Sync follows declarations
-        run: python3 .github/scripts/sync-follows.py
       - name: Update Flake inputs
         run: nix flake update
+      - name: Sync follows declarations
+        run: python3 .github/scripts/sync-follows.py
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v7
@@ -32,7 +28,6 @@ jobs:
           committer: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
           author: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
           signoff: true
-          branch: chore/flake-updates
           delete-branch: true
           title: "chore(deps): Update Flake inputs"
           branch-suffix: "short-commit-hash"
