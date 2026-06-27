@@ -8,6 +8,9 @@ concurrency:
   group: gh-ref-${{ github.ref }}
   cancel-in-progress: true
 jobs:
+  format-check:
+    uses: ./.github/workflows/flake-formatting-check.yml
+    secrets: inherit
   flake-tests:
     uses: ./.github/workflows/flake-tests.yml
     secrets: inherit
