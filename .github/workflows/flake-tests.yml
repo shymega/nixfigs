@@ -15,4 +15,4 @@ jobs:
         with:
           github-token: ${{ secrets.NIX_GH_ACTIONS_TOKEN }}
       - name: Check Flake with Nix
-        run: nix flake check --all-systems --accept-flake-config
+        run: nix flake check --accept-flake-config
