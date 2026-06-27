@@ -19,29 +19,6 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@main
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Setup nixbuild.net
-        uses: nixbuild/nix-quick-install-action@v28
-        with:
-          nix_conf: |
-            extra-trusted-public-keys = nixbuild.net/nixos-23.05-1:LeOWXeJOBOhLAhqB2yHNUH7VQb7HWHm1Qp8b2iCGjzY=
-            extra-substituters = https://nixbuild.net
-            builders = ssh://eu.nixbuild.net x86_64-linux,aarch64-linux - 100 1 big-parallel,kvm,nixos-test
-            builders-use-substitutes = true
-      - name: Setup SSH for nixbuild.net
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.NIXBUILD_SSH_KEY }}" > ~/.ssh/nixbuild_ed25519
-          chmod 600 ~/.ssh/nixbuild_ed25519
-          echo "Host eu.nixbuild.net" >> ~/.ssh/config
-          echo "  HostName eu.nixbuild.net" >> ~/.ssh/config
-          echo "  User root" >> ~/.ssh/config
-          echo "  IdentityFile ~/.ssh/nixbuild_ed25519" >> ~/.ssh/config
-          echo "  IdentitiesOnly yes" >> ~/.ssh/config
-      - name: Setup sops-nix key
-        run: |
-          mkdir -p ~/.config/sops/age
-          echo "${{ secrets.SOPS_AGE_KEY }}" > ~/.config/sops/age/keys.txt
-          chmod 600 ~/.config/sops/age/keys.txt
       - name: Generate Nix Matrix
         id: set-matrix
         run: |
