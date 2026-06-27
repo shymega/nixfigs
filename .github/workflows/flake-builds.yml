@@ -160,7 +160,6 @@ jobs:
           nix build $OVERRIDE_ARGS \
             --accept-flake-config \
             --show-trace \
-            --builders "" \
             ".#nixosConfigurations.${{ matrix.hostName }}.config.system.build.toplevel"
 
           echo "Build completed successfully"
