@@ -1,0 +1,20 @@
+# SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
+#
+# SPDX-License-Identifier: GPL-3.0-only
+name: "Nix Formatting Check"
+on:
+  workflow_call:
+jobs:
+  check-format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: DeterminateSystems/nix-installer-action@main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check Nix formatting
+        run: |
+          nix fmt .
+          git diff --exit-code
