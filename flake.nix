@@ -156,7 +156,7 @@
       nixosConfigs;
   };
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+    nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/*";
     nixfigs-helpers.url = "github:shymega/nixfigs-helpers";
     nixfigs-pkgs.url = "github:shymega/nixfigs-pkgs";
     nixfigs-private.url = "github:shymega/nixfigs-private";
