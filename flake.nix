@@ -108,7 +108,7 @@
 
   inputs = {
     # Core Nix ecosystem
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-26.05";
+    nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/*";
     nixpkgs-unstable.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable";
     nixpkgs-shymega.url = "github:shymega/nixpkgs?ref=shymega/staging";
     flake-utils.url = "github:numtide/flake-utils";
