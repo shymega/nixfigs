@@ -294,6 +294,13 @@
       flake = false;
     };
 
+    # M365 Authentication
+    himmelblau = {
+      url = "github:himmelblau-idm/himmelblau?ref=3.1.7";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Overlays
     dzr-taskwarrior-recur.url = "github:shymega/dzr-taskwarrior-recur";
     breezy-desktop.url = "git+https://github.com/shymega/breezy-desktop?ref=shymega/add-nix-flake-support";
