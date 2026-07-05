@@ -2103,6 +2103,27 @@
         "type": "github"
       }
     },
+    "himmelblau": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1781192810,
+        "narHash": "sha256-zgxKqVIT7ukfkxH6obTzXGPXVOYLKn3ZEIZI9IrZpyU=",
+        "owner": "himmelblau-idm",
+        "repo": "himmelblau",
+        "rev": "f4e43ca0f7c296027c9b26ec0cff3d385626c179",
+        "type": "github"
+      },
+      "original": {
+        "owner": "himmelblau-idm",
+        "ref": "3.1.7",
+        "repo": "himmelblau",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -4640,6 +4661,7 @@
         "git-hooks": "git-hooks_4",
         "hardware": "hardware",
         "hardware-shymega": "hardware-shymega",
+        "himmelblau": "himmelblau",
         "home-manager": "home-manager",
         "hyprland": [
           "hyprnix",
