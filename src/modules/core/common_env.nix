@@ -6,7 +6,7 @@
   environment = {
     variables = {
       TERMINAL = "${pkgs.lib.getExe pkgs.alacritty}";
-      EDITOR = "${pkgs.lib.getExe' pkgs.emacs "emacsclient"}";
+      EDITOR = pkgs.lib.mkForce "${pkgs.lib.getExe' pkgs.emacs "emacsclient"}";
       VISUAL = "$EDITOR";
       GIT_EDITOR = "$EDITOR";
       SUDO_EDITOR = "$EDITOR";
