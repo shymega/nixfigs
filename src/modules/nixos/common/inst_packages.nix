@@ -8,6 +8,7 @@
     aria2
     curl
     ddcutil
+    dovecot_pigeonhole
     encfs
     fido2luks
     fuse
@@ -20,11 +21,9 @@
     libimobiledevice
     lm_sensors
     nano
-    neovim
     nvme-cli
     pciutils
     powertop
-    rsync
     smartmontools
     solo2-cli
     syncthing
