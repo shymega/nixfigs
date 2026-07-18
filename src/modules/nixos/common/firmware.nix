@@ -3,5 +3,5 @@
 # SPDX-License-Identifier: GPL-3.0-only
 #
 {lib, ...}: {
-  hardware.enableAllFirmware = lib.mkDefault true;
+  hardware.enableRedistributableFirmware = lib.mkDefault true;
 }

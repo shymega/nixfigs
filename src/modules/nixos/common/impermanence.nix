@@ -28,7 +28,7 @@
         "/var/spool/mail"
       ]
       ++ lib.optionals
-      (config.networking.hostName == "NEO-LINUX" || config.networking.hostName == "TWINS-LINUX")
+      (config.networking.hostName == "NEO-LINUX" || config.networking.hostName == "DEUSEX-LINUX" || config.networking.hostName == "THOR-LINUX" || config.networking.hostName == "MJOLNIR-LINUX" || config.networking.hostName == "TWINS-LINUX")
       [
         "/var/lib/AccountsService"
         "/var/lib/alsa"
@@ -50,6 +50,8 @@
         "/var/lib/postfix"
         "/var/lib/power-profiles-daemon"
         "/var/lib/private"
+        "/var/lib/regreet"
+        "/var/lib/sbctl"
         "/var/lib/systemd"
         "/var/lib/upower"
         "/var/lib/wayland"
