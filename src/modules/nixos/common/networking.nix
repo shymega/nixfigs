@@ -20,8 +20,7 @@ in {
     ];
     ensureProfiles.profiles =
       inputs.nixfigs-networks.networks.all
-      // inputs.nixfigs-networks.networks.work
-      // inputs.nixfigs-networks.networks.fly-io;
+      // inputs.nixfigs-networks.networks.work;
     wifi.macAddress = "stable-ssid";
     wifi.scanRandMacAddress = true;
     ethernet.macAddress = "stable";
@@ -40,9 +39,8 @@ in {
   };
 
   networking.extraHosts = ''
-    192.168.8.1 router-int.mudi-01.ext-wifi.rnet.rodriguez.org.uk
-    172.28.13.63 oauth2-mail-proxy.delta-zero.rodriguez.org.uk
-    172.28.13.63 taskd.shymega.org.uk
+    192.168.8.1 gl-inet.routers.rnet.rodriguez.org.uk
+    100.70.185.78 mail.delta-zero.rodriguez.org.uk taskd.shymega.org.uk
   '';
 
   programs.nm-applet = {
