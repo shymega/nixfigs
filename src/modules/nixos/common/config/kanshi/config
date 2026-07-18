@@ -1,0 +1,127 @@
+profile desk_home_office_mini_pc {
+  output "LG Electronics LG Ultra HD 0x0009B7B4" enable mode 3840x2160 position 0,0 scale 1.50
+  output "Invalid Vendor Codename - RTK FlipGo-A1 demoset-1" enable mode 2256x1504 position 2560,0 scale 1.50 
+  output "Invalid Vendor Codename - RTK FlipGo-A2 demoset-1" enable mode 2256x1504 position 2560,1002 scale 1.50 
+}
+
+profile viture_home_office_mini_pc {
+  output "LG Electronics LG Ultra HD 0x0009B7B4" disable
+  output "CVT VITURE 0x88888800" enable mode 1920x1080 position 0,0 scale 1.40
+}
+
+profile default_gpd_wm2 {
+  output "Japan Display Inc. GPD1001H 0x00000001" enable mode 2560x1600 scale 1.65 position 0,0
+}
+
+profile portable_monitor_gpd_wm2 {
+  output "Japan Display Inc. GPD1001H 0x00000001" enable mode 2560x1600 position 2803,795 scale 1.50
+  output "Invalid Vendor Codename - RTK FlipGo-A1 demoset-1" enable mode 2256x1504 position 5363,1798 scale 1.50
+  output "Invalid Vendor Codename - RTK FlipGo-A2 demoset-1" enable mode 2256x1504 position 5363,795 scale 1.50
+}
+
+profile viture_home_office_gpd_wm2 {
+  output "CVT VITURE 0x88888800" enable mode 1920x1080 position 0,0 scale 1.40
+  output "Japan Display Inc. GPD1001H 0x00000001" disable
+  output "LG Electronics LG Ultra HD 0x0009B7B4" disable
+}
+
+profile viture_default_gpd_wm2 {
+  output "CVT VITURE 0x88888800" enable mode 1920x1080 position 0,0 scale 1.40
+  output "Japan Display Inc. GPD1001H 0x00000001" disable
+}
+
+profile home_office_portable_monitor_gpd_wm2 {
+  output "Japan Display Inc. GPD1001H 0x00000001" disable
+  output "LG Electronics LG Ultra HD 0x0009B7B4" enable mode 3840x2160 position 0,0 scale 1.50
+  output "Invalid Vendor Codename - RTK FlipGo-A1 demoset-1" enable mode 2256x1504 position 2560,0 scale 1.50 
+  output "Invalid Vendor Codename - RTK FlipGo-A2 demoset-1" enable mode 2256x1504 position 2560,1002 scale 1.50 
+}
+
+profile home_office_single_portable_monitor_gpd_wm2 {
+  output "Japan Display Inc. GPD1001H 0x00000001" disable
+  output "Invalid Vendor Codename - RTK FlipGo-A1 demoset-1" enable mode 2256x1504 position 2560,0 scale 1.50 
+  output "Invalid Vendor Codename - RTK FlipGo-A2 demoset-1" enable mode 2256x1504 position 2560,1002 scale 1.50 
+}
+
+profile home_office_single_monitor_gpd_wm2 {
+  output "Japan Display Inc. GPD1001H 0x00000001" disable
+  output "LG Electronics LG Ultra HD 0x0009B7B4" enable mode 3840x2160 position 0,0 scale 1.50
+}
+
+profile default_thinkpad_x270 {
+  output "Unknown 0x226D 0x00000000" enable mode 1920x1080 position 0,0
+}
+
+profile desk_home_thinkpad_x270 {
+  output "Unknown 0x226D 0x00000000" disable	
+  output "LG Electronics LG Ultra HD 0x0000BFB4" enable mode 3840x2160 position 0,0 scale 1.50
+}
+
+profile default_redacted {
+  output "California Institute of Technology 0x1404 Unknown" enable mode 1920x1200 scale 1.00 position 0,0
+}
+
+profile home_office_redacted {
+  output "California Institute of Technology 0x1404 Unknown" disable
+  output "LG Electronics LG Ultra HD 0x0009B7B4" enable mode 3840x2160 position 0,0 scale 1.50
+  output "Invalid Vendor Codename - RTK FlipGo-A1 demoset-1" enable mode 2256x1504 position 2560,0 scale 1.50
+  output "Invalid Vendor Codename - RTK FlipGo-A2 demoset-1" enable mode 2256x1504 position 4064,0 scale 1.50
+}
+
+profile viture_home_office_redacted {
+  output "CVT VITURE 0x88888800" enable mode 1920x1080 position 0,0 scale 1.40
+  output "California Institute of Technology 0x1404 Unknown" disable
+  output "LG Electronics LG Ultra HD 0x0009B7B4" disable
+}
+
+profile viture_default_redacted {
+  output "CVT VITURE 0x88888800" enable mode 1920x1080 position 0,0 scale 1.40
+  output "California Institute of Technology 0x1404 Unknown" disable
+}
+
+profile portable_monitor_redacted {
+  output "California Institute of Technology 0x1404 Unknown" enable mode 1920x1200 scale 1.00 position 0,0
+  output "Invalid Vendor Codename - RTK FlipGo-A1 demoset-1" enable mode 2256x1504 position 2560,0 scale 1.50
+  output "Invalid Vendor Codename - RTK FlipGo-A2 demoset-1" enable mode 2256x1504 position 4064,0 scale 1.50
+}
+
+profile default_single_gpd_duo {
+  output "Samsung Display Corp. 0x4166 Unknown" enable mode 2880x1800 scale 1.50 position 0,0 transform 180
+}
+
+profile default_dual_gpd_duo {
+  output "Samsung Display Corp. 0x4166 Unknown" enable mode 2880x1800 scale 1.50 position 0,1200 transform 180
+  output "Stargate Technology DP 0x01010101" enable mode 2880x1800 scale 1.50 position 0,0 transform normal
+}
+
+profile default_home_office_gpd_duo_single_desk {
+  output "Samsung Display Corp. 0x4166 Unknown" disable
+  output "Stargate Technology DP 0x01010101" disable
+  output "LG Electronics LG Ultra HD 0x0009B7B4" enable mode 3840x2160 position 0,0 scale 1.50
+}
+
+profile default_home_office_gpd_duo_full_desk {
+  output "Samsung Display Corp. 0x4166 Unknown" disable
+  output "Stargate Technology DP 0x01010101" disable
+  output "LG Electronics LG Ultra HD 0x0009B7B4" enable mode 3840x2160 position 0,0 scale 1.50
+  output "Invalid Vendor Codename - RTK FlipGo-A1 demoset-1" enable mode 2256x1504 position 2560,0 scale 1.50
+  output "Invalid Vendor Codename - RTK FlipGo-A2 demoset-1" enable mode 2256x1504 position 4064,0 scale 1.50
+}
+
+profile mirror_redacted_hdmi {
+  output "California Institute of Technology 0x1404 Unknown" enable mode 1920x1200 scale 1.00 position 0,0
+  output HDMI-A-1 enable mode 1920x1080 position 1920,0
+  exec wl-present mirror eDP-1 --fullscreen-output HDMI-A-1 --fullscreen
+}
+
+profile mirror_gpd_wm2_hdmi {
+  output "Samsung Display Corp. 0x4166 Unknown" enable mode 2880x1800 scale 1.50 position 0,0 
+  output HDMI-A-1 enable mode 1920x1080 position 1920,0
+  exec wl-present mirror eDP-1 --fullscreen-output HDMI-A-1 --fullscreen
+}
+
+profile mirror_thinkpad_x270_hdmi {
+  output "Unknown 0x226D 0x00000000" enable mode 1920x1080 position 0,0
+  output HDMI-A-1 enable mode 1920x1080 position 1920,0
+  exec wl-present mirror eDP-1 --fullscreen-output HDMI-A-1 --fullscreen
+}
