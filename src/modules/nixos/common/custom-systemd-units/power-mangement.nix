@@ -9,8 +9,21 @@
   ...
 }: let
   inherit (config.networking) hostName;
-  inherit (lib) getExe getExe' optionalAttrs;
+  inherit (lib) getExe getExe' optionalAttrs singleton;
+  amdcpu-adjust = pkgs.writeShellScriptBin "amdcpu-adjust" ''
+    #! ${getExe pkgs.bash}
+
+    WATTAGE=$1
+
+    if [ -z $WATTAGE ]; then
+      echo "Not enough params." && exit 1
+    fi
+
+    ${getExe pkgs.ryzenadj} --stapm-limit="$WATTAGE"000 \
+      --fast-limit="$WATTAGE"000 --slow-limit="$WATTAGE"000
+  '';
 in {
+  environment.systemPackages = singleton amdcpu-adjust;
   systemd = {
     services = {
       power-maximum-tdp =
@@ -46,7 +59,7 @@ in {
         '';
       };
 
-      powertop = optionalAttrs (hostName == "MORPHEUS-LINUX" || hostName == "TWINS-LINUX") {
+      powertop = optionalAttrs (hostName == "TWINS-LINUX" || hostName == "DEUSEX-LINUX" || hostName == "MORPHEUS-LINUX") {
         description = "Auto-tune Power Management with powertop";
         unitConfig = {
           RefuseManualStart = true;
@@ -66,7 +79,7 @@ in {
         description = "Inhibit suspension for one hour";
         serviceConfig = {
           Type = "oneshot";
-          ExecStart = "${getExe' pkgs.systemd "systemd-inhibit"} --what=sleep --why=PreventSuspension --who=system ${getExe' pkgs.toybox "sleep"} %ih";
+          ExecStart = "${getExe' pkgs.systemd "systemd-inhibit"} --what=sleep --why=PreventSuspension --who=system ${getExe' pkgs.coreutils "sleep"} %ih";
         };
       };
     };
