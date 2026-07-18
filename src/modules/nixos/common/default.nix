@@ -4,150 +4,179 @@
 #
 {
   lib,
-  pkgs,
   hostname,
+  config,
+  inputs,
+  pkgs,
   ...
 }: let
   isPersonal =
     hostname
     == "NEO-LINUX"
+    || hostname == "DEUSEX-LINUX"
+    || hostname == "MJOLNIR-LINUX"
     || hostname == "MORPHEUS-LINUX"
-    || hostname == "TRINITY-LINUX"
-    || hostname == "TWINS-LINUX"
-    || hostname == "DEUSEX-LINUX";
+    || hostname == "TWINS-LINUX";
+  isWorkPersonal = hostname == "DEUSEX-LINUX" || hostname == "MJOLNIR-LINUX";
   isDeltaZero = hostname == "DELTA-ZERO" || hostname == "delta-zero";
-in {
-  imports =
-    [
-      ./appimage.nix
-      ./bluetooth.nix
-      ./custom-systemd-units
-      ./fido2.nix
-      ./firmware.nix
-      ./inst_packages.nix
-      ./kernel_params.nix
-      ./keychron.nix
-      ./networking.nix
-      ./sops.nix
-      ./systemd-initrd.nix
-      ./utils
-    ]
-    ++ (
-      if isPersonal
-      then [
-        ./automount.nix
-        ./dovecot2.nix
-        ./graphical.nix
-        ./impermanence.nix
-        ./matrix.nix
-        ./postfix.nix
-        ./steam-hardware.nix
-        ./xdg.nix
+in
+  {
+    imports =
+      [
+        ./appimage.nix
+        ./bluetooth.nix
+        ./custom-systemd-units
+        ./fido2.nix
+        ./firmware.nix
+        ./inst_packages.nix
+        ./kernel_params.nix
+        ./keychron.nix
+        ./networking.nix
+        ./sops.nix
+        ./systemd-initrd.nix
+        ./utils
       ]
-      else []
-    )
-    ++ (
-      if isDeltaZero
-      then [
-        ./davmail.nix
-        ./dovecot2.nix
-        ./postfix.nix
-      ]
-      else []
-    );
+      ++ (
+        if isWorkPersonal
+        then
+          (with inputs; [
+            nixfigs-work-container.nixosModules.default
+          ])
+        else []
+      )
+      ++ (
+        if isPersonal
+        then [
+          ./automount.nix
+          ./davmail.nix
+          ./dovecot2.nix
+          ./graphical.nix
+          ./impermanence.nix
+          ./postfix.nix
+          ./steam-hardware.nix
+          ./xdg.nix
+        ]
+        else []
+      )
+      ++ (
+        if isDeltaZero
+        then [
+          ./davmail.nix
+          ./dovecot2.nix
+          ./postfix.nix
+        ]
+        else []
+      );
 
-  boot.kernelParams = ["log_buf_len=10M"];
+    boot.kernelParams = ["log_buf_len=10M"];
 
-  documentation = {
-    dev.enable = true;
-    man.generateCaches = true;
-  };
-
-  i18n.defaultLocale = "en_GB.UTF-8";
-
-  networking = {
-    firewall = {
-      trustedInterfaces = ["tailscale0"];
-      # allowedUDPPorts = [ config.services.tailscale.port ];
+    documentation = {
+      dev.enable = true;
+      man.generateCaches = true;
     };
-  };
 
-  programs = {
-    command-not-found.enable = false;
-    mosh.enable = true;
-    zsh.enableGlobalCompInit = false;
-  };
+    i18n.defaultLocale = "en_GB.UTF-8";
 
-  security = {
-    sudo = {
-      enable = true;
-      wheelNeedsPassword = lib.mkDefault false;
+    networking = {
+      firewall = {
+        trustedInterfaces = ["tailscale0"];
+        allowedUDPPorts = [config.services.tailscale.port];
+      };
     };
-  };
 
-  services = {
-    dbus.implementation = "broker";
-    openssh = {
-      enable = true;
-      settings.PermitRootLogin = lib.mkDefault "no";
+    programs = {
+      command-not-found.enable = false;
+      mosh.enable = true;
+      zsh.enableGlobalCompInit = false;
     };
-    tailscale.enable = true;
-  };
 
-  system = {
-    extraSystemBuilderCmds = ''
-      ln -sv ${pkgs.path} $out/nixpkgs
+    security = {
+      sudo = {
+        enable = true;
+        wheelNeedsPassword = lib.mkDefault false;
+      };
+    };
+
+    services = {
+      dbus.implementation = "broker";
+      openssh = {
+        enable = true;
+        settings.PermitRootLogin = lib.mkDefault "no";
+      };
+      tailscale.enable = true;
+    };
+
+    system = {
+      extraSystemBuilderCmds = ''
+        ln -sv ${pkgs.path} $out/nixpkgs
+      '';
+    };
+
+    systemd = {
+      network.wait-online.anyInterface = false;
+      services.tailscaled = {
+        after = ["network-online.target"];
+        wants = ["network-online.target"];
+      };
+    };
+
+    services.udev.packages = with pkgs;
+      lib.optional (pkgs.system == "x86_64_linux" || pkgs.system == "aarch64-linux") [xrlinuxdriver];
+
+    services.udev.extraRules = ''
+      SUBSYSTEMS=="usb", ATTRS{idVendor}=="5548", ATTRS{idProduct}=="6670", GROUP="users", TAG+="uaccess"
+
+      # XR Glasses Rules:
+      SUBSYSTEM=="usb", ACTION=="add", ATTRS{idVendor}=="1bbb", MODE="0660", TAG+="uaccess"
+      SUBSYSTEM=="usb", ACTION=="add", ATTRS{idVendor}=="04d2", MODE="0660", TAG+="uaccess"
+      KERNEL=="uinput", SUBSYSTEM=="misc" MODE="0660", TAG+="uaccess", OPTIONS+="static_node=uinput"
+      SUBSYSTEM=="usb", ACTION=="add", ATTRS{idVendor}=="35ca", MODE="0660", TAG+="uaccess"
+      SUBSYSTEM=="usb", KERNEL=="hiddev[0-9]*", ATTRS{idVendor}=="35ca", MODE="0660", TAG+="uaccess"
+      SUBSYSTEM=="tty", KERNEL=="ttyACM[0-9]*", ATTRS{idVendor}=="35ca", MODE="0660", TAG+="uaccess"
+      SUBSYSTEM=="hidraw", KERNEL=="hidraw[0-9]*", ATTRS{idVendor}=="35ca", MODE="0660", TAG+="uaccess"
+      SUBSYSTEM=="usb", ACTION=="add", ATTR{idVendor}=="3318", MODE="0660", TAG+="uaccess"
+      SUBSYSTEM=="input", KERNEL=="event[0-9]*", ATTRS{idVendor}=="3318", MODE="0660", TAG+="uaccess"
+      SUBSYSTEM=="sound", KERNEL=="pcmC[0-9]D[0-9]p", ATTRS{idVendor}=="3318", MODE="0660", TAG+="uaccess"
+      SUBSYSTEM=="sound", KERNEL=="controlC[0-9]", ATTRS{idVendor}=="3318", MODE="0660", TAG+="uaccess"
+      SUBSYSTEM=="hidraw", KERNEL=="hidraw[0-9]*", ATTRS{idVendor}=="3318", MODE="0660", TAG+="uaccess"
+      SUBSYSTEM=="usb", KERNEL=="hiddev[0-9]*", ATTRS{idVendor}=="3318", MODE="0660", TAG+="uaccess"
+
+      # Block monitor's internal Prolific hub - prevents touchscreen/trackpad from enumerating
+      ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="067b", ATTRS{idProduct}=="2586", ATTR{authorized}="0"
+      # WingCool touchscreen
+      ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="27c6", ATTRS{idProduct}=="0529", ATTR{authorized}="0"
+      # Fake Magic Trackpad (touch pointer device)
+      ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="05ac", ATTRS{idProduct}=="0265", ATTR{authorized}="0"
     '';
-  };
 
-  systemd = {
-    network.wait-online.anyInterface = false;
-    services.tailscaled = {
-      after = ["network-online.target"];
-      wants = ["network-online.target"];
-    };
-  };
-
-  services.udev.packages = with pkgs;
-    lib.optional (pkgs.system == "x86_64_linux" || pkgs.system == "aarch64-linux") [xrlinuxdriver];
-
-  services.udev.extraRules = ''
-    SUBSYSTEMS=="usb", ATTRS{idVendor}=="5548", ATTRS{idProduct}=="6670", GROUP="users", TAG+="uaccess"
-
-    # XR Glasses Rules:
-    SUBSYSTEM=="usb", ACTION=="add", ATTRS{idVendor}=="1bbb", MODE="0660", TAG+="uaccess"
-    SUBSYSTEM=="usb", ACTION=="add", ATTRS{idVendor}=="04d2", MODE="0660", TAG+="uaccess"
-    KERNEL=="uinput", SUBSYSTEM=="misc" MODE="0660", TAG+="uaccess", OPTIONS+="static_node=uinput"
-    SUBSYSTEM=="usb", ACTION=="add", ATTRS{idVendor}=="35ca", MODE="0660", TAG+="uaccess"
-    SUBSYSTEM=="usb", KERNEL=="hiddev[0-9]*", ATTRS{idVendor}=="35ca", MODE="0660", TAG+="uaccess"
-    SUBSYSTEM=="tty", KERNEL=="ttyACM[0-9]*", ATTRS{idVendor}=="35ca", MODE="0660", TAG+="uaccess"
-    SUBSYSTEM=="hidraw", KERNEL=="hidraw[0-9]*", ATTRS{idVendor}=="35ca", MODE="0660", TAG+="uaccess"
-    SUBSYSTEM=="usb", ACTION=="add", ATTR{idVendor}=="3318", MODE="0660", TAG+="uaccess"
-    SUBSYSTEM=="input", KERNEL=="event[0-9]*", ATTRS{idVendor}=="3318", MODE="0660", TAG+="uaccess"
-    SUBSYSTEM=="sound", KERNEL=="pcmC[0-9]D[0-9]p", ATTRS{idVendor}=="3318", MODE="0660", TAG+="uaccess"
-    SUBSYSTEM=="sound", KERNEL=="controlC[0-9]", ATTRS{idVendor}=="3318", MODE="0660", TAG+="uaccess"
-    SUBSYSTEM=="hidraw", KERNEL=="hidraw[0-9]*", ATTRS{idVendor}=="3318", MODE="0660", TAG+="uaccess"
-    SUBSYSTEM=="usb", KERNEL=="hiddev[0-9]*", ATTRS{idVendor}=="3318", MODE="0660", TAG+="uaccess"
-  '';
-
-  users.mutableUsers = false;
-  services.atd.enable = true;
-  programs.nix-ld.enable = true;
-  programs.java.binfmt = true;
-  services.incron.enable = true;
-  security.pam.services = let
-    inherit (lib) optionalAttrs hasSuffix;
-  in
-    optionalAttrs (hasSuffix "-LINUX" hostname) {
-      login.gnupg = {
-        enable = true;
-        noAutostart = true;
-        storeOnly = true;
+    users.mutableUsers = false;
+    services.atd.enable = true;
+    programs.nix-ld.enable = true;
+    programs.java.binfmt = true;
+    services.incron.enable = true;
+    security.pam.services = let
+      inherit (lib) optionalAttrs hasSuffix;
+    in
+      optionalAttrs (hasSuffix "-LINUX" hostname) {
+        login.gnupg = {
+          enable = true;
+          noAutostart = true;
+          storeOnly = true;
+        };
+        greetd.gnupg = {
+          enable = true;
+          noAutostart = true;
+          storeOnly = true;
+        };
       };
-      greetd.gnupg = {
-        enable = true;
-        noAutostart = true;
-        storeOnly = true;
-      };
+  }
+  // lib.optionalAttrs isWorkPersonal {
+    nixfigs.workBrowserContainer = {
+      enable = true;
+      embedSecrets = false;
+      vpnConfigPath = config.age.secrets.ct_vpn_config.path;
+      vpnCredentialsPath = config.age.secrets.ct_vpn_creds.path;
+      chromiumWorkDomain = "redacted.co.uk";
     };
-}
+    environment.systemPackages = with pkgs; [waypipe];
+  }
