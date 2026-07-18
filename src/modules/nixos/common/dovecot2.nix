@@ -2,66 +2,80 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 #
-{config, ...}: let
-  userHome = config.users.users.dzrodriguez.home;
+{
+  config,
+  lib,
+  ...
+}: let
+  userHome = "/home/dzrodriguez";
 in {
   services.dovecot2 = {
     enable = true;
-    user = "dzrodriguez";
-    group = "users";
-    mailLocation = "maildir:${userHome}/.mail/%d/%u/:LAYOUT=fs:INBOX=${userHome}/.mail/%d/%u/INBOX";
     enablePAM = false;
-    sieve.globalExtensions = [
-      "body"
-      "copy"
-      "date"
-      "editheader"
-      "envelope"
-      "fileinto"
-      "imap4flags"
-      "include"
-      "mailbox"
-      "regex"
-      "variables"
-    ];
-    enableImap = true;
-    enablePop3 = false;
-    extraConfig = ''
-      listen = 127.0.0.1, ::1
-      mail_uid = 1000
-      mail_gid = 100
+    settings = {
+      protocols = {
+        imap = true;
+        pop3 = false;
+      };
+      dovecot_config_version = config.services.dovecot2.package.version;
+      dovecot_storage_version = config.services.dovecot2.package.version;
+      mail_home = "${userHome}/.mail/%{user | domain | lower}/%{user | lower}";
+      mail_path = "~/";
+      mail_inbox_path = "~/INBOX";
+      mailbox_list_layout = "fs";
+      mail_driver = "maildir";
+      listen = "127.0.0.1, ::1${lib.optionalString (config.networking.hostName == "delta-zero") ", 100.70.185.78"}";
+      mail_uid = "1000";
+      mail_gid = "100";
 
-      namespace inbox {
-          inbox = yes
-          location =
+      "namespace inbox" = {
+        inbox = "yes";
 
-          mailbox Drafts {
-            special_use = \Drafts
-            auto = subscribe
-          }
+        "mailbox Drafts" = {
+          special_use = "\\Drafts";
+          auto = "subscribe";
+        };
 
-          mailbox "Junk Email" {
-            special_use = \Junk
-          }
+        "mailbox \"Spam\"" = {
+          special_use = "\\Junk";
+        };
 
-          mailbox "Sent Items" {
-            special_use = \Sent
-            auto = subscribe
-          }
+        "mailbox \"Sent\"" = {
+          special_use = "\\Sent";
+          auto = "subscribe";
+        };
 
-          mailbox "Deleted Items" {
-            special_use = \Trash
-            auto = subscribe
-          }
+        "mailbox \"Trash\"" = {
+          special_use = "\\Trash";
+          auto = "subscribe";
+        };
 
-          prefix =
-          separator = /
-      }
+        prefix = "";
+        separator = "/";
+      };
 
-      passdb {
-          driver = static
-          args = nopassword
-      }
-    '';
+      "userdb static" = {
+        fields = {
+          allow_all_users = "yes";
+          uid = config.services.dovecot2.settings.mail_uid;
+          gid = config.services.dovecot2.settings.mail_gid;
+          home = config.services.dovecot2.settings.mail_home;
+        };
+      };
+
+      "passdb static" = {
+        fields = {
+          nopassword = "yes";
+        };
+      };
+
+      "sieve_script personal" = {
+        type = "personal";
+        path = "${config.services.dovecot2.settings.mail_home}/scripts";
+        active_path = "${config.services.dovecot2.settings.mail_home}/active-script.sieve";
+      };
+
+      maildir_broken_filename_sizes = "yes";
+    };
   };
 }
