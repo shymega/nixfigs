@@ -10,8 +10,8 @@
 }:
 with lib; let
   enabled = checkRoles ["workstation"] config;
-  sway-wrapped-hw = pkgs.writeShellScript "sway-wrapped-hw" ''
-    #!/bin/sh
+  sway-wrapped-hw = pkgs.writeScript "sway-wrapped-hw" ''
+    #!${pkgs.runtimeShell}
     export WLR_NO_HARDWARE_CURSORS=1
     exec ${getExe pkgs.sway} --unsupported-gpu "$@"
   '';
@@ -25,20 +25,29 @@ in {
     };
 
     services = {
-      displayManager.defaultSession = "sway";
       xserver = {
         enable = true;
         displayManager = {
           startx.enable = true;
-          gdm = {
-            enable = false;
-            autoSuspend = false;
-          };
-        };
-        desktopManager = {
-          gnome.enable = true;
         };
         xkb.layout = "us";
+      };
+      displayManager = {
+        sessionPackages = let
+          swayUnsupportedSession =
+            (pkgs.makeDesktopItem {
+              name = "sway-unsupported";
+              desktopName = "Sway (Unsupported GPU)";
+              comment = "Start Sway with --unsupported-gpu";
+              exec = sway-wrapped-hw;
+              type = "Application";
+              destination = "/share/wayland-sessions";
+            }).overrideAttrs (_old: {
+              passthru.providedSessions = ["sway-unsupported"];
+            });
+        in [
+          swayUnsupportedSession
+        ];
       };
       desktopManager = {
         plasma6.enable = true;
@@ -48,66 +57,34 @@ in {
         enable = true;
         settings = {
           default_session = let
-            hyprConfig = pkgs.writeText "greetd-hyprland-config" ''
-              exec-once=${getExe pkgs.kanshi} -c /etc/greetd/kanshi-config
-              exec-once=${getExe pkgs.greetd.regreet}; hyprctl dispatch exit
-              debug {
-                disable_scale_checks = true
-              }
-
-              misc {
-                disable_hyprland_logo = true
-                disable_splash_rendering = true
-              }
-              env = GTK_USE_PORTAL,0
-              env = GDK_DEBUG,no-portals
-              env = AQ_NO_MODIFIERS,1
-              env = GDK_BACKEND,wayland
-              env = GDK_SCALE,2
-              env = MOZ_ENABLE_WAYLAND,1
-              env = QT_AUTO_SCREEN_SCALE_FACTOR,1
-              env = QT_QPA_PLATFORM,wayland;xcb
-              env = QT_ENABLE_HIGHDPI_SCALING,1
-              env = QT_WAYLAND_DISABLE_WINDOWDECORATION,1
-              env = SDL_VIDEODRIVER,wayland
-              env = XDG_SESSION_TYPE,wayland
-              env = _JAVA_AWT_WM_NONREPARENTING,1
-              cursor {
-                no_hardware_cursors = 1
-              }
+            swayConfig = pkgs.writeText "greetd-sway-config" ''
+              exec "${getExe pkgs.kanshi} -c /etc/greetd/kanshi-config"
+              exec "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP; ${getExe pkgs.regreet}; swaymsg exit"
+              bindsym Mod4+shift+e exec swaynag \
+              -t warning \
+              -m 'What do you want to do?' \
+              -b 'Poweroff' 'systemctl poweroff' \
+              -b 'Reboot' 'systemctl reboot'
             '';
           in {
-            command = "${getExe pkgs.hyprland} --config ${hyprConfig}";
+            command = "${sway-wrapped-hw} --config ${swayConfig}";
             user = "greeter";
           };
         };
       };
     };
-    environment.etc."greetd/environments".text = ''
-      ${getExe pkgs.hyprland}
-      ${sway-wrapped-hw}
-      ${getExe pkgs.dwl}
-      ${pkgs.kdePackages.plasma-workspace}/bin/startplasma-wayland
-      ${pkgs.kdePackages.plasma-workspace}/bin/startplasma-X11
-    '';
-    programs.ssh.askPassword = pkgs.lib.mkForce "${pkgs.kdePackages.ksshaskpass.out}/bin/ksshaskpass";
     programs.regreet = {
       enable = true;
       settings = {
         commands = {
-          reboot = [
-            "loginctl"
-            "reboot"
-          ];
-          poweroff = [
-            "loginctl"
-            "poweroff"
-          ];
+          reboot = ["loginctl" "reboot"];
+          poweroff = ["loginctl" "poweroff"];
         };
         GTK.application_prefer_dark_theme = true;
-        appearance.greeting_msg = "Welcome back to ${config.networking.hostName}!";
+        appearance.greeting_msg = "Welcome to ${config.networking.hostName}! Please authenticate yourself.";
       };
     };
-    programs.hyprland.enable = true;
+    programs.ssh.askPassword = pkgs.lib.mkForce "${pkgs.kdePackages.ksshaskpass.out}/bin/ksshaskpass";
+    environment.sessionVariables.NIXOS_OZONE_WL = "1";
   };
 }
