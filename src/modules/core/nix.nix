@@ -7,10 +7,9 @@
   pkgs,
   config,
   options,
-  username,
   ...
 }: let
-  inherit (lib) isDarwin isForeignNix isNixOS;
+  inherit (lib) isDarwin;
 in {
   environment.etc."nix/overlays-compat/overlays.nix".text = ''
     final: prev:
@@ -20,17 +19,12 @@ in {
   '';
 
   programs.ssh = {
-    extraConfig = let
-      cfgLine = let
-        sshSecret = "/run/agenix/nixbuild_ssh_priv_key";
-      in "IdentityFile ${sshSecret}";
-    in ''
+    extraConfig = ''
       Host eu.nixbuild.net
         HostName eu.nixbuild.net
         PubkeyAcceptedKeyTypes ssh-ed25519
         ServerAliveInterval 60
-        IPQoS throughput
-        ${cfgLine}
+        IdentityFile ${config.age.secrets."nixbuild_ssh_priv_key".path}
     '';
     knownHosts = {
       nixbuild = {
@@ -53,7 +47,7 @@ in {
             "i686-linux"
             "x86_64-linux"
           ];
-          maxJobs = 2;
+          maxJobs = 4;
           supportedFeatures = [
             "benchmark"
             "big-parallel"
@@ -61,7 +55,7 @@ in {
           protocol = "ssh-ng";
         }
       ];
-      settings = {
+      settings = rec {
         accept-flake-config = true;
         extra-platforms = config.boot.binfmt.emulatedSystems;
         allowed-users = ["@wheel"];
@@ -71,16 +65,22 @@ in {
           "root"
           "@wheel"
         ];
-        sandbox = isForeignNix || isNixOS;
-        substituters = [
-          "https://cache.nixos.org/?priority=10"
-          "https://nix-community.cachix.org/?priority=5"
-          "https://numtide.cachix.org/?priority=5"
-          "https://pre-commit-hooks.cachix.org/?priority=5"
+        sandbox = true;
+        substituters = lib.mkForce [
+          "https://attic.xuyh0120.win/lantian?priority=10"
+          "https://cache.nixos.org/?priority=5"
+          "https://hyprland.cachix.org/?priority=10"
+          "https://install.determinate.systems"
+          "https://nix-community.cachix.org/?priority=10"
+          "https://numtide.cachix.org/?priority=10"
+          "https://pre-commit-hooks.cachix.org/?priority=10"
           "ssh://eu.nixbuild.net?priority=50"
         ];
-        trusted-public-keys = [
+        trusted-public-keys = lib.mkForce [
+          "cache.flakehub.com-3:hJuILl5sVK4iKm86JzgdXW12Y2Hwd5G07qKtHTOcDCM="
           "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+          "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+          "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
           "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
           "nixbuild.net/VNUM6K-1:ha1G8guB68/E1npRiatdXfLZfoFBddJ5b2fPt3R9JqU="
           "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE="
@@ -109,25 +109,38 @@ in {
         max-free = ${toString (1024 * 1024 * 1024)}
         !include ${config.age.secrets.nix_conf_access_tokens.path}
       '';
-      registry = {
-        home-manager.flake = inputs.home-manager;
-        n.flake = inputs.nixpkgs;
-        nixpkgs.flake = inputs.nixpkgs;
-        nu.flake = inputs.nixpkgs-unstable;
-        shypkgs.flake = inputs.shypkgs-public // inputs.shypkgs-public;
-        unstable.flake = inputs.nixpkgs-unstable;
-      };
+      package = let
+        determinateNixPkg = let
+          inherit (inputs.determinate.inputs.nix.packages.${pkgs.stdenv.hostPlatform.system}) default;
+          detnixPatch = pkgs.fetchpatch {
+            url = "https://github.com/user-attachments/files/27144728/detnix.patch";
+            hash = "sha256-oEeOigJJrT4vVKkGddqwpjhT+6b/pJC/7GPbe2G2OAs=";
+          };
+        in
+          default.appendPatches [
+            detnixPatch
+          ];
+      in
+        lib.mkForce determinateNixPkg;
+      registry =
+        {
+          n.flake = inputs.nixpkgs;
+          nu.flake = inputs.nixpkgs-unstable;
+          shypkgs.flake = inputs.shypkgs-public;
+          unstable.flake = inputs.nixpkgs-unstable;
+        }
+        // lib.mapAttrs (_: value: {flake = value;}) inputs;
       optimise = {
         automatic = true;
         dates = ["06:00"];
       };
-      nixPath = options.nix.nixPath.default ++ lib.singleton "nixpkgs-overlays=/etc/nix/overlays-compat/";
+      nixPath = options.nix.nixPath.default ++ lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
       gc = {
         automatic = true;
         options = "--delete-older-than 14d";
       };
     }
-    // lib.optionalAttrs (isForeignNix || isNixOS) {
+    // lib.optionalAttrs (!isDarwin) {
       daemonCPUSchedPolicy = "batch";
       daemonIOSchedPriority = 5;
       gc.dates = "06:00";
