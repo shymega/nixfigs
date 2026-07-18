@@ -274,11 +274,15 @@
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
 
     # Private configs (dummy repos)
-    nixfigs-virtual-private.url = "github:shymega/nixfigs-virtual-private-dummy";
-    nixfigs-work.url = "github:shymega/nixfigs-work-dummy";
-    nixfigs-private.url = "github:shymega/nixfigs-private-dummy";
-    nixfigs-secrets.url = "github:shymega/nixfigs-secrets";
-    nixfigs-networks.url = "github:shymega/nixfigs-networks-dummy";
+    nixfigs-virtual-private.url = "./internal_sources/nixfigs-virtual-private@";
+    nixfigs-work.url = "./internal_sources/nixfigs-work@";
+    nixfigs-private.url = "./internal_sources/nixfigs-private@";
+    nixfigs-secrets.url = "./internal_sources/nixfigs-secrets@";
+    nixfigs-networks.url = "./internal_sources/nixfigs-networks@";
+    nixfigs-work-container = {
+      url = "github:shymega/nixfigs-work-container";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Non-flake inputs
     nixos-flake-registry = {
