@@ -27,7 +27,7 @@
     extraAliases = ''
       postmaster: root
       root: dzodriguez
-      root: noreply+${config.networking.hostName}@rodriguez.org.uk
+      root: noreply+${config.networking.hostName}@devices.rnet.rodriguez.org.uk
     '';
     extraHeaderChecks = ''
       /^Date:/i PREPEND x-ms-reactions: disallow
@@ -45,14 +45,12 @@
       "rodriguez.org.uk"
       "shymega.org.uk"
     ];
-    extraConfig = ''
-      smtp_generic_maps = hash:/etc/postfix/generic
-    '';
     networks = [
       "127.0.0.0/8"
       "[::1]/128"
     ];
-    config = {
+    settings.main = {
+      smtp_generic_maps = "hash:/etc/postfix/generic";
       smtp_sender_dependent_authentication = "yes";
       smtp_sasl_mechanism_filter = "plain";
       sender_dependent_default_transport_maps = "hash:/etc/postfix/sender_relay";
