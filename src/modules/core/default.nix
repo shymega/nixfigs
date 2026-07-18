@@ -20,10 +20,10 @@
   ];
 
   documentation = {
-    enable = true;
-    doc.enable = true;
-    man.enable = true;
-    info.enable = true;
+    enable = lib.mkForce true;
+    doc.enable = lib.mkForce true;
+    man.enable = lib.mkForce true;
+    info.enable = lib.mkForce true;
   };
 
   environment = {
