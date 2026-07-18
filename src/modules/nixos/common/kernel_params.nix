@@ -8,10 +8,8 @@
     "loglevel=3"
     "quiet"
     "systemd.show_status=false"
-    "systemd.unified_cgroup_hierarchy=1"
     "udev.log_level=3"
     "udev.log_priority=3"
-    "rhgb"
     "splash"
   ];
   boot.kernel.sysctl."kernel.sysrq" = 1;
