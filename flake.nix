@@ -111,7 +111,6 @@
     nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/*";
     nixpkgs-unstable.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable";
     nixpkgs-shymega.url = "github:shymega/nixpkgs?ref=shymega/staging";
-    flake-utils.url = "github:numtide/flake-utils";
 
     # NixOS modules and hardware
     hardware = {
@@ -274,11 +273,8 @@
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
 
     # Private configs (dummy repos)
-    nixfigs-virtual-private.url = "./internal_sources/nixfigs-virtual-private@";
-    nixfigs-work.url = "./internal_sources/nixfigs-work@";
-    nixfigs-private.url = "./internal_sources/nixfigs-private@";
-    nixfigs-secrets.url = "./internal_sources/nixfigs-secrets@";
-    nixfigs-networks.url = "./internal_sources/nixfigs-networks@";
+    nixfigs-secrets.url = "github:shymega/nixfigs-secrets";
+    nixfigs-networks.url = "github:shymega/nixfigs-networks-dummy";
     nixfigs-work-container = {
       url = "github:shymega/nixfigs-work-container";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -297,7 +293,6 @@
     # M365 Authentication
     himmelblau = {
       url = "github:himmelblau-idm/himmelblau?ref=3.1.7";
-      inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
