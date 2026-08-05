@@ -116,7 +116,7 @@ in {
         virtiofsd
         vlc
         w3m
-        weechatWithMyPlugins
+        weechat
         wget
         xsv
         zathura
