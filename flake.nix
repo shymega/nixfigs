@@ -121,6 +121,9 @@
     };
     impermanence = {
       url = "github:nix-community/impermanence";
+    
+      inputs.home-manager.follows = "home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-wsl = {
       url = "github:nix-community/nixos-wsl";
@@ -161,6 +164,8 @@
     devenv = {
       url = "github:cachix/devenv?ref=latest";
       inputs.nixpkgs.follows = "nixpkgs";
+    
+      inputs.git-hooks.follows = "git-hooks";
     };
     nix-ld = {
       url = "github:Mic92/nix-ld";
@@ -185,7 +190,10 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    _1password-shell-plugins.url = "github:1Password/shell-plugins";
+    _1password-shell-plugins = {
+      url = "github:1Password/shell-plugins";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Deployment
     deploy-rs = {
@@ -199,6 +207,8 @@
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };
+    
+      inputs.nur.follows = "nur";
     };
     base16-schemes = {
       url = "github:SenchoPens/base16.nix";
@@ -226,11 +236,18 @@
     nur-xddxdd = {
       url = "github:xddxdd/nur-packages";
       inputs.nixpkgs.follows = "nixpkgs";
+    
+      inputs.nix-cachyos-kernel.follows = "nix-cachyos-kernel";
+      inputs.nix-index-database.follows = "nix-index-database";
+      inputs.treefmt-nix.follows = "treefmt-nix";
     };
 
     # Nix alternatives
     # Lix is included in Nixpkgs.
-    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
+    determinate = {
+      url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Specialized tools
     ucodenix = {
@@ -270,10 +287,16 @@
     };
 
     # CachyOS Kernels (And ZFS)
-    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
+    nix-cachyos-kernel = {
+      url = "github:xddxdd/nix-cachyos-kernel/release";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Private configs (dummy repos)
-    nixfigs-secrets.url = "github:shymega/nixfigs-secrets";
+    nixfigs-secrets = {
+      url = "github:shymega/nixfigs-secrets";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixfigs-networks.url = "github:shymega/nixfigs-networks-dummy";
     nixfigs-work-container = {
       url = "github:shymega/nixfigs-work-container";
@@ -297,9 +320,22 @@
     };
 
     # Overlays
-    dzr-taskwarrior-recur.url = "github:shymega/dzr-taskwarrior-recur";
-    breezy-desktop.url = "git+https://github.com/shymega/breezy-desktop?ref=shymega/add-nix-flake-support";
-    nix-openclaw.url = "github:openclaw/nix-openclaw";
-    hyprnix.url = "github:hyprwm/hyprnix";
+    dzr-taskwarrior-recur = {
+      url = "github:shymega/dzr-taskwarrior-recur";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    breezy-desktop = {
+      url = "git+https://github.com/shymega/breezy-desktop?ref=shymega/add-nix-flake-support";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-openclaw = {
+      url = "github:openclaw/nix-openclaw";
+      inputs.home-manager.follows = "home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    hyprnix = {
+      url = "github:hyprwm/hyprnix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }
