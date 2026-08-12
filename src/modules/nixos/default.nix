@@ -5,5 +5,8 @@
   imports = [
     ./metadata
     ./common
+    ./alarm-clock.nix
+    ./restic-backup.nix
+    ./window-managers.nix
   ];
 }

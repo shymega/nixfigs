@@ -7,22 +7,58 @@
   config,
   username,
   hostPlatform,
-  osConfig ? null,
-  self,
   lib,
   ...
 }: let
-  inherit (lib) isPC homePrefix;
+  inherit (lib) isPC homePrefix getExe';
+  homeDirectory = let
+    getHomeDirectory = username: homePrefix + "/${username}";
+  in
+    getHomeDirectory username;
+  rustCrates = with pkgs; [
+    cargo-binutils
+    cargo-bloat
+    cargo-bootimage
+    cargo-cross
+    cargo-deny
+    cargo-dist
+    cargo-edit
+    cargo-embassy
+    cargo-espmonitor
+    cargo-expand
+    cargo-generate
+    cargo-license
+    cargo-make
+    cargo-update
+    cargo-watch
+    cargo-workspaces
+    cargo-xbuild
+    difftastic
+    espflash
+    fclones
+    fd
+    just
+    ldproxy
+    ripgrep
+    starship
+    taskwarrior-tui
+    tokei
+    wasm-pack
+    watchexec
+    worker-build
+    zoxide
+  ];
 in {
   imports = with inputs; [
     ./network-targets.nix
-    ./programs/rofi.nix
+    ./programs/hyprland.nix
+    ./programs/sway.nix
     agenix.homeManagerModules.default
-    nix-doom-emacs-unstraightened.hmModule
     nix-index-database.homeModules.nix-index
     _1password-shell-plugins.hmModules.default
-    shypkgs-public.hmModules.${hostPlatform}.dwl
-    ../../secrets/user
+    nixfigs-secrets.user
+    shyemacs-cfg.homeModules.emacs
+    stylix.homeModules.stylix
   ];
 
   home = {
@@ -31,15 +67,16 @@ in {
     stateVersion = "26.05";
     packages = with pkgs;
       [
-        (isync-patched.override {withCyrusSaslXoauth2 = true;})
-        alpaca
-        android-studio-for-platform
+        aerc
+        age
+        alejandra
+        alsa-utils
         android-tools
-        ansible
+        asciinema
+        atuin-desktop
         b4
         bat
         bc
-        beeper
         brightnessctl
         cloudflared
         cocogitto
@@ -47,130 +84,141 @@ in {
         dateutils
         devenv
         dex
-        diesel-cli
         difftastic
         distrobox
-        dogdns
+        dosbox
         elf2uf2-rs
         encfs
         exiftool
-        expect
         eza
         firefox
+        flatpak-xdg-utils
         fuse
         fzf
+        gh
+        glab
         gnumake
-        gpicview
+        go
+        google-chrome
+        gthumb
+        halloy
         httpie
         hub
         hut
         imagemagick
+        imapsync
         inetutils
-        itd
-        jdk17
+        ispell
         jq
-        khal
-        khard
+        leafnode
+        libnotify
+        lynx
         m4
-        maven
         mkcert
-        moneydance
-        mpc-cli
+        mpc
+        mprisence
+        mpv
         mupdf
         ncmpcpp
-        nixpkgs-fmt
+        neomutt
+        networkmanagerapplet
+        nh
+        nix-prefetch
+        nixfmt
+        nixpkgs-review
         nodejs
         notmuch
         p7zip
-        parallel
         pass
-        pavucontrol
         pdftk
-        poetry
-        poppler_utils
+        pizauth
+        playerctl
         pre-commit
+        prek
         public-inbox
-        python3Full
+        pwvucontrol
         python3Packages.pip
-        python3Packages.pipx
         python3Packages.virtualenv
+        python3Packages.virtualenvwrapper
         q
         ranger
         rclone
+        restic
         reuse
-        ripgrep
+        rkvm
+        rofi
+        rot8
+        ruff
         rustup
+        sbcl
         scrcpy
+        senpai
+        shikane
         speedtest-go
-        starship
+        spring-boot-cli
         statix
         step-cli
-        stow
-        texlive.combined.scheme-full
+        swaks
+        taskwarrior-tui
+        tea
+        tigervnc
         timewarrior
         tmuxp
+        toolbox
+        totp
+        twilight-kde
+        units
         unrar
+        unstable.antigravity-cli
+        unstable.beeper
+        unstable.claude-code
+        unstable.isync-patched
+        unstable.opencode
         unzip
+        uv
         vdirsyncer
-        virt-manager
-        virtiofsd
-        vlc
         w3m
-        weechat
+        wayfarer
+        waypipe
+        wayvnc
+        wezterm
+        wf-recorder
         wget
-        xsv
+        whitesur-kde
+        wl-mirror
+        wlr-randr
+        wm-menu
         zathura
         zellij
-        zenmonitor
         zip
-        zoxide
+        (pkgs.doomEmacs {
+          doomDir = inputs.nixfigs-doom-emacs;
+          doomLocalDir = "${homeDirectory}/.local/state/doom";
+          emacs = pkgs.emacs-pgtk;
+          experimentalFetchTree = true;
+        })
+        inputs.agenix.packages.${hostPlatform}.default
       ]
-      ++ [inputs.agenix.packages.${hostPlatform}.default]
-      ++ (with pkgs; [
-        android-studio
-        aws-sam-cli
-        azure-cli
-        bestool
-        gitkraken
-        google-chrome
-        google-cloud-sdk
-        leafnode
-        lutris
-        mpv
-        neomutt
-        protontricks
-        protonup-qt
-        qemu_full
-        steamcmd
-        totp
-        wemod-launcher
-        wezterm
-        wineWowPackages.stable
-        winetricks
-        yubikey-manager-qt
-        yubioath-flutter
-      ])
+      ++ rustCrates
       ++ (
         with pkgs;
           lib.optionals isPC (
-            with pkgs.jetbrains; [
-              clion
-              datagrip
-              gateway
-              goland
-              idea-ultimate
-              phpstorm
-              pycharm-professional
-              rider
-              ruby-mine
-              rust-rover
-              webstorm
+            with pkgs; [
+              android-studio
+              android-studio-for-platform
+              texlive.combined.scheme-full
+              virt-manager
+              virtiofsd
             ]
           )
-      );
+      )
+      ++ (with pkgs; [(git-wip.override {wipPrefix = "shymega";})])
+      ++ rustCrates
+      ++ [inputs.snappy-switcher.packages.${hostPlatform}.default];
   };
 
   services = {
+    swaync.enable = true;
     darkman = {
       enable = true;
       package = pkgs.darkman;
@@ -178,22 +226,33 @@ in {
         usegeoclue = true;
       };
       darkModeScripts.gtk-theme = ''
-        ${pkgs.dconf.outPath}/bin/dconf write /org/gnome/desktop/interface/color-scheme "'prefer-dark'"
+        ${getExe' pkgs.dconf "dconf"} write /org/gnome/desktop/interface/gtk-theme "'Adwaita-dark'"
       '';
 
       lightModeScripts.gtk-theme = ''
-        ${pkgs.dconf.outPath}/bin/dconf write /org/gnome/desktop/interface/color-scheme "'prefer-light'"
+        ${getExe' pkgs.dconf "dconf"} write /org/gnome/desktop/interface/gtk-theme "'Adwaita'"
       '';
     };
     keybase.enable = true;
     gpg-agent = {
       enable = true;
-      pinentryPackage = with pkgs; lib.mkForce pinentry-gtk2;
+      pinentry.package = lib.mkForce pkgs.pinentry-gtk2;
       enableScDaemon = true;
       enableSshSupport = false;
       enableExtraSocket = true;
-      defaultCacheTtl = 43200;
-      maxCacheTtl = 43200;
+      grabKeyboardAndMouse = true;
+      defaultCacheTtl = 34560000;
+      maxCacheTtl = 34560000;
+      extraConfig = ''
+        auto-expand-secmem
+        allow-preset-passphrase
+        allow-emacs-pinentry
+        allow-loopback-pinentry
+      '';
+    };
+    kanshi = {
+      enable = true;
+      systemdTarget = "graphical-session.target";
     };
     gnome-keyring = {
       enable = true;
@@ -218,14 +277,6 @@ in {
         }
       '';
     };
-    gammastep = {
-      enable = true;
-      temperature = {
-        day = 6500;
-        night = 3400;
-      };
-      provider = "geoclue2";
-    };
   };
 
   xdg.systemDirs.data = [
@@ -238,14 +289,18 @@ in {
     _1password-shell-plugins = {
       enable = true;
       plugins = with pkgs; [
-        gh
         awscli2
         cachix
+        flyctl
+        gh
+        hcloud
+        wrangler
       ];
     };
+    zsh.enable = false;
     bash.enable = true;
     obs-studio = {
-      enable = true;
+      enable = false;
       plugins = with pkgs.obs-studio-plugins; [
         wlrobs
         obs-backgroundremoval
@@ -277,8 +332,12 @@ in {
     };
     atuin = {
       enable = true;
-      package = pkgs.atuin;
+      package = pkgs.unstable.atuin;
+      enableBashIntegration = true;
+      enableFishIntegration = true;
       settings = {
+        style = "auto";
+        inline_height = 0;
         key_path = config.age.secrets.atuin_key.path;
         sync_address = "https://api.atuin.sh";
         auto_sync = true;
@@ -286,33 +345,28 @@ in {
         secrets_filter = true;
         enter_accept = false;
         workspaces = true;
-        sync_frequency = 1800;
+        sync_frequency = 900;
         sync = {
           records = true;
         };
         daemon = {
           enabled = true;
           systemd_socket = true;
-          sync_frequency = 1800;
+          sync_frequency = 900;
         };
       };
     };
     nix-index-database.comma.enable = true;
-    nix-index.enable = true;
     rbw.enable = true;
     neovim = {
       enable = true;
       viAlias = true;
+      sideloadInitLua = true;
     };
     git = {
       enable = true;
       lfs.enable = true;
-      extraConfig = {
-        #        gpg.format = "ssh";
-        #        "gpg \"ssh\"".program = "${lib.getExe' pkgs._1password-gui "op-ssh-sign"}";
-        #        commit.gpgsign = true;
-      };
-      aliases = {
+      settings.alias = {
         aa = "add --all";
         amend = "commit --amend";
         br = "branch";
@@ -331,6 +385,7 @@ in {
         revert = "revert --no-edit";
         squash-all = "!f(){ git reset $(git commit-tree HEAD^{tree} -m 'A new start');};f";
       };
+      includes = with inputs; [{path = "${gitalias}/gitalias.txt";}];
     };
     vscode = {
       enable = true;
@@ -341,16 +396,9 @@ in {
       nix-direnv.enable = true;
     };
     home-manager.enable = true;
-    doom-emacs = {
-      enable = true;
-      emacs = pkgs.emacs-pgtk;
-      provideEmacs = true;
-      experimentalFetchTree = true;
-      doomDir = inputs.nixfigs-doom-emacs;
-      doomLocalDir = "${homeDirectory}/.local/state/doom";
-    };
     taskwarrior = {
       enable = true;
+      package = pkgs.taskwarrior2;
       config = {
         report = {
           minimal.filter = "status:pending";
@@ -379,12 +427,42 @@ in {
   news.display = "silent";
 
   systemd.user = let
+    atuinDataDir = "${config.xdg.dataHome}/atuin";
+    atuinCommonConfig = {
+      ConditionPathIsDirectory = atuinDataDir;
+      ConditionPathExists = "${config.xdg.configHome}/atuin/config.toml";
+    };
     taskwCommonConfig = {
       ConditionPathExists = "${config.xdg.configHome}/task/taskrc";
       ConditionPathIsDirectory = "${config.xdg.dataHome}/task";
     };
   in {
+    sockets.atuin-daemon = {
+      Unit = {
+        Description = "Unix socket activation for atuin shell history daemon";
+      };
+
+      Socket = {
+        ListenStream = "%t/atuin.sock";
+        SocketMode = "0600";
+        RemoveOnStop = true;
+      };
+
+      Install = {
+        WantedBy = ["sockets.target"];
+      };
+    };
+
     timers = {
+      atuin-sync = {
+        Unit =
+          atuinCommonConfig
+          // {
+            Description = "Atuin - Sync Service Timer";
+          };
+        Timer.OnCalendar = "*:0/30";
+        Install.WantedBy = ["timers.target"];
+      };
       task-sync = {
         Unit =
           taskwCommonConfig
@@ -404,6 +482,34 @@ in {
     };
     tmpfiles.rules = ["L %t/discord-ipc-0 - - - - app/com.discordapp.Discord/discord-ipc-0"];
     services = {
+      atuin-daemon = {
+        Unit = {
+          Description = "atuin shell history daemon";
+          Requires = ["atuin-daemon.socket"];
+        };
+        Service = {
+          ExecStart = "${getExe' pkgs.atuin "atuin"} daemon";
+          Environment = ["ATUIN_LOG=info"];
+          Restart = "on-failure";
+          RestartSteps = 5;
+          RestartMaxDelaySec = 10;
+        };
+        Install = {
+          Also = ["atuin-daemon.socket"];
+          WantedBy = ["default.target"];
+        };
+      };
+      atuin-sync = {
+        Unit =
+          atuinCommonConfig
+          // {
+            Description = "Atuin - Sync Service";
+          };
+        Service = {
+          Type = "oneshot";
+          ExecStart = "${getExe' pkgs.atuin "atuin"} sync";
+        };
+      };
       task-sync = {
         Unit =
           taskwCommonConfig
@@ -412,43 +518,36 @@ in {
           };
         Service = {
           Type = "oneshot";
-          ExecStartPre = "${pkgs.taskwarrior}/bin/task";
-          ExecStart = "${pkgs.taskwarrior}/bin/task sync";
-          ExecStartPost = "${pkgs.taskwarrior}/bin/task sync";
+          ExecStartPre = "${getExe' pkgs.taskwarrior2 "task"}";
+          ExecStart = "${getExe' pkgs.taskwarrior2 "task"} sync";
+          ExecStartPost = "${getExe' pkgs.taskwarrior2 "task"} sync";
         };
       };
     };
   };
-
-  xdg = {
+  services.kdeconnect = {
     enable = true;
-    configFile = {
-      "emacs.src/doom-emacs" = {
-        source = inputs.doom-emacs-src;
-        recursive = true;
+    indicator = true;
+  };
+  stylix = {
+    enable = true;
+    autoEnable = false;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/zenburn.yaml";
+    image = inputs.wallpaper;
+    targets = {
+      alacritty.enable = true;
+      gnome.enable = true;
+      kde.enable = true;
+      hyprland = {
+        enable = true;
+        hyprpaper.enable = false;
       };
-      "emacs.src/spacemacs" = {
-        source = inputs.spacemacs-src;
-        recursive = true;
-      };
-    };
-    portal = {
-      config = {
-        sway = {
-          default = [
-            "wlr"
-            "gtk"
-          ];
-          "org.freedesktop.impl.portal.Secret" = ["gnome-keyring"];
-          "org.freedesktop.impl.portal.Screenshot" = ["wlr"];
-          "org.freedesktop.impl.portal.Screencast" = ["wlr"];
-        };
-      };
-      extraPortals = with pkgs; [
-        xdg-desktop-portal-gtk
-        xdg-desktop-portal-wlr
-      ];
-      xdgOpenUsePortal = true;
+      hyprlock.enable = false;
+      rofi.enable = true;
+      sway.enable = true;
+      swaylock.enable = true;
+      tmux.enable = true;
+      waybar.enable = true;
     };
   };
 }

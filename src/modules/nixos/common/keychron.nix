@@ -9,9 +9,14 @@
   ...
 }:
 with lib; let
-  enabled = checkRoles ["personal" "work" "workstation"] config;
+  enabledByRole = checkRoles ["personal" "work" "workstation"] config;
 in {
-  config = mkIf enabled {
+  options.nixfigs.input.keyboard.keychron.enable = mkOption {
+    type = types.bool;
+    description = "Enable Linux-specific mitigations for the Keychron keyboard.";
+    default = enabledByRole;
+  };
+  config = mkIf config.nixfigs.input.keyboard.keychron.enable {
     boot.extraModprobeConfig = ''
       options hid_apple fnmode=0
     '';

@@ -14,12 +14,25 @@
 } @ args: let
   isOsModule = builtins.hasAttr "config" osConfig;
 in {
-  imports = with inputs; [
-    op-password-shell-plugins.hmModules.default
-    shypkgs-public.hmModules.${hostPlatform}.dwl
-    nix-flatpak.homeManagerModules.nix-flatpak
-    shyemacs-cfg.homeModules.emacs
-  ];
+  imports = with inputs;
+    [
+      op-password-shell-plugins.hmModules.default
+      shypkgs-public.hmModules.${hostPlatform}.dwl
+      nix-flatpak.homeManagerModules.nix-flatpak
+      shyemacs-cfg.homeModules.emacs
+    ]
+    ++ [
+      ../configs
+      ../../modules/home/nixfigs-options.nix
+      ../../modules/home/hypr/hypridle
+      ../../modules/home/hypr/hyprland
+      ../../modules/home/hypr/hyprlock
+      ../../modules/home/hypr/hyprpaper
+      ../../modules/home/swaync
+      ../../modules/home/waybar
+      ../../modules/home/win2k
+      ../../modules/home/wpaperd
+    ];
 
   home = {
     homeDirectory = lib.mkForce "${lib.getHomeDirectory username}";

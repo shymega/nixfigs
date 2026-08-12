@@ -40,6 +40,9 @@
 in {
   imports = with inputs; [
     ./hardware-configuration.nix
+    ../../modules/nixos/alarm-clock.nix
+    ../../modules/nixos/restic-backup.nix
+    ../../modules/nixos/window-managers.nix
     ucodenix.nixosModules.default
     nur-xddxdd.nixosModules.setupOverlay
     nur-xddxdd.nixosModules.nix-cache-attic
