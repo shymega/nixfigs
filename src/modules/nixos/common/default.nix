@@ -17,7 +17,6 @@
     || hostname == "MJOLNIR-LINUX"
     || hostname == "MORPHEUS-LINUX"
     || hostname == "TWINS-LINUX";
-  isWorkPersonal = hostname == "DEUSEX-LINUX" || hostname == "MJOLNIR-LINUX" || hostname == "MORPHEUS-LINUX";
   isDeltaZero = hostname == "DELTA-ZERO" || hostname == "delta-zero";
 in
   {
@@ -36,14 +35,6 @@ in
         ./systemd-initrd.nix
         ./utils
       ]
-      ++ (
-        if isWorkPersonal
-        then
-          (with inputs; [
-            nixfigs-work-container.nixosModules.default
-          ])
-        else []
-      )
       ++ (
         if isPersonal
         then [
@@ -169,14 +160,4 @@ in
           storeOnly = true;
         };
       };
-  }
-  // lib.optionalAttrs isWorkPersonal {
-    nixfigs.workBrowserContainer = {
-      enable = true;
-      embedSecrets = false;
-      vpnConfigPath = config.age.secrets.ct_vpn_config.path;
-      vpnCredentialsPath = config.age.secrets.ct_vpn_creds.path;
-      chromiumWorkDomain = "redacted.co.uk";
-    };
-    environment.systemPackages = with pkgs; [waypipe];
   }
