@@ -320,10 +320,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixfigs-networks.url = "github:shymega/nixfigs-networks";
-    nixfigs-work-container = {
-      url = "github:shymega/nixfigs-work-container";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nixfigs-virtual = {
       url = "github:shymega/nixfigs-virtual";
       inputs.nixpkgs.follows = "nixpkgs";
