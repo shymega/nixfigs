@@ -2,6 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 {pkgs, ...}: {
+  package = pkgs.treefmt;
   projectRootFile = "flake.nix";
 
   settings = {
@@ -17,14 +18,12 @@
     ];
   };
   programs = {
-    actionlint.enable = true;
+    deadnix.enable = true;
+    statix.enable = true;
     alejandra.enable = true;
+    yamlfmt.enable = true;
     jsonfmt.enable = true;
     mdformat.enable = true;
-    prettier.enable = true;
-    shellcheck.enable = true;
-    shfmt.enable = true;
-    statix.enable = true;
-    yamlfmt.enable = true;
+    actionlint.enable = true;
   };
 }

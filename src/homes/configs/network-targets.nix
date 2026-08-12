@@ -15,8 +15,8 @@
           Service = {
             Type = "oneshot";
             RemainAfterExit = "true";
-            ExecStart = "-${pkgs.coreutils}/bin/touch /tmp/network-online-dzr.flag";
-            ExecStop = "-${pkgs.coreutils}/bin/rm /tmp/network-online-dzr.flag";
+            ExecStart = "-${pkgs.lib.getExe' pkgs.coreutils "touch"} /tmp/network-online-dzr.flag";
+            ExecStop = "-${pkgs.lib.getExe' pkgs.coreutils "rm"}  /tmp/network-online-dzr.flag";
           };
           Install = {
             WantedBy = ["network-online.target"];
@@ -31,8 +31,8 @@
           Service = {
             Type = "oneshot";
             RemainAfterExit = "true";
-            ExecStart = "-${pkgs.coreutils}/bin/touch /tmp/network-mifi-dzr.flag";
-            ExecStop = "-${pkgs.coreutils}/bin/rm /tmp/network-mifi-dzr.flag";
+            ExecStart = "-${pkgs.lib.getExe' pkgs.coreutils "touch"} /tmp/network-mifi-dzr.flag";
+            ExecStop = "-${pkgs.lib.getExe' pkgs.coreutils "rm"}  /tmp/network-mifi-dzr.flag";
           };
           Install = {
             WantedBy = ["network-mifi.target"];
@@ -47,8 +47,8 @@
           Service = {
             Type = "oneshot";
             RemainAfterExit = "true";
-            ExecStart = "-${pkgs.coreutils}/bin/touch /tmp/network-portal-dzr.flag";
-            ExecStop = "-${pkgs.coreutils}/bin/rm /tmp/network-portal-dzr.flag";
+            ExecStart = "-${pkgs.lib.getExe' pkgs.coreutils "touch"} /tmp/network-portal-dzr.flag";
+            ExecStop = "-${pkgs.lib.getExe' pkgs.coreutils "rm"}  /tmp/network-portal-dzr.flag";
           };
           Install = {
             WantedBy = ["network-portal.target"];
@@ -63,8 +63,8 @@
           Service = {
             Type = "oneshot";
             RemainAfterExit = "true";
-            ExecStart = "-${pkgs.coreutils}/bin/touch /tmp/network-rnet-dzr.flag";
-            ExecStop = "-${pkgs.coreutils}/bin/rm /tmp/network-rnet-dzr.flag";
+            ExecStart = "-${pkgs.lib.getExe' pkgs.coreutils "touch"} /tmp/network-rnet-dzr.flag";
+            ExecStop = "-${pkgs.lib.getExe' pkgs.coreutils "rm"}  /tmp/network-rnet-dzr.flag";
           };
           Install = {
             WantedBy = ["network-rnet.target"];
@@ -79,8 +79,8 @@
           Service = {
             Type = "oneshot";
             RemainAfterExit = "true";
-            ExecStart = "-${pkgs.coreutils}/bin/touch /tmp/network-vpn-dzr.flag";
-            ExecStop = "-${pkgs.coreutils}/bin/rm /tmp/network-vpn-dzr.flag";
+            ExecStart = "-${pkgs.lib.getExe' pkgs.coreutils "touch"} /tmp/network-vpn-dzr.flag";
+            ExecStop = "-${pkgs.lib.getExe' pkgs.coreutils "rm"}  /tmp/network-vpn-dzr.flag";
           };
           Install = {
             WantedBy = ["network-vpn.target"];
