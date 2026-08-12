@@ -4271,26 +4271,6 @@
         "type": "github"
       }
     },
-    "nixfigs-work-container": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1784126259,
-        "narHash": "sha256-ZWgRrHFm/sn/NsmE3UJXoKypJTvZM/5O+hFaCqm/liQ=",
-        "owner": "shymega",
-        "repo": "nixfigs-work-container",
-        "rev": "29dfa9250d535a6a53c659b4fb2a1c7c63a4ae8e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "shymega",
-        "repo": "nixfigs-work-container",
-        "type": "github"
-      }
-    },
     "nixlib": {
       "locked": {
         "lastModified": 1736643958,
@@ -5014,7 +4994,6 @@
         "nixfigs-virtual": "nixfigs-virtual",
         "nixfigs-virtual-private": "nixfigs-virtual-private",
         "nixfigs-wallpapers": "nixfigs-wallpapers",
-        "nixfigs-work-container": "nixfigs-work-container",
         "nixos-flake-registry": "nixos-flake-registry",
         "nixos-generators": "nixos-generators",
         "nixos-wsl": "nixos-wsl",
