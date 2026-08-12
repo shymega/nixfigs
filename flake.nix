@@ -36,6 +36,7 @@
       inherit (inputs.nixpkgs) lib;
     };
     deploy = import ./nix-support/deploy.nix {inherit self inputs;};
+    templates = inputs.nixfigs-devenvs.templates;
     homeConfigurations = import ./hosts/homes {inherit inputs;};
     nixosConfigurations = import ./hosts/nixos {inherit self inputs;};
     darwinConfigurations = import ./hosts/darwin {inherit self inputs;};
@@ -82,11 +83,11 @@
     devShells = let
       inherit (systemsModule) devshellSystems forDevSystems;
     in
-      forDevSystems (system: {
-        default = import ./nix-support/devshell.nix {
+      forDevSystems (system:
+        import ./nix-support/devshell.nix {
           inherit inputs self system;
-        };
-      });
+          pkgs = inputs.nixpkgs.legacyPackages.${system};
+        });
 
     checks = let
       inherit (systemsModule) checkSystems forDevSystems;
@@ -98,6 +99,7 @@
       // forDevSystems (system: {
         pre-commit-check = import ./nix-support/checks.nix {
           inherit inputs system self;
+          lib = inputs.nixpkgs.lib;
         };
       });
 
@@ -171,6 +173,10 @@
       url = "github:Mic92/nix-ld";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixfigs-devenvs = {
+      url = "github:shymega/nixfigs-devenvs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-alien = {
       url = "github:thiagokokada/nix-alien";
       inputs = {
@@ -226,6 +232,22 @@
     };
     nix-flatpak = {
       url = "github:gmodena/nix-flatpak/?ref=v0.7.0";
+    };
+    snappy-switcher = {
+      url = "github:OpalAayan/snappy-switcher?rev=0957cd612fadf80fa95034515cb6fa2c163e497e";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixfigs-wallpapers = {
+      url = "github:shymega/nixfigs-wallpapers";
+      flake = false;
+    };
+    hypr-dotw2k = {
+      url = "github:shymega/hypr-dotw2k";
+      inputs.hyprnix.follows = "hyprnix";
+      inputs.home-manager.follows = "home-manager";
+      inputs.hyprland-plugins.follows = "hyprland-plugins";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.snappy-switcher.follows = "snappy-switcher";
     };
 
     # Package repositories
@@ -297,9 +319,17 @@
       url = "github:shymega/nixfigs-secrets";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixfigs-networks.url = "github:shymega/nixfigs-networks-dummy";
+    nixfigs-networks.url = "github:shymega/nixfigs-networks";
     nixfigs-work-container = {
       url = "github:shymega/nixfigs-work-container";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixfigs-virtual = {
+      url = "github:shymega/nixfigs-virtual";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixfigs-virtual-private = {
+      url = "github:shymega/nixfigs-virtual-private";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
