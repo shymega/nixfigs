@@ -39,21 +39,21 @@ in rec {
     linux = allLinuxSystems;
     darwin = allDarwinSystems;
   };
-  allSystems = allLinuxSystems ++ allDarwinSystems;
-  defaultSystems = [
+  allSystems = allSystemsAttrs.darwin ++ allSystemsAttrs.linux;
+  systems = [
     "x86_64-linux"
     "aarch64-linux"
   ];
   getHomeDirectory = username: homePrefix + "/${username}";
   isArm = isArmv7 || isAarch64 || isAarch32;
   isForeignNix =
-    !isNixOS && isLinux && builtins.pathExists "/nix" && !builtins.pathExists "/etc/nixos";
+    !isNixOS && isLinux;
   isNixOS = builtins.pathExists "/etc/nixos" && builtins.pathExists "/nix" && isLinux;
   isPC = isx86_64 || isi686;
   isPC64 = isx86_64;
   isPC32 = isi686;
-  isDarwinArm = pkgs.system == "aarch64-darwin";
-  forEachSystem = genAttrs defaultSystems;
+  isDarwinArm = pkgs.stdenv.hostPlatform.system == "aarch64-darwin";
+  forEachSystem = genAttrs systems;
   forAllEachSystems = genAttrs allSystems;
   homePrefix =
     if isDarwin
