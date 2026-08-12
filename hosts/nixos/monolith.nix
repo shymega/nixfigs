@@ -11,9 +11,8 @@
   ...
 }: {
   imports = [
-    ../../modules/nixos/secrets.nix
-    ../../modules/nixos/roles.nix
-    inputs.nixfigs-common.common.nixos
+    ../../src/modules/nixos/secrets.nix
+    ../../src/modules/nixos/roles.nix
   ];
   users = {
     mutableUsers = false;
@@ -38,11 +37,11 @@
         }
       ];
       extraGroups = [
-        "i2c"
         "adbusers"
         "dialout"
         "disk"
         "docker"
+        "i2c"
         "input"
         "kvm"
         "libvirt"
@@ -52,6 +51,7 @@
         "networkmanager"
         "plugdev"
         "qemu-libvirtd"
+        "render"
         "scanner"
         "systemd-journal"
         "uucp"
@@ -82,7 +82,10 @@
     upower.enable = lib.mkForce true;
     printing = lib.optionalAttrs libx.isPC {
       enable = true;
-      browsed.enable = true;
+      clientConf = ''
+        ServerName 192.168.1.6
+      '';
+      browsed.enable = false;
       drivers = with pkgs; [
         hplipWithPlugin
         gutenprint
@@ -93,9 +96,7 @@
         brgenml1cupswrapper
       ];
     };
-    guix = {
-      enable = true;
-    };
+    guix.enable = true;
     zerotierone = {
       enable = true;
       joinNetworks = ["@secret@"];
@@ -105,12 +106,17 @@
       enableDemoAgent = lib.mkForce true;
       submissionUrl = "@secret@";
       geoProviderUrl = config.services.geoclue2.submissionUrl;
+      enableWifi = true;
       appConfig = {
         redshift = {
           isAllowed = true;
           isSystem = false;
         };
         gammastep = {
+          isAllowed = true;
+          isSystem = false;
+        };
+        darkman = {
           isAllowed = true;
           isSystem = false;
         };
