@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>>
+# SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
 #
 # SPDX-License-Identifier: GPL-3.0-only
 #
@@ -6,18 +6,16 @@
   inputs,
   lib,
   ...
-}:
-with lib;
-  _: prev: let
-    importUnstableOverlay = overlay: composeExtensions (_: _: {__inputs = inputs;}) (import (./enabled.d + "/${overlay}"));
+}: final: _prev: let
+  importUnstableOverlay = overlay: lib.composeExtensions (_: _: {__inputs = inputs;}) (import (./enabled.d + "/${overlay}"));
 
-    unstableOverlays = mapAttrs' (
-      overlay: _: nameValuePair (removeSuffix ".nix" overlay) (importUnstableOverlay overlay)
-    ) (builtins.readDir ./enabled.d);
-  in {
-    unstable = import inputs.nixpkgs-unstable {
-      inherit (prev) system;
-      config = inputs.self.nixpkgs-config;
-      overlays = builtins.attrValues unstableOverlays;
-    };
-  }
+  unstableOverlays = lib.mapAttrs' (
+    overlay: _: lib.nameValuePair (lib.removeSuffix ".nix" overlay) (importUnstableOverlay overlay)
+  ) (builtins.readDir ./enabled.d);
+in {
+  unstable = import inputs.nixpkgs-unstable {
+    localSystem = final.stdenv.hostPlatform.system;
+    config = inputs.self.nixpkgs-config;
+    overlays = builtins.attrValues unstableOverlays;
+  };
+}

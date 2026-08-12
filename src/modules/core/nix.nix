@@ -61,6 +61,8 @@ in {
         allowed-users = ["@wheel"];
         build-users-group = "nixbld";
         builders-use-substitutes = true;
+        download-attempts = 5;
+        keep-going = true;
         trusted-users = [
           "root"
           "@wheel"

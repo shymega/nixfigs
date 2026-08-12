@@ -17,7 +17,7 @@
     || hostname == "MJOLNIR-LINUX"
     || hostname == "MORPHEUS-LINUX"
     || hostname == "TWINS-LINUX";
-  isWorkPersonal = hostname == "DEUSEX-LINUX" || hostname == "MJOLNIR-LINUX";
+  isWorkPersonal = hostname == "DEUSEX-LINUX" || hostname == "MJOLNIR-LINUX" || hostname == "MORPHEUS-LINUX";
   isDeltaZero = hostname == "DELTA-ZERO" || hostname == "delta-zero";
 in
   {
