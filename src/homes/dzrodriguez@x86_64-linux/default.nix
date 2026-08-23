@@ -3,17 +3,12 @@
 # SPDX-License-Identifier: GPL-3.0-only
 {
   lib,
-  pkgs,
   inputs,
   hostPlatform,
-  self,
-  config,
   username,
   osConfig ? {},
   ...
-} @ args: let
-  isOsModule = builtins.hasAttr "config" osConfig;
-in {
+}: {
   imports = with inputs;
     [
       op-password-shell-plugins.hmModules.default

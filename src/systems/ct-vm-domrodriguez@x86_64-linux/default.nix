@@ -2,15 +2,10 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 {
-  inputs,
-  self,
-  config,
   lib,
   pkgs,
   ...
-}: let
-  inherit (lib) checkRoles;
-in {
+}: {
   imports = [
     ./hardware-configuration.nix
     ../../modules/nixos

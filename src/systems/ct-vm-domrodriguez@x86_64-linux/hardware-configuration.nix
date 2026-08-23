@@ -4,7 +4,6 @@
 # Hardware configuration for ct-vm-domrodriguez libvirt VM
 # Optimized for QEMU/KVM virtualization with ZFS backing
 {
-  config,
   lib,
   pkgs,
   modulesPath,
