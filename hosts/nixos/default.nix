@@ -29,7 +29,7 @@
     ...
   }: let
     lib = inputs.nixpkgs.lib.extend (
-      final: prev:
+      _final: _prev:
         (import "${self}/lib" {
           pkgs = genPkgs hostPlatform overlays;
           inherit self inputs;
