@@ -15,7 +15,7 @@
   ];
   nixpkgs = {
     hostPlatform.system = "armv6l-linux";
-    buildPlatform.system = "${pkgs.system}";
+    buildPlatform.system = "${pkgs.stdenv.hostPlatform.system}";
   };
 
   disabledModules = [
