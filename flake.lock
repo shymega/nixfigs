@@ -4082,7 +4082,7 @@
         "flake-compat": "flake-compat_17",
         "flake-utils": "flake-utils_3",
         "git-hooks": "git-hooks_6",
-        "nixpkgs": "nixpkgs_8",
+        "nixpkgs": "nixpkgs_7",
         "treefmt-nix": "treefmt-nix_4"
       },
       "locked": {
@@ -4155,7 +4155,7 @@
         "flake-compat": "flake-compat_23",
         "flake-utils": "flake-utils_4",
         "git-hooks": "git-hooks_9",
-        "nixpkgs": "nixpkgs_11",
+        "nixpkgs": "nixpkgs_10",
         "treefmt-nix": "treefmt-nix_7"
       },
       "locked": {
@@ -4175,7 +4175,9 @@
     "nixfigs-networks": {
       "inputs": {
         "nixfigs-helpers": "nixfigs-helpers_2",
-        "nixpkgs": "nixpkgs_7"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1786535445,
@@ -4488,20 +4490,6 @@
     },
     "nixpkgs_10": {
       "locked": {
-        "lastModified": 1782375420,
-        "narHash": "sha256-wiPYmEuHbJvleW489n6+lamL7JSJg3pcKUYwURU9CkI=",
-        "rev": "4062d36ebeae843c750011eef6b61ec9a9dbc9a9",
-        "revCount": 1007541,
-        "type": "tarball",
-        "url": "https://api.flakehub.com/f/pinned/NixOS/nixpkgs/0.2605.1007541%2Brev-4062d36ebeae843c750011eef6b61ec9a9dbc9a9/019f07ce-b04c-7903-ba9d-9afdbb0b4ce2/source.tar.gz"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://flakehub.com/f/NixOS/nixpkgs/%2A"
-      }
-    },
-    "nixpkgs_11": {
-      "locked": {
         "lastModified": 1777077449,
         "narHash": "sha256-AIiMJiqvGrN4HyLEbKAoCSRRYn0rnlW5VbKNIMIYqm4=",
         "owner": "NixOS",
@@ -4516,7 +4504,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_12": {
+    "nixpkgs_11": {
       "locked": {
         "lastModified": 1770107345,
         "narHash": "sha256-tbS0Ebx2PiA1FRW8mt8oejR0qMXmziJmPaU1d4kYY9g=",
@@ -4612,20 +4600,6 @@
     },
     "nixpkgs_7": {
       "locked": {
-        "lastModified": 1786430034,
-        "narHash": "sha256-Vux08kA5PICwS2sViCMfwVLAHNoH8TkKAeBo25LjpMI=",
-        "rev": "70cc4559b10a6062b05ff1af17e0add065ccaed9",
-        "revCount": 1011734,
-        "type": "tarball",
-        "url": "https://api.flakehub.com/f/pinned/NixOS/nixpkgs/0.2605.1011734%2Brev-70cc4559b10a6062b05ff1af17e0add065ccaed9/019ff490-3b07-7451-8f5e-7febc5a7e4f8/source.tar.gz"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://flakehub.com/f/NixOS/nixpkgs/%2A"
-      }
-    },
-    "nixpkgs_8": {
-      "locked": {
         "lastModified": 1777077449,
         "narHash": "sha256-AIiMJiqvGrN4HyLEbKAoCSRRYn0rnlW5VbKNIMIYqm4=",
         "owner": "NixOS",
@@ -4640,7 +4614,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_9": {
+    "nixpkgs_8": {
       "locked": {
         "lastModified": 1770107345,
         "narHash": "sha256-tbS0Ebx2PiA1FRW8mt8oejR0qMXmziJmPaU1d4kYY9g=",
@@ -4654,6 +4628,20 @@
         "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
         "type": "github"
+      }
+    },
+    "nixpkgs_9": {
+      "locked": {
+        "lastModified": 1782375420,
+        "narHash": "sha256-wiPYmEuHbJvleW489n6+lamL7JSJg3pcKUYwURU9CkI=",
+        "rev": "4062d36ebeae843c750011eef6b61ec9a9dbc9a9",
+        "revCount": 1007541,
+        "type": "tarball",
+        "url": "https://api.flakehub.com/f/pinned/NixOS/nixpkgs/0.2605.1007541%2Brev-4062d36ebeae843c750011eef6b61ec9a9dbc9a9/019f07ce-b04c-7903-ba9d-9afdbb0b4ce2/source.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://flakehub.com/f/NixOS/nixpkgs/%2A"
       }
     },
     "nm2nix": {
@@ -4997,7 +4985,7 @@
         "nixos-flake-registry": "nixos-flake-registry",
         "nixos-generators": "nixos-generators",
         "nixos-wsl": "nixos-wsl",
-        "nixpkgs": "nixpkgs_10",
+        "nixpkgs": "nixpkgs_9",
         "nixpkgs-shymega": "nixpkgs-shymega",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nm2nix": "nm2nix",
@@ -5551,7 +5539,7 @@
     },
     "treefmt-nix_4": {
       "inputs": {
-        "nixpkgs": "nixpkgs_9"
+        "nixpkgs": "nixpkgs_8"
       },
       "locked": {
         "lastModified": 1775636079,
@@ -5613,7 +5601,7 @@
     },
     "treefmt-nix_7": {
       "inputs": {
-        "nixpkgs": "nixpkgs_12"
+        "nixpkgs": "nixpkgs_11"
       },
       "locked": {
         "lastModified": 1775636079,
