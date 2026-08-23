@@ -3,9 +3,6 @@
 # SPDX-License-Identifier: GPL-3.0-only
 {
   mkHost,
-  genPkgs,
-  self,
-  inputs,
   ...
 }:
 mkHost rec {
