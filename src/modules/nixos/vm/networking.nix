@@ -18,9 +18,6 @@ in {
       # Disable systemd-networkd (conflicts with NetworkManager)
       useNetworkd = false;
 
-      # VM hostname
-      hostName = "redacted";
-
       # Enable IPv6
       enableIPv6 = true;
 
