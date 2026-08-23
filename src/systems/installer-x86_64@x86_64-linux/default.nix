@@ -1,12 +1,7 @@
 # SPDX-FileCopyrightText: 2025 Dom Rodriguez <shymega@shymega.org.uk>
 #
 # SPDX-License-Identifier: GPL-3.0-only
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}: {
+_: {
   # Architecture-specific optimizations
   boot.kernelParams = [
     "console=ttyS0,115200n8"

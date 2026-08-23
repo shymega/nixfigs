@@ -6,7 +6,6 @@
   lib,
   self,
   config,
-  pkgs,
   inputs,
   ...
 }: let

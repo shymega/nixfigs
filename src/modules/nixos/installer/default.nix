@@ -10,7 +10,6 @@
   ...
 }: let
   cfg = config.nixfigs.installer;
-  isWork = builtins.elem "work" (config.nixfigs.hostRoles or []);
   isPersonal = builtins.elem "personal" (config.nixfigs.hostRoles or []);
 
   # Determine architecture-specific settings
@@ -259,7 +258,7 @@ in
         # Welcome message
         environment.etc."issue".text = ''
           NixOS Installer (${outputFormat})
-          ======================${lib.stringAsChars (x: "=") outputFormat}
+          ======================${lib.stringAsChars (_x: "=") outputFormat}
 
           Welcome to the NixOS installer environment!
 
