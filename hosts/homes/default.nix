@@ -10,14 +10,14 @@
     };
   inherit (inputs) self;
   inherit (inputs.home-manager.lib) homeManagerConfiguration;
-  genConfiguration = hostname: {
+  genConfiguration = _hostname: {
     type,
     hostPlatform,
     username,
     ...
   }: let
     lib = inputs.nixpkgs.lib.extend (
-      final: prev:
+      _final: _prev:
         {
           inherit (inputs.home-manager.lib) hm;
         }

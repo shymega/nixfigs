@@ -13,7 +13,7 @@
       inherit self inputs systemsModule;
     };
     buildsModule = import ./nix-support/builds.nix {inherit self inputs;};
-    inherit (systemsModule) treefmtSystems forEachSystem;
+    inherit (systemsModule) treefmtSystems;
     treeFmtEachSystem = f: inputs.nixpkgs.lib.genAttrs treefmtSystems (system: f inputs.nixpkgs.legacyPackages.${system});
     treeFmtEval = treeFmtEachSystem (
       pkgs: inputs.treefmt-nix.lib.evalModule pkgs ./nix-support/formatter.nix
@@ -81,7 +81,7 @@
     formatter = treeFmtEachSystem (pkgs: treeFmtEval.${pkgs.stdenv.hostPlatform.system}.config.build.wrapper);
 
     devShells = let
-      inherit (systemsModule) devshellSystems forDevSystems;
+      inherit (systemsModule) forDevSystems;
     in
       forDevSystems (system:
         import ./nix-support/devshell.nix {
@@ -90,7 +90,7 @@
         });
 
     checks = let
-      inherit (systemsModule) checkSystems forDevSystems;
+      inherit (systemsModule) forDevSystems;
     in
       builtins.mapAttrs (_system: deployLib: deployLib.deployChecks self.deploy) inputs.deploy-rs.lib
       // treeFmtEachSystem (pkgs: {
@@ -123,7 +123,7 @@
     };
     impermanence = {
       url = "github:nix-community/impermanence";
-    
+
       inputs.home-manager.follows = "home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -166,7 +166,7 @@
     devenv = {
       url = "github:cachix/devenv?ref=latest";
       inputs.nixpkgs.follows = "nixpkgs";
-    
+
       inputs.git-hooks.follows = "git-hooks";
     };
     nix-ld = {
@@ -213,7 +213,7 @@
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };
-    
+
       inputs.nur.follows = "nur";
     };
     base16-schemes = {
@@ -258,7 +258,7 @@
     nur-xddxdd = {
       url = "github:xddxdd/nur-packages";
       inputs.nixpkgs.follows = "nixpkgs";
-    
+
       inputs.nix-cachyos-kernel.follows = "nix-cachyos-kernel";
       inputs.nix-index-database.follows = "nix-index-database";
       inputs.treefmt-nix.follows = "treefmt-nix";
