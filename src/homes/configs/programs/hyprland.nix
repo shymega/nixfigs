@@ -12,7 +12,6 @@
   isMjolnir = hostIs "MJOLNIR-LINUX";
   isMorpheus = hostIs "MORPHEUS-LINUX";
   isDeusEx = hostIs "DEUSEX-LINUX";
-  isWork = hostIs "redacted";
 
   lockScripts = import ./session-lock.nix {inherit pkgs;};
   lockPrep = lib.getExe lockScripts.lockPrep;
@@ -439,7 +438,7 @@ in {
         ([
             "GDK_BACKEND,wayland"
             "GDK_SCALE,${
-              if (isMorpheus || isDeusEx || isWork)
+              if (isMorpheus || isDeusEx)
               then "1"
               else "2"
             }"
@@ -454,7 +453,7 @@ in {
             "HYPRCURSOR_SIZE,24"
             "_JAVA_AWT_WM_NONREPARENTING,1"
           ]
-          ++ lib.optionals (isMjolnir || isWork) [
+          ++ lib.optionals isMjolnir [
             "GBM_BACKEND,nvidia-drm"
             "LIBVA_DRIVER_NAME,iHD"
             "NVD_BACKEND,direct"
