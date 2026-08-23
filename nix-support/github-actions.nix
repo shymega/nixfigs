@@ -14,7 +14,7 @@ in {
   githubActions.matrix = let
     nixosConfigs = {
       include = with builtins; let
-        pred = n: v: let
+        pred = _n: v: let
           isWorkMachine = v:
             if hasAttr "nixfigs.meta.rolesEnabled" v.config
             then elem "work" v.config.nixfigs.meta.rolesEnabled

@@ -5,7 +5,6 @@
   pkgs,
   inputs,
   config,
-  lib,
   ...
 }: let
   lockedXanmodLatestGitKernelPackage = pkgs.linuxPackagesFor (

@@ -7,7 +7,6 @@
   lib,
   libx,
   pkgs,
-  inputs,
   ...
 }: {
   imports = [
