@@ -111,8 +111,10 @@ in
       };
     };
 
-    services.udev.packages = with pkgs;
-      lib.optional (pkgs.system == "x86_64_linux" || pkgs.system == "aarch64-linux") [xrlinuxdriver];
+    services.udev.packages = let
+     inherit (pkgs.stdenv.hostPlatform) system; 
+    in with pkgs;
+      lib.optional (system == "x86_64_linux" || system == "aarch64-linux") [xrlinuxdriver];
 
     services.udev.extraRules = ''
       SUBSYSTEMS=="usb", ATTRS{idVendor}=="5548", ATTRS{idProduct}=="6670", GROUP="users", TAG+="uaccess"
