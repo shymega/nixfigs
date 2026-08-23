@@ -319,7 +319,10 @@
       url = "github:shymega/nixfigs-secrets";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixfigs-networks.url = "github:shymega/nixfigs-networks";
+    nixfigs-networks = {
+      url = "github:shymega/nixfigs-networks";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixfigs-virtual = {
       url = "github:shymega/nixfigs-virtual";
       inputs.nixpkgs.follows = "nixpkgs";
