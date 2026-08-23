@@ -39,7 +39,7 @@
         "${self}/src/hosts/${hostname}@${hostPlatform}"
         "${self}/src/modules/core"
         "${self}/src/modules/darwin"
-        {nixpkgs.pkgs = pkgs;}
+        {nixpkgs.pkgs = genPkgs hostPlatform overlays;}
       ];
       specialArgs = {
         hostAddress = address;
