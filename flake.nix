@@ -222,7 +222,7 @@
       inputs.hyprland.follows = "hyprland";
     };
     nix-flatpak = {
-      url = "github:gmodena/nix-flatpak/?ref=v0.7.0";
+      url = "github:gmodena/nix-flatpak?ref=v0.7.0";
     };
     snappy-switcher = {
       url = "github:OpalAayan/snappy-switcher?ref=v4.5.0";
