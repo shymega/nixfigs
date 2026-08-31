@@ -323,7 +323,7 @@
 
     # M365 Authentication
     himmelblau = {
-      url = "github:himmelblau-idm/himmelblau?ref=3.1.10";
+      url = "github:himmelblau-idm/himmelblau?ref=4.0.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
