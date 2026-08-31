@@ -19,9 +19,9 @@ mkHost rec {
   hardwareModules = with inputs; [
     hardware.nixosModules.common-cpu-amd
     hardware.nixosModules.common-gpu-amd
-    hardware.nixosModules.common-pc-ssd
     hardware.nixosModules.common-pc
-    hardware-shymega.nixosModules.gpd-duo
+    hardware.nixosModules.common-pc-ssd
+    hardware.nixosModules.gpd-duo
   ];
   extraModules = with inputs; [
     lanzaboote.nixosModules.lanzaboote
