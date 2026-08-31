@@ -289,7 +289,7 @@
 
     # CachyOS Kernels (And ZFS)
     nix-cachyos-kernel = {
-      url = "github:xddxdd/nix-cachyos-kernel/release";
+      url = "github:xddxdd/nix-cachyos-kernel?ref=release";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
