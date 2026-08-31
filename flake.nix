@@ -214,31 +214,23 @@
     # Desktop environment
     hyprland.follows = "hyprnix/hyprland";
     hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins?ref=v0.56.0";
+      url = "github:hyprwm/hyprland-plugins?ref=v0.55.0";
       inputs.hyprland.follows = "hyprland"; # Prevents version mismatch.
     };
     split-monitor-workspaces = {
-      url = "github:Duckonaut/split-monitor-workspaces?ref=v0.56.1";
+      url = "github:Duckonaut/split-monitor-workspaces?ref=v0.55.4";
       inputs.hyprland.follows = "hyprland";
     };
     nix-flatpak = {
       url = "github:gmodena/nix-flatpak/?ref=v0.7.0";
     };
     snappy-switcher = {
-      url = "github:OpalAayan/snappy-switcher?rev=0957cd612fadf80fa95034515cb6fa2c163e497e";
+      url = "github:OpalAayan/snappy-switcher?ref=v4.5.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixfigs-wallpapers = {
       url = "github:shymega/nixfigs-wallpapers";
       flake = false;
-    };
-    hypr-dotw2k = {
-      url = "github:shymega/hypr-dotw2k";
-      inputs.hyprnix.follows = "hyprnix";
-      inputs.home-manager.follows = "home-manager";
-      inputs.hyprland-plugins.follows = "hyprland-plugins";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.snappy-switcher.follows = "snappy-switcher";
     };
 
     # Package repositories
