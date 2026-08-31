@@ -152,10 +152,6 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    lanzaboote = {
-      url = "github:nix-community/lanzaboote?ref=v1.1.0";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     # Development tools
     devenv = {
