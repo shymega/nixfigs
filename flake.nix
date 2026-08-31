@@ -203,9 +203,8 @@
       url = "github:danth/stylix?ref=release-26.05";
       inputs = {
         nixpkgs.follows = "nixpkgs";
+        nur.follows = "nur";
       };
-
-      inputs.nur.follows = "nur";
     };
     base16-schemes = {
       url = "github:SenchoPens/base16.nix";
@@ -241,7 +240,6 @@
     nur-xddxdd = {
       url = "github:xddxdd/nur-packages";
       inputs.nixpkgs.follows = "nixpkgs";
-
       inputs.nix-cachyos-kernel.follows = "nix-cachyos-kernel";
       inputs.nix-index-database.follows = "nix-index-database";
       inputs.treefmt-nix.follows = "treefmt-nix";
