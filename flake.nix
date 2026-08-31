@@ -258,10 +258,6 @@
     ucodenix = {
       url = "github:e-tho/ucodenix";
     };
-    nm2nix = {
-      url = "github:Janik-Haag/nm2nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     # Personal packages and configs
     shypkgs-private = {
