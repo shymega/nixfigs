@@ -41,7 +41,7 @@ in {
   };
 
   networking = {
-    hostName = "TWINS-LINUX";
+    hostName = "TYR-LINUX";
     hostId = "c6153b29";
     usePredictableInterfaceNames = false;
   };
@@ -75,7 +75,7 @@ in {
 
     extraModulePackages = with config.boot.kernelPackages; [zfs];
 
-    zfs.devNodes = "/dev/TWINS-LINUX/ROOT";
+    zfs.devNodes = "/dev/TYR-LINUX/ROOT";
 
     extraModprobeConfig = ''
       options kvm_intel nested=1
