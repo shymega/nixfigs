@@ -8,7 +8,7 @@
 }:
 mkHost rec {
   type = "nixos";
-  hostname = "DEUSEX-LINUX";
+  hostname = "HEIMDALL-LINUX";
   hostPlatform = "x86_64-linux";
   hostRoles = [
     "workstation"

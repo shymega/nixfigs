@@ -12,7 +12,7 @@
 
   isMjolnir = hostIs "MJOLNIR-LINUX";
   isMorpheus = hostIs "MORPHEUS-LINUX";
-  isDeusEx = hostIs "DEUSEX-LINUX";
+  isHeimdall = hostIs "HEIMDALL-LINUX";
 in {
   imports = with inputs; [
     hyprland.homeManagerModules.default
@@ -268,7 +268,7 @@ in {
           ([
               "GDK_BACKEND,wayland"
               "GDK_SCALE,${
-                if (isMorpheus || isDeusEx)
+                if (isMorpheus || isHeimdall)
                 then "1"
                 else "2"
               }"
