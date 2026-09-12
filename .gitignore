@@ -18,3 +18,5 @@ config/work.*
 
 # Temporary git-crypt files
 .git-crypt-tmp/
+
+/.env
