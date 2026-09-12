@@ -14,7 +14,7 @@
     == "HEIMDALL-LINUX"
     || hostname == "MJOLNIR-LINUX"
     || hostname == "FREYR-LINUX"
-    || hostname == "TWINS-LINUX";
+    || hostname == "TYR-LINUX";
   isDeltaZero = hostname == "DELTA-ZERO" || hostname == "delta-zero";
 in {
   imports =
