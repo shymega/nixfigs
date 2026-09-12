@@ -84,7 +84,7 @@ in {
   lantian.qemu-user-static-binfmt.enable = true;
 
   networking = {
-    hostName = "DEUSEX-LINUX";
+    hostName = "HEIMDALL-LINUX";
     hostId = "aa1cf1f3";
     usePredictableInterfaceNames = false;
   };
