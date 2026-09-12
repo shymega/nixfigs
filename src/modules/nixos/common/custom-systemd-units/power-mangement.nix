@@ -28,7 +28,7 @@ in {
     services = {
       power-maximum-tdp =
         optionalAttrs
-        (hostName == "NEO-LINUX" || hostName == "MORPHEUS-LINUX" || hostName == "DEUSEX-LINUX")
+        (hostName == "MORPHEUS-LINUX" || hostName == "DEUSEX-LINUX")
         {
           description = "Change TDP to maximum TDP when on AC power";
           wantedBy = [

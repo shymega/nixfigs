@@ -7,7 +7,6 @@
 keys:
   # SSH public keys for age encryption
   - &ssh_deusex age1ssh-ed25519-key-example-deusex-linux
-  - &ssh_neo age1ssh-ed25519-key-example-neo-linux
   # GPG keys
   - &gpg_personal 0x1234567890ABCDEF1234567890ABCDEF12345678
   # Yubikey PIV slots
@@ -18,13 +17,6 @@ creation_rules:
     key_groups:
       - age:
           - *ssh_deusex
-          - *yubikey_piv
-        pgp:
-          - *gpg_personal
-  - path_regex: secrets/hosts/NEO-LINUX/.*\.yaml$
-    key_groups:
-      - age:
-          - *ssh_neo
           - *yubikey_piv
         pgp:
           - *gpg_personal
