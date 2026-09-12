@@ -28,7 +28,7 @@ in {
     services = {
       power-maximum-tdp =
         optionalAttrs
-        (hostName == "MORPHEUS-LINUX" || hostName == "DEUSEX-LINUX")
+        (hostName == "MORPHEUS-LINUX" || hostName == "HEIMDALL-LINUX")
         {
           description = "Change TDP to maximum TDP when on AC power";
           wantedBy = [
@@ -46,7 +46,7 @@ in {
           '';
         };
 
-      power-saving-tdp = optionalAttrs (hostName == "MORPHEUS-LINUX" || hostName == "DEUSEX-LINUX") {
+      power-saving-tdp = optionalAttrs (hostName == "MORPHEUS-LINUX" || hostName == "HEIMDALL-LINUX") {
         description = "Change TDP to power saving TDP when on battery power";
         wantedBy = ["battery.target"];
         unitConfig = {
@@ -59,7 +59,7 @@ in {
         '';
       };
 
-      powertop = optionalAttrs (hostName == "TWINS-LINUX" || hostName == "DEUSEX-LINUX" || hostName == "MORPHEUS-LINUX") {
+      powertop = optionalAttrs (hostName == "TWINS-LINUX" || hostName == "HEIMDALL-LINUX" || hostName == "MORPHEUS-LINUX") {
         description = "Auto-tune Power Management with powertop";
         unitConfig = {
           RefuseManualStart = true;

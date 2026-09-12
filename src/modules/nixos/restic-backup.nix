@@ -25,7 +25,7 @@ in {
       description = ''
         Path within the B2 bucket used as this host's restic repository.
         Kept per-host (rather than one shared repository) to avoid restic
-        lock contention between MJOLNIR, DEUSEX and MORPHEUS backing up
+        lock contention between MJOLNIR, HEIMDALL and MORPHEUS backing up
         concurrently.
       '';
     };
@@ -65,7 +65,7 @@ in {
       type = types.str;
       default = "15m";
       description = ''
-        Random jitter added before each run, so MJOLNIR, DEUSEX and
+        Random jitter added before each run, so MJOLNIR, HEIMDALL and
         MORPHEUS don't all hit B2 at the same moment.
       '';
     };

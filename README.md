@@ -25,7 +25,7 @@ This flake provides a comprehensive NixOS configuration system with support for:
 
 ```bash
 # Build a specific host configuration
-nix build .#nixosConfigurations.DEUSEX-LINUX.config.system.build.toplevel
+nix build .#nixosConfigurations.HEIMDALL-LINUX.config.system.build.toplevel
 
 # Build all packages
 nix build .#packages.x86_64-linux.totp
@@ -38,7 +38,7 @@ nix develop
 
 ```bash
 # Deploy to a specific host
-nix run .#deploy.nodes.DEUSEX-LINUX
+nix run .#deploy.nodes.HEIMDALL-LINUX
 
 # Deploy to all hosts
 nix run .#deploy
@@ -119,7 +119,7 @@ This configuration uses sops-nix for secure secrets management with multiple enc
 
 ```bash
 # Edit secrets for a specific host
-sops secrets/hosts/DEUSEX-LINUX/passwords.yaml
+sops secrets/hosts/HEIMDALL-LINUX/passwords.yaml
 
 # Create new secrets file
 sops --config .sops.yaml secrets/global/new-secret.yaml
@@ -173,7 +173,7 @@ statix check .
 nix flake check
 
 # Test specific configuration
-nix build .#nixosConfigurations.DEUSEX-LINUX.config.system.build.toplevel
+nix build .#nixosConfigurations.HEIMDALL-LINUX.config.system.build.toplevel
 ```
 
 ## Deployment
@@ -184,7 +184,7 @@ The flake includes automated deployment using deploy-rs:
 
 ```bash
 # Deploy to specific host
-nix run .#deploy.nodes.DEUSEX-LINUX
+nix run .#deploy.nodes.HEIMDALL-LINUX
 
 # Deploy to all configured hosts
 nix run .#deploy
