@@ -44,7 +44,7 @@ in {
   };
 
   networking = {
-    hostName = "MORPHEUS-LINUX";
+    hostName = "FREYR-LINUX";
     hostId = "c4e0feaa";
     usePredictableInterfaceNames = false;
   };

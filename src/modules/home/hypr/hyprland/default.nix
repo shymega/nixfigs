@@ -11,7 +11,7 @@
   hostIs = name: hasosConfig && args.osConfig.networking.hostName == name;
 
   isMjolnir = hostIs "MJOLNIR-LINUX";
-  isMorpheus = hostIs "MORPHEUS-LINUX";
+  isFreyr = hostIs "FREYR-LINUX";
   isHeimdall = hostIs "HEIMDALL-LINUX";
 in {
   imports = with inputs; [
@@ -268,7 +268,7 @@ in {
           ([
               "GDK_BACKEND,wayland"
               "GDK_SCALE,${
-                if (isMorpheus || isHeimdall)
+                if (isFreyr || isHeimdall)
                 then "1"
                 else "2"
               }"
