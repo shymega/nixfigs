@@ -136,7 +136,7 @@ hosts:
 # Show personal hosts only
 hosts-personal:
     @echo "Available personal hosts:"
-    @nix eval --json {{override_args}} '.#nixosConfigurations' --apply 'lib.filterAttrs (n: v: builtins.elem "personal" v.config.nixfigs.meta.rolesEnabled) >> builtins.attrNames' 2>/dev/null | jq -r '.[]' || echo "DEUSEX-LINUX\nNEO-LINUX"
+    @nix eval --json {{override_args}} '.#nixosConfigurations' --apply 'lib.filterAttrs (n: v: builtins.elem "personal" v.config.nixfigs.meta.rolesEnabled) >> builtins.attrNames' 2>/dev/null | jq -r '.[]' || echo "DEUSEX-LINUX"
 
 # Show available home configurations
 homes:

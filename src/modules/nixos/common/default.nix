@@ -11,8 +11,7 @@
 }: let
   isPersonal =
     hostname
-    == "NEO-LINUX"
-    || hostname == "DEUSEX-LINUX"
+    == "DEUSEX-LINUX"
     || hostname == "MJOLNIR-LINUX"
     || hostname == "MORPHEUS-LINUX"
     || hostname == "TWINS-LINUX";
