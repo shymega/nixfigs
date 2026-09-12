@@ -10,7 +10,7 @@
   hostIs = name: hasosConfig && args.osConfig ? config && args.osConfig.networking.hostName == name;
 
   isMjolnir = hostIs "MJOLNIR-LINUX";
-  isMorpheus = hostIs "MORPHEUS-LINUX";
+  isFreyr = hostIs "FREYR-LINUX";
   isHeimdall = hostIs "HEIMDALL-LINUX";
 
   lockScripts = import ./session-lock.nix {inherit pkgs;};
@@ -438,7 +438,7 @@ in {
         ([
             "GDK_BACKEND,wayland"
             "GDK_SCALE,${
-              if (isMorpheus || isHeimdall)
+              if (isFreyr || isHeimdall)
               then "1"
               else "2"
             }"
