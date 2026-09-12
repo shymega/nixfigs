@@ -59,7 +59,7 @@ in {
         '';
       };
 
-      powertop = optionalAttrs (hostName == "TWINS-LINUX" || hostName == "HEIMDALL-LINUX" || hostName == "FREYR-LINUX") {
+      powertop = optionalAttrs (hostName == "TYR-LINUX" || hostName == "HEIMDALL-LINUX" || hostName == "FREYR-LINUX") {
         description = "Auto-tune Power Management with powertop";
         unitConfig = {
           RefuseManualStart = true;
