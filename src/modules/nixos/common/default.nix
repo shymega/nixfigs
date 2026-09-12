@@ -13,7 +13,7 @@
     hostname
     == "HEIMDALL-LINUX"
     || hostname == "MJOLNIR-LINUX"
-    || hostname == "MORPHEUS-LINUX"
+    || hostname == "FREYR-LINUX"
     || hostname == "TWINS-LINUX";
   isDeltaZero = hostname == "DELTA-ZERO" || hostname == "delta-zero";
 in {
