@@ -6,7 +6,6 @@
   inputs,
   hostPlatform,
   username,
-  osConfig ? {},
   ...
 }: {
   imports = with inputs;
