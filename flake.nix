@@ -115,7 +115,7 @@
     nixpkgs-shymega.url = "github:shymega/nixpkgs?ref=shymega/staging";
 
     # NixOS modules and hardware
-    hardware.url = "github:NixOS/nixos-hardware?ref=pull/1524/merge";
+    hardware.url = "github:NixOS/nixos-hardware";
     impermanence = {
       url = "github:nix-community/impermanence";
 
