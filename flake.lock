@@ -1692,16 +1692,15 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1790045527,
+        "lastModified": 1790321948,
         "narHash": "sha256-mZGHLGi217oLIwzDM4PNRZeCNa6g2WBXURyXbNMFs7Y=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "ab35263d49a6dacad3e2bba47245c1086c2aacba",
+        "rev": "30d48a0ec6035f8140d0125af274f0de95f1e9b5",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "pull/1524/merge",
         "repo": "nixos-hardware",
         "type": "github"
       }
