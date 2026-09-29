@@ -168,13 +168,7 @@
       url = "github:shymega/nixfigs-devenvs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-alien = {
-      url = "github:thiagokokada/nix-alien";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        nix-index-database.follows = "nix-index-database";
-      };
-    };
+    nix-alien.url = "github:thiagokokada/nix-alien";
     nix-index-database = {
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -247,10 +241,7 @@
 
     # Nix alternatives
     # Lix is included in Nixpkgs.
-    determinate = {
-      url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
 
     # Specialized tools
     ucodenix = {
@@ -286,10 +277,7 @@
     };
 
     # CachyOS Kernels (And ZFS)
-    nix-cachyos-kernel = {
-      url = "github:xddxdd/nix-cachyos-kernel?ref=release";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel?ref=release";
 
     # Private configs (dummy repos)
     nixfigs-secrets = {
