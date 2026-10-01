@@ -225,7 +225,7 @@ Matrix includes all supported systems and configurations.
 
 ## License
 
-This configuration is licensed under GPL-3.0-only.
+This configuration is licensed under Apache-2.0.
 
 ## Support
 
