@@ -11,16 +11,16 @@
   inherit (config.networking) hostName;
   inherit (lib) getExe getExe' optionalAttrs singleton;
   amdcpu-adjust = pkgs.writeShellScriptBin "amdcpu-adjust" ''
-   #!${pkgs.runtimeShell}
+    #!${pkgs.runtimeShell}
 
-    WATTAGE=$1
+     WATTAGE=$1
 
-    if [ -z $WATTAGE ]; then
-      echo "Not enough params." && exit 1
-    fi
+     if [ -z $WATTAGE ]; then
+       echo "Not enough params." && exit 1
+     fi
 
-    ${getExe pkgs.ryzenadj} --stapm-limit="$WATTAGE"000 \
-      --fast-limit="$WATTAGE"000 --slow-limit="$WATTAGE"000
+     ${getExe pkgs.ryzenadj} --stapm-limit="$WATTAGE"000 \
+       --fast-limit="$WATTAGE"000 --slow-limit="$WATTAGE"000
   '';
 in {
   environment.systemPackages = singleton amdcpu-adjust;
