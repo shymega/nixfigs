@@ -11,7 +11,7 @@
   inherit (config.networking) hostName;
   inherit (lib) getExe getExe' optionalAttrs singleton;
   amdcpu-adjust = pkgs.writeShellScriptBin "amdcpu-adjust" ''
-    #! ${getExe pkgs.bash}
+   #!${pkgs.runtimeShell}
 
     WATTAGE=$1
 
