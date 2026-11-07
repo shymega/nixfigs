@@ -388,7 +388,7 @@ in {
     };
     vscode = {
       enable = true;
-      package = pkgs.vscode.fhs;
+      package = pkgs.unstable.vscode.fhs;
     };
     direnv = {
       enable = true;
