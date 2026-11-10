@@ -157,21 +157,94 @@
   };
   inputs = {
     nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/*";
-    nixfigs-helpers.url = "github:shymega/nixfigs-helpers";
-    nixfigs-pkgs.url = "github:shymega/nixfigs-pkgs";
-    nixfigs-private.url = "github:shymega/nixfigs-private";
-    nixfigs-public.url = "github:shymega/nixfigs-public";
-    nixfigs-homes.url = "github:shymega/nixfigs-homes";
-    nixfigs-secrets.url = "github:shymega/nixfigs-secrets";
-    nixfigs-roles.url = "github:shymega/nixfigs-roles";
-    nixfigs-devenvs.url = "github:shymega/nixfigs-devenvs";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
+    nixpkgs-shymega.url = "github:shymega/nixpkgs?ref=shymega/staging";
+
+    nixfigs-helpers = {
+      url = "github:shymega/nixfigs-helpers";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixfigs-roles = {
+      url = "github:shymega/nixfigs-roles";
+      inputs.nixfigs-helpers.follows = "nixfigs-helpers";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixfigs-secrets = {
+      url = "github:shymega/nixfigs-secrets";
+      inputs.nixfigs-helpers.follows = "nixfigs-helpers";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixfigs-devenvs = {
+      url = "github:shymega/nixfigs-devenvs";
+      inputs.nixfigs-helpers.follows = "nixfigs-helpers";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixfigs-pkgs = {
+      url = "github:shymega/nixfigs-pkgs";
+      inputs.nixfigs-helpers.follows = "nixfigs-helpers";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-shymega.follows = "nixpkgs-shymega";
+      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
+      inputs.shypkgs-public.follows = "shypkgs-public";
+    };
+    nixfigs-private = {
+      url = "github:shymega/nixfigs-private";
+      inputs.deploy-rs.follows = "deploy-rs";
+      inputs.nixfigs-helpers.follows = "nixfigs-helpers";
+      inputs.nixfigs-pkgs.follows = "nixfigs-pkgs";
+      inputs.nixfigs-roles.follows = "nixfigs-roles";
+      inputs.nixfigs-secrets.follows = "nixfigs-secrets";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-master.follows = "nixpkgs-master";
+      inputs.nixpkgs-shymega.follows = "nixpkgs-shymega";
+      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
+      inputs.shypkgs-private.follows = "shypkgs-private";
+      inputs.shypkgs-public.follows = "shypkgs-public";
+    };
+    nixfigs-public = {
+      url = "github:shymega/nixfigs-public";
+      inputs.deploy-rs.follows = "deploy-rs";
+      inputs.nixfigs-helpers.follows = "nixfigs-helpers";
+      inputs.nixfigs-pkgs.follows = "nixfigs-pkgs";
+      inputs.nixfigs-roles.follows = "nixfigs-roles";
+      inputs.nixfigs-secrets.follows = "nixfigs-secrets";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-shymega.follows = "nixpkgs-shymega";
+      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
+      inputs.shypkgs-private.follows = "shypkgs-private";
+      inputs.shypkgs-public.follows = "shypkgs-public";
+    };
+    nixfigs-homes = {
+      url = "github:shymega/nixfigs-homes";
+      inputs.nixfigs-helpers.follows = "nixfigs-helpers";
+      inputs.nixfigs-pkgs.follows = "nixfigs-pkgs";
+      inputs.nixfigs-roles.follows = "nixfigs-roles";
+      inputs.nixfigs-secrets.follows = "nixfigs-secrets";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-master.follows = "nixpkgs-master";
+      inputs.nixpkgs-shymega.follows = "nixpkgs-shymega";
+      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
+      inputs.shypkgs-private.follows = "shypkgs-private";
+      inputs.shypkgs-public.follows = "shypkgs-public";
+    };
+
     hardware.url = "github:NixOS/nixos-hardware";
     deploy-rs = {
       url = "github:serokell/deploy-rs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager.follows = "nixfigs-homes/home-manager";
-    shypkgs-private.url = "github:shymega/shypkgs-private";
-    shypkgs-public.url = "github:shymega/shypkgs-public";
+    shypkgs-private = {
+      url = "github:shymega/shypkgs-private";
+      inputs.nixfigs-helpers.follows = "nixfigs-helpers";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    shypkgs-public = {
+      url = "github:shymega/shypkgs-public";
+      inputs.nixfigs-helpers.follows = "nixfigs-helpers";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-master.follows = "nixpkgs-master";
+    };
   };
 }
