@@ -11,12 +11,11 @@ default:
 
 # Variables for dummy input overrides (set these in your environment)
 NIXFIGS_VIRTUAL_PRIVATE_URL := env_var_or_default('NIXFIGS_VIRTUAL_PRIVATE_URL', 'github:shymega/nixfigs-virtual-private')
-NIXFIGS_PRIVATE_URL := env_var_or_default('NIXFIGS_PRIVATE_URL', 'github:shymega/nixfigs-private')
 NIXFIGS_NETWORKS_URL := env_var_or_default('NIXFIGS_NETWORKS_URL', 'github:shymega/nixfigs-networks')
 SHYPKGS_PRIVATE_URL := env_var_or_default('SHYPKGS_PRIVATE_URL', 'github:shymega/shypkgs-private')
 
 # Override arguments for dummy inputs
-override_args := "--override-input nixfigs-virtual-private " + NIXFIGS_VIRTUAL_PRIVATE_URL + " --override-input nixfigs-private " + NIXFIGS_PRIVATE_URL + " --override-input nixfigs-networks " + NIXFIGS_NETWORKS_URL + " --override-input shypkgs-private " + SHYPKGS_PRIVATE_URL
+override_args := "--override-input nixfigs-virtual-private " + NIXFIGS_VIRTUAL_PRIVATE_URL + " --override-input nixfigs-networks " + NIXFIGS_NETWORKS_URL + " --override-input shypkgs-private " + SHYPKGS_PRIVATE_URL
 
 # === FLAKE OPERATIONS ===
 
@@ -136,7 +135,7 @@ hosts:
 # Show personal hosts only
 hosts-personal:
     @echo "Available personal hosts:"
-    @nix eval --json {{override_args}} '.#nixosConfigurations' --apply 'lib.filterAttrs (n: v: builtins.elem "personal" v.config.nixfigs.meta.rolesEnabled) >> builtins.attrNames' 2>/dev/null | jq -r '.[]' || echo "HEIMDALL-LINUX"
+    @nix eval --json {{override_args}} '.#nixosConfigurations' --apply 'x: builtins.filter (n: builtins.elem "personal" (x.${n}.config.nixfigs.meta.rolesEnabled or [])) (builtins.attrNames x)' | jq -r '.[]'
 
 # Show available home configurations
 homes:
