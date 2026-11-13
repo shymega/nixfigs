@@ -22,7 +22,6 @@ inputs.git-hooks.lib.${hostPlatform}.run {
         "flake.nix"
         "*-compose.nix"
         "mautrix-whatsapp.nix"
-        "mautrix-slack.nix"
         ".devenv"
         ".direnv"
       ];
