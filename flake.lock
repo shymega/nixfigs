@@ -10383,6 +10383,8 @@
         "hyprwayland-scanner": "hyprwayland-scanner",
         "hyprwire": "hyprwire",
         "nixpkgs": [
+          "hyprnix",
+          "hyprland",
           "nixpkgs"
         ],
         "systems": [
