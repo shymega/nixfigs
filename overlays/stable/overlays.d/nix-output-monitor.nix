@@ -1,15 +1,17 @@
-# SPDX-FileCopyrightText: 2023-2026 Dom 'shymega' Rodriguez <shymega@shymega.org.uk>
-#
-# SPDX-License-Identifier: Apache-2.0
-_: prev: {
-  nix-output-monitor = prev.nix-output-monitor.overrideAttrs (_: rec {
-    version = "2.1.5";
+final: prev: {
+  nix-output-monitor = prev.nix-output-monitor.override {
+    extraComposeFunctions = [
+      (prev.haskell.lib.compose.appendPatch (
+        prev.fetchpatch2 {
+          url = "https://patch-diff.githubusercontent.com/raw/maralorn/nix-output-monitor/pull/321.patch";
+          relative = "nix-output-monitor";
+          hash = "sha256-uleti4hBzGN/uQS7CxUi4FaVs+fy+Q/rmqDPNPXBNiM=";
+        }
+      ))
+    ];
+  };
 
-    src = prev.fetchFromGitHub {
-      owner = "maralorn";
-      repo = "nix-output-monitor";
-      rev = "refs/tags/v${version}";
-      hash = "sha256-bTmWlcCobvNb+tpHxYYDiLF5vay9UV+bujYqcrpoOgc=";
-    };
-  });
+  nh = prev.nh.override {
+    inherit (final) nix-output-monitor;
+  };
 }
