@@ -1,1 +1,0 @@
-../overlays.d/goimapnotify.nix
