@@ -8242,16 +8242,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1778669258,
-        "narHash": "sha256-WMUJ7tyw/9QbKUyRzLndEQSqX05fQLmFlRdMAmPD7tI=",
+        "lastModified": 1792508453,
+        "narHash": "sha256-y+V5RFJcjnV1+ZzImkfiSJ97iDIflanjP2OR9lemvTs=",
         "owner": "hyprwm",
         "repo": "hyprland-plugins",
-        "rev": "90e66baf99c9025b1d5e9c9e58dd3c80d0911ea2",
+        "rev": "d2427d4d15b36df40468f5a58bbd67cdba19835d",
         "type": "github"
       },
       "original": {
         "owner": "hyprwm",
-        "ref": "v0.55.0",
+        "ref": "v0.57.0",
         "repo": "hyprland-plugins",
         "type": "github"
       }
