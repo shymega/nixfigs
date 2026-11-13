@@ -71,7 +71,6 @@
                   inputs
                   lib
                   self
-                  specialArgs
                   username
                   ;
               };
@@ -92,7 +91,6 @@
           inputs
           pubkey
           self
-          specialArgs
           username
           ;
       };
