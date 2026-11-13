@@ -155,7 +155,7 @@
 
     # Development tools
     devenv = {
-      url = "github:cachix/devenv?ref=latest";
+      url = "github:cachix/devenv?ref=v2.4.0";
       inputs.nixpkgs.follows = "nixpkgs";
 
       inputs.git-hooks.follows = "git-hooks";
