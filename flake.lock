@@ -2242,7 +2242,7 @@
       },
       "original": {
         "owner": "cachix",
-        "ref": "latest",
+        "ref": "v2.4.0",
         "repo": "devenv",
         "type": "github"
       }
