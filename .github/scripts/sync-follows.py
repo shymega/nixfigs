@@ -12,6 +12,18 @@ import re
 import sys
 from collections import defaultdict
 
+# Inputs that deliberately pin their own nixpkgs rather than following the
+# root's, so a mismatched sub-input here is not a bug to auto-fix: adding
+# `.follows` would silently break a version-compatibility guarantee the
+# upstream flake relies on. Previously had to be reverted by hand once
+# already added ("fix: Don't override nixvim's nixpkgs input" in the
+# shyvim.nix sibling repo; "fix: don't override hyprnix's nixpkgs input"
+# and the nix-cachyos-kernel precedent it followed, here).
+SKIP_FOLLOWS: dict[str, set[str]] = {
+    "hyprnix": {"nixpkgs"},
+    "nix-cachyos-kernel": {"nixpkgs"},
+}
+
 
 def load_needed_follows(lock_path: str = "flake.lock") -> dict[str, list[str]]:
     with open(lock_path) as f:
@@ -35,6 +47,7 @@ def load_needed_follows(lock_path: str = "flake.lock") -> dict[str, list[str]]:
                 sub_name in top_level_names
                 and isinstance(sub_node, str)
                 and sub_node != root_inputs[sub_name]
+                and sub_name not in SKIP_FOLLOWS.get(input_name, set())
             ):
                 needed[input_name].append(sub_name)
 
