@@ -1,0 +1,41 @@
+diff --git i/src/backend/drm/DRM.cpp w/src/backend/drm/DRM.cpp
+index 94d1a67..603b60f 100644
+--- i/src/backend/drm/DRM.cpp
++++ w/src/backend/drm/DRM.cpp
+@@ -976,10 +976,20 @@ void Aquamarine::CDRMBackend::recheckCRTCs() {
+             continue;
+         }
+ 
+-        // disabled outputs release their CRTCs so active outputs get priority
++        // disabled outputs release their CRTCs so active outputs get priority --
++        // but only when another connected, enabled connector actually needs one
++        // (genuine CRTC starvation). Unconditionally releasing on every disable
++        // (e.g. DPMS-off) makes a disable/re-enable flap (some panels
++        // disconnect/reconnect on DPMS-off) force a full CRTC
++        // reassignment + modeset, instead of just re-enabling the same CRTC.
+         if (c->crtc && c->status == DRM_MODE_CONNECTED && c->output && !c->output->enabledState) {
+-            backend->log(AQ_LOG_DEBUG, std::format("drm: {} is disabled, releasing crtc {}", c->szName, c->crtc->id));
+-            c->setCRTC(nullptr);
++            const bool otherNeedsCrtc = std::ranges::any_of(connectors, [&c](auto const& o) {
++                return o != c && !o->tilingRedundant && o->status == DRM_MODE_CONNECTED && !o->crtc && o->output && o->output->enabledState;
++            });
++            if (otherNeedsCrtc) {
++                backend->log(AQ_LOG_DEBUG, std::format("drm: {} is disabled, releasing crtc {} for a starved connector", c->szName, c->crtc->id));
++                c->setCRTC(nullptr);
++            }
+         }
+ 
+         if (c->crtc && c->status == DRM_MODE_CONNECTED) {
+@@ -2227,7 +2237,11 @@ void Aquamarine::SDRMConnector::applyCommit(SDRMConnectorCommitData& data) {
+     if (!backend->updateSecondaryRendererState(&data.retiredFBs))
+         backend->backend->log(AQ_LOG_ERROR, std::format("drm: Failed to update renderer state for {} on applyCommit", szName));
+ 
+-    if (wasEnabled != output->enabledState) {
++    // Only rescan on re-enable (a disabled connector coming back needs a CRTC
++    // reassignment). Rescanning on disable too (the original behavior) means
++    // a disable->enable flap during DPMS-off (see recheckCRTCs()) forces a
++    // second unnecessary CRTC reassignment + modeset for every flap.
++    if (!wasEnabled && output->enabledState) {
+         auto bk = backend.lock();
+         if (bk) {
+             bk->backend->log(AQ_LOG_DEBUG, std::format("drm: Connector {} enabledState changed {} -> {}", szName, wasEnabled, output->enabledState));

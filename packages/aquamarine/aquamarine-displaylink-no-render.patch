@@ -1,0 +1,17 @@
+diff --git i/src/backend/drm/DRM.cpp w/src/backend/drm/DRM.cpp
+index 94d1a67..1a2b3c4 100644
+--- i/src/backend/drm/DRM.cpp
++++ w/src/backend/drm/DRM.cpp
+@@ -339,7 +339,11 @@ std::vector<SP<CDRMBackend>> Aquamarine::CDRMBackend::attempt(SP<CBackend> bac
+         auto drmBackend  = SP<CDRMBackend>(new CDRMBackend(backend));
+         drmBackend->self = drmBackend;
+ 
+-        if (!drmBackend->registerGPU(gpu, newPrimary)) {
++        // DisplayLink/evdi devices expose a DRM node with no render node, so
++        // registering them with a primary GPU makes aquamarine try (and fail)
++        // to stand up a renderer on them -- see hyprwm/aquamarine#22. Passing
++        // no primary skips that, leaving Mesa to render on the real GPU.
++        if (!drmBackend->registerGPU(gpu, {})) {
+             backend->log(AQ_LOG_ERROR, std::format("drm: Failed to register gpu {}", gpu->path));
+             continue;
+         } else
