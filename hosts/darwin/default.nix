@@ -36,7 +36,7 @@
     inputs.nix-darwin.lib.darwinSystem {
       pkgs = genPkgs hostPlatform overlays;
       modules = [
-        "${self}/src/hosts/${hostname}@${hostPlatform}"
+        "${self}/src/systems/${hostname}@${hostPlatform}"
         "${self}/src/modules/core"
         "${self}/src/modules/darwin"
         {nixpkgs.pkgs = genPkgs hostPlatform overlays;}
