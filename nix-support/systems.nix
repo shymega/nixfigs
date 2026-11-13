@@ -4,9 +4,19 @@
 # Centralized system definitions to reduce duplication
 {
   inputs,
+  self,
   lib ? inputs.nixpkgs.lib,
   ...
 }: {
+  # Canonical pkgs builder, shared by lib/, hosts/, hosts/nixos/,
+  # hosts/darwin/, and hosts/homes/ to avoid re-implementing this import.
+  genPkgs = system: overlays:
+    import inputs.nixpkgs {
+      inherit system;
+      overlays = builtins.attrValues self.overlays ++ overlays;
+      config = self.nixpkgs-config;
+    };
+
   # All supported systems
   allSystems = [
     "x86_64-linux"

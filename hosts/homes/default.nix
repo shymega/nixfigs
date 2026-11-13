@@ -2,13 +2,8 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 {inputs, ...}: let
-  genPkgs = system:
-    import inputs.nixpkgs {
-      inherit system;
-      overlays = builtins.attrValues self.overlays;
-      config = self.nixpkgs-config;
-    };
   inherit (inputs) self;
+  inherit (import ../../nix-support/systems.nix {inherit inputs self;}) genPkgs;
   inherit (inputs.home-manager.lib) homeManagerConfiguration;
   genConfiguration = _hostname: {
     type,
@@ -22,13 +17,13 @@
           inherit (inputs.home-manager.lib) hm;
         }
         // (import "${self}/lib" {
-          pkgs = genPkgs hostPlatform;
+          pkgs = genPkgs hostPlatform [];
           inherit self inputs;
         })
     );
   in
     homeManagerConfiguration {
-      pkgs = genPkgs hostPlatform;
+      pkgs = genPkgs hostPlatform [];
       modules = with inputs; [
         "${self}/src/homes/${username}@${hostPlatform}"
         agenix.homeManagerModules.default

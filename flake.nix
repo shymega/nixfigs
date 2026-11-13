@@ -7,7 +7,7 @@
   outputs = inputs: let
     inherit (inputs) self;
     rolesModule = import ./nix-support/roles.nix;
-    systemsModule = import ./nix-support/systems.nix {inherit inputs;};
+    systemsModule = import ./nix-support/systems.nix {inherit inputs self;};
     hydraModule = import ./nix-support/hydra.nix {inherit self inputs;};
     githubActionsModule = import ./nix-support/github-actions.nix {
       inherit self inputs systemsModule;
