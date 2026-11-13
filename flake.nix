@@ -330,9 +330,12 @@
       inputs.home-manager.follows = "home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Not followed: hyprnix's nixpkgs is an alias for hyprland/nixpkgs,
+    # and overriding it cascades to the whole hypr* ecosystem (aquamarine,
+    # hyprutils, hyprland itself, ...), which is built/tested against a
+    # specific nixpkgs revision.
     hyprnix = {
       url = "github:hyprwm/hyprnix";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 }
