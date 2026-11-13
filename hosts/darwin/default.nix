@@ -6,12 +6,7 @@
   inputs,
   ...
 }: let
-  genPkgs = system: overlays:
-    import inputs.nixpkgs {
-      inherit system;
-      overlays = builtins.attrValues self.overlays ++ overlays;
-      config = self.nixpkgs-config;
-    };
+  inherit (import ../../nix-support/systems.nix {inherit inputs self;}) genPkgs;
   genConfiguration = hostname: {
     address,
     hostPlatform,

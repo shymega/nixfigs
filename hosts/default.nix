@@ -6,12 +6,7 @@
   inputs,
   ...
 }: let
-  genPkgs = system:
-    import inputs.nixpkgs {
-      inherit system;
-      overlays = builtins.attrValues self.overlays;
-      config = self.nixpkgs-config;
-    };
+  genPkgs = system: (import ../nix-support/systems.nix {inherit inputs self;}).genPkgs system [];
   mkHost = {
     type ? "nixos",
     address ? "${hostname}.dzr.devices.rnet.rodriguez.org.uk",
