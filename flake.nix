@@ -330,12 +330,24 @@
       inputs.home-manager.follows = "home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # Not followed: hyprnix's nixpkgs is an alias for hyprland/nixpkgs,
-    # and overriding it cascades to the whole hypr* ecosystem (aquamarine,
-    # hyprutils, hyprland itself, ...), which is built/tested against a
-    # specific nixpkgs revision.
+    # Not followed: this fork pins its own nixpkgs (nixos-unstable) directly
+    # rather than aliasing hyprland/nixpkgs, and that pin feeds the whole
+    # hypr* ecosystem (aquamarine, hyprutils, hyprland itself, ...), which is
+    # built/tested against it.
     hyprnix = {
-      url = "github:hyprwm/hyprnix";
+      url = "github:shymega/hyprnix?ref=shymega/nix-gcc-stdenv-fixes";
+    };
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    atuin = {
+      url = "github:atuinsh/atuin?ref=v18.24.8";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    waybar = {
+      url = "github:Alexays/Waybar?rev=16843896794a9c595139318420f81f40e84f8c78";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 }
