@@ -19,7 +19,7 @@
   };
   programs = {
     deadnix.enable = true;
-    statix.enable = true;
+    statix.enable = false;
     alejandra.enable = true;
     yamlfmt.enable = true;
     jsonfmt.enable = true;
