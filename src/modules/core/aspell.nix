@@ -14,7 +14,7 @@ with lib; {
   ];
 
   # Configure aspell system wide
-  environment.etc."aspell.conf".text = optionalString isNixOS ''
+  environment.etc."aspell.conf".text = optionalString (isLinux && !isDarwin) ''
     master en_US
     add-extra-dicts en-computers.rws
   '';

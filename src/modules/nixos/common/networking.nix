@@ -9,7 +9,7 @@
   inputs,
   ...
 }: let
-  inherit (lib) isNixOS optionals hasSuffix;
+  inherit (lib) isLinux isDarwin optionals hasSuffix;
 in {
   networking.networkmanager = {
     dns = "systemd-resolved";
@@ -25,7 +25,7 @@ in {
     ethernet.macAddress = "stable";
     wifi.powersave = true;
     enable = true;
-    dispatcherScripts = optionals (isNixOS && hasSuffix "-LINUX" config.networking.hostName) [
+    dispatcherScripts = optionals (isLinux && !isDarwin && hasSuffix "-LINUX" config.networking.hostName) [
       {
         source = "${self}/static/nixos/rootfs/etc/NetworkManager/dispatcher.d/05-wireless-toggle";
         type = "basic";
