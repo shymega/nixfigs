@@ -19445,16 +19445,16 @@
         "nix-filter": "nix-filter"
       },
       "locked": {
-        "lastModified": 1782230079,
-        "narHash": "sha256-AIg6hxip9hP6XWIqpjQOIripCdJQvtKSEubV+qL8mF8=",
+        "lastModified": 1794256210,
+        "narHash": "sha256-fy4pK/cuzazLOGdHR/597Yvik+2xbO/O6hehWtbd65k=",
         "owner": "Duckonaut",
         "repo": "split-monitor-workspaces",
-        "rev": "d6b45cdb9b30c388bc4ded4adad78a14e523d591",
+        "rev": "5fd2f066d12e727365535bb13beec78f8dbe4157",
         "type": "github"
       },
       "original": {
         "owner": "Duckonaut",
-        "ref": "v0.55.4",
+        "ref": "v0.57.2",
         "repo": "split-monitor-workspaces",
         "type": "github"
       }
