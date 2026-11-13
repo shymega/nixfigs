@@ -12,9 +12,9 @@
   deploySystem = system: let
     inherit (lib) hasSuffix;
   in
-    if hasSuffix system "-darwin"
+    if hasSuffix "-darwin" system
     then "darwin"
-    else if hasSuffix system "-linux"
+    else if hasSuffix "-linux" system
     then "nixos"
     else throw "Unsupported system: ${system}";
 
