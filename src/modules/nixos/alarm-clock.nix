@@ -83,6 +83,11 @@ in
             then "Scheduled wake-up (silent)"
             else "Alarm clock";
 
+          # Timer-triggered oneshot, not part of any boot target: without
+          # this, nixos-rebuild switch re-runs it (playing the alarm or
+          # re-waking the system) any time its unit definition changes.
+          restartIfChanged = false;
+
           # Deliberately Wants= without a matching After=: the inhibitor is a
           # oneshot that sleeps for inhibitHours, so ordering after it would
           # hold the alarm back for that long. Unordered means concurrent.
@@ -125,6 +130,10 @@ in
       (mkIf cfg.bedtime.enable {
         systemd.services.bedtime = {
           description = "Suspend the system at bedtime";
+          # Timer-triggered oneshot, not part of any boot target: without
+          # this, nixos-rebuild switch re-runs it (suspending the machine
+          # mid-switch) any time its unit definition changes.
+          restartIfChanged = false;
           serviceConfig = {
             Type = "oneshot";
             # No --ignore-inhibitors: a held sleep lock (a long build, a manual
